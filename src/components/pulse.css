@@ -1,0 +1,154 @@
+.pulse {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(0, 1fr);
+  min-width: 620px;
+}
+.pulse__stop {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  min-width: 0;
+  -webkit-touch-callout: none;
+}
+.pulse__activity {
+  height: 72px;
+  display: flex;
+  align-items: flex-end;
+  padding-bottom: 14px;
+  padding-right: 10px;
+  width: 100%;
+}
+.pulse__bubble {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  color: var(--label-2);
+  transform-origin: bottom left;
+}
+.pulse__bubble .t-caption1 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  max-width: 150px;
+}
+.pulse__track {
+  position: relative;
+  width: 100%;
+  height: 24px;
+  display: flex;
+  align-items: center;
+}
+.pulse__line {
+  position: absolute;
+  right: calc(100% - 12px);
+  width: 100%;
+  top: 50%;
+  height: 4px;
+  margin-top: -2px;
+  background: var(--ink);
+  transform-origin: left center;
+  border-radius: 2px;
+}
+.pulse__line.is-future {
+  height: 4px;
+  background: radial-gradient(circle, var(--tint) 1.9px, transparent 2.1px) left center / 9px 4px repeat-x;
+}
+.pulse__stop.is-present .pulse__line {
+  background: var(--ink);
+}
+.pulse__dot {
+  position: relative;
+  z-index: 1;
+  width: 18px;
+  height: 18px;
+  margin-left: 3px;
+  border-radius: 50%;
+  background: var(--bg);
+  box-shadow: inset 0 0 0 3.5px var(--ink);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 800;
+  color: var(--label);
+}
+.pulse__stop.is-present .pulse__dot {
+  width: 24px;
+  height: 24px;
+  margin-left: 0;
+  background: var(--tint);
+  box-shadow:
+    0 0 0 3px var(--bg),
+    0 0 0 4.5px var(--tint);
+}
+.pulse__ring {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  box-shadow: 0 0 0 1.5px var(--tint);
+  animation: pulse-breathe 2.8s var(--ease-out) infinite;
+}
+@keyframes pulse-breathe {
+  0% {
+    transform: scale(1);
+    opacity: 0.7;
+  }
+  70%,
+  100% {
+    transform: scale(2.1);
+    opacity: 0;
+  }
+}
+.pulse__stop.is-unknown .pulse__dot {
+  width: 24px;
+  height: 24px;
+  margin-left: 0;
+  box-shadow: none;
+  border: 2px dashed var(--label-3);
+}
+.pulse__stop.is-destination .pulse__dot {
+  width: 24px;
+  height: 24px;
+  margin-left: 0;
+  box-shadow:
+    inset 0 0 0 3.5px var(--tint),
+    inset 0 0 0 7px var(--bg),
+    inset 0 0 0 20px var(--tint);
+}
+.pulse__label {
+  display: flex;
+  flex-direction: column;
+  margin-top: 12px;
+  padding-right: 10px;
+}
+.pulse__here {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--tint-text);
+}
+.pulse__name {
+  font-size: 15px;
+  line-height: 20px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+.pulse__stop.is-unknown .pulse__name,
+.pulse__stop.is-past .pulse__name {
+  font-weight: 500;
+  color: var(--label-2);
+}
+@media (hover: hover) {
+  .pulse__stop:hover .pulse__name {
+    color: var(--label);
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 3px;
+  }
+}

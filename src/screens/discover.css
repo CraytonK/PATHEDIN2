@@ -1,0 +1,174 @@
+.discover__back {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  color: var(--tint-text);
+  font-weight: 600;
+}
+@media (max-width: 767px) {
+  .discover__back {
+    display: none;
+  }
+}
+.discover__search {
+  max-width: 640px;
+  margin-bottom: 40px;
+}
+.discover__search .search-field__box {
+  height: 48px;
+  border-radius: 14px;
+  font-size: 18px;
+}
+.discover__results {
+  max-width: 640px;
+  margin-top: -20px;
+}
+.discover__section + .discover__section {
+  margin-top: 56px;
+}
+.discover__section-head {
+  margin-bottom: 20px;
+}
+.doors {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 16px;
+}
+.door {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  height: 100%;
+  padding: 20px 20px 18px;
+  border-radius: 20px;
+  background: var(--bg-grouped);
+  transition:
+    transform var(--dur-3) var(--ease-out),
+    background-color var(--dur-2);
+}
+:root[data-theme='dark'] .door {
+  background: var(--bg-sunken);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) .door {
+    background: var(--bg-sunken);
+  }
+}
+.door:hover {
+  transform: translateY(-2px);
+}
+.door:active {
+  transform: scale(0.985);
+}
+.door__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: var(--label);
+  margin-bottom: 10px;
+}
+.door__mine {
+  color: var(--tint-text);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-size: 11px;
+}
+.door__title {
+  font-family: var(--font-display);
+  font-size: 22px;
+  line-height: 27px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+.door__meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: auto;
+  padding-top: 14px;
+}
+.door__from {
+  color: var(--tint-text);
+  font-weight: 600;
+}
+
+.discover__confluence {
+  margin: 8px 0 36px;
+  padding: 26px 30px 30px;
+  border-radius: 24px;
+  background: var(--bg-grouped);
+}
+:root[data-theme='dark'] .discover__confluence {
+  background: var(--bg-sunken);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) .discover__confluence {
+    background: var(--bg-sunken);
+  }
+}
+.discover__confluence .confluence__rider,
+.discover__confluence .avatar-stack__item {
+  box-shadow: 0 0 0 2px var(--bg-grouped);
+}
+.discover__confluence-head {
+  margin-bottom: 8px;
+}
+@media (max-width: 767px) {
+  .discover__confluence {
+    margin: 0 calc(var(--gutter) * -1) 28px;
+    border-radius: 0;
+    padding: 20px var(--gutter) 24px;
+  }
+}
+
+.route-panel {
+  padding-bottom: 12px;
+}
+.route-panel__head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.route-panel__kicker {
+  color: var(--tint-text);
+  font-weight: 600;
+  margin-bottom: 2px;
+}
+.route-panel__actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.route-panel__on {
+  color: var(--tint-text);
+  font-weight: 600;
+}
+.route-panel__line {
+  margin: 20px 0 16px;
+  max-width: 520px;
+}
+.route-panel__line .route-line__label {
+  font-size: 13px;
+}
+.route-panel__note {
+  max-width: 640px;
+}
+.route-panel__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 12px 40px;
+  margin-top: 28px;
+}
+.discover__eco {
+  margin-top: 24px;
+  padding-top: 12px;
+}
+.discover__eco .eco {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 0 40px;
+  align-items: start;
+}

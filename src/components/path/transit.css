@@ -1,0 +1,341 @@
+.tmap {
+  position: relative;
+  --station-past: var(--ink);
+}
+.tmap__lines {
+  position: absolute;
+  left: 0;
+  top: 0;
+  overflow: visible;
+  pointer-events: none;
+  z-index: 1;
+}
+.tmap__stations {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 2;
+}
+.tmap__rows {
+  position: relative;
+}
+
+/* ── Stations ─────────────────────────────── */
+.station {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 0;
+  height: 0;
+}
+.station__mark {
+  position: absolute;
+  left: 0;
+  top: 0;
+  display: block;
+  width: 16px;
+  height: 16px;
+  transform: translate(-50%, -50%);
+  border-radius: 999px;
+  background: var(--bg);
+  box-shadow: inset 0 0 0 3.5px var(--ink);
+  transition:
+    box-shadow var(--dur-2) var(--ease-out),
+    background-color var(--dur-2) var(--ease-out);
+}
+.station--past.is-active .station__mark,
+.station--past.is-highlight .station__mark {
+  box-shadow: inset 0 0 0 3.5px var(--tint);
+}
+.station.is-shared .station__mark {
+  background: var(--tint);
+  box-shadow:
+    inset 0 0 0 3.5px var(--ink),
+    inset 0 0 0 5px var(--bg);
+}
+.station--present .station__mark {
+  width: 22px;
+  height: 22px;
+  background: var(--tint);
+  box-shadow:
+    0 0 0 3px var(--bg),
+    0 0 0 4.5px var(--tint);
+}
+.station__pulse {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 0 0 1.5px var(--tint);
+  animation: station-breathe 2.8s var(--ease-out) infinite;
+  pointer-events: none;
+}
+@keyframes station-breathe {
+  0% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0.7;
+  }
+  70%,
+  100% {
+    transform: translate(-50%, -50%) scale(2.1);
+    opacity: 0;
+  }
+}
+
+/* Junction and destination share geometry so they can grow into capsules. */
+.station--junction .station__mark,
+.station--destination .station__mark {
+  width: 22px;
+  height: 22px;
+  transform: translate(-11px, -50%);
+}
+.station--junction .station__mark {
+  background: var(--bg);
+  box-shadow: none;
+  border: 2px dashed var(--label-3);
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding-left: 5px;
+}
+.station__q {
+  font-size: 12px;
+  font-weight: 800;
+  color: var(--label);
+  line-height: 1;
+}
+.station--destination .station__mark {
+  background: var(--bg);
+  box-shadow:
+    inset 0 0 0 3.5px var(--tint),
+    inset 0 0 0 7px var(--bg),
+    inset 0 0 0 20px var(--tint);
+}
+.station--destination.is-capsule .station__mark {
+  background: var(--tint-soft);
+  box-shadow: inset 0 0 0 3.5px var(--tint);
+}
+
+.station--route .station__mark {
+  width: 15px;
+  height: 15px;
+  box-shadow: inset 0 0 0 3px var(--label-3);
+}
+.station--route.is-focus .station__mark,
+.station--route.is-active .station__mark {
+  box-shadow: inset 0 0 0 3.5px var(--tint);
+}
+.station--route.is-dim .station__mark {
+  box-shadow: inset 0 0 0 3px var(--label-4);
+}
+.station--explore .station__mark {
+  width: 14px;
+  height: 14px;
+  box-shadow: inset 0 0 0 2.5px var(--label-3);
+}
+
+/* ── Rows ────────────────────────────────── */
+.tmap__row {
+  position: relative;
+  list-style: none;
+  padding-bottom: 26px;
+}
+.tmap__row:last-child {
+  padding-bottom: 4px;
+}
+.tmap__row--route {
+  padding-bottom: 18px;
+}
+.tmap__row.is-dim .tmap__people {
+  display: none;
+}
+.tmap__hit {
+  position: relative;
+  border-radius: 14px;
+  margin-right: -10px;
+  padding-right: 10px;
+  transition:
+    padding-left 0.42s var(--ease-out),
+    background-color var(--dur-2);
+  outline-offset: -2px;
+}
+.tmap__hit[role='button'] {
+  cursor: pointer;
+}
+.tmap__hit::before {
+  content: '';
+  position: absolute;
+  inset: -8px 0 -8px calc(var(--label-x) - 12px);
+  border-radius: 12px;
+  background: transparent;
+  transition: background-color var(--dur-2);
+  z-index: -1;
+}
+@media (hover: hover) {
+  .tmap__hit[role='button']:hover::before {
+    background: var(--fill-3);
+  }
+}
+.tmap__row.is-selected .tmap__hit::before {
+  background: var(--tint-softer);
+}
+.tmap__title {
+  font-size: 17px;
+  line-height: 22px;
+  font-weight: 600;
+  letter-spacing: -0.016em;
+}
+.tmap__row--present .tmap__title {
+  font-size: 20px;
+  line-height: 22px;
+  letter-spacing: -0.02em;
+}
+.tmap__row--destination .tmap__title {
+  font-size: 20px;
+  letter-spacing: -0.02em;
+}
+.tmap__row--junction .tmap__title,
+.tmap__row--route .tmap__title,
+.tmap__row--explore .tmap__title {
+  color: var(--label);
+  font-weight: 600;
+}
+.tmap__row--explore .tmap__title {
+  color: var(--label-2);
+}
+.tmap__sub {
+  color: var(--label-2);
+  margin-top: 1px;
+}
+.tmap__here {
+  margin-bottom: 2px;
+  font-weight: 700;
+  color: var(--tint-text);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-size: 11px;
+}
+.tmap__note {
+  color: var(--label-2);
+  margin-top: 6px;
+  max-width: 460px;
+}
+.tmap__shared {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 6px;
+  color: var(--tint-text);
+  font-weight: 500;
+}
+.tmap__shared-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--tint);
+}
+.tmap__people {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 8px;
+}
+.tmap__toggle {
+  display: inline-block;
+  margin-top: 6px;
+  color: var(--tint-text);
+  font-weight: 600;
+}
+.tmap__story {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  margin-top: 8px;
+  color: var(--label);
+  font-family: var(--font-serif);
+  font-size: 15px;
+  line-height: 20px;
+  max-width: 440px;
+}
+.tmap__story:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1px;
+}
+.tmap__story-mark {
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--tint-text);
+  flex: none;
+}
+
+/* ── Walk ahead ───────────────────────────── */
+.walk-puck {
+  position: absolute;
+  left: 0;
+  z-index: 5;
+  width: 34px;
+  height: 34px;
+  margin: -17px 0 0 -17px;
+  border-radius: 50%;
+  cursor: grab;
+  touch-action: none;
+  box-shadow:
+    0 0 0 2.5px var(--bg),
+    0 0 0 4.5px var(--tint),
+    0 6px 16px rgba(0, 0, 0, 0.18);
+}
+.walk-puck:active {
+  cursor: grabbing;
+}
+.walk-puck img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  pointer-events: none;
+  -webkit-user-drag: none;
+}
+.tmap__walk {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 28px;
+  padding: 8px 12px 8px 10px;
+  margin-left: -10px;
+  color: var(--label-2);
+  border-radius: 10px;
+  text-align: left;
+}
+.tmap__walk:hover {
+  background: var(--fill-3);
+  color: var(--label);
+}
+.tmap__walk-arrow {
+  display: inline-flex;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  align-items: center;
+  justify-content: center;
+  background: var(--tint-soft);
+  color: var(--tint-text);
+  font-weight: 700;
+  animation: nudge 2.4s var(--ease-in-out) infinite;
+}
+@keyframes nudge {
+  0%,
+  60%,
+  100% {
+    transform: translateY(0);
+  }
+  30% {
+    transform: translateY(3px);
+  }
+}

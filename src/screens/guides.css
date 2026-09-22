@@ -1,0 +1,105 @@
+.guides__picker {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+.guides__section {
+  padding: 36px 0 12px;
+  border-top: var(--hairline) solid var(--separator);
+  margin-top: 28px;
+}
+.guides__head {
+  display: flex;
+  gap: 18px;
+  align-items: flex-start;
+  margin-bottom: 18px;
+}
+.guides__num {
+  font-family: var(--font-display);
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--tint-text);
+  padding-top: 6px;
+  min-width: 22px;
+}
+.guides__move {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 4px 0 2px;
+  flex-wrap: wrap;
+}
+.guides__move strong {
+  font-weight: 600;
+}
+.guides__cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(420px, 100%), 1fr));
+  gap: 8px 40px;
+  padding-left: 40px;
+}
+@media (max-width: 767px) {
+  .guides__cards {
+    grid-template-columns: minmax(0, 1fr);
+    padding-left: 0;
+  }
+}
+.gcard {
+  min-width: 0;
+}
+.gcard {
+  display: flex;
+  gap: 16px;
+  padding: 16px 0;
+}
+.gcard__photo {
+  flex: none;
+  width: 76px;
+  height: 76px;
+  border-radius: 50%;
+  overflow: hidden;
+  background: var(--fill);
+  -webkit-touch-callout: none;
+}
+.gcard__photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.gcard__body {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.gcard__top {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: flex-start;
+}
+.gcard__made {
+  color: var(--tint-text);
+  font-weight: 600;
+}
+.gcard__helps {
+  margin-top: 2px;
+}
+.gcard__hours {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  flex-wrap: wrap;
+}
+.gcard__open {
+  color: var(--green);
+  font-weight: 500;
+}
+.guides__foot {
+  margin-top: 36px;
+  white-space: normal;
+  font-weight: 500;
+}

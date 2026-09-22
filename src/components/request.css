@@ -1,0 +1,139 @@
+.req {
+  padding: 16px 24px 28px;
+}
+@media (max-width: 767px) {
+  .req {
+    padding: 8px 16px 32px;
+  }
+}
+.req__to {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.req__to img {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+.req__h {
+  font-weight: 600;
+  color: var(--label-2);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  font-size: 12px;
+  margin: 24px 0 10px;
+}
+.req__segs {
+  border-radius: 12px;
+  background: var(--bg-grouped);
+  overflow: hidden;
+}
+:root[data-theme='dark'] .req__segs {
+  background: var(--bg-sunken);
+}
+.req__segs li + li .req__seg {
+  border-top: var(--hairline) solid var(--separator);
+}
+.req__seg {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+  min-height: 56px;
+  padding: 8px 14px;
+  text-align: left;
+  position: relative;
+  transition: background-color var(--dur-2);
+}
+.req__seg:active {
+  background: var(--bg-press);
+}
+.req__track {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 12px;
+  flex: none;
+}
+.req__dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  box-shadow: inset 0 0 0 2px var(--label-3);
+}
+.req__dot--end {
+  background: var(--label-3);
+}
+.req__line {
+  width: 2px;
+  height: 14px;
+  background: var(--label-4);
+}
+.req__seg.is-on .req__dot {
+  box-shadow: inset 0 0 0 2px var(--tint);
+}
+.req__seg.is-on .req__dot--end {
+  background: var(--tint);
+}
+.req__seg.is-on .req__line {
+  background: var(--tint);
+}
+.req__seg-text {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  flex: 1;
+  min-width: 0;
+}
+.req__seg-text strong {
+  font-weight: 600;
+}
+.req__check {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--tint);
+  color: var(--on-tint);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+}
+.req__msg textarea {
+  display: block;
+  width: 100%;
+  margin: 18px 0 12px;
+  resize: vertical;
+  min-height: 108px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  border: 0;
+  background: var(--bg-grouped);
+  font-size: 16px;
+  line-height: 22px;
+  outline: none;
+  transition: box-shadow var(--dur-2);
+}
+:root[data-theme='dark'] .req__msg textarea {
+  background: var(--bg-sunken);
+}
+.req__msg textarea:focus {
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--tint) 30%, transparent);
+}
+.req__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 16px;
+  margin-bottom: 18px;
+}
+.req__meta span {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.req__foot {
+  text-align: center;
+  margin-top: 12px;
+}

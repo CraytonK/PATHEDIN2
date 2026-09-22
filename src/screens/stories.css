@@ -1,0 +1,221 @@
+.stories__filter {
+  margin-bottom: 32px;
+}
+.stories__lead {
+  padding-bottom: 44px;
+  margin-bottom: 40px;
+  border-bottom: var(--hairline) solid var(--separator);
+}
+.stories__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 44px 32px;
+}
+
+/* ── Story ─────────────────────────────── */
+.story__progress {
+  position: fixed;
+  top: var(--topbar-h);
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--tint);
+  transform-origin: left;
+  z-index: 41;
+}
+@media (max-width: 767px) {
+  .story__progress {
+    top: calc(var(--navbar-h) + var(--safe-top));
+  }
+}
+.story {
+  padding-top: 48px;
+}
+@media (max-width: 767px) {
+  .story {
+    padding-top: 8px;
+  }
+}
+.story__head {
+  max-width: 820px;
+}
+.story__title {
+  font-size: 52px;
+  line-height: 58px;
+  font-weight: 500;
+  letter-spacing: -0.028em;
+  margin: 12px 0 16px;
+  text-wrap: balance;
+}
+.story__dek {
+  font-size: 21px;
+  line-height: 30px;
+  color: var(--label-2);
+  max-width: 700px;
+  letter-spacing: -0.012em;
+}
+@media (max-width: 767px) {
+  .story__title {
+    font-size: 34px;
+    line-height: 40px;
+  }
+  .story__dek {
+    font-size: 18px;
+    line-height: 26px;
+  }
+}
+.story__byline {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 28px;
+}
+.story__tools {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--label-2);
+}
+.story__share {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--label-2);
+}
+.story__share:hover {
+  background: var(--bg-hover);
+  color: var(--label);
+}
+.story__art {
+  margin: 36px 0 48px;
+  padding: 24px 32px 16px;
+  border-radius: 22px;
+  background: var(--bg-grouped);
+}
+:root[data-theme='dark'] .story__art {
+  background: var(--bg-sunken);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) .story__art {
+    background: var(--bg-sunken);
+  }
+}
+.story__art .seg-art {
+  max-width: 760px;
+  margin: 0 auto;
+}
+.story__art figcaption {
+  text-align: center;
+  margin-top: 6px;
+}
+@media (max-width: 767px) {
+  .story__art {
+    margin: 24px calc(var(--gutter) * -1) 32px;
+    border-radius: 0;
+    padding: 16px var(--gutter) 12px;
+  }
+}
+.story__layout {
+  display: grid;
+  grid-template-columns: minmax(0, 680px) 300px;
+  gap: 80px;
+  align-items: start;
+}
+@media (max-width: 1099px) {
+  .story__layout {
+    grid-template-columns: minmax(0, 1fr) 260px;
+    gap: 40px;
+  }
+}
+@media (max-width: 767px) {
+  .story__layout {
+    display: block;
+  }
+}
+.story__p {
+  font-size: 20px;
+  line-height: 33px;
+  letter-spacing: -0.006em;
+  margin-bottom: 26px;
+  color: var(--label);
+}
+.story__p:first-child::first-letter {
+  font-size: 3.1em;
+  float: left;
+  line-height: 0.9;
+  padding: 6px 10px 0 0;
+  font-weight: 500;
+}
+@media (max-width: 767px) {
+  .story__p {
+    font-size: 18px;
+    line-height: 29px;
+  }
+}
+.story__pull {
+  font-size: 30px;
+  line-height: 38px;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  margin: 40px 0;
+  padding-left: 22px;
+  border-left: 3px solid var(--tint);
+  text-wrap: balance;
+}
+@media (max-width: 767px) {
+  .story__pull {
+    font-size: 24px;
+    line-height: 31px;
+  }
+}
+.story__rail {
+  position: sticky;
+  top: calc(var(--topbar-h) + 32px);
+}
+.story__rail-h {
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-size: 11px;
+  color: var(--label-2);
+  margin-bottom: 20px;
+}
+.story__rail .tmap__title {
+  font-size: 15px;
+  line-height: 20px;
+}
+.story__rail .tmap__sub {
+  font-size: 13px;
+  line-height: 17px;
+}
+.story__rail .tmap__row.is-highlight .tmap__title {
+  color: var(--tint-text);
+}
+.story__end {
+  margin-top: 48px;
+  padding-top: 28px;
+  border-top: var(--hairline) solid var(--separator);
+}
+.story__end-who {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
+.story__end-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 20px;
+}
+.story__more {
+  margin-top: 72px;
+  padding-top: 40px;
+  border-top: var(--hairline) solid var(--separator);
+}
+.story__more h2 {
+  margin-bottom: 28px;
+}

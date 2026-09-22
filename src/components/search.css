@@ -1,0 +1,134 @@
+.search-field {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.search-field__box {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  height: 38px;
+  padding: 0 8px 0 10px;
+  border-radius: 11px;
+  background: var(--fill);
+  color: var(--label-2);
+}
+.search-field__box input {
+  flex: 1;
+  min-width: 0;
+  border: 0;
+  background: none;
+  outline: none;
+  font-size: 17px;
+  color: var(--label);
+  height: 100%;
+}
+.search-field__box input::placeholder {
+  color: var(--label-2);
+}
+.search-field__box input::-webkit-search-cancel-button {
+  display: none;
+}
+.search-field__clear {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--label-3);
+  color: var(--bg);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.search-field__cancel {
+  color: var(--tint-text);
+  font-size: 17px;
+}
+
+.search-layer {
+  position: fixed;
+  inset: 0;
+  z-index: 85;
+  background: rgba(0, 0, 0, 0.18);
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding-top: 12vh;
+}
+.search-panel {
+  width: min(620px, calc(100vw - 48px));
+  background: var(--bg-elevated);
+  border-radius: 16px;
+  box-shadow: var(--shadow-popover);
+  padding: 12px;
+  max-height: 70vh;
+  display: flex;
+  flex-direction: column;
+}
+.search-panel .search-field__box {
+  height: 44px;
+  background: transparent;
+  font-size: 18px;
+}
+.search-panel__body {
+  overflow-y: auto;
+  border-top: var(--hairline) solid var(--separator);
+  margin-top: 8px;
+  padding-top: 4px;
+}
+
+.search-empty__h,
+.search-results__h {
+  font-weight: 600;
+  color: var(--label-2);
+  padding: 12px 8px 6px;
+}
+.search-suggest,
+.search-hit {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  min-height: 48px;
+  padding: 6px 8px;
+  border-radius: 10px;
+  text-align: left;
+  transition: background-color var(--dur-1);
+}
+.search-suggest {
+  color: var(--label);
+}
+.search-suggest svg {
+  color: var(--tint);
+}
+.search-suggest:hover,
+.search-hit:hover,
+.search-hit:focus-visible {
+  background: var(--bg-hover);
+}
+.search-hit__lead {
+  width: 36px;
+  height: 36px;
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--tint);
+}
+.search-hit__lead img {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+.search-hit__text {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  flex: 1;
+}
+.search-none {
+  padding: 32px 8px;
+  text-align: center;
+}

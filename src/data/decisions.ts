@@ -1,0 +1,218 @@
+import type { Decision } from './types';
+
+export const decisionList: Decision[] = [
+  {
+    id: 'd-maya-phd',
+    owner: 'maya',
+    title: 'PhD first, or industry now?',
+    context: 'I defend in December. My supervisor has offered me a PhD spot in the lab. I also have two CRO interviews lined up. I want to end up in pharmaceutical R&D either way.',
+    at: 'msc-chem',
+    status: 'open',
+    community: 'phd-question',
+    ago: '3d',
+    options: [
+      {
+        id: 'industry',
+        label: 'Industry now',
+        detail: 'Start at a CRO or in process chemistry in early 2027.',
+        wp: 'cro-analytical',
+        chose: [
+          { person: 'elena', outcome: 'Scientist I, Pharma R&D · 5 years later' },
+          { person: 'amara', outcome: 'Senior Scientist, Formulation · 7 years later' },
+          { person: 'priya', outcome: 'Process Chemist · weighing discovery' },
+          { person: 'rafael', outcome: 'Scientist II, Pharma R&D · 8 years later' },
+          { person: 'daniel', outcome: 'At a CRO · 18 months in' },
+        ],
+      },
+      {
+        id: 'phd',
+        label: 'PhD first',
+        detail: 'Stay in the lab for a 4–5 year PhD, then apply to pharma.',
+        wp: 'phd-chem',
+        chose: [
+          { person: 'tomas', outcome: 'Principal Scientist, Med Chem · 11 years later' },
+          { person: 'mei', outcome: 'Group Lead, Discovery · 11 years later' },
+          { person: 'nikhil', outcome: 'PhD year six · applying to pharma now' },
+          { person: 'paul', outcome: 'Director, R&D · 18 years later' },
+        ],
+      },
+    ],
+    weighIns: [
+      {
+        person: 'elena',
+        option: 'industry',
+        body: 'I chose industry and don’t regret it. But I’d tell you: pick the CRO whose people leave for pharma. That’s the whole game.',
+        ago: '2d',
+      },
+      {
+        person: 'tomas',
+        option: 'phd',
+        body: 'Only if you want to lead discovery programmes, and only for a supervisor who places people in industry. Ask your supervisor where their last five students went.',
+        ago: '2d',
+      },
+      {
+        person: 'priya',
+        option: 'industry',
+        body: 'Industry is more reversible than it feels. Several colleagues went back for a PhD after a few years with a much clearer idea of why.',
+        ago: '1d',
+      },
+      {
+        person: 'sarah',
+        option: 'phd',
+        body: 'I’m facing the same decision in March. Leaning PhD because my supervisor has strong pharma ties. Want to compare notes?',
+        ago: '20h',
+      },
+    ],
+  },
+  {
+    id: 'd-jonah-offers',
+    owner: 'jonah',
+    title: 'PhD at McGill, or Associate Scientist at Kestrel?',
+    context: 'Two real offers, both expiring in November. The PhD lab is medicinal chemistry with strong industry ties. Kestrel is an associate scientist role in discovery.',
+    at: 'msc-chem',
+    status: 'open',
+    community: 'phd-question',
+    ago: '4d',
+    options: [
+      {
+        id: 'phd',
+        label: 'PhD at McGill',
+        detail: 'Medicinal chemistry, 4–5 years.',
+        wp: 'phd-chem',
+        chose: [
+          { person: 'tomas', outcome: 'Principal Scientist · 11 years later' },
+          { person: 'nikhil', outcome: 'PhD year six' },
+        ],
+      },
+      {
+        id: 'kestrel',
+        label: 'Kestrel, now',
+        detail: 'Associate Scientist, Discovery.',
+        wp: 'medchem',
+        chose: [
+          { person: 'rafael', outcome: 'Scientist II at Kestrel · 8 years later' },
+          { person: 'aisha', outcome: 'Associate Scientist · 1 year in' },
+        ],
+      },
+    ],
+    weighIns: [
+      { person: 'paul', option: 'kestrel', body: 'I run R&D at Kestrel. We promote associates who show ownership, degree or not. But I’d never talk anyone out of a great PhD lab.', ago: '3d' },
+      { person: 'nikhil', option: 'phd', body: 'Visit the lab on a bad day, not a recruitment day. That tells you what five years will feel like.', ago: '2d' },
+    ],
+  },
+  {
+    id: 'd-elena-leave',
+    owner: 'elena',
+    title: 'Stay for the CRO promotion, or take the move into R&D?',
+    context: 'I was offered a team lead role at Brightwater the same month Northfield offered me Scientist I in R&D. The CRO role paid more.',
+    at: 'cro-analytical',
+    status: 'decided',
+    chosen: 'rnd',
+    reflection: 'I took the R&D role at a small pay cut. Three weeks in, I already know it was right. The team lead role would have been another two years of “after this project.”',
+    community: 'cro-rnd',
+    ago: '1mo',
+    options: [
+      {
+        id: 'stay',
+        label: 'Team lead at the CRO',
+        detail: 'Higher pay, a team of four.',
+        wp: 'cro-analytical',
+        chose: [{ person: 'yusuf', outcome: 'Still weighing it at Solace Labs' }],
+      },
+      {
+        id: 'rnd',
+        label: 'Scientist I, R&D',
+        detail: 'Smaller pay, the destination.',
+        wp: 'pharma-rnd',
+        chose: [
+          { person: 'elena', outcome: 'Chose this · 3 weeks in' },
+          { person: 'fatima', outcome: 'Chose this in 2021 · now Scientist' },
+          { person: 'amara', outcome: 'Chose this in 2016 · now Senior Scientist' },
+        ],
+      },
+    ],
+    weighIns: [
+      { person: 'amara', option: 'rnd', body: 'Take the destination when it’s offered. Pay catches up; timing doesn’t always.', ago: '1mo' },
+      { person: 'fatima', option: 'rnd', body: 'I took a pay cut too. It was even within a year.', ago: '1mo' },
+    ],
+  },
+  {
+    id: 'd-priya-upstream',
+    owner: 'priya',
+    title: 'Stay in process chemistry, or move upstream into discovery?',
+    context: 'Five years in process. I love it, but I’m increasingly curious about what gets made, not just how.',
+    at: 'process-chem',
+    status: 'open',
+    community: 'chem-pharma',
+    ago: '1w',
+    options: [
+      {
+        id: 'stay',
+        label: 'Stay in process',
+        detail: 'Senior process chemist track.',
+        wp: 'process-chem',
+        chose: [{ person: 'henrik', outcome: 'Director, Process Chemistry · 20 years in' }],
+      },
+      {
+        id: 'discovery',
+        label: 'Move into discovery',
+        detail: 'Medicinal chemistry, possibly a level down.',
+        wp: 'medchem',
+        chose: [{ person: 'tomas', outcome: 'Principal Scientist, Med Chem' }],
+      },
+    ],
+    weighIns: [
+      { person: 'henrik', option: 'stay', body: 'Biased, obviously. But process chemists who move to discovery are rare and valued. If you go, you’ll be good at it.', ago: '5d' },
+      { person: 'mei', option: 'discovery', body: 'We’d interview a process chemist for discovery in a heartbeat. You know what’s makeable.', ago: '4d' },
+    ],
+  },
+  {
+    id: 'd-lucas-back',
+    owner: 'lucas',
+    title: 'Go back for an MSc at 34, or apply for QC roles now?',
+    context: 'Nine years teaching. I want to get back into a lab and eventually into R&D. An MSc would take two years. QC could start this spring.',
+    at: 'teacher',
+    status: 'open',
+    community: 'chem-pharma',
+    ago: '2d',
+    options: [
+      {
+        id: 'msc',
+        label: 'MSc first',
+        detail: 'Two years, then apply.',
+        wp: 'msc-chem',
+        chose: [{ person: 'amara', outcome: 'Used an MSc to restart in Canada' }],
+      },
+      {
+        id: 'qc',
+        label: 'QC now',
+        detail: 'Start this spring, move internally.',
+        wp: 'qc-chemist',
+        chose: [
+          { person: 'grace', outcome: 'Scientist, Analytical R&D · 3 years after QC' },
+          { person: 'chloe', outcome: 'R&D Associate · 2 years after QC' },
+        ],
+      },
+    ],
+    weighIns: [{ person: 'grace', option: 'qc', body: 'QC now. You’ll learn faster, get paid, and R&D teams will know you by name in two years.', ago: '1d' }],
+  },
+  {
+    id: 'd-marcus-pm',
+    owner: 'marcus',
+    title: 'Stay tech lead, or become a PM?',
+    context: 'I was a year into tech lead when the PM on my team left. I was asked to cover.',
+    at: 'tech-lead',
+    status: 'decided',
+    chosen: 'pm',
+    reflection: 'I covered for three months and never went back. The hardest part was letting someone else own the code I’d written.',
+    community: 'swe-pm',
+    ago: '2mo',
+    options: [
+      { id: 'lead', label: 'Stay tech lead', detail: 'Keep building.', wp: 'tech-lead', chose: [{ person: 'sam', outcome: 'Senior engineer, exploring PM' }] },
+      { id: 'pm', label: 'Become the PM', detail: 'Cover, then commit.', wp: 'pm', chose: [{ person: 'marcus', outcome: 'Group PM · 6 years later' }, { person: 'joon', outcome: 'PM at Fieldnote' }] },
+    ],
+    weighIns: [{ person: 'joon', option: 'pm', body: 'Covering for a PM is the best trial run there is.', ago: '2mo' }],
+  },
+];
+
+export const decisions: Record<string, Decision> = Object.fromEntries(decisionList.map((d) => [d.id, d]));

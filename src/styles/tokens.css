@@ -1,0 +1,161 @@
+/*
+  PathedIn design tokens.
+  Built on Apple's Human Interface Guidelines: system type ramp (Dynamic Type "Large"),
+  semantic label/fill/separator colors, a single app tint, and hairline separators.
+*/
+
+:root {
+  color-scheme: light dark;
+
+  /* ── Type families ─────────────────────────────────────────── */
+  --font-sans: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Inter', system-ui, 'Segoe UI', Roboto, sans-serif;
+  --font-display: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Inter', system-ui, 'Segoe UI', Roboto, sans-serif;
+  --font-serif: ui-serif, 'New York', 'Newsreader', 'Iowan Old Style', Georgia, serif;
+  --font-rounded: ui-rounded, 'SF Pro Rounded', 'Inter', system-ui, sans-serif;
+
+  /* ── Semantic colors (light) ───────────────────────────────── */
+  --bg: #ffffff;
+  --bg-elevated: #ffffff;
+  --bg-grouped: #f5f5f7;
+  --bg-sunken: #f5f5f7;
+  --bg-hover: rgba(0, 0, 0, 0.035);
+  --bg-press: rgba(0, 0, 0, 0.06);
+
+  --label: #1d1d1f;
+  --label-2: rgba(60, 60, 67, 0.64);
+  --label-3: rgba(60, 60, 67, 0.38);
+  --label-4: rgba(60, 60, 67, 0.2);
+
+  --fill: rgba(118, 118, 128, 0.12);
+  --fill-2: rgba(118, 118, 128, 0.08);
+  --fill-3: rgba(118, 118, 128, 0.05);
+
+  --separator: rgba(60, 60, 67, 0.15);
+  --separator-strong: rgba(60, 60, 67, 0.26);
+
+  /* The PathedIn tint: a warm trail-marker vermilion. Used for "you", the present, and actions. */
+  --tint: #d2521a;
+  --tint-text: #bf4712;
+  --tint-soft: rgba(210, 82, 26, 0.1);
+  --tint-softer: rgba(210, 82, 26, 0.06);
+  --on-tint: #ffffff;
+
+  --ink: #1d1d1f; /* everyone else's Path */
+  --ink-soft: rgba(29, 29, 31, 0.1);
+
+  --green: #248a3d;
+  --red: #d70015;
+
+  /* Bars use the HIG chrome material: nearly opaque, lightly blurred. */
+  --bar-bg: rgba(255, 255, 255, 0.86);
+  --bar-blur: saturate(180%) blur(20px);
+
+  --shadow-popover: 0 12px 40px rgba(0, 0, 0, 0.12), 0 2px 10px rgba(0, 0, 0, 0.05);
+  --shadow-lift: 0 1px 2px rgba(0, 0, 0, 0.04), 0 4px 16px rgba(0, 0, 0, 0.06);
+  --scrim: rgba(0, 0, 0, 0.28);
+
+  /* ── Geometry ─────────────────────────────────────────────── */
+  --gutter: 16px;
+  --r-xs: 6px;
+  --r-sm: 8px;
+  --r-md: 12px;
+  --r-lg: 16px;
+  --r-xl: 22px;
+  --hairline: 0.5px;
+  --hit: 44px;
+
+  --tabbar-h: 50px;
+  --navbar-h: 44px;
+  --topbar-h: 60px;
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+
+  /* ── Motion ───────────────────────────────────────────────── */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --dur-1: 120ms;
+  --dur-2: 220ms;
+  --dur-3: 360ms;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    --bg: #000000;
+    --bg-elevated: #1c1c1e;
+    --bg-grouped: #0d0d0e;
+    --bg-sunken: #161618;
+    --bg-hover: rgba(255, 255, 255, 0.05);
+    --bg-press: rgba(255, 255, 255, 0.09);
+
+    --label: #f5f5f7;
+    --label-2: rgba(235, 235, 245, 0.62);
+    --label-3: rgba(235, 235, 245, 0.34);
+    --label-4: rgba(235, 235, 245, 0.18);
+
+    --fill: rgba(118, 118, 128, 0.3);
+    --fill-2: rgba(118, 118, 128, 0.2);
+    --fill-3: rgba(118, 118, 128, 0.12);
+
+    --separator: rgba(84, 84, 88, 0.55);
+    --separator-strong: rgba(84, 84, 88, 0.8);
+
+    --tint: #ff7a3d;
+    --tint-text: #ff8a54;
+    --tint-soft: rgba(255, 122, 61, 0.16);
+    --tint-softer: rgba(255, 122, 61, 0.08);
+    --on-tint: #1d0c03;
+
+    --ink: #f5f5f7;
+    --ink-soft: rgba(245, 245, 247, 0.12);
+
+    --green: #30d158;
+    --red: #ff453a;
+
+    --bar-bg: rgba(18, 18, 20, 0.82);
+    --shadow-popover: 0 12px 40px rgba(0, 0, 0, 0.5), 0 0 0 0.5px rgba(255, 255, 255, 0.08);
+    --shadow-lift: 0 0 0 0.5px rgba(255, 255, 255, 0.08);
+    --scrim: rgba(0, 0, 0, 0.5);
+  }
+}
+
+:root[data-theme='dark'] {
+  --bg: #000000;
+  --bg-elevated: #1c1c1e;
+  --bg-grouped: #0d0d0e;
+  --bg-sunken: #161618;
+  --bg-hover: rgba(255, 255, 255, 0.05);
+  --bg-press: rgba(255, 255, 255, 0.09);
+  --label: #f5f5f7;
+  --label-2: rgba(235, 235, 245, 0.62);
+  --label-3: rgba(235, 235, 245, 0.34);
+  --label-4: rgba(235, 235, 245, 0.18);
+  --fill: rgba(118, 118, 128, 0.3);
+  --fill-2: rgba(118, 118, 128, 0.2);
+  --fill-3: rgba(118, 118, 128, 0.12);
+  --separator: rgba(84, 84, 88, 0.55);
+  --separator-strong: rgba(84, 84, 88, 0.8);
+  --tint: #ff7a3d;
+  --tint-text: #ff8a54;
+  --tint-soft: rgba(255, 122, 61, 0.16);
+  --tint-softer: rgba(255, 122, 61, 0.08);
+  --on-tint: #1d0c03;
+  --ink: #f5f5f7;
+  --ink-soft: rgba(245, 245, 247, 0.12);
+  --green: #30d158;
+  --red: #ff453a;
+  --bar-bg: rgba(18, 18, 20, 0.82);
+  --shadow-popover: 0 12px 40px rgba(0, 0, 0, 0.5), 0 0 0 0.5px rgba(255, 255, 255, 0.08);
+  --shadow-lift: 0 0 0 0.5px rgba(255, 255, 255, 0.08);
+  --scrim: rgba(0, 0, 0, 0.5);
+}
+
+@media (min-width: 768px) {
+  :root {
+    --gutter: 24px;
+  }
+}
+@media (min-width: 1100px) {
+  :root {
+    --gutter: 40px;
+  }
+}

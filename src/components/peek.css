@@ -1,0 +1,123 @@
+.peek-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  background: var(--scrim);
+  -webkit-backdrop-filter: blur(10px) saturate(120%);
+  backdrop-filter: blur(10px) saturate(120%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: calc(var(--safe-top) + 24px) 16px calc(var(--safe-bottom) + 24px);
+}
+.peek-overlay__stack {
+  width: min(360px, 100%);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.peek {
+  background: var(--bg-elevated);
+  border-radius: 16px;
+  padding: 16px;
+  box-shadow: var(--shadow-popover);
+}
+.peek--hover {
+  position: fixed;
+  z-index: 80;
+  width: 340px;
+  padding: 16px 16px 12px;
+}
+.peek__head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  text-align: left;
+  border-radius: 12px;
+  margin: -6px -6px 0;
+  padding: 6px;
+  width: calc(100% + 12px);
+}
+@media (hover: hover) {
+  .peek__head:hover {
+    background: var(--bg-hover);
+  }
+}
+.peek__who {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  flex: 1;
+  min-width: 0;
+}
+.peek__rel {
+  margin-top: 12px;
+}
+.peek__why {
+  margin-top: 4px;
+  color: var(--label);
+}
+.peek__path {
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: var(--hairline) solid var(--separator);
+}
+.peek__now {
+  margin-top: 8px;
+}
+.peek__menu {
+  background: var(--bg-elevated);
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: var(--shadow-popover);
+  width: min(260px, 100%);
+  transform-origin: top left;
+}
+.peek__menu li + li {
+  border-top: var(--hairline) solid var(--separator);
+}
+.peek__menu-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  height: 46px;
+  padding: 0 16px;
+  text-align: left;
+}
+.peek__menu-item:active {
+  background: var(--bg-press);
+}
+.peek__menu-item.is-on {
+  color: var(--tint-text);
+}
+.peek__row {
+  display: flex;
+  gap: 4px;
+  margin-top: 12px;
+  padding-top: 10px;
+  border-top: var(--hairline) solid var(--separator);
+}
+.peek__chip {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  padding: 8px 0 6px;
+  border-radius: 10px;
+  color: var(--label);
+  transition: background-color var(--dur-2);
+}
+.peek__chip svg {
+  color: var(--tint);
+}
+.peek__chip.is-on svg {
+  color: var(--tint);
+}
+@media (hover: hover) {
+  .peek__chip:hover {
+    background: var(--bg-hover);
+  }
+}
