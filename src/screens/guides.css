@@ -5,6 +5,16 @@
   flex-wrap: wrap;
   margin-bottom: 16px;
 }
+@media (max-width: 767px) {
+  .guides__picker .segmented {
+    flex: 1 1 100%;
+    order: 2;
+  }
+  .guides__picker > a {
+    order: 1;
+    margin-left: auto;
+  }
+}
 .guides__section {
   padding: 36px 0 12px;
   border-top: var(--hairline) solid var(--separator);

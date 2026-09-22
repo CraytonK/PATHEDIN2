@@ -42,6 +42,18 @@ const sections = [
 ];
 const desktopOrder = ['/', '/path', '/discover', '/network', '/communities'];
 
+/* Screens pushed from a section belong to it; anything else keeps the last section active, like a tab's navigation stack. */
+const owners: [RegExp, string][] = [
+  [/^\/(stories|questions|decisions)/, '/discover'],
+  [/^\/(messages|notifications|saved|search)/, '/'],
+];
+let lastSection = '/';
+function useActiveSection(pathname: string): string {
+  const direct = sections.find((s) => s.match(pathname))?.to ?? owners.find(([re]) => re.test(pathname))?.[1];
+  if (direct) lastSection = direct;
+  return direct ?? lastSection;
+}
+
 export function useUnread() {
   const read = useApp((s) => s.readNotifications);
   const readThreads = useApp((s) => s.readThreads);
@@ -60,6 +72,7 @@ export function TopBar() {
   const setSearch = useUI((s) => s.setSearch);
   const navigate = useNavigate();
   const ordered = desktopOrder.map((to) => sections.find((s) => s.to === to)!);
+  const current = useActiveSection(pathname);
   return (
     <header className="topbar">
       <div className="topbar__inner">
@@ -68,7 +81,7 @@ export function TopBar() {
         </Link>
         <nav className="topbar__nav" aria-label="Primary">
           {ordered.map((s) => {
-            const active = s.match(pathname);
+            const active = s.to === current;
             return (
               <NavLink key={s.to} to={s.to} className={`topbar__link ${active ? 'is-active' : ''}`} aria-current={active ? 'page' : undefined}>
                 {s.label}
@@ -181,10 +194,11 @@ export function Wordmark({ size = 22 }: { size?: number }) {
 export function TabBar() {
   const { pathname } = useLocation();
   const unread = useUnread();
+  const current = useActiveSection(pathname);
   return (
     <nav className="tabbar" aria-label="Primary">
       {sections.map((s) => {
-        const active = s.match(pathname);
+        const active = s.to === current;
         const Icon = s.icon;
         const badge = s.to === '/network' ? unread.incoming : 0;
         return (
