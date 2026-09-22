@@ -26,10 +26,24 @@ export function Avatar({
 }) {
   const p = people[id];
   const handlers = usePeek(peek ? id : undefined);
+  const [loaded, setLoaded] = useState(false);
   if (!p) return null;
   return (
     <span className={`avatar ${ring ? 'avatar--ring' : ''} ${className}`} style={{ width: size, height: size }} {...handlers}>
-      <img src={p.photo} alt="" width={size} height={size} loading="lazy" decoding="async" draggable={false} />
+      <img
+        src={p.photo}
+        alt=""
+        width={size}
+        height={size}
+        loading="lazy"
+        decoding="async"
+        draggable={false}
+        className={loaded ? 'is-loaded' : ''}
+        onLoad={() => setLoaded(true)}
+        ref={(el) => {
+          if (el?.complete && el.naturalWidth && !loaded) setLoaded(true);
+        }}
+      />
     </span>
   );
 }
@@ -366,6 +380,53 @@ export function RelationTag({ kind, label, className = '' }: { kind: RelationKin
       </span>
       {label}
     </span>
+  );
+}
+
+/* ── Inset grouped list (HIG) ───────────────────────────────── */
+
+export interface ListRow {
+  icon: ReactNode;
+  title: string;
+  detail?: string;
+  value?: ReactNode;
+  to?: string;
+  onClick?: () => void;
+}
+
+export function GroupedList({ rows, header }: { rows: ListRow[]; header?: string }) {
+  return (
+    <div className="glist">
+      {header && <p className="glist__header t-footnote">{header}</p>}
+      <ul className="glist__rows">
+        {rows.map((r) => {
+          const inner = (
+            <>
+              <span className="glist__icon">{r.icon}</span>
+              <span className="glist__text">
+                <span className="t-body">{r.title}</span>
+                {r.detail && <span className="t-footnote c-2">{r.detail}</span>}
+              </span>
+              {r.value !== undefined && <span className="glist__value t-callout">{r.value}</span>}
+              {r.to && <IconChevronRight size={14} strokeWidth={2.6} className="glist__chev" />}
+            </>
+          );
+          return (
+            <li key={r.title}>
+              {r.to ? (
+                <Link to={r.to} className="glist__row">
+                  {inner}
+                </Link>
+              ) : (
+                <button className="glist__row" onClick={r.onClick}>
+                  {inner}
+                </button>
+              )}
+            </li>
+          );
+        })}
+      </ul>
+    </div>
   );
 }
 

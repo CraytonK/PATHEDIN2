@@ -15,6 +15,11 @@
   height: 100%;
   object-fit: cover;
   -webkit-touch-callout: none;
+  opacity: 0;
+  transition: opacity 280ms var(--ease-out);
+}
+.avatar img.is-loaded {
+  opacity: 1;
 }
 .avatar::after {
   content: '';
@@ -398,6 +403,83 @@
 .relation-tag__glyph {
   color: var(--tint);
   display: inline-flex;
+}
+
+/* ── Inset grouped list ─────────────────────────── */
+.glist__header {
+  color: var(--label-2);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  font-size: 13px;
+  padding: 0 16px 6px;
+}
+.glist__rows {
+  border-radius: 12px;
+  background: var(--bg-grouped);
+  overflow: hidden;
+}
+:root[data-theme='dark'] .glist__rows {
+  background: var(--bg-elevated);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) .glist__rows {
+    background: var(--bg-elevated);
+  }
+}
+.glist__row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+  min-height: 56px;
+  padding: 8px 16px;
+  text-align: left;
+  position: relative;
+  transition: background-color var(--dur-1);
+}
+.glist__rows li + li .glist__row::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 60px;
+  border-top: var(--hairline) solid var(--separator);
+}
+.glist__row:active {
+  background: var(--bg-press);
+}
+@media (hover: hover) {
+  .glist__row:hover {
+    background: var(--bg-hover);
+  }
+}
+.glist__icon {
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  background: var(--tint);
+  color: var(--on-tint);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+}
+.glist__icon svg {
+  width: 19px;
+  height: 19px;
+}
+.glist__text {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+.glist__value {
+  color: var(--label-2);
+}
+.glist__chev {
+  color: var(--label-3);
+  flex: none;
 }
 
 .dot-sep {

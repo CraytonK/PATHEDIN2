@@ -38,6 +38,11 @@ export function Network() {
 
   const actions = (
     <div className="network__links">
+      <Link to="/guides">
+        <Button variant="tinted" size={isMobile ? 'small' : 'medium'} icon={<RelationGlyph kind="guide" size={16} />}>
+          Path Guides
+        </Button>
+      </Link>
       <Link to="/requests">
         <Button variant="gray" size={isMobile ? 'small' : 'medium'} icon={<IconSend size={16} />}>
           Requests{unread.incoming ? ` · ${unread.incoming}` : ''}

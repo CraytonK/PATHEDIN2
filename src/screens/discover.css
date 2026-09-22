@@ -26,6 +26,9 @@
 .discover__section + .discover__section {
   margin-top: 56px;
 }
+.discover__ways {
+  max-width: 640px;
+}
 .discover__section-head {
   margin-bottom: 20px;
 }

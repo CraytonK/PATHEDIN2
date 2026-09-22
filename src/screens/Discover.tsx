@@ -6,8 +6,11 @@ import { Confluence } from '../components/path/Confluence';
 import { Ecosystem, RouteLine } from '../components/Ecosystem';
 import { CommunityRow, PersonRow } from '../components/content';
 import { SearchField, SearchResults } from '../components/SearchLayer';
-import { AvatarStack, Button, SaveToggle, formatCount } from '../components/ui';
-import { IconCheck, IconPlus } from '../components/icons';
+import { AvatarStack, Button, GroupedList, SaveToggle, formatCount } from '../components/ui';
+import { IconBook, IconCheck, IconPeople, IconPlus, IconQuestion, IconSignpost } from '../components/icons';
+import { storyList } from '../data/stories';
+import { questionList } from '../data/questions';
+import { decisionList } from '../data/decisions';
 import { destinations, nearMe, otherJourneys } from '../data/destinations';
 import { communities } from '../data/communities';
 import { people, me, ME } from '../data/people';
@@ -182,6 +185,20 @@ export function Discover() {
                 <DestinationDoor key={id} id={id} i={i} />
               ))}
             </div>
+          </section>
+          <section className="discover__section discover__ways">
+            <div className="discover__section-head">
+              <h2 className="t-title2">Other ways to explore</h2>
+              <p className="t-subhead c-2">Learn from the people who already made the move.</p>
+            </div>
+            <GroupedList
+              rows={[
+                { icon: <IconPeople />, title: 'Path Guides', detail: 'People who’ve been where you’re going', to: '/guides' },
+                { icon: <IconBook />, title: 'Stories', detail: 'The moves people made, in their words', value: storyList.length, to: '/stories' },
+                { icon: <IconQuestion />, title: 'Questions', detail: 'Answered by people ahead of you', value: questionList.length, to: '/questions' },
+                { icon: <IconSignpost />, title: 'Decision Points', detail: 'Forks in people’s Paths, and where they led', value: decisionList.length, to: '/decisions' },
+              ]}
+            />
           </section>
           <section className="discover__section">
             <div className="discover__section-head">

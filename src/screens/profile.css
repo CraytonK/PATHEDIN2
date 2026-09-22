@@ -209,6 +209,9 @@
 .profile__path .profile__h {
   margin-bottom: 28px;
 }
+.profile__space-m {
+  margin-bottom: 36px;
+}
 .profile__side {
   display: flex;
   flex-direction: column;

@@ -4,8 +4,8 @@ import { Page } from '../components/chrome';
 import { TransitMap } from '../components/path/TransitMap';
 import { AlignMap, compareSummary } from '../components/path/Compare';
 import { CommunityRow, ConnectButton, CredibilityLabel, DecisionItem, RequestButton, StoryItem } from '../components/content';
-import { Button, RelationTag, SaveToggle } from '../components/ui';
-import { IconAlign, IconCalendar, IconClock, IconPin } from '../components/icons';
+import { Button, GroupedList, RelationTag, SaveToggle } from '../components/ui';
+import { IconAlign, IconBell, IconBookmark, IconCalendar, IconClock, IconMoon, IconPeople, IconPin, IconSend, IconSun } from '../components/icons';
 import { people, ME } from '../data/people';
 import { wp } from '../data/waypoints';
 import { storyList } from '../data/stories';
@@ -18,6 +18,34 @@ import { useApp } from '../lib/store';
 import { useUI } from '../lib/ui';
 import { NotFound } from './NotFound';
 import './profile.css';
+
+function YourSpace() {
+  const requests = useApp((s) => s.requests);
+  const connections = useApp((s) => s.connections);
+  const saved = useApp((s) => s.saved);
+  const theme = useApp((s) => s.theme);
+  const setTheme = useApp((s) => s.setTheme);
+  const incoming = requests.filter((r) => r.to === ME && r.status === 'pending').length;
+  const next = { system: 'light', light: 'dark', dark: 'system' } as const;
+  return (
+    <section>
+      <GroupedList
+        rows={[
+          { icon: <IconSend />, title: 'Path Requests', detail: incoming ? `${incoming} waiting for you` : undefined, value: incoming || undefined, to: '/requests' },
+          { icon: <IconPeople />, title: 'Connections', value: Object.values(connections).filter((c) => c === 'connected').length, to: '/connections' },
+          { icon: <IconBookmark />, title: 'Saved', value: Object.values(saved).filter(Boolean).length, to: '/saved' },
+          { icon: <IconBell />, title: 'Notifications', to: '/notifications' },
+          {
+            icon: theme === 'dark' ? <IconMoon /> : <IconSun />,
+            title: 'Appearance',
+            value: theme === 'system' ? 'Automatic' : theme === 'dark' ? 'Dark' : 'Light',
+            onClick: () => setTheme(next[theme]),
+          },
+        ]}
+      />
+    </section>
+  );
+}
 
 export function Profile() {
   const { id = ME } = useParams();
@@ -129,6 +157,11 @@ export function Profile() {
         </section>
       )}
 
+      {self && isMobile && (
+        <div className="profile__space-m">
+          <YourSpace />
+        </div>
+      )}
       <div className="profile__grid">
         <section className="profile__path">
           <h2 className="profile__h">{self ? 'Your Path' : `${p.first}’s Path`}</h2>
@@ -153,6 +186,7 @@ export function Profile() {
         </section>
 
         <aside className="profile__side">
+          {self && !isMobile && <YourSpace />}
           {!self && summary && (
             <section className="profile__meet">
               <div className="profile__meet-head">
