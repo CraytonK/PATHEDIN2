@@ -80,6 +80,7 @@
 
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme='light']) {
+    color-scheme: dark;
     --bg: #000000;
     --bg-elevated: #1c1c1e;
     --bg-grouped: #0d0d0e;
@@ -119,6 +120,7 @@
 }
 
 :root[data-theme='dark'] {
+  color-scheme: dark;
   --bg: #000000;
   --bg-elevated: #1c1c1e;
   --bg-grouped: #0d0d0e;
@@ -158,4 +160,8 @@
   :root {
     --gutter: 40px;
   }
+}
+
+:root[data-theme='light'] {
+  color-scheme: light;
 }

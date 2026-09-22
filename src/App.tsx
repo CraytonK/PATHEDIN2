@@ -43,12 +43,19 @@ export function App() {
   );
 }
 
+/** Only touch data-theme when the viewer picks an appearance, so a theme stamped by an embedding host survives. */
+let themeSetByApp = false;
 function useTheme() {
   const theme = useApp((s) => s.theme);
   useEffect(() => {
     const root = document.documentElement;
-    if (theme === 'system') delete root.dataset.theme;
-    else root.dataset.theme = theme;
+    if (theme === 'system') {
+      if (themeSetByApp) delete root.dataset.theme;
+      themeSetByApp = false;
+    } else {
+      root.dataset.theme = theme;
+      themeSetByApp = true;
+    }
   }, [theme]);
 }
 
