@@ -8,31 +8,31 @@
   margin-top: 12px;
 }
 .list-group__h {
-  font-size: 11px;
-  line-height: 16px;
+  font-size: 16px;
+  line-height: 22px;
   font-weight: 600;
-  color: var(--label-2);
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
+  color: var(--label);
+  letter-spacing: -0.016em;
   padding-bottom: 8px;
   border-bottom: var(--hairline) solid var(--separator);
 }
 
 /* Notifications */
+/* Medium's notifications: plain rows between hairlines; unread shows only as a small dot. */
 .notif {
   position: relative;
   display: flex;
   gap: 14px;
-  padding: 14px 12px;
-  margin: 0 -12px;
-  border-radius: 14px;
-  transition: background-color var(--dur-1);
+  padding: 18px 0;
+  border-bottom: 1px solid var(--separator);
 }
-.notif:hover {
-  background: var(--bg-hover);
+.notif:hover .notif__body > p:first-child {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
 }
-.notif.is-unread {
-  background: var(--tint-softer);
+.notif.is-unread .notif__body > p:first-child {
+  font-weight: 500;
 }
 .notif__glyph {
   width: 44px;
@@ -126,8 +126,7 @@
 .saved {
   display: flex;
   flex-direction: column;
-  gap: 24px;
-  padding-top: 12px;
+  padding-top: 4px;
 }
 .saved__route-to {
   font-weight: 600;

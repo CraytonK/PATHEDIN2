@@ -1,0 +1,129 @@
+/* ── Medium's right-hand column ─────────────────────────── */
+.rail-card {
+  padding: 20px 20px 12px;
+  border-radius: var(--r-md);
+  background: var(--bg-grouped);
+}
+.rail-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+}
+.rail-h {
+  font-size: 16px;
+  line-height: 20px;
+  font-weight: 600;
+  letter-spacing: -0.016em;
+  margin-bottom: 16px;
+}
+.rail-more {
+  font-size: 14px;
+  color: var(--label-2);
+}
+.rail-more:hover {
+  color: var(--label);
+}
+.rail-more--below {
+  display: inline-block;
+  margin-top: 16px;
+}
+.rail-pill {
+  display: inline-flex;
+  align-items: center;
+  height: 38px;
+  padding: 0 16px;
+  border-radius: var(--r-pill);
+  background: var(--fill);
+  color: var(--label);
+  font-size: 14px;
+  transition: background-color var(--dur-2);
+}
+.rail-pill:hover {
+  background: color-mix(in srgb, var(--fill) 100%, var(--label) 6%);
+}
+.rail-foot {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 16px;
+  font-size: 13px;
+  color: var(--label-2);
+}
+
+/* "Staff Picks"-style list */
+.rail-posts {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.rail-posts__by {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  line-height: 18px;
+  color: var(--label-2);
+}
+.rail-posts__strong {
+  color: var(--label);
+}
+.rail-posts__title {
+  display: block;
+  margin-top: 8px;
+  font-size: 16px;
+  line-height: 21px;
+  font-weight: 700;
+  letter-spacing: -0.018em;
+  color: var(--label);
+}
+.rail-posts__title:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.rail-posts__meta {
+  margin-top: 6px;
+  font-size: 13px;
+  color: var(--label-2);
+}
+
+/* People worth knowing (Medium's "Who to follow") */
+.rail-people {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+.rail-people__row {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+}
+.rail-people__text {
+  flex: 1;
+  min-width: 0;
+}
+.rail-people__name {
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: -0.012em;
+}
+.rail-people__why {
+  margin-top: 2px;
+  font-size: 13px;
+  line-height: 18px;
+  color: var(--label-2);
+}
+.rail-people__rel {
+  color: var(--tint-text);
+}
+.rail-people__row .btn {
+  flex: none;
+  margin-top: 2px;
+}
+
+/* Communities as Medium's topic pills */
+.rail-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+

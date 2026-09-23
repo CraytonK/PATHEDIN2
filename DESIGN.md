@@ -64,6 +64,38 @@ This analysis is based on the signed-in screenshot supplied with the brief and o
 
 On iPhone, PathedIn keeps the HIG tab bar and large titles, as Medium's own apps do. Home opens with the **Up next** cards, the horizontal *Your Path this week*, a *People worth knowing* carousel, then the same For you / Following tabs and post rows.
 
+### Every page, the same way
+All pages share Medium's page shape.
+
+**The page itself**
+- A bold page title, and underlined text tabs where a page has views.
+- Hairline-separated rows in a reading column about 728px wide.
+- A right-hand column behind a full-height hairline.
+- Any page can pass `rail` to `Page`. On iPhone that column follows the page content.
+- The column is built from the shared pieces in `components/Rail.tsx`:
+  - section heads
+  - *Who to follow*-style people rows
+  - *Staff Picks*-style post lists
+  - topic pills
+  - footer links
+
+**Lists**
+- Stories, questions, decisions and community conversations all render as the same **post row** (`Post`), wherever they appear.
+- Each row carries a byline, bold title, grey summary, "why it's here" line, stats, save, "…" menu and Path-art thumbnail.
+- Rows adapt to their width with a container query, so they also fit side columns.
+
+| Page | Medium pattern |
+| --- | --- |
+| Stories | A topic page: text tabs, a featured story, then post rows. Right column: *Most read on your route* and *Writers ahead of you*. |
+| A story | An article: one centred column, byline, an action bar between hairlines (reads, Align, save, share), the Path art as the lead image with a caption, and the body in the reading serif. *The Path behind this story*, the author box and *More from this stretch* follow. |
+| Questions | Post rows under tabs. The *Ask the people ahead of you* composer sits at the top of the right column, like Medium's "start writing" card. |
+| Question / Decision | The reading column holds the question or fork. The right column holds the people who made the move, the ones to ask, and similar forks. |
+| Decision Points | Your fork, then the ones near your Path, as post rows with fork thumbnails. |
+| Communities / a community | A publication: title, description, members and Join, then tabs and post rows. The right column holds the community's Guides and journeys that cross this one. |
+| Profile | Medium's profile. The reading column holds the name as a large title, then Path / Stories / Answers / Decisions tabs. The right column holds the person (photo, bio, buttons), what they're doing now, the Path Guide card, *Where your Paths meet* and communities. On iPhone the person card leads. |
+| Discover | A topic grid: a quiet image area with the route art, then title, summary and counts, with no card boxes. Other ways to explore appear as topic pills. |
+| Network, Guides, Connections, Requests, Notifications, Saved, Search | Hairline lists with text tabs. Notifications drop the blue unread panels for a small dot. Each page has a right column (people worth knowing, your communities, or office hours). |
+
 ## Typography
 | Role | Face | Used for |
 | --- | --- | --- |
@@ -86,7 +118,10 @@ The ramp keeps the HIG's roles:
 | Footnote | 13/18 |
 | Caption | 12/16 and 11/13 |
 
-Feed titles are 22/28 bold with −0.024em tracking, with 16/24 grey subtitles. Eyebrows (small uppercase labels) are 11px semibold with 0.1em tracking, in deep sky.
+Feed titles are 22/28 bold with −0.024em tracking, with 16/24 grey subtitles. As on Medium, labels are sentence case, never shouted:
+- small labels above titles are 13px medium, in grey
+- section heads are 16px semibold, like *Staff Picks*
+- list headings are 20px bold
 
 ## Color
 | Token | Light | Role |
@@ -101,7 +136,17 @@ Feed titles are 22/28 bold with −0.024em tracking, with 16/24 grey subtitles. 
 | Celestial Blue | `#38BDF8` | The future: dashed lines, open nodes, the "you" dot |
 | Deep Sky | `#0284C7` / `#0369A1` | Icons, links, the "why it's here" line, badges |
 
-Celestial Blue is the only accent, following the brand's Minimal Blue Principle. Dark mode is a neutral charcoal (`#121212` canvas, `#ECECEC` text), and Celestial keeps its role there.
+Celestial Blue is the only accent, following the brand's Minimal Blue Principle.
+
+**Light is the default**, as Medium is on the web. The app no longer follows the device's dark setting, and it holds its light background even when the page is embedded somewhere dark. The saved appearance is applied before first paint, so there's no dark flash.
+
+Dark is an opt-in, set from the account menu or Appearance on your profile. It's a **warm charcoal**, never pure black or navy:
+- canvas `#1F1E1C`
+- surfaces `#262522` and `#292825`
+- paper-white text `#EDE9E2`
+- warm grey secondary text
+
+Celestial keeps its role there.
 
 ## Components
 - **Buttons:** Medium's pills.
@@ -111,7 +156,8 @@ Celestial Blue is the only accent, following the brand's Minimal Blue Principle.
   - **Tinted** is the celestial wash, used for Path actions (Align, Ask, Connect).
 - **Text tabs** are grey labels. The active tab is near-black with a 1px ink underline.
 - **Cards** are used sparingly: soft `#F9F9F9` panels with 8px corners. Everything else is separated by hairlines.
-- **Data chips** ("99% path match") are small uppercase pills.
+- **Data chips** ("99% path match") are small sentence-case pills.
+- **Segmented controls** are pills too: a soft fill with a white sliding thumb.
 - **Text fields** are white with a hairline. On focus they gain a celestial line and a soft wash ring.
 
 ## Brand identity kit

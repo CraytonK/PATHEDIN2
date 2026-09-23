@@ -415,6 +415,50 @@
 .page--wide {
   max-width: 1280px;
 }
+/* Medium's layout: a reading column and a right-hand column behind a full-height hairline. */
+.page--rail {
+  max-width: 1336px;
+  padding-bottom: 0;
+}
+.page__cols {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 344px;
+  min-height: calc(100dvh - var(--topbar-h));
+}
+.page__main {
+  width: 100%;
+  min-width: 0;
+  max-width: 728px;
+  margin: 0 auto;
+  padding: 0 48px 72px 0;
+}
+.page__rail {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  min-width: 0;
+  padding: 44px 0 48px 40px;
+  border-left: 1px solid var(--separator);
+}
+.page__rail-mobile {
+  display: flex;
+  flex-direction: column;
+  gap: 36px;
+  margin-top: 40px;
+  padding-top: 32px;
+  border-top: 1px solid var(--separator);
+}
+@media (max-width: 1099px) {
+  .page__cols {
+    grid-template-columns: minmax(0, 1fr) 296px;
+  }
+  .page__main {
+    padding-right: 32px;
+  }
+  .page__rail {
+    padding-left: 28px;
+  }
+}
 .page__sentinel {
   height: 1px;
   margin-top: -1px;
@@ -451,12 +495,11 @@
 }
 .page__eyebrow {
   margin-bottom: 8px;
-  font-size: 11px;
-  line-height: 14px;
-  font-weight: 600;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--tint-text);
+  font-size: 13px;
+  line-height: 18px;
+  font-weight: 500;
+  letter-spacing: -0.005em;
+  color: var(--label-2);
 }
 /* Page titles the way Medium sets them: large, bold, close-tracked grotesk. */
 .page__title {

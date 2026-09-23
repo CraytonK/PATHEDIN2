@@ -101,7 +101,8 @@ export const useApp = create<AppState>()(
       readThreads: {},
       weighIns: {},
       addedRoutes: {},
-      theme: 'system',
+      // Light by default, like Medium on the web; dark is something you choose.
+      theme: 'light',
       signedIn: false,
       sidebar: true,
 
@@ -140,6 +141,13 @@ export const useApp = create<AppState>()(
     {
       name: 'pathedin:v1',
       storage: createJSONStorage(() => safeStorage),
+      // v1: appearance used to follow the system by default; start everyone on light again.
+      version: 1,
+      migrate: (persisted, version) => {
+        const s = (persisted ?? {}) as Partial<AppState>;
+        if (version < 1 && (!s.theme || s.theme === 'system')) s.theme = 'light';
+        return s as AppState;
+      },
       partialize: (s) => ({
         connections: s.connections,
         following: s.following,

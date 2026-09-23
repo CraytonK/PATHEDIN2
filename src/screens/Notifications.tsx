@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { Page } from '../components/chrome';
+import { DefaultRail } from '../components/Rail';
 import { Avatar, Button, Rich } from '../components/ui';
 import { IconFlag, IconSignpost } from '../components/icons';
 import { notificationList } from '../data/social';
@@ -25,6 +26,7 @@ export function Notifications() {
       title="Notifications"
       subtitle="What moved along your Path."
       back="Home"
+      rail={<DefaultRail />}
       trailing={
         !readAll && unread > 0 ? (
           <Button variant="plain" size="small" onClick={markRead}>

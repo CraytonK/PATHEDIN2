@@ -2,8 +2,9 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Page } from '../components/chrome';
+import { DefaultRail } from '../components/Rail';
 import { PathStrip } from '../components/path/PathStrip';
-import { Avatar, Button, PersonName, RelationTag, Segmented } from '../components/ui';
+import { Avatar, Button, PersonName, RelationTag, TextTabs } from '../components/ui';
 import { IconCheck } from '../components/icons';
 import { people, ME } from '../data/people';
 import { wp } from '../data/waypoints';
@@ -88,18 +89,18 @@ export function Requests() {
   const outgoing = requests.filter((r) => r.from === ME);
   const list = tab === 'in' ? incoming : outgoing;
   return (
-    <Page title="Path Requests" subtitle="Requests arrive with the part of the Path they’re about — so you know exactly what you’re being asked." back="Network">
+    <Page title="Path Requests" subtitle="Requests arrive with the part of the Path they’re about — so you know exactly what you’re being asked." back="Network" rail={<DefaultRail people={['amara', 'elena', 'daniel']} />}>
       <div className="list-page">
-        <Segmented
-          value={tab}
-          onChange={setTab}
-          ariaLabel="Requests"
-          size="large"
-          options={[
-            { value: 'in', label: `Received · ${incoming.filter((r) => r.status === 'pending').length}` },
-            { value: 'out', label: `Sent · ${outgoing.length}` },
-          ]}
-        />
+        <div className="list-tabs">
+          <TextTabs
+            value={tab}
+            onChange={setTab}
+            options={[
+              { value: 'in', label: 'Received', count: incoming.filter((r) => r.status === 'pending').length },
+              { value: 'out', label: 'Sent', count: outgoing.length },
+            ]}
+          />
+        </div>
         <AnimatePresence mode="popLayout">
           {list.map((r) => (
             <RequestCard key={r.id} r={r} incoming={tab === 'in'} />

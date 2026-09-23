@@ -383,6 +383,7 @@ export function Page({
   wide,
   hideHeaderOnDesktop,
   eyebrow,
+  rail,
 }: {
   title: string;
   large?: boolean;
@@ -395,6 +396,8 @@ export function Page({
   wide?: boolean;
   hideHeaderOnDesktop?: boolean;
   eyebrow?: ReactNode;
+  /** Medium's right-hand column. On iPhone it follows the page content. */
+  rail?: ReactNode;
 }) {
   const sentinel = useRef<HTMLDivElement>(null);
   const [scrolled, setScrolled] = useState(false);
@@ -416,8 +419,9 @@ export function Page({
   };
   const backLabel = typeof back === 'string' && !back.startsWith('/') ? back : 'Back';
 
+  const withRail = !!rail && !isMobile;
   return (
-    <div className={`page ${wide ? 'page--wide' : ''} ${className}`}>
+    <div className={`page ${wide ? 'page--wide' : ''} ${withRail ? 'page--rail' : ''} ${className}`}>
       {isMobile && (
         <header className={`navbar ${scrolled || !large ? 'is-scrolled' : ''}`}>
           <div className="navbar__side">
@@ -441,6 +445,7 @@ export function Page({
           <div className="navbar__side navbar__side--end">{trailing}</div>
         </header>
       )}
+      <PageColumns rail={withRail ? rail : undefined}>
       <div className={`page__header ${hideHeaderOnDesktop ? 'page__header--mobile-only' : ''} ${!large ? 'page__header--bare' : ''} ${!large && isMobile ? 'visually-hidden' : ''}`}>
         {!isMobile && back && (
           <button className="page__back t-subhead" onClick={goBack}>
@@ -459,6 +464,19 @@ export function Page({
       </div>
       <div ref={sentinel} className="page__sentinel" />
       <div className="page__body">{children}</div>
+      {rail && isMobile && <div className="page__rail-mobile">{rail}</div>}
+      </PageColumns>
+    </div>
+  );
+}
+
+/** Medium's two columns: the reading column, and a quiet right-hand column behind a full-height hairline. */
+function PageColumns({ rail, children }: { rail?: ReactNode; children: ReactNode }) {
+  if (!rail) return <>{children}</>;
+  return (
+    <div className="page__cols">
+      <div className="page__main">{children}</div>
+      <aside className="page__rail">{rail}</aside>
     </div>
   );
 }

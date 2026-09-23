@@ -1,5 +1,40 @@
+/* ── Lists of posts, as on Medium's list pages ── */
+.list-tabs {
+  margin-bottom: 4px;
+}
+@media (min-width: 768px) {
+  .list-tabs .text-tabs {
+    margin: 0;
+    padding: 0;
+  }
+}
+.list-h {
+  margin-top: 48px;
+  font-size: 20px;
+  line-height: 26px;
+  font-weight: 700;
+  letter-spacing: -0.022em;
+}
+.list-h--first {
+  margin-top: 8px;
+}
+.list-sub {
+  margin-top: 4px;
+  font-size: 14px;
+  color: var(--label-2);
+}
+
 /* ── Post: a feed row laid out like a Medium story preview ── */
+/* Each row is its own container, so it lays out the same in the feed, a side column or a phone. */
 .post {
+  container-type: inline-size;
+  padding: 28px 0 22px;
+  border-bottom: 1px solid var(--separator);
+}
+.post:last-child {
+  border-bottom: 0;
+}
+.post__in {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
   grid-template-areas:
@@ -7,8 +42,6 @@
     'main thumb';
   column-gap: 48px;
   align-items: start;
-  padding: 28px 0 22px;
-  border-bottom: 1px solid var(--separator);
 }
 .post__by {
   grid-area: by;
@@ -25,6 +58,9 @@
 .post__author {
   color: var(--label);
   font-weight: 400;
+}
+.post__note {
+  color: var(--label-2);
 }
 .post__where {
   min-width: 0;
@@ -192,13 +228,12 @@
   color: var(--label-2);
 }
 
-@media (max-width: 767px) {
-  .post {
+@container (max-width: 560px) {
+  .post__in {
     column-gap: 20px;
     grid-template-areas:
       'by by'
       'main thumb';
-    padding: 22px 0 14px;
   }
   .post__title {
     font-size: 18px;
@@ -224,5 +259,10 @@
   }
   .post__stats {
     display: none;
+  }
+}
+@media (max-width: 767px) {
+  .post {
+    padding: 22px 0 14px;
   }
 }

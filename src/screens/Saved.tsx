@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Page } from '../components/chrome';
+import { DefaultRail } from '../components/Rail';
 import { DecisionItem, PersonRow, QuestionItem, StoryItem } from '../components/content';
 import { RouteItem } from '../components/Ecosystem';
 import { TextTabs } from '../components/ui';
@@ -25,7 +26,7 @@ export function Saved() {
   const [tab, setTab] = useState<Kind>(kinds[0] ?? 'person');
   const items = of(tab);
   return (
-    <Page title="Saved" subtitle="People, routes and stories you want to come back to." back="Home">
+    <Page title="Saved" subtitle="People, routes and stories you want to come back to." back="Home" rail={<DefaultRail />}>
       <div className="list-page">
         {kinds.length === 0 ? (
           <div className="empty">

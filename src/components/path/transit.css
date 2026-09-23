@@ -214,11 +214,10 @@
 }
 .tmap__here {
   margin-bottom: 4px;
-  font-weight: 600;
+  font-weight: 500;
   color: var(--tint-text);
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  font-size: 11px;
+  letter-spacing: -0.005em;
+  font-size: 13px;
 }
 /* A step's note is a reflection in the person's own words: Marat Sans Light Italic. */
 .tmap__note {
@@ -272,10 +271,9 @@
 }
 .tmap__story-mark {
   font-family: var(--font-sans);
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: -0.005em;
   color: var(--tint-text);
   flex: none;
 }

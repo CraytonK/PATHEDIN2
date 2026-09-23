@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { Page } from '../components/chrome';
 import { PathStrip } from '../components/path/PathStrip';
-import { DecisionItem, RequestButton } from '../components/content';
+import { RequestButton } from '../components/content';
 import { Avatar, Button, PersonName, RelationTag, SaveToggle } from '../components/ui';
 import { decisions, decisionList } from '../data/decisions';
 import { people, ME } from '../data/people';
@@ -13,6 +13,7 @@ import { relationTo } from '../lib/relations';
 import { springs, useIsMobile, haptic } from '../lib/motion';
 import { useApp } from '../lib/store';
 import { useUI } from '../lib/ui';
+import { RailFooter, RailPosts, RailSection } from '../components/Rail';
 import { NotFound } from './NotFound';
 import './decisions.css';
 
@@ -113,7 +114,6 @@ export function DecisionScreen() {
   const toast = useUI((s) => s.showToast);
   const [option, setOption] = useState<string | null>(null);
   const [body, setBody] = useState('');
-  const isMobile = useIsMobile();
   if (!d) return <NotFound />;
   const owner = people[d.owner];
   const rel = relationTo(d.owner);
@@ -124,7 +124,49 @@ export function DecisionScreen() {
   const people1 = d.options[1].chose[0]?.person;
 
   return (
-    <Page title={d.title} large={false} back="Decisions" wide>
+    <Page
+      title={d.title}
+      large={false}
+      back="Decisions"
+      rail={
+        <>
+          {mine ? (
+            <section>
+              <h2 className="rail-h">Talk to someone on each road</h2>
+              <p className="t-subhead c-2 dd__side-p">One conversation on each side is worth more than any spreadsheet.</p>
+              {[people0, people1].filter(Boolean).map((pid, i) => (
+                <div key={pid} className="dd__ask">
+                  <Avatar id={pid!} size={40} />
+                  <div>
+                    <PersonName id={pid!} className="t-subhead" />
+                    <p className="t-footnote c-2">Took “{d.options[i].label}”</p>
+                  </div>
+                  <RequestButton id={pid!} segment={[d.at, d.options[i].wp]} variant="tinted" label="Ask" />
+                </div>
+              ))}
+            </section>
+          ) : (
+            <section>
+              <h2 className="rail-h">Facing this too?</h2>
+              <p className="t-subhead c-2 dd__side-p">
+                Add it to your Path as a Decision Point and the people who took each road will see it.
+              </p>
+              <Link to="/decisions/d-maya-phd">
+                <Button variant="gray" size="small">
+                  See your decision
+                </Button>
+              </Link>
+            </section>
+          )}
+          {similar.length > 0 && (
+            <RailSection title="Similar forks">
+              <RailPosts items={similar.map((x) => ({ author: x.owner, title: x.title, to: `/decisions/${x.id}`, meta: `${x.status === 'open' ? 'Deciding now' : 'Decided'} · ${x.weighIns.length} weighed in` }))} />
+            </RailSection>
+          )}
+          <RailFooter />
+        </>
+      }
+    >
       <div className="dd">
         <div className="dd__main">
           <p className="dd__kicker t-eyebrow">
@@ -232,46 +274,6 @@ export function DecisionScreen() {
           </section>
         </div>
 
-        <aside className="dd__side">
-          {mine ? (
-            <section>
-              <h3 className="eco__h">Talk to someone on each road</h3>
-              <p className="t-subhead c-2 dd__side-p">One conversation on each side is worth more than any spreadsheet.</p>
-              {[people0, people1].filter(Boolean).map((pid, i) => (
-                <div key={pid} className="dd__ask">
-                  <Avatar id={pid!} size={40} />
-                  <div>
-                    <PersonName id={pid!} className="t-subhead" />
-                    <p className="t-footnote c-2">Took “{d.options[i].label}”</p>
-                  </div>
-                  <RequestButton id={pid!} segment={[d.at, d.options[i].wp]} variant="tinted" label="Ask" />
-                </div>
-              ))}
-            </section>
-          ) : (
-            <section>
-              <h3 className="eco__h">Facing this too?</h3>
-              <p className="t-subhead c-2 dd__side-p">
-                Add it to your Path as a Decision Point and the people who took each road will see it.
-              </p>
-              <Link to="/decisions/d-maya-phd">
-                <Button variant="gray" size="small">
-                  See your decision
-                </Button>
-              </Link>
-            </section>
-          )}
-          {similar.length > 0 && !isMobile && (
-            <section>
-              <h3 className="eco__h">Similar forks</h3>
-              <div className="dd__similar">
-                {similar.map((s) => (
-                  <DecisionItem key={s.id} d={s} />
-                ))}
-              </div>
-            </section>
-          )}
-        </aside>
       </div>
     </Page>
   );

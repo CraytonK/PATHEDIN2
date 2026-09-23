@@ -19,10 +19,10 @@
 }
 .req__h {
   font-weight: 600;
-  color: var(--label-2);
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  font-size: 11px;
+  color: var(--label);
+  letter-spacing: -0.016em;
+  font-size: 16px;
+  line-height: 22px;
   margin: 24px 0 10px;
 }
 .req__segs {

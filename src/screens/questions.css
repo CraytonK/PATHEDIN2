@@ -44,6 +44,19 @@
 .ask > p {
   margin-top: 4px;
 }
+/* In the right-hand column the card itself is the rail card. */
+.rail-card .ask {
+  padding: 0;
+  background: none;
+  box-shadow: none;
+}
+.rail-card .ask .t-title3 {
+  font-size: 16px;
+  line-height: 20px;
+}
+.qs__ask-mobile {
+  margin-bottom: 20px;
+}
 .ask__segs {
   display: flex;
   flex-wrap: wrap;
@@ -100,17 +113,7 @@
 
 /* ── Question detail ─────────────────── */
 .qd {
-  display: grid;
-  grid-template-columns: minmax(0, 720px) 300px;
-  gap: 80px;
-  padding-top: 44px;
-  align-items: start;
-}
-@media (max-width: 1099px) {
-  .qd {
-    grid-template-columns: minmax(0, 1fr) 260px;
-    gap: 40px;
-  }
+  padding-top: 40px;
 }
 @media (max-width: 767px) {
   .qd {
@@ -270,5 +273,6 @@
   padding: 10px 0;
 }
 .qd__asker-note {
-  margin-top: 16px;
+  font-size: 13px;
+  color: var(--label-2);
 }

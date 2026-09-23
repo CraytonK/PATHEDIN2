@@ -13,6 +13,7 @@ import { PathStrip } from './path/PathStrip';
 import { Avatar, AvatarStack, Button, PathChips, PersonName, RelationGlyph, RelationTag, SaveToggle, formatCount } from './ui';
 import { IconCheck, IconChevronRight, IconFlag, IconMessage, IconPersonAdd, IconSend } from './icons';
 import { usePeek } from './Peek';
+import { Post } from './Post';
 import './content.css';
 
 /* ── Connect ────────────────────────────────────────────────── */
@@ -197,21 +198,24 @@ export function SegmentArt({ story, height = 150, labels = true }: { story: Stor
   );
 }
 
+/** A featured story, like the lead on a Medium topic page: the Path art large, then the preview. */
 export function StoryLead({ story }: { story: Story }) {
   return (
     <Link to={`/stories/${story.id}`} className="story-lead">
-      <div className="story-lead__grid">
       <div className="story-lead__art">
         <SegmentArt story={story} height={170} />
       </div>
       <div className="story-lead__text">
-        <p className="story-kicker t-eyebrow">
-          {wp(story.segment[0]).label} → {wp(story.segment[1]).label}
+        <p className="story-lead__by">
+          <Avatar id={story.author} size={20} peek={false} />
+          <span>{people[story.author].name}</span>
+          <span className="c-2">· {story.published}</span>
         </p>
-        <h3 className="story-lead__title t-serif">{story.title}</h3>
-        <p className="story-lead__dek t-callout c-2">{story.dek}</p>
-        <StoryByline story={story} />
-      </div>
+        <h3 className="story-lead__title">{story.title}</h3>
+        <p className="story-lead__dek">{story.dek}</p>
+        <p className="story-lead__meta">
+          {wp(story.segment[0]).short} → {wp(story.segment[1]).short} · {story.minutes} min read
+        </p>
       </div>
     </Link>
   );
@@ -233,54 +237,71 @@ export function StoryByline({ story }: { story: Story }) {
   );
 }
 
-export function StoryItem({ story, withArt = true }: { story: Story; withArt?: boolean }) {
+/** Relation label for a byline ("Path Twin"), or nothing for yourself and strangers. */
+function relationNote(id: string) {
+  const rel = relationTo(id);
+  return rel.kind !== 'self' && rel.kind !== 'other' ? rel.label : undefined;
+}
+
+export function StoryItem({ story, withArt = true, i }: { story: Story; withArt?: boolean; i?: number }) {
   return (
-    <Link to={`/stories/${story.id}`} className="story-item">
-      {withArt && (
-        <div className="story-item__art">
-          <SegmentArt story={story} height={150} labels={false} />
-        </div>
-      )}
-      <div className="story-item__text">
-        <p className="story-kicker t-eyebrow">
-          {wp(story.segment[0]).short} → {wp(story.segment[1]).short}
-        </p>
-        <h3 className="story-item__title t-serif">{story.title}</h3>
-        <p className="t-subhead c-2 clamp-2">{story.dek}</p>
-        <StoryByline story={story} />
-      </div>
-    </Link>
+    <Post
+      i={i}
+      author={story.author}
+      note={relationNote(story.author)}
+      ago={story.published}
+      to={`/stories/${story.id}`}
+      title={story.title}
+      subtitle={story.dek}
+      why={{ kind: 'ahead', text: `${wp(story.segment[0]).short} → ${wp(story.segment[1]).short}` }}
+      stats={
+        <>
+          <span>{story.minutes} min read</span>
+          <span>{formatCount(story.reads)} reads</span>
+        </>
+      }
+      thumb={withArt ? <SegmentArt story={story} height={120} labels={false} /> : undefined}
+      saveKey={`story:${story.id}`}
+    />
   );
 }
 
 /* ── Questions ──────────────────────────────────────────────── */
 
-export function QuestionItem({ q, showAnswer = true }: { q: Question; showAnswer?: boolean }) {
+export function QuestionItem({ q, showAnswer = true, i }: { q: Question; showAnswer?: boolean; i?: number }) {
   const top = q.answers[0];
+  const c = communities[q.community];
   return (
-    <Link to={`/questions/${q.id}`} className="q-item">
-      <p className="q-item__about t-caption1">
-        <span className="q-item__mark">Q</span> About {wp(q.about[0]).short} → {wp(q.about[1]).short}
-      </p>
-      <h3 className="q-item__title">{q.title}</h3>
-      <p className="q-item__asker t-footnote c-2">
-        Asked by {q.asker === ME ? 'you' : people[q.asker].name} · {q.ago}
-      </p>
-      {showAnswer && top && (
-        <div className="q-item__answer">
-          <Avatar id={top.author} size={32} />
-          <div>
-            <p className="t-subhead">
-              <strong>{people[top.author].first}</strong> <span className="clamp-2 q-item__answer-text">{top.body}</span>
-            </p>
-            <CredibilityLabel kind={top.credibility} text={top.credibilityText} />
-          </div>
-        </div>
-      )}
-      <p className="q-item__meta t-footnote c-2">
-        {q.answers.length} answers from people who’ve been there <span className="dot-sep">·</span> {q.followers} following
-      </p>
-    </Link>
+    <Post
+      i={i}
+      author={q.asker}
+      note={q.asker === ME ? 'You asked' : relationNote(q.asker)}
+      where={c ? <Link to={`/c/${c.id}`}>{c.title}</Link> : undefined}
+      ago={q.ago}
+      to={`/questions/${q.id}`}
+      title={q.title}
+      subtitle={
+        showAnswer && top ? (
+          <>
+            <strong>{people[top.author].first}:</strong> {top.body}
+          </>
+        ) : (
+          q.body
+        )
+      }
+      why={
+        top
+          ? { kind: credGlyph[top.credibility], text: `Answered by someone who ${top.credibilityText.charAt(0).toLowerCase()}${top.credibilityText.slice(1)}` }
+          : { kind: 'ahead', text: `About ${wp(q.about[0]).short} → ${wp(q.about[1]).short}` }
+      }
+      stats={
+        <>
+          <span>{q.answers.length} answers</span>
+          <span>{q.followers} following</span>
+        </>
+      }
+      saveKey={`question:${q.id}`}
+    />
   );
 }
 
@@ -325,26 +346,21 @@ export function DecisionFork({ d, width = 280, height = 116 }: { d: Decision; wi
   );
 }
 
-export function DecisionItem({ d }: { d: Decision }) {
-  const owner = people[d.owner];
+export function DecisionItem({ d, i }: { d: Decision; i?: number }) {
   return (
-    <Link to={`/decisions/${d.id}`} className="decision-item">
-      <div className="decision-item__grid">
-      <div className="decision-item__fork">
-        <DecisionFork d={d} />
-      </div>
-      <div>
-        <p className="decision-item__kicker t-eyebrow">
-          Decision Point · {d.status === 'open' ? 'Deciding now' : 'Decided'}
-        </p>
-        <h3 className="decision-item__title">{d.title}</h3>
-        <p className="t-footnote c-2">
-          {d.owner === ME ? 'Your decision' : owner.name} · at {wp(d.at).label} · {d.weighIns.length} weighed in
-        </p>
-        <p className="decision-item__context t-subhead c-2 clamp-3">{d.context}</p>
-      </div>
-      </div>
-    </Link>
+    <Post
+      i={i}
+      author={d.owner}
+      note={d.owner === ME ? 'Your decision' : relationNote(d.owner)}
+      ago={d.ago}
+      to={`/decisions/${d.id}`}
+      title={d.title}
+      subtitle={d.context}
+      why={{ kind: d.status === 'open' ? 'peer' : 'ahead', text: `${d.status === 'open' ? 'Deciding now' : 'Decided'} at ${wp(d.at).short}` }}
+      stats={<span>{d.weighIns.length} weighed in</span>}
+      thumb={<DecisionFork d={d} />}
+      saveKey={`decision:${d.id}`}
+    />
   );
 }
 
@@ -355,40 +371,28 @@ export function RouteStamp({ id }: { id: string }) {
   return <span className="route-stamp t-caption1">at {wp(now.wp).short}</span>;
 }
 
-export function ThreadItem({ t, showCommunity }: { t: Thread; showCommunity?: boolean }) {
+export function ThreadItem({ t, showCommunity, i }: { t: Thread; showCommunity?: boolean; i?: number }) {
   const c = communities[t.community];
   const repliers = [...new Set(t.replies.map((r) => r.author))];
+  const now = current(people[t.author]);
   return (
-    <article className="thread-item">
-      {showCommunity && (
-        <Link to={`/c/${c.id}`} className="thread-item__community t-caption1">
-          {c.title}
-        </Link>
-      )}
-      <div className="thread-item__author">
-        <Avatar id={t.author} size={32} />
-        <PersonName id={t.author} className="t-subhead" />
-        <RouteStamp id={t.author} />
-        <span className="t-footnote c-3">{t.ago}</span>
-        {t.pinned && <span className="thread-item__pin t-eyebrow">Pinned</span>}
-      </div>
-      <Link to={`/c/${c.id}#${t.id}`} className="thread-item__link">
-        <h3 className="thread-item__title">{t.title}</h3>
-        <p className="t-subhead c-2 clamp-3">{t.body}</p>
-      </Link>
-      {t.replies[0] && (
-        <div className="thread-item__reply">
-          <Avatar id={t.replies[0].author} size={22} />
-          <p className="t-footnote clamp-2">
-            <strong>{people[t.replies[0].author].first}</strong> <RouteStamp id={t.replies[0].author} /> <span className="c-2">{t.replies[0].body}</span>
-          </p>
-        </div>
-      )}
-      <div className="thread-item__foot t-footnote c-2">
-        <AvatarStack ids={repliers} size={20} max={3} />
-        {t.replyCount} replies
-      </div>
-    </article>
+    <Post
+      i={i}
+      author={t.author}
+      note={`at ${wp(now.wp).short}`}
+      where={showCommunity ? <Link to={`/c/${c.id}`}>{c.title}</Link> : undefined}
+      ago={t.pinned ? `${t.ago} · Pinned` : t.ago}
+      to={`/c/${c.id}#${t.id}`}
+      title={t.title}
+      subtitle={t.body}
+      why={t.replies[0] ? { kind: 'peer', text: `${people[t.replies[0].author].first} replied from ${wp(current(people[t.replies[0].author]).wp).short}` } : undefined}
+      stats={
+        <span>
+          <AvatarStack ids={repliers} size={18} max={3} /> {t.replyCount} replies
+        </span>
+      }
+      saveKey={`thread:${t.id}`}
+    />
   );
 }
 

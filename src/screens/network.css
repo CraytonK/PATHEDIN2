@@ -77,15 +77,20 @@
 }
 .network__glyph {
   display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 40px;
-  height: 40px;
-  border-radius: 12px;
-  background: var(--tint-soft);
+  margin-top: 5px;
   color: var(--tint-strong);
   flex: none;
 }
+.network__group-head h2 {
+  font-size: 20px;
+  line-height: 26px;
+  font-weight: 700;
+  letter-spacing: -0.022em;
+}
+.network__group-head p {
+  margin-top: 2px;
+  font-size: 14px;
+}
 .network__list {
-  max-width: 820px;
+  max-width: 728px;
 }

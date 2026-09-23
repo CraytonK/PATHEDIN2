@@ -1,9 +1,8 @@
 import { Page } from '../components/chrome';
-import { CommunityRow, ThreadItem } from '../components/content';
-import { SectionHeader } from '../components/ui';
+import { CommunityRow } from '../components/content';
+import { RailFooter, RailPeople, RailPosts, RailSection } from '../components/Rail';
 import { communities, communityList, threads } from '../data/communities';
 import { useApp } from '../lib/store';
-import { useIsMobile } from '../lib/motion';
 import './communities.css';
 
 const onRoute: { id: string; reason: string }[] = [
@@ -15,42 +14,46 @@ const elsewhere = ['swe-pm', 'teach-ux', 'nursing-healthtech'];
 
 export function Communities() {
   const joined = useApp((s) => s.joined);
-  const isMobile = useIsMobile();
   const mine = communityList.filter((c) => joined[c.id]);
-  const live = threads.filter((t) => joined[t.community]).slice(0, 5);
+  const live = threads.filter((t) => joined[t.community]).slice(0, 4);
   return (
-    <Page title="Communities" subtitle="Built around journeys, not industries. Find the people making the same move as you." wide>
-      <div className="cms">
-        <div className="cms__main">
-          <section className="cms__section">
-            <SectionHeader title="Your journeys" subtitle="Communities on your Path" size="title2" />
-            {mine.map((c) => (
-              <CommunityRow key={c.id} c={c} />
-            ))}
-          </section>
-          <section className="cms__section">
-            <SectionHeader title="Along your route" subtitle="Journeys that cross yours" size="title2" />
-            {onRoute
-              .filter((r) => !joined[r.id])
-              .map((r) => (
-                <CommunityRow key={r.id} c={communities[r.id]} reason={r.reason} />
-              ))}
-          </section>
-          <section className="cms__section">
-            <SectionHeader title="Other journeys" subtitle="Far from your Path, just as alive" size="title2" />
-            {elsewhere.map((id) => (
-              <CommunityRow key={id} c={communities[id]} />
-            ))}
-          </section>
-        </div>
-        {!isMobile && (
-          <aside className="cms__rail">
-            <SectionHeader title="Happening now" subtitle="In your journeys" size="headline" />
-            {live.map((t) => (
-              <ThreadItem key={t.id} t={t} showCommunity />
-            ))}
-          </aside>
-        )}
+    <Page
+      title="Communities"
+      subtitle="Built around journeys, not industries. Find the people making the same move as you."
+      rail={
+        <>
+          <RailSection title="Happening now">
+            <RailPosts items={live.map((t) => ({ author: t.author, where: communities[t.community].title, title: t.title, to: `/c/${t.community}#${t.id}`, meta: `${t.ago} · ${t.replyCount} replies` }))} />
+          </RailSection>
+          <RailSection title="Hosts on your route" more={{ to: '/guides', label: 'See all Path Guides' }}>
+            <RailPeople ids={['amara', 'tomas', 'priya']} action="request" />
+          </RailSection>
+          <RailFooter />
+        </>
+      }
+    >
+      <h2 className="list-h list-h--first">Your journeys</h2>
+      <p className="list-sub">Communities on your Path</p>
+      <div className="cms__list">
+        {mine.map((c) => (
+          <CommunityRow key={c.id} c={c} />
+        ))}
+      </div>
+      <h2 className="list-h">Along your route</h2>
+      <p className="list-sub">Journeys that cross yours</p>
+      <div className="cms__list">
+        {onRoute
+          .filter((r) => !joined[r.id])
+          .map((r) => (
+            <CommunityRow key={r.id} c={communities[r.id]} reason={r.reason} />
+          ))}
+      </div>
+      <h2 className="list-h">Other journeys</h2>
+      <p className="list-sub">Far from your Path, just as alive</p>
+      <div className="cms__list">
+        {elsewhere.map((id) => (
+          <CommunityRow key={id} c={communities[id]} />
+        ))}
       </div>
     </Page>
   );

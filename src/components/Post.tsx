@@ -13,12 +13,14 @@ export interface PostProps {
   /** Who it's from, and optionally where ("in Chemistry → Pharma R&D"). */
   author: string;
   where?: ReactNode;
+  /** A short note after the name, e.g. their relation to you. */
+  note?: ReactNode;
   ago?: string;
   to: string;
   title: ReactNode;
   subtitle?: ReactNode;
   /** Why this is in your feed — PathedIn always says. */
-  why: { kind: RelationKind; text: ReactNode };
+  why?: { kind: RelationKind; text: ReactNode };
   stats?: ReactNode;
   thumb?: ReactNode;
   thumbKind?: 'art' | 'photo';
@@ -32,7 +34,7 @@ export interface PostProps {
  * A feed row laid out like a Medium story preview: byline, bold title, grey subtitle,
  * a quiet meta row, and a thumbnail on the right.
  */
-export function Post({ author, where, ago, to, title, subtitle, why, stats, thumb, thumbKind = 'art', extra, saveKey, i = 0 }: PostProps) {
+export function Post({ author, where, note, ago, to, title, subtitle, why, stats, thumb, thumbKind = 'art', extra, saveKey, i = 0 }: PostProps) {
   return (
     <motion.article
       className="post"
@@ -41,9 +43,11 @@ export function Post({ author, where, ago, to, title, subtitle, why, stats, thum
       viewport={{ once: true, margin: '-40px' }}
       transition={{ ...springs.smooth, delay: Math.min(i, 3) * 0.04 }}
     >
+      <div className="post__in">
       <p className="post__by">
         <Avatar id={author} size={20} />
         <PersonName id={author} className="post__author" />
+        {note && <span className="post__note">· {note}</span>}
         {where && <span className="post__where">in {where}</span>}
         {ago && <span className="post__ago">· {ago}</span>}
       </p>
@@ -54,10 +58,12 @@ export function Post({ author, where, ago, to, title, subtitle, why, stats, thum
         </Link>
         {extra && <div className="post__extra">{extra}</div>}
         <div className="post__meta">
-          <span className="post__why">
-            <RelationGlyph kind={why.kind} size={15} />
-            <span>{why.text}</span>
-          </span>
+          {why && (
+            <span className="post__why">
+              <RelationGlyph kind={why.kind} size={15} />
+              <span>{why.text}</span>
+            </span>
+          )}
           {stats && <span className="post__stats">{stats}</span>}
           <span className="post__actions">
             {saveKey && <SaveToggle saveKey={saveKey} compact />}
@@ -70,6 +76,7 @@ export function Post({ author, where, ago, to, title, subtitle, why, stats, thum
           {thumb}
         </Link>
       )}
+      </div>
     </motion.article>
   );
 }

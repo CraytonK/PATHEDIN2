@@ -42,7 +42,7 @@ Requires Node 20+.
 | **Decision Points.** A decision drawn as a fork, showing who took each road and where it led them. People weigh in with their own Path. | Home, Decisions |
 | **Stories on a Path.** Each story's cover is generated from the author's Path, with the stretch it covers highlighted. | Stories |
 
-Everything is stateful in the browser: connecting, saving, joining, requests, weighing in, messages and added routes all persist to `localStorage` (and fail safely if storage is unavailable). Light and dark appearance follow the system, and you can override it from the account menu or your profile. **Sign out** (account menu, or the bottom of your own profile) returns you to the intro page.
+Everything is stateful in the browser: connecting, saving, joining, requests, weighing in, messages and added routes all persist to `localStorage` (and fail safely if storage is unavailable). The app is light by default, like Medium on the web. A warm-charcoal dark appearance can be chosen from the account menu or your profile. **Sign out** (account menu, or the bottom of your own profile) returns you to the intro page.
 
 ## Project structure
 

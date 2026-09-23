@@ -14,6 +14,7 @@ import { peopleThrough, relationTo } from '../lib/relations';
 import { springs, haptic } from '../lib/motion';
 import { useApp } from '../lib/store';
 import { useUI } from '../lib/ui';
+import { RailFooter, RailPeople, RailSection } from '../components/Rail';
 import { NotFound } from './NotFound';
 import './questions.css';
 
@@ -52,7 +53,22 @@ export function QuestionScreen() {
   const canAnswer = q.asker !== ME;
 
   return (
-    <Page title={q.title} large={false} back="Questions" wide>
+    <Page
+      title={q.title}
+      large={false}
+      back="Questions"
+      rail={
+        <>
+          <RailSection title="People who made this move">
+            <RailPeople ids={made.slice(0, 4).map((p) => p.id)} action="request" />
+          </RailSection>
+          <p className="qd__asker-note">
+            {q.asker === ME ? 'You' : asker.first} asked from {wp(asker.path.at(-1)!.wp).label}.
+          </p>
+          <RailFooter />
+        </>
+      }
+    >
       <div className="qd">
         <article className="qd__main">
           <p className="qd__about t-subhead">
@@ -142,21 +158,6 @@ export function QuestionScreen() {
           )}
         </article>
 
-        <aside className="qd__side">
-          <h3 className="eco__h">People who made this move</h3>
-          {made.slice(0, 5).map((p) => (
-            <div key={p.id} className="qd__maker">
-              <Avatar id={p.id} size={36} />
-              <div>
-                <PersonName id={p.id} className="t-subhead" />
-                <p className="t-caption1 c-2">{people[p.id].headline}</p>
-              </div>
-            </div>
-          ))}
-          <p className="t-footnote c-2 qd__asker-note">
-            {asker.first === 'Maya' ? 'You' : asker.first} asked from {wp(asker.path.at(-1)!.wp).label}.
-          </p>
-        </aside>
       </div>
     </Page>
   );

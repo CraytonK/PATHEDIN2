@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Page } from '../components/chrome';
+import { DefaultRail } from '../components/Rail';
 import { PersonRow } from '../components/content';
 import { SearchField } from '../components/SearchLayer';
 import { people } from '../data/people';
@@ -17,7 +18,7 @@ export function Connections() {
     .map((k) => ({ k, ids: ids.filter((id) => relationTo(id).kind === k && match(id)) }))
     .filter((g) => g.ids.length);
   return (
-    <Page title="Connections" subtitle={`${ids.length} people, grouped by how their Path relates to yours.`} back="Network">
+    <Page title="Connections" subtitle={`${ids.length} people, grouped by how their Path relates to yours.`} back="Network" rail={<DefaultRail people={['elena', 'rafael', 'priya']} />}>
       <div className="list-page">
         <SearchField value={q} onChange={setQ} placeholder="Search your connections" />
         {pending.length > 0 && !q && (

@@ -8,8 +8,10 @@ import { questionList } from '../data/questions';
 import { people, ME } from '../data/people';
 import { wp } from '../data/waypoints';
 import { futureWaypoints, peopleAt, peopleThrough, walked } from '../lib/relations';
-import { springs } from '../lib/motion';
+import { springs, useIsMobile } from '../lib/motion';
 import { useUI } from '../lib/ui';
+import { communities } from '../data/communities';
+import { RailFooter, RailPosts, RailSection } from '../components/Rail';
 import './questions.css';
 
 const mine = new Set([...walked(people[ME]), ...futureWaypoints(people[ME])]);
@@ -68,32 +70,59 @@ function AskBox() {
 
 export function Questions() {
   const [tab, setTab] = useState<'path' | 'mine' | 'all'>('path');
+  const isMobile = useIsMobile();
   const list = questionList.filter((q) => (tab === 'all' ? true : tab === 'mine' ? q.asker === ME : mine.has(q.about[0]) && mine.has(q.about[1])));
+  const answeredMost = [...questionList].sort((a, b) => b.followers - a.followers).slice(0, 3);
   return (
-    <Page title="Questions" subtitle="Answered by people who’ve been there — and every answer tells you why it’s worth your time." wide>
-      <div className="qs">
-        <div className="qs__main">
-          <TextTabs
-            value={tab}
-            onChange={setTab}
-            options={[
-              { value: 'path', label: 'About your Path' },
-              { value: 'mine', label: 'Your questions', count: questionList.filter((q) => q.asker === ME).length },
-              { value: 'all', label: 'Every journey' },
-            ]}
-          />
-          <AnimatePresence mode="wait">
-            <motion.div key={tab} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, transition: { duration: 0.1 } }} transition={springs.smooth}>
-              {list.map((q) => (
-                <QuestionItem key={q.id} q={q} />
-              ))}
-            </motion.div>
-          </AnimatePresence>
-        </div>
-        <aside className="qs__side">
+    <Page
+      title="Questions"
+      subtitle="Answered by people who’ve been there — and every answer tells you why it’s worth your time."
+      rail={
+        <>
+          {/* Like Medium's "start writing" card, the composer lives at the top of the column. */}
+          {!isMobile && (
+            <section className="rail-card">
+              <AskBox />
+            </section>
+          )}
+          <RailSection title="Most followed">
+            <RailPosts
+              items={answeredMost.map((q) => ({
+                author: q.asker,
+                where: communities[q.community]?.title,
+                title: q.title,
+                to: `/questions/${q.id}`,
+                meta: `${q.answers.length} answers · ${q.followers} following`,
+              }))}
+            />
+          </RailSection>
+          <RailFooter />
+        </>
+      }
+    >
+      {isMobile && (
+        <div className="qs__ask-mobile">
           <AskBox />
-        </aside>
+        </div>
+      )}
+      <div className="list-tabs">
+        <TextTabs
+          value={tab}
+          onChange={setTab}
+          options={[
+            { value: 'path', label: 'About your Path' },
+            { value: 'mine', label: 'Your questions', count: questionList.filter((q) => q.asker === ME).length },
+            { value: 'all', label: 'Every journey' },
+          ]}
+        />
       </div>
+      <AnimatePresence mode="wait">
+        <motion.div key={tab} className="post-list" initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, transition: { duration: 0.1 } }} transition={springs.smooth}>
+          {list.map((q, i) => (
+            <QuestionItem key={q.id} q={q} i={i} />
+          ))}
+        </motion.div>
+      </AnimatePresence>
     </Page>
   );
 }

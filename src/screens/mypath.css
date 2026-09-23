@@ -111,10 +111,9 @@
 }
 .walk-card__kicker {
   color: var(--tint-text);
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: -0.005em;
+  font-size: 13px;
 }
 .walk-card__people {
   display: flex;
@@ -129,10 +128,9 @@
 }
 .insp__kicker {
   color: var(--tint-text);
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: -0.005em;
+  font-size: 13px;
   margin-bottom: 4px;
 }
 .insp__head h2 {
@@ -143,12 +141,11 @@
   margin-top: 28px;
 }
 .insp__h {
-  font-size: 11px;
-  line-height: 16px;
+  font-size: 16px;
+  line-height: 22px;
   font-weight: 600;
-  color: var(--label-2);
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
+  color: var(--label);
+  letter-spacing: -0.016em;
   padding-bottom: 8px;
   border-bottom: var(--hairline) solid var(--separator);
   margin-bottom: 4px;

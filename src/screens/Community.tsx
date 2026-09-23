@@ -1,9 +1,9 @@
 import { AnimatePresence, motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
-import { Link, useLocation, useParams } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import { Page } from '../components/chrome';
 import { CommunityRoute, membersAt } from '../components/CommunityRoute';
-import { CommunityRow, CommunityTitle, DecisionItem, JoinButton, PersonRow, QuestionItem, StoryItem, ThreadItem } from '../components/content';
+import { CommunityTitle, DecisionItem, JoinButton, PersonRow, QuestionItem, StoryItem, ThreadItem } from '../components/content';
 import { Avatar, Button, PersonName, TextTabs, formatCount } from '../components/ui';
 import { communities, communityList, threads as allThreads } from '../data/communities';
 import { questionList } from '../data/questions';
@@ -13,9 +13,10 @@ import { people, ME } from '../data/people';
 import { wp } from '../data/waypoints';
 import type { Thread } from '../data/types';
 import { current } from '../lib/relations';
-import { springs, useIsMobile } from '../lib/motion';
+import { springs } from '../lib/motion';
 import { useApp } from '../lib/store';
 import { useUI } from '../lib/ui';
+import { RailFooter, RailPeople, RailPills, RailSection } from '../components/Rail';
 import { NotFound } from './NotFound';
 import './community.css';
 
@@ -76,7 +77,6 @@ export function CommunityScreen() {
   const { id = '' } = useParams();
   const c = communities[id];
   const { hash } = useLocation();
-  const isMobile = useIsMobile();
   const joined = useApp((s) => !!s.joined[id]);
   const [tab, setTab] = useState<Tab>('conversations');
   const [stage, setStage] = useState<string | null>(null);
@@ -105,7 +105,27 @@ export function CommunityScreen() {
   ].filter((t) => t.count > 0 || t.value === 'conversations');
 
   return (
-    <Page title={c.title} large={false} back="Communities" wide>
+    <Page
+      title={c.title}
+      large={false}
+      back="Communities"
+      rail={
+        <>
+          <RailSection title="Guides in this community" more={{ to: '/guides', label: 'See all Path Guides' }}>
+            <RailPeople ids={c.guideIds} action="request" />
+          </RailSection>
+          {related.length > 0 && (
+            <RailSection title="Journeys that cross this one">
+              <RailPills items={related.map((r) => ({ to: `/c/${r.id}`, label: r.title }))} />
+            </RailSection>
+          )}
+          <p className="cm__rules">
+            Path Communities are for people on this journey. Be specific about where you are, generous about where you’ve been.
+          </p>
+          <RailFooter />
+        </>
+      }
+    >
       <header className="cm__head">
         <p className="cm__kicker t-eyebrow">
           Path Community · {c.kind === 'transition' ? 'built around a transition' : c.kind === 'decision' ? 'built around a decision' : 'built around a circumstance'}
@@ -140,9 +160,8 @@ export function CommunityScreen() {
         <CommunityRoute c={c} active={stage} onPick={setStage} />
       </section>
 
-      <div className="cm__grid">
-        <div className="cm__main">
-          <div className="cm__tabs">
+      <div className="cm__main">
+          <div className="cm__tabs list-tabs">
             <TextTabs value={tab} onChange={setTab} options={tabs} />
           </div>
           <AnimatePresence mode="wait">
@@ -165,14 +184,14 @@ export function CommunityScreen() {
               )}
               {tab === 'questions' && qs.map((q) => <QuestionItem key={q.id} q={q} />)}
               {tab === 'decisions' && (
-                <div className="cm__stack">
+                <div className="post-list">
                   {ds.map((d) => (
                     <DecisionItem key={d.id} d={d} />
                   ))}
                 </div>
               )}
               {tab === 'stories' && (
-                <div className="cm__stories">
+                <div className="post-list">
                   {ss.map((s) => (
                     <StoryItem key={s.id} story={s} />
                   ))}
@@ -188,32 +207,6 @@ export function CommunityScreen() {
               )}
             </motion.div>
           </AnimatePresence>
-        </div>
-
-        {!isMobile && (
-          <aside className="cm__rail">
-            <section>
-              <h3 className="eco__h">Guides in this community</h3>
-              {c.guideIds.map((g) => (
-                <PersonRow key={g} id={g} action="request" compact />
-              ))}
-            </section>
-            {related.length > 0 && (
-              <section>
-                <h3 className="eco__h">Journeys that cross this one</h3>
-                {related.map((r) => (
-                  <CommunityRow key={r.id} c={r} />
-                ))}
-              </section>
-            )}
-            <p className="t-footnote c-2 cm__rules">
-              Path Communities are for people on this journey. Be specific about where you are, generous about where you’ve been.{' '}
-              <Link to="/guides" className="c-tint">
-                Find a Guide
-              </Link>
-            </p>
-          </aside>
-        )}
       </div>
     </Page>
   );

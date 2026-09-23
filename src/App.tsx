@@ -54,10 +54,16 @@ function useTheme() {
     if (theme === 'system') {
       if (themeSetByApp) delete root.dataset.theme;
       themeSetByApp = false;
-    } else {
-      root.dataset.theme = theme;
-      themeSetByApp = true;
+      return;
     }
+    root.dataset.theme = theme;
+    themeSetByApp = true;
+    // An explicit choice (light by default) wins over a theme stamped later by an embedding host.
+    const mo = new MutationObserver(() => {
+      if (root.dataset.theme !== theme) root.dataset.theme = theme;
+    });
+    mo.observe(root, { attributes: true, attributeFilter: ['data-theme'] });
+    return () => mo.disconnect();
   }, [theme]);
 }
 

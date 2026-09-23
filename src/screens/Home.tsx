@@ -4,7 +4,8 @@ import { Page, useUnread } from '../components/chrome';
 import { PathPulse, type PulseStop } from '../components/PathPulse';
 import { PathStrip } from '../components/path/PathStrip';
 import { Post } from '../components/Post';
-import { ConnectButton, DecisionFork, PersonTile, RequestButton, SegmentArt } from '../components/content';
+import { RailCommunities, RailFooter, RailPeople } from '../components/Rail';
+import { DecisionFork, PersonTile, RequestButton, SegmentArt } from '../components/content';
 import { Avatar, AvatarStack, IconButton, PersonName, SectionHeader, TextTabs, formatCount } from '../components/ui';
 import { IconBell, IconChevronRight, IconMessage } from '../components/icons';
 import { people, me, ME } from '../data/people';
@@ -15,7 +16,7 @@ import { threads, communities } from '../data/communities';
 import { destinations } from '../data/destinations';
 import { wp } from '../data/waypoints';
 import type { Thread } from '../data/types';
-import { relationTo } from '../lib/relations';
+import { relationTo, type RelationKind } from '../lib/relations';
 import { useIsMobile } from '../lib/motion';
 import { useApp } from '../lib/store';
 import './home.css';
@@ -91,7 +92,7 @@ function UpNext({ variant = 'cards' }: { variant?: 'cards' | 'list' }) {
 
 /* ── For you: every post says why it's here ─────────────────── */
 
-function threadPost(t: Thread, why: { kind: Parameters<typeof Post>[0]['why']['kind']; text: string }, i: number) {
+function threadPost(t: Thread, why: { kind: RelationKind; text: string }, i: number) {
   const c = communities[t.community];
   return (
     <Post
@@ -315,28 +316,6 @@ function RailPath() {
   );
 }
 
-function RailPeople() {
-  return (
-    <ul className="rail-people">
-      {worth.slice(0, 3).map((id) => {
-        const rel = relationTo(id);
-        return (
-          <li key={id} className="rail-people__row">
-            <Avatar id={id} size={32} />
-            <div className="rail-people__text">
-              <PersonName id={id} className="rail-people__name" />
-              <p className="rail-people__why clamp-2">
-                <span className="rail-people__rel">{rel.label}.</span> {rel.why}
-              </p>
-            </div>
-            <ConnectButton id={id} />
-          </li>
-        );
-      })}
-    </ul>
-  );
-}
-
 function RailHours() {
   return (
     <ul className="rail-hours">
@@ -358,20 +337,6 @@ function RailHours() {
   );
 }
 
-function RailCommunities() {
-  const joined = useApp((s) => s.joined);
-  const list = Object.keys(joined).filter((k) => joined[k] && communities[k]);
-  return (
-    <div className="rail-pills">
-      {list.map((k) => (
-        <Link key={k} to={`/c/${k}`} className="rail-pill">
-          {communities[k].title}
-        </Link>
-      ))}
-    </div>
-  );
-}
-
 function Rail() {
   return (
     <aside className="home__rail" aria-label="Your Path at a glance">
@@ -390,7 +355,7 @@ function Rail() {
       </section>
       <section>
         <h2 className="rail-h">People worth knowing</h2>
-        <RailPeople />
+        <RailPeople ids={worth.slice(0, 3)} />
         <Link to="/network" className="rail-more rail-more--below">
           See more suggestions
         </Link>
@@ -409,11 +374,7 @@ function Rail() {
           See more communities
         </Link>
       </section>
-      <footer className="rail-foot">
-        {['Help', 'About', 'Path Guides', 'Communities', 'Privacy', 'Terms'].map((l) => (
-          <span key={l}>{l}</span>
-        ))}
-      </footer>
+      <RailFooter />
     </aside>
   );
 }

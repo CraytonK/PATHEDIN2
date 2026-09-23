@@ -2,9 +2,10 @@ import { motion } from 'framer-motion';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Page } from '../components/chrome';
+import { RailFooter, RailPosts, RailSection } from '../components/Rail';
 import { PathStrip } from '../components/path/PathStrip';
 import { RequestButton } from '../components/content';
-import { PersonName, RelationTag, Segmented } from '../components/ui';
+import { PersonName, Segmented } from '../components/ui';
 import { IconCalendar } from '../components/icons';
 import { peopleList, people, ME } from '../data/people';
 import { wp } from '../data/waypoints';
@@ -72,7 +73,27 @@ export function Guides() {
     .filter((t) => t.guides.length);
 
   return (
-    <Page title="Path Guides" subtitle="People who’ve already made the moves you’re weighing — and said they’d help." back="Network" wide>
+    <Page
+      title="Path Guides"
+      subtitle="People who’ve already made the moves you’re weighing — and said they’d help."
+      back="Network"
+      rail={
+        <>
+          <RailSection title="Office Hours this week">
+            <RailPosts
+              items={['amara', 'tomas', 'priya', 'rafael'].map((g) => ({
+                author: g,
+                title: people[g].guide!.officeHours.when,
+                to: `/p/${g}`,
+                meta: `${people[g].guide!.officeHours.open} of ${people[g].guide!.officeHours.total} spots open · ${people[g].guide!.replies}`,
+              }))}
+            />
+          </RailSection>
+          <p className="guides__note">Guides are never paid, ranked or rated. They’re people who were once where you are.</p>
+          <RailFooter />
+        </>
+      }
+    >
       <div className="guides__picker">
         <span className="t-subhead c-2">{isMobile ? 'Heading to' : 'Guides for the moves between you and'}</span>
         <Segmented
@@ -94,7 +115,7 @@ export function Guides() {
           <header className="guides__head">
             <span className="guides__num num-tag">{String(i + 1).padStart(2, '0')}</span>
             <div>
-              <h2 className="t-title2">{s.title}</h2>
+              <h2 className="guides__title">{s.title}</h2>
               <p className="guides__move t-subhead">
                 <span>{wp(s.from).label}</span>
                 <svg width="36" height="12" viewBox="0 0 36 12" aria-hidden="true">
@@ -114,7 +135,6 @@ export function Guides() {
           </div>
         </section>
       ))}
-      <RelationTag kind="guide" label="Guides are never paid, ranked or rated. They’re people who were once where you are." className="guides__foot" />
     </Page>
   );
 }

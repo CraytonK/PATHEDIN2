@@ -164,12 +164,11 @@ ol {
 /* Brand eyebrow: Marat Sans Demibold, uppercase, widest tracking, in the celestial text tone. */
 .t-eyebrow {
   font-family: var(--font-sans);
-  font-size: 11px;
-  line-height: 14px;
-  font-weight: 600;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--tint-text);
+  font-size: 13px;
+  line-height: 18px;
+  font-weight: 500;
+  letter-spacing: -0.005em;
+  color: var(--label-2);
 }
 /* Reflections in someone's own words: the editorial serif, italic. */
 .t-reflection {
