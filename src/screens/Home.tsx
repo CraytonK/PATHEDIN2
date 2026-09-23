@@ -17,8 +17,8 @@ import {
 } from '../components/content';
 import { RouteItem } from '../components/Ecosystem';
 import { Avatar, AvatarStack, Button, IconButton, PersonName, RelationGlyph, RelationTag, SectionHeader } from '../components/ui';
-import { IconAlign, IconBell, IconCalendar, IconMessage } from '../components/icons';
-import { people, me } from '../data/people';
+import { IconAlign, IconBell, IconCalendar, IconChevronRight, IconMessage } from '../components/icons';
+import { people, me, ME } from '../data/people';
 import { stories } from '../data/stories';
 import { questions } from '../data/questions';
 import { decisions } from '../data/decisions';
@@ -38,9 +38,63 @@ const pulseStops: PulseStop[] = [
   { key: 'dest', label: 'Pharma R&D', kind: 'destination', href: '/path?focus=pharma-rnd', activity: { ids: ['elena'], text: 'Elena arrived this month' } },
 ];
 
-function greeting() {
-  const h = new Date().getHours();
-  return h < 12 ? 'Good morning' : h < 18 ? 'Good afternoon' : 'Good evening';
+/** The next date that falls on `weekday` (0 = Sunday), counting today. */
+function nextWeekday(weekday: number) {
+  const d = new Date();
+  d.setHours(0, 0, 0, 0);
+  d.setDate(d.getDate() + ((weekday - d.getDay() + 7) % 7));
+  return d;
+}
+
+function joinNames(ids: string[]) {
+  const names = ids.map((id) => people[id].first);
+  return names.length > 1 ? `${names.slice(0, -1).join(', ')} and ${names[names.length - 1]}` : names[0];
+}
+
+/** What's actually on your plate: the next call you've booked, and requests waiting on you. */
+function UpNext() {
+  const requests = useApp((s) => s.requests);
+  const call = requests.find((r) => r.from === ME && r.status === 'accepted' && r.proposed);
+  const incoming = requests.filter((r) => r.to === ME && r.status === 'pending');
+  if (!call && !incoming.length) return null;
+  const day = nextWeekday(4);
+  const inDays = Math.round((day.getTime() - new Date().setHours(0, 0, 0, 0)) / 86_400_000);
+  const dayLabel = inDays === 0 ? 'Today' : inDays === 1 ? 'Tomorrow' : day.toLocaleDateString('en-CA', { weekday: 'long' });
+  const time = call?.proposed?.split(', ')[1];
+  return (
+    <div className="upnext">
+      {call && (
+        <Link to={call.thread ? `/messages/${call.thread}` : '/requests'} className="upnext__item">
+          <span className="upnext__date" aria-hidden="true">
+            <span className="upnext__dow">{day.toLocaleDateString('en-CA', { weekday: 'short' }).replace('.', '')}</span>
+            <span className="upnext__day">{day.getDate()}</span>
+          </span>
+          <span className="upnext__text">
+            <span className="t-headline truncate">Call with {people[call.to].name}</span>
+            <span className="t-subhead c-2 truncate">
+              {dayLabel}
+              {time && ` · ${time}`}
+            </span>
+          </span>
+          <IconChevronRight size={16} className="c-3" />
+        </Link>
+      )}
+      {incoming.length > 0 && (
+        <Link to="/requests" className="upnext__item">
+          <span className="upnext__faces">
+            <AvatarStack ids={incoming.map((r) => r.from)} size={28} max={3} />
+          </span>
+          <span className="upnext__text">
+            <span className="t-headline truncate">
+              {incoming.length} Path {incoming.length === 1 ? 'Request' : 'Requests'}
+            </span>
+            <span className="t-subhead c-2 truncate">From {joinNames(incoming.map((r) => r.from))}</span>
+          </span>
+          <IconChevronRight size={16} className="c-3" />
+        </Link>
+      )}
+    </div>
+  );
 }
 
 function FeedItem({ context, glyph = 'ahead', children, i = 0 }: { context: ReactNode; glyph?: Parameters<typeof RelationGlyph>[0]['kind']; children: ReactNode; i?: number }) {
@@ -178,7 +232,6 @@ export function Home() {
   const isWide = useIsWide();
   const unread = useUnread();
   const navigate = useNavigate();
-  const date = new Date().toLocaleDateString('en-CA', { weekday: 'long', month: 'long', day: 'numeric' });
   const worth = ['sarah', 'amara', 'daniel', 'elena', 'rafael', 'jonah'];
   const cro = destinations['pharma-rnd'].routes.find((r) => r.id === 'via-intern')!;
 
@@ -237,13 +290,7 @@ export function Home() {
 
   return (
     <Page
-      title={`${greeting()}, ${me.first}`}
-      eyebrow={date}
-      subtitle={
-        <>
-          Elena just reached your destination, and Amara said yes to Thursday. <Link to="/path" className="c-tint">Open your Path</Link>
-        </>
-      }
+      title="Home"
       wide
       trailing={
         isMobile ? (
@@ -267,6 +314,8 @@ export function Home() {
         )
       }
     >
+      <UpNext />
+
       <section className="home__pulse">
         <div className="home__pulse-head">
           <h2 className="t-headline">Your Path this week</h2>
