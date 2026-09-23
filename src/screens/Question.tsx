@@ -2,7 +2,7 @@ import { motion } from 'framer-motion';
 import { useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { Page } from '../components/chrome';
-import { PathStrip } from '../components/path/PathStrip';
+import { PathHint } from '../components/path/PathHint';
 import { CredibilityLabel, RequestButton } from '../components/content';
 import { Avatar, AvatarStack, Button, PersonName, RelationTag } from '../components/ui';
 import { IconHandRaise } from '../components/icons';
@@ -82,7 +82,7 @@ export function QuestionScreen() {
               <p className="t-subhead">
                 {q.asker === ME ? <strong>You</strong> : <PersonName id={q.asker} />} asked {q.ago} ago
               </p>
-              <PathStrip id={q.asker} />
+              <PathHint id={q.asker} segment={q.about} />
             </div>
           </div>
 
@@ -114,7 +114,7 @@ export function QuestionScreen() {
                 </div>
                 <p className="answer__body t-body">{a.body}</p>
                 <div className="answer__path">
-                  <PathStrip id={a.author} highlight={q.about} />
+                  <PathHint id={a.author} segment={q.about} />
                 </div>
                 <div className="answer__actions">
                   <Helpful id={a.id} count={a.helpful} />
@@ -140,7 +140,7 @@ export function QuestionScreen() {
             <div className="qd__answer">
               <h3 className="t-headline">Answer from where you are</h3>
               <p className="t-footnote c-2">Your answer will show your Path, so people know what you’re speaking from.</p>
-              <PathStrip id={ME} />
+              <PathHint id={ME} />
               <textarea rows={3} value={draft} onChange={(e) => setDraft(e.target.value)} placeholder="Share what you’ve seen from your step…" />
               <Button
                 variant="filled"

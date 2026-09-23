@@ -206,6 +206,15 @@ const list: Community[] = [
 export const communities: Record<string, Community> = Object.fromEntries(list.map((c) => [c.id, c]));
 export const communityList = list;
 
+/** Communities that cross Maya's route, and why each one is worth a look. */
+export const alongMyRoute: { id: string; reason: string }[] = [
+  { id: 'bench-regulatory', reason: 'On the branch you’re exploring' },
+  { id: 'lab-data', reason: 'Where Wei and Isabel are heading' },
+  { id: 'newcomers-science', reason: 'Where Amara hosts, and Chloé and Grace help' },
+];
+/** Journeys far from Maya's Path. */
+export const elsewhereCommunities = ['swe-pm', 'teach-ux', 'nursing-healthtech'];
+
 export const threads: Thread[] = [
   {
     id: 't-start-here',

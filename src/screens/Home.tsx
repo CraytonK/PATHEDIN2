@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Page, useUnread } from '../components/chrome';
 import { PathPulse, type PulseStop } from '../components/PathPulse';
-import { PathStrip } from '../components/path/PathStrip';
+import { PathHint } from '../components/path/PathHint';
 import { Post } from '../components/Post';
 import { RailCommunities, RailFooter, RailPeople } from '../components/Rail';
 import { DecisionFork, PersonTile, RequestButton, SegmentArt } from '../components/content';
@@ -130,7 +130,7 @@ function ForYou() {
         to="/p/elena"
         title={`${people.elena.first} reached ${wp('pharma-rnd').mid}`}
         subtitle="“Three weeks in. If you’re at the CRO step, set yourself a date and tell someone ahead of you what it is.”"
-        extra={<PathStrip id="elena" wrap />}
+        extra={<PathHint id="elena" />}
         why={{ kind: 'guide', text: 'Reached your destination' }}
         thumb={<img src={people.elena.photo} alt="" loading="lazy" />}
         thumbKind="photo"
@@ -162,7 +162,7 @@ function ForYou() {
         subtitle={relationTo('amara').why}
         extra={
           <div className="feed-guide">
-            <PathStrip id="amara" />
+            <PathHint id="amara" />
             <p className="feed-guide__hours">
               {amara.guide!.officeHours.when} · {amara.guide!.officeHours.open} of {amara.guide!.officeHours.total} spots open
               <RequestButton id="amara" variant="tinted" label="Ask" />

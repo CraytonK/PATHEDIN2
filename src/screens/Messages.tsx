@@ -3,6 +3,7 @@ import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { Link, useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import { Page } from '../components/chrome';
 import { PathStrip } from '../components/path/PathStrip';
+import { PathHint } from '../components/path/PathHint';
 import { Avatar, Button, PersonName, RelationTag } from '../components/ui';
 import { IconAlign, IconArrowUp, IconPlus, IconChevronLeft } from '../components/icons';
 import { conversationList } from '../data/social';
@@ -126,7 +127,7 @@ function Thread({ c, onBack }: { c: Conversation; onBack?: () => void }) {
         <p className="t-footnote c-2">
           You’re talking about <strong>{wp(c.about[0]).label} → {wp(c.about[1]).label}</strong> on {c.aboutPerson === ME ? 'your' : `${people[c.aboutPerson].first}’s`} Path
         </p>
-        <PathStrip id={c.aboutPerson} highlight={c.about} />
+        <PathHint id={c.aboutPerson} segment={c.about} />
       </div>
 
       <div className="thread__scroll" ref={scroller}>

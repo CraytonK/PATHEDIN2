@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Page } from '../components/chrome';
 import { RailFooter, RailPosts, RailSection } from '../components/Rail';
-import { PathStrip } from '../components/path/PathStrip';
+import { PathHint } from '../components/path/PathHint';
 import { RequestButton } from '../components/content';
 import { PersonName, Segmented } from '../components/ui';
 import { IconCalendar } from '../components/icons';
@@ -47,7 +47,7 @@ function GuideCard({ id, from, to }: { id: string; from: string; to: string }) {
           Made this move {step?.start ? `in ${step.start}` : ''}
           {rel.kind !== 'other' && rel.kind !== 'guide' ? ` · ${rel.label}` : ''}
         </p>
-        <PathStrip id={id} highlight={[from, to]} />
+        <PathHint id={id} segment={[from, to]} className="gcard__path" />
         {g.guide && (
           <>
             <p className="gcard__helps t-subhead">{g.guide.helpsWith.slice(0, 2).join(' · ')}</p>

@@ -1,0 +1,238 @@
+/* ── PathHint: a Path in one quiet line ─────────────────── */
+.phint {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  max-width: 100%;
+  min-height: 24px;
+  font-size: 13px;
+  line-height: 18px;
+  font-weight: 400;
+  color: var(--label-2);
+  text-align: left;
+  vertical-align: middle;
+  align-self: flex-start;
+}
+/* A 44pt hit area without changing the layout. */
+.phint:not(.phint--plain)::after {
+  content: '';
+  position: absolute;
+  inset: -10px -6px;
+}
+.phint svg {
+  flex: none;
+  color: var(--tint-strong);
+}
+.phint__text {
+  min-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.phint__arrow {
+  color: var(--label-3);
+}
+.phint__to {
+  color: var(--label);
+  font-weight: 500;
+}
+.phint:not(.phint--plain) .phint__text {
+  text-decoration: underline dotted var(--label-4);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 4px;
+}
+@media (hover: hover) {
+  .phint:not(.phint--plain):hover .phint__text {
+    color: var(--label);
+    text-decoration-color: var(--label-2);
+  }
+}
+.phint.is-open .phint__text {
+  color: var(--label);
+  text-decoration-color: var(--tint);
+}
+
+/* ── The Path card it opens ─────────────────────────────── */
+.pcard {
+  position: fixed;
+  z-index: 85;
+  padding: 16px 16px 8px;
+  border-radius: 12px;
+  background: var(--bg-elevated);
+  box-shadow: var(--shadow-popover);
+  outline: none;
+}
+.pcard__head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+.pcard__title {
+  font-size: 11px;
+  line-height: 15px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--tint-text);
+}
+.pcard__shared {
+  font-size: 12px;
+  color: var(--label-2);
+}
+
+/* Steps, drawn top to bottom with the brand's nodes. */
+.pcard__steps {
+  display: flex;
+  flex-direction: column;
+}
+.pcard__step {
+  position: relative;
+  display: grid;
+  grid-template-columns: 18px minmax(0, 1fr) auto;
+  column-gap: 12px;
+  align-items: start;
+  padding: 5px 0 7px;
+}
+/* The track from this node down to the next one: walked is solid ink, ahead is dashed navy. */
+.pcard__step:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  left: 8px;
+  top: 12px;
+  bottom: -8px;
+  width: 2px;
+  border-radius: 1px;
+  background: var(--ink);
+}
+.pcard__step.to-future::after {
+  background: linear-gradient(180deg, var(--tint) 0 3px, transparent 3px 6px) center top / 2px 6px repeat-y;
+}
+.pcard__step.to-lit::after {
+  background: var(--tint);
+}
+.pcard__node {
+  position: relative;
+  z-index: 1;
+  justify-self: center;
+  margin-top: 3px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--ink);
+  box-shadow: 0 0 0 3px var(--bg-elevated);
+}
+.pcard__step.is-present .pcard__node {
+  width: 14px;
+  height: 14px;
+  margin-top: 1px;
+  background: radial-gradient(circle, var(--tint) 0 2.4px, var(--bg-elevated) 2.9px);
+  box-shadow:
+    inset 0 0 0 2.5px var(--ink),
+    0 0 0 3px var(--bg-elevated);
+}
+.pcard__step.is-future .pcard__node {
+  width: 10px;
+  height: 10px;
+  background: var(--bg-elevated);
+  box-shadow:
+    inset 0 0 0 1.75px var(--tint),
+    0 0 0 3px var(--bg-elevated);
+}
+.pcard__step.is-destination .pcard__node {
+  width: 14px;
+  height: 14px;
+  margin-top: 1px;
+  background: var(--bg-elevated);
+  box-shadow:
+    inset 0 0 0 2.5px var(--tint),
+    0 0 0 3px var(--bg-elevated);
+}
+.pcard__text {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+.pcard__label {
+  font-size: 14px;
+  line-height: 19px;
+  font-weight: 500;
+  color: var(--label);
+}
+.pcard__step.is-past .pcard__label {
+  font-weight: 400;
+}
+.pcard__step.is-future .pcard__label,
+.pcard__step.is-destination .pcard__label {
+  color: var(--tint-text);
+}
+.pcard__meta {
+  font-size: 12px;
+  line-height: 17px;
+  font-weight: 300;
+  color: var(--label-2);
+}
+.pcard__you {
+  margin-top: 1px;
+  padding: 1px 6px;
+  border-radius: 999px;
+  font-size: 10px;
+  line-height: 16px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--tint-text);
+  background: var(--tint-softer);
+  white-space: nowrap;
+}
+
+/* A stretch in focus: everything else steps back. */
+.pcard__steps.has-segment .pcard__step:not(.is-lit) .pcard__label {
+  color: var(--label-2);
+  font-weight: 400;
+}
+.pcard__steps.has-segment .pcard__step:not(.is-lit) .pcard__node {
+  opacity: 0.45;
+}
+.pcard__steps.has-segment .pcard__step.is-lit .pcard__label {
+  font-weight: 600;
+}
+
+.pcard__actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin: 8px -8px 0;
+  padding-top: 6px;
+  border-top: 1px solid var(--separator);
+}
+.pcard__btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  min-height: 36px;
+  padding: 0 8px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--tint-text);
+}
+.pcard__btn--quiet {
+  margin-left: auto;
+  font-weight: 400;
+  color: var(--label-2);
+}
+@media (hover: hover) {
+  .pcard__btn:hover {
+    background: var(--bg-hover);
+  }
+  .pcard__btn--quiet:hover {
+    color: var(--label);
+  }
+}
+.pcard .nowrap {
+  white-space: nowrap;
+}

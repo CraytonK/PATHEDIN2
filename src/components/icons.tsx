@@ -212,12 +212,15 @@ export const IconSend = (p: P) => (
   </Svg>
 );
 
-/** Two Paths coming together: used for "Align Paths" */
+/** Two walked Paths (solid nodes) meeting at a shared "now" node: used for "Align Paths". */
 export const IconAlign = (p: P) => (
   <Svg {...p}>
-    <path d="M5 3.5v4.5a4 4 0 0 0 4 4h1.8" />
-    <path d="M19 3.5v4.5a4 4 0 0 1-4 4h-1.8" />
-    <path d="M11 12v8.5M13 12v8.5" />
+    <path d="M6.3 6H9c3 0 3.6 6 6.4 6" />
+    <path d="M6.3 18H9c3 0 3.6-6 6.4-6" />
+    <circle cx="4.3" cy="6" r="2" fill="currentColor" stroke="none" />
+    <circle cx="4.3" cy="18" r="2" fill="currentColor" stroke="none" />
+    <circle cx="18.3" cy="12" r="2.7" />
+    <circle cx="18.3" cy="12" r="0.9" fill="currentColor" stroke="none" />
   </Svg>
 );
 

@@ -2,7 +2,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { Page } from '../components/chrome';
-import { PathStrip } from '../components/path/PathStrip';
+import { PathHint } from '../components/path/PathHint';
 import { RequestButton } from '../components/content';
 import { Avatar, Button, PersonName, RelationTag, SaveToggle } from '../components/ui';
 import { decisions, decisionList } from '../data/decisions';
@@ -185,7 +185,7 @@ export function DecisionScreen() {
                   </>
                 )}
               </p>
-              <PathStrip id={d.owner} />
+              <PathHint id={d.owner} />
             </div>
             <SaveToggle saveKey={`decision:${d.id}`} compact />
           </div>

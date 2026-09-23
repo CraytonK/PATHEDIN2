@@ -40,6 +40,8 @@ Requires Node 20+.
 | **Destination ecosystem.** Select the destination to see the routes people took, the Guides who made it, who's heading there, and the communities, questions, stories and decisions around it. | My Path → Pharmaceutical R&D |
 | **Route Confluence.** Every real route into a destination runs as its own line into one terminus. Where routes share a station you'll see an interchange, and if you're standing on it, you'll see yourself there. Tap a route to follow it into people and its community. | Discover → Pharmaceutical R&D |
 | **Path Lens.** Your network placed *on* your Path: Twins beside you, Peers at your station, People Ahead on your next step, Guides at your destination, Explorers arriving from elsewhere. | Network |
+| **Path hints.** Posts and people show a Path in one line ("CRO → Pharma R&D"). Hover it, or tap it on a phone, to see the whole Path drawn top to bottom, with the steps you share marked. | Home, Network, Discover, Questions |
+| **Discover.** Tabs for People, Path Guides, Communities and Destinations, with a For you mix of each. | Discover |
 | **Peek.** Press and hold anyone (or hover on desktop, or right-click) to preview their Path and relationship to you without leaving the page. | Anywhere |
 | **Align Paths.** Two Paths start apart, then slide together so shared stations merge into one lit track. | Any profile, Peek, or conversation |
 | **Path Requests.** Ask about a specific stretch of someone's Path; every request arrives with its context. | Profile → *Send a Path Request* |
@@ -61,7 +63,7 @@ src/
     store.ts     persisted app state (zustand)
     ui.ts        overlay state: Peek, Align, Path Request, search, toasts
   components/
-    path/        TransitMap, PathStrip, Align (Compare), Confluence, PathLens
+    path/        TransitMap, PathStrip, PathHint (one-line Path + hover card), Align (Compare), Confluence, PathLens
     chrome.tsx   Medium-style top bar and sidebar, iPhone tab bar, navigation bars with large titles, sheets
     Post.tsx     the feed row (byline, title, subtitle, why it's here, thumbnail)
     PathSplash.tsx  the Path that draws itself after sign-in

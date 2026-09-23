@@ -9,7 +9,7 @@ import { compactSteps, current, relationTo, stepTitle } from '../lib/relations';
 import { useApp } from '../lib/store';
 import { useUI } from '../lib/ui';
 import { springs, haptic } from '../lib/motion';
-import { PathStrip } from './path/PathStrip';
+import { PathHint } from './path/PathHint';
 import { Avatar, AvatarStack, Button, PathChips, PersonName, RelationGlyph, RelationTag, SaveToggle, formatCount } from './ui';
 import { IconCheck, IconChevronRight, IconFlag, IconMessage, IconPersonAdd, IconSend } from './icons';
 import { usePeek } from './Peek';
@@ -89,7 +89,7 @@ export function PersonRow({ id, why, action = 'connect', compact }: { id: string
         </div>
         <p className="person-row__headline t-subhead c-2">{p.headline}</p>
         {!compact && <p className="person-row__why t-callout">{why ?? rel.why}</p>}
-        <PathStrip id={id} />
+        <PathHint id={id} className="person-row__path" />
       </div>
     </article>
   );
@@ -109,7 +109,7 @@ export function PersonTile({ id, why }: { id: string; why?: string }) {
       <p className="t-footnote c-2 truncate">{p.headline}</p>
       <PathChips id={id} className="person-tile__chips" matchOnly />
       <p className="t-subhead person-tile__why clamp-3">{why ?? rel.why}</p>
-      <PathStrip id={id} />
+      <PathHint id={id} plain className="person-tile__path" />
       <div className="person-tile__actions">
         <ConnectButton id={id} />
       </div>

@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Page } from '../components/chrome';
 import { DefaultRail } from '../components/Rail';
-import { PathStrip } from '../components/path/PathStrip';
+import { PathHint } from '../components/path/PathHint';
 import { Avatar, Button, PersonName, RelationTag, TextTabs } from '../components/ui';
 import { IconCheck } from '../components/icons';
 import { people, ME } from '../data/people';
@@ -41,7 +41,7 @@ function RequestCard({ r, incoming }: { r: PathRequest; incoming: boolean }) {
             {wp(r.segment[0]).short} → {wp(r.segment[1]).short}
           </strong>
         </p>
-        <PathStrip id={pathOwner} highlight={r.segment} />
+        <PathHint id={pathOwner} segment={r.segment} />
       </div>
       <p className="req-card__msg t-callout">“{r.message}”</p>
       {incoming && r.status === 'pending' && (

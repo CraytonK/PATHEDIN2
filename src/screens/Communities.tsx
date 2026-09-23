@@ -1,16 +1,9 @@
 import { Page } from '../components/chrome';
 import { CommunityRow } from '../components/content';
 import { RailFooter, RailPeople, RailPosts, RailSection } from '../components/Rail';
-import { communities, communityList, threads } from '../data/communities';
+import { alongMyRoute, communities, communityList, elsewhereCommunities, threads } from '../data/communities';
 import { useApp } from '../lib/store';
 import './communities.css';
-
-const onRoute: { id: string; reason: string }[] = [
-  { id: 'bench-regulatory', reason: 'On the branch you’re exploring' },
-  { id: 'lab-data', reason: 'Where Wei and Isabel are heading' },
-  { id: 'newcomers-science', reason: 'Where Amara hosts, and Chloé and Grace help' },
-];
-const elsewhere = ['swe-pm', 'teach-ux', 'nursing-healthtech'];
 
 export function Communities() {
   const joined = useApp((s) => s.joined);
@@ -42,7 +35,7 @@ export function Communities() {
       <h2 className="list-h">Along your route</h2>
       <p className="list-sub">Journeys that cross yours</p>
       <div className="cms__list">
-        {onRoute
+        {alongMyRoute
           .filter((r) => !joined[r.id])
           .map((r) => (
             <CommunityRow key={r.id} c={communities[r.id]} reason={r.reason} />
@@ -51,7 +44,7 @@ export function Communities() {
       <h2 className="list-h">Other journeys</h2>
       <p className="list-sub">Far from your Path, just as alive</p>
       <div className="cms__list">
-        {elsewhere.map((id) => (
+        {elsewhereCommunities.map((id) => (
           <CommunityRow key={id} c={communities[id]} />
         ))}
       </div>

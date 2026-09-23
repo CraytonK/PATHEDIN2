@@ -30,7 +30,214 @@
   max-width: 640px;
 }
 .discover__section-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
   margin-bottom: 20px;
+}
+.discover__more {
+  flex: none;
+  color: var(--tint-text);
+  font-weight: 500;
+  white-space: nowrap;
+}
+@media (hover: hover) {
+  .discover__more:hover {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+}
+.discover__tabs {
+  position: sticky;
+  top: var(--topbar-h);
+  z-index: 5;
+  background: var(--bg);
+  margin: -12px 0 36px;
+}
+.discover__tabs .text-tabs {
+  margin: 0;
+  padding: 0;
+}
+@media (max-width: 767px) {
+  .discover__tabs {
+    top: calc(var(--navbar-h) + var(--safe-top));
+    margin: -16px calc(var(--gutter) * -1) 28px;
+  }
+  .discover__tabs .text-tabs {
+    padding: 0 var(--gutter);
+  }
+}
+.discover__lede {
+  max-width: 640px;
+  margin: -8px 0 32px;
+}
+.discover__lede a {
+  color: var(--tint-text);
+  font-weight: 500;
+}
+
+/* People, Guides and communities as a quiet grid: hairline above, no boxes. */
+.discover__section {
+  container-type: inline-size;
+}
+.dgrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 36px 32px;
+}
+@container (max-width: 760px) {
+  .dgrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 32px 24px;
+  }
+}
+@container (max-width: 480px) {
+  .dgrid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 28px;
+  }
+  /* On a phone, "For you" rows scroll sideways, like the carousels on Home. */
+  .dgrid--row {
+    grid-template-columns: none;
+    grid-auto-flow: column;
+    grid-auto-columns: 82%;
+    gap: 20px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-padding: 0 var(--gutter);
+    scrollbar-width: none;
+    margin: 0 calc(var(--gutter) * -1);
+    padding: 0 var(--gutter) 4px;
+  }
+  .dgrid--row::-webkit-scrollbar {
+    display: none;
+  }
+  .dgrid--row > * {
+    scroll-snap-align: start;
+  }
+}
+.dcard {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+  min-width: 0;
+  height: 100%;
+  padding-top: 20px;
+  border-top: 1px solid var(--separator);
+  color: var(--label);
+}
+.dcard__who {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+  color: var(--label);
+}
+.dcard__name {
+  font-size: 17px;
+  line-height: 22px;
+  font-weight: 600;
+  letter-spacing: -0.012em;
+}
+@media (hover: hover) {
+  .dcard__who:hover .dcard__name,
+  .dcard--community:hover .dcard__title {
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 3px;
+  }
+}
+.dcard__rel {
+  margin-top: 2px;
+}
+.dcard__headline {
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 300;
+  color: var(--label-2);
+}
+.dcard__why {
+  margin-top: 6px;
+  font-size: 15px;
+  line-height: 22px;
+  color: var(--label);
+}
+.dcard__move {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--tint-text);
+}
+.dcard__move svg {
+  flex: none;
+  color: var(--tint-strong);
+}
+.dcard__hours {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-top: 4px;
+  font-size: 13px;
+  line-height: 18px;
+  color: var(--label-2);
+}
+.dcard__hours svg {
+  flex: none;
+}
+.dcard__hours strong {
+  font-weight: 600;
+  color: var(--tint-text);
+}
+.dcard__foot {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+  width: 100%;
+  margin-top: auto;
+  padding-top: 14px;
+}
+.dcard--community .dcard__foot {
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+.dcard__reason {
+  font-size: 11px;
+  line-height: 15px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--tint-text);
+  margin-bottom: 4px;
+}
+.dcard__title {
+  font-size: 19px;
+  line-height: 25px;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+}
+.dcard__members {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 10px;
+  font-size: 13px;
+  color: var(--label-2);
+}
+.dcard__live {
+  color: var(--tint-text);
+  font-weight: 500;
+}
+.dcard__guides {
+  font-size: 13px;
+  color: var(--label-2);
 }
 /* Destinations as Medium's topic grid: a quiet image area, then byline-weight text; no card boxes. */
 .doors {
@@ -180,4 +387,12 @@
   grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
   gap: 0 40px;
   align-items: start;
+}
+
+/* Narrow columns: the photo sits beside the name. */
+@container (max-width: 480px) {
+  .dcard__who {
+    flex-direction: row;
+    align-items: center;
+  }
 }

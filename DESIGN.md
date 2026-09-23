@@ -93,7 +93,7 @@ All pages share Medium's page shape.
 | Decision Points | Your fork, then the ones near your Path, as post rows with fork thumbnails. |
 | Communities / a community | A publication: title, description, members and Join, then tabs and post rows. The right column holds the community's Guides and journeys that cross this one. |
 | Profile | Medium's profile. The reading column holds the name as a large title, then Path / Stories / Answers / Decisions tabs. The right column holds the person (photo, bio, buttons), what they're doing now, the Path Guide card, *Where your Paths meet* and communities. On iPhone the person card leads. |
-| Discover | A topic grid: a quiet image area with the route art, then title, summary and counts, with no card boxes. Other ways to explore appear as topic pills. |
+| Discover | Text tabs for **For you, People, Path Guides, Communities and Destinations**. For you mixes a row of each (people worth knowing, Guides for your next move, communities along your route, futures near your Path), each with a "See all" link to its tab. People, Guides and communities are a quiet three-column grid with a hairline above each card and no boxes; on a phone the For you rows scroll sideways. Destinations keep the topic grid: a quiet image area with the route art, then title, summary and counts. |
 | Network, Guides, Connections, Requests, Notifications, Saved, Search | Hairline lists with text tabs. Notifications drop the blue unread panels for a small dot. Each page has a right column (people worth knowing, your communities, or office hours). |
 
 ## Typography
@@ -224,7 +224,8 @@ A career is drawn like a transit line. Stations are steps, and 45° bends and ro
 - **Decisions:** the road taken is solid, and roads still open are dashed navy.
 
 The same vocabulary appears at every scale:
-- the Path strip
+- the Path hint and its Path card
+- the Path strip (My Path, Peek and shared step cards in messages)
 - the Transit Map
 - the Confluence of routes
 - Align
@@ -236,6 +237,16 @@ The same vocabulary appears at every scale:
 - the right column's *Your Path this week*
 - the intro illustration
 - the sign-in splash
+
+### Paths on posts: one line, the rest on hover
+A full Path on every post and person row was too much to read. In feeds, lists and cards a Path is now a **Path hint**: the brand mark and one quiet line, where someone is now and where they're heading ("CRO → Pharma R&D"), with a dotted underline to show there's more (`components/path/PathHint.tsx`).
+- **Hover** it on a desktop, or **tap** it or press **Enter**, and the **Path card** opens beside it. The card draws the whole Path top to bottom with the brand nodes, each step with its organisation and years, and marks the steps you share ("You too").
+- When a post is about one stretch (a question, a request, a Guide's move), that stretch is lit in navy and the rest steps back.
+- The card ends with **Align Paths** and **View profile**. It closes when you move away, click outside, scroll or press Escape.
+- The full horizontal strip stays where the Path *is* the content: My Path, Peek, and a step shared in a message.
+
+### Align icon
+Align Paths uses its own glyph: two walked Paths (solid nodes) curving together into one shared "now" node, the brand's present node. It reads as *where your Paths meet*.
 
 ### Relevance is always explained
 Every person and every post says *why* it is in front of you. People carry a relation ("Path Twin", "One step ahead", "Reached your destination"), and posts carry a "why it's here" line. The Path match chip puts a number to it.
