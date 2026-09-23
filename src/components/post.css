@@ -1,0 +1,228 @@
+/* ── Post: a feed row laid out like a Medium story preview ── */
+.post {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-areas:
+    'by thumb'
+    'main thumb';
+  column-gap: 48px;
+  align-items: start;
+  padding: 28px 0 22px;
+  border-bottom: 1px solid var(--separator);
+}
+.post__by {
+  grid-area: by;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 4px 8px;
+  min-width: 0;
+  margin-bottom: 12px;
+  font-size: 13px;
+  line-height: 20px;
+  color: var(--label-2);
+}
+.post__author {
+  color: var(--label);
+  font-weight: 400;
+}
+.post__where {
+  min-width: 0;
+}
+.post__where a,
+.post__where strong {
+  color: var(--label);
+  font-weight: 400;
+}
+.post__main {
+  grid-area: main;
+  min-width: 0;
+}
+.post__link {
+  display: block;
+  color: var(--label);
+}
+.post__title {
+  font-size: 22px;
+  line-height: 28px;
+  font-weight: 700;
+  letter-spacing: -0.024em;
+  text-wrap: pretty;
+}
+.post__sub {
+  margin-top: 8px;
+  font-size: 16px;
+  line-height: 24px;
+  color: var(--label-2);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.post__extra {
+  margin-top: 14px;
+}
+.post__meta {
+  display: flex;
+  align-items: center;
+  gap: 6px 16px;
+  margin-top: 16px;
+  min-height: 32px;
+  font-size: 13px;
+  color: var(--label-2);
+}
+.post__why {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+  color: var(--tint-text);
+}
+.post__why svg {
+  flex: none;
+  color: var(--tint-strong);
+}
+.post__why span {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.post__stats {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  flex: none;
+  white-space: nowrap;
+}
+.post__stats > span {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+.post__actions {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  margin-left: auto;
+  flex: none;
+  color: var(--label-2);
+}
+.post__actions .save-toggle {
+  color: var(--label-2);
+}
+.post__thumb {
+  grid-area: thumb;
+  align-self: center;
+  width: 160px;
+  height: 107px;
+  overflow: hidden;
+  border-radius: 2px;
+  background: var(--bg-grouped);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.post__thumb--art {
+  padding: 8px 6px;
+}
+.post__thumb--art svg {
+  width: 100%;
+  height: auto;
+  max-height: 100%;
+}
+.post__thumb--photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+@media (hover: hover) {
+  .post__link:hover .post__title {
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 4px;
+  }
+}
+
+/* "…" menu */
+.post-more {
+  position: relative;
+}
+.post-more__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  color: var(--label-2);
+}
+.post-more__btn:hover {
+  color: var(--label);
+}
+.post-more__menu {
+  position: absolute;
+  right: -6px;
+  top: calc(100% + 4px);
+  z-index: 20;
+  min-width: 240px;
+  padding: 8px 0;
+  border-radius: 4px;
+  background: var(--bg-elevated);
+  box-shadow: var(--shadow-popover);
+  transform-origin: top right;
+}
+.post-more__menu button {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 9px 18px;
+  font-size: 14px;
+  color: var(--label);
+  text-align: left;
+  white-space: nowrap;
+}
+.post-more__menu button svg {
+  color: var(--label-2);
+}
+.post-more__menu button:hover {
+  background: var(--bg-hover);
+}
+.post-more__menu .is-quiet {
+  color: var(--label-2);
+}
+
+@media (max-width: 767px) {
+  .post {
+    column-gap: 20px;
+    grid-template-areas:
+      'by by'
+      'main thumb';
+    padding: 22px 0 14px;
+  }
+  .post__title {
+    font-size: 18px;
+    line-height: 23px;
+    letter-spacing: -0.02em;
+  }
+  .post__sub {
+    font-size: 15px;
+    line-height: 21px;
+  }
+  .post__thumb {
+    align-self: start;
+    width: 80px;
+    height: 54px;
+    margin-top: 2px;
+  }
+  .post__thumb--art {
+    padding: 4px 3px;
+  }
+  .post__meta {
+    gap: 6px 12px;
+    margin-top: 12px;
+  }
+  .post__stats {
+    display: none;
+  }
+}

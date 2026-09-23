@@ -20,6 +20,10 @@ interface AppState {
   weighIns: Record<string, { option: string; body: string }>;
   addedRoutes: Record<string, boolean>;
   theme: Theme;
+  /** Prototype auth: signed-out visitors see the intro page. */
+  signedIn: boolean;
+  /** Desktop sidebar, remembered like Medium's. */
+  sidebar: boolean;
 
   connect: (id: string) => void;
   toggleFollow: (id: string) => void;
@@ -34,6 +38,9 @@ interface AppState {
   weighIn: (decision: string, option: string, body: string) => void;
   setTheme: (t: Theme) => void;
   toggleRoute: (id: string) => void;
+  signIn: () => void;
+  signOut: () => void;
+  toggleSidebar: () => void;
 }
 
 /** localStorage can throw (private mode, blocked storage). Never let that break the app. */
@@ -95,6 +102,8 @@ export const useApp = create<AppState>()(
       weighIns: {},
       addedRoutes: {},
       theme: 'system',
+      signedIn: false,
+      sidebar: true,
 
       connect: (id) =>
         set((s) => {
@@ -124,6 +133,9 @@ export const useApp = create<AppState>()(
       weighIn: (decision, option, body) => set((s) => ({ weighIns: { ...s.weighIns, [decision]: { option, body } } })),
       setTheme: (theme) => set({ theme }),
       toggleRoute: (id) => set((s) => ({ addedRoutes: { ...s.addedRoutes, [id]: !s.addedRoutes[id] } })),
+      signIn: () => set({ signedIn: true }),
+      signOut: () => set({ signedIn: false }),
+      toggleSidebar: () => set((s) => ({ sidebar: !s.sidebar })),
     }),
     {
       name: 'pathedin:v1',
@@ -141,6 +153,8 @@ export const useApp = create<AppState>()(
         weighIns: s.weighIns,
         addedRoutes: s.addedRoutes,
         theme: s.theme,
+        signedIn: s.signedIn,
+        sidebar: s.sidebar,
       }),
     },
   ),

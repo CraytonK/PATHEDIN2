@@ -1,8 +1,9 @@
 import { AnimatePresence, motion, MotionConfig } from 'framer-motion';
-import { useEffect, useLayoutEffect, useRef } from 'react';
+import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { BrowserRouter, HashRouter, Route, Routes, useLocation, useNavigationType } from 'react-router-dom';
-import { TabBar, TopBar, ToastLayer } from './components/chrome';
+import { Sidebar, TabBar, TopBar, ToastLayer, useSidebarVisible } from './components/chrome';
 import { PeekLayer } from './components/Peek';
+import { PathSplash } from './components/PathSplash';
 import { CompareLayer } from './components/path/Compare';
 import { RequestLayer } from './components/RequestComposer';
 import { SearchLayer } from './components/SearchLayer';
@@ -30,6 +31,7 @@ import { Notifications } from './screens/Notifications';
 import { SearchScreen } from './screens/Search';
 import { Saved } from './screens/Saved';
 import { NotFound } from './screens/NotFound';
+import { Landing } from './screens/Landing';
 
 const Router = __HASH_ROUTER__ ? HashRouter : BrowserRouter;
 
@@ -80,6 +82,11 @@ function Shell() {
   const location = useLocation();
   const { type, restore } = useScrollMemory();
   const setSearch = useUI((s) => s.setSearch);
+  const sidebar = useSidebarVisible();
+  const signedIn = useApp((s) => s.signedIn);
+  const signIn = useApp((s) => s.signIn);
+  const [splash, setSplash] = useState(false);
+  const endSplash = useCallback(() => setSplash(false), []);
   useTheme();
 
   useEffect(() => {
@@ -99,49 +106,65 @@ function Shell() {
   // Messages keeps its own split view on desktop, so thread changes shouldn't animate the whole page.
   const routeKey = location.pathname.startsWith('/messages') && !isMobile ? '/messages' : location.pathname;
 
+  // Signing in plays the Path splash; the app appears underneath it once it has covered the page.
+  const splashLayer = splash && <PathSplash onCovered={signIn} onDone={endSplash} />;
+  // Both branches keep the splash in the same slot, so it keeps playing across the switch.
+  if (!signedIn) {
+    return (
+      <>
+        <Landing onAuthed={() => setSplash(true)} />
+        {splashLayer}
+      </>
+    );
+  }
+
   return (
-    <div className={`app ${isMobile ? (inThread ? 'app--thread' : 'app--mobile') : 'app--desktop'}`}>
-      {!isMobile && <TopBar />}
-      <AnimatePresence mode="wait" initial={false} onExitComplete={restore}>
-        <motion.main
-          key={routeKey}
-          initial={isMobile ? { opacity: 0, x: back ? -28 : 36 } : { opacity: 0, y: 6 }}
-          animate={{ opacity: 1, x: 0, y: 0 }}
-          exit={{ opacity: 0, transition: { duration: 0.09 } }}
-          transition={{ type: 'spring', stiffness: 420, damping: 40, mass: 0.8 }}
-        >
-          <Routes location={location}>
-            <Route path="/" element={<Home />} />
-            <Route path="/path" element={<MyPath />} />
-            <Route path="/discover" element={<Discover />} />
-            <Route path="/network" element={<Network />} />
-            <Route path="/guides" element={<Guides />} />
-            <Route path="/communities" element={<Communities />} />
-            <Route path="/c/:id" element={<CommunityScreen />} />
-            <Route path="/p/:id" element={<Profile />} />
-            <Route path="/stories" element={<Stories />} />
-            <Route path="/stories/:id" element={<StoryScreen />} />
-            <Route path="/questions" element={<Questions />} />
-            <Route path="/questions/:id" element={<QuestionScreen />} />
-            <Route path="/decisions" element={<Decisions />} />
-            <Route path="/decisions/:id" element={<DecisionScreen />} />
-            <Route path="/requests" element={<Requests />} />
-            <Route path="/connections" element={<Connections />} />
-            <Route path="/messages" element={<Messages />} />
-            <Route path="/messages/:id" element={<Messages />} />
-            <Route path="/notifications" element={<Notifications />} />
-            <Route path="/search" element={<SearchScreen />} />
-            <Route path="/saved" element={<Saved />} />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </motion.main>
-      </AnimatePresence>
-      {isMobile && !inThread && <TabBar />}
-      <PeekLayer />
-      <CompareLayer />
-      <RequestLayer />
-      <SearchLayer />
-      <ToastLayer />
-    </div>
+    <>
+      <div className={`app ${isMobile ? (inThread ? 'app--thread' : 'app--mobile') : 'app--desktop'} ${!isMobile && sidebar ? 'app--sidebar' : ''}`}>
+        {!isMobile && <TopBar />}
+        {!isMobile && <Sidebar />}
+        <AnimatePresence mode="wait" initial={false} onExitComplete={restore}>
+          <motion.main
+            key={routeKey}
+            initial={isMobile ? { opacity: 0, x: back ? -28 : 36 } : { opacity: 0, y: 6 }}
+            animate={{ opacity: 1, x: 0, y: 0 }}
+            exit={{ opacity: 0, transition: { duration: 0.09 } }}
+            transition={{ type: 'spring', stiffness: 420, damping: 40, mass: 0.8 }}
+          >
+            <Routes location={location}>
+              <Route path="/" element={<Home />} />
+              <Route path="/path" element={<MyPath />} />
+              <Route path="/discover" element={<Discover />} />
+              <Route path="/network" element={<Network />} />
+              <Route path="/guides" element={<Guides />} />
+              <Route path="/communities" element={<Communities />} />
+              <Route path="/c/:id" element={<CommunityScreen />} />
+              <Route path="/p/:id" element={<Profile />} />
+              <Route path="/stories" element={<Stories />} />
+              <Route path="/stories/:id" element={<StoryScreen />} />
+              <Route path="/questions" element={<Questions />} />
+              <Route path="/questions/:id" element={<QuestionScreen />} />
+              <Route path="/decisions" element={<Decisions />} />
+              <Route path="/decisions/:id" element={<DecisionScreen />} />
+              <Route path="/requests" element={<Requests />} />
+              <Route path="/connections" element={<Connections />} />
+              <Route path="/messages" element={<Messages />} />
+              <Route path="/messages/:id" element={<Messages />} />
+              <Route path="/notifications" element={<Notifications />} />
+              <Route path="/search" element={<SearchScreen />} />
+              <Route path="/saved" element={<Saved />} />
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </motion.main>
+        </AnimatePresence>
+        {isMobile && !inThread && <TabBar />}
+        <PeekLayer />
+        <CompareLayer />
+        <RequestLayer />
+        <SearchLayer />
+        <ToastLayer />
+      </div>
+      {splashLayer}
+    </>
   );
 }

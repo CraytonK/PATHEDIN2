@@ -2,9 +2,14 @@
 
 **Where you've been, where you are, where you want to go — and who you should know to get there.**
 
-PathedIn is a professional network built around one object: the **Path**. A Path is a journey (Past → Present → Possible futures), drawn as a transit line. Stations are steps, drawn with the brand's three nodes. The walked track is solid navy, and the future is a dashed celestial line. An undecided next step is an interchange that opens into the real routes people took. Everything in the product hangs off the Path: the people you should know, the communities you belong to, and the questions, stories and decisions worth your time.
+PathedIn is a professional network built around one object: the **Path**. A Path is a journey (Past → Present → Possible futures), drawn as a transit line. Stations are steps, drawn with the brand's three nodes. The walked track is solid ink, and the future is a dashed celestial line. An undecided next step is an interchange that opens into the real routes people took. Everything in the product hangs off the Path: the people you should know, the communities you belong to, and the questions, stories and decisions worth your time.
 
-This repository is a working front-end prototype. It's a React + TypeScript single-page app, built mobile-first. Its structure and behaviour follow Apple's [Human Interface Guidelines](https://developer.apple.com/design/human-interface-guidelines), and its look follows the PathedIn brand identity kit: the three-node Path mark, Deep Slate Navy with Celestial Blue kept for the future, and Noe Display / Marat Sans / Charter typography. It ships with a believable, interconnected sample network centred on Maya Okafor, an MSc chemistry student heading for pharmaceutical R&D.
+This repository is a working front-end prototype. It's a React + TypeScript single-page app, built mobile-first.
+- **Behaviour** follows Apple's [Human Interface Guidelines](https://developer.apple.com/design/human-interface-guidelines).
+- **Look and layout** follow Medium's reading experience: a cream intro page, a "Join PathedIn." sign-in card, a slim top bar with a left sidebar, and a For you feed beside a quiet right-hand column.
+- **Brand:** the PathedIn Path mark, with Celestial Blue as its one accent.
+
+It ships with a believable, interconnected sample network centred on Maya Okafor, an MSc chemistry student heading for pharmaceutical R&D.
 
 ## Run it
 
@@ -22,6 +27,10 @@ Requires Node 20+.
 
 | Interaction | Where |
 | --- | --- |
+| **The intro page.** One serif line and one sentence explain PathedIn. *Get started* or *Sign in* opens the "Join PathedIn." card. | First visit, or after signing out |
+| **Your Path draws itself.** After you sign in, your steps pop in one by one, each name types out, the future dashes on to your destination, and "Welcome, Maya." is written. Tap to skip. | Sign in |
+| **Home.** The For you feed, where every post says why it's there, next to a right-hand column. The column shows Coming up (your call with Amara and your Path Requests), Your Path this week, People worth knowing, Office Hours and your communities. | Home |
+| **Sidebar.** The menu button docks or hides it on wide screens and slides it over the content on narrower ones. | Desktop and iPad |
 | **The Transit Map.** Your Path draws itself station by station. The "?" interchange opens into three parallel routes that rejoin at your destination terminus. Tap any station to see who is there. | My Path |
 | **Walk ahead.** Drag your photo down your future, or tap *take the walk*. At each station the inspector shows who is there right now. | My Path |
 | **Destination ecosystem.** Select the destination to see the routes people took, the Guides who made it, who's heading there, and the communities, questions, stories and decisions around it. | My Path → Pharmaceutical R&D |
@@ -33,7 +42,7 @@ Requires Node 20+.
 | **Decision Points.** A decision drawn as a fork, showing who took each road and where it led them. People weigh in with their own Path. | Home, Decisions |
 | **Stories on a Path.** Each story's cover is generated from the author's Path, with the stretch it covers highlighted. | Stories |
 
-Everything is stateful in the browser: connecting, saving, joining, requests, weighing in, messages and added routes all persist to `localStorage` (and fail safely if storage is unavailable). Light and dark appearance follow the system, and you can override it from the account menu or your profile.
+Everything is stateful in the browser: connecting, saving, joining, requests, weighing in, messages and added routes all persist to `localStorage` (and fail safely if storage is unavailable). Light and dark appearance follow the system, and you can override it from the account menu or your profile. **Sign out** (account menu, or the bottom of your own profile) returns you to the intro page.
 
 ## Project structure
 
@@ -49,17 +58,27 @@ src/
     ui.ts        overlay state: Peek, Align, Path Request, search, toasts
   components/
     path/        TransitMap, PathStrip, Align (Compare), Confluence, PathLens
-    chrome.tsx   tab bar, top bar, navigation bars with large titles, sheets with detents
+    chrome.tsx   Medium-style top bar and sidebar, iPhone tab bar, navigation bars with large titles, sheets
+    Post.tsx     the feed row (byline, title, subtitle, why it's here, thumbnail)
+    PathSplash.tsx  the Path that draws itself after sign-in
     Peek.tsx     press-and-hold / hover previews
     …            content building blocks (people, stories, questions, decisions, communities)
-  screens/       one file per area of the product
-  styles/        brand tokens (type ramp, palette, dark mode), self-hosted fonts and base styles
-  assets/fonts/  WOFF2 stand-ins for the brand faces (Playfair Display, Plus Jakarta Sans, Source Serif 4)
+  screens/       one file per area of the product (Landing.tsx is the signed-out intro page and sign-in card)
+  styles/        tokens (type ramp, palette, dark mode), self-hosted fonts and base styles
+  assets/fonts/  WOFF2 fonts: Inter, Playfair Display, Source Serif 4
 ```
 
 ## Notes
 
 - **Portraits** are AI-generated faces of people who don't exist, from the public [100k-faces](https://github.com/ozgrozer/100k-faces) set (originally from [generated.photos](https://generated.photos)). They are placeholders: replace them with licensed photography before any real use.
 - **Names, companies and people are fictional.** Universities are real places, used only as settings.
-- **Fonts.** The brand's Noe Display and Marat Sans are commercial typefaces, and Charter comes with Apple devices. The app ships the brand kit's suggested open-licence stand-ins: Playfair Display, Plus Jakarta Sans and Source Serif 4 (SIL Open Font License). The font stacks name the brand faces first, so adding licensed files is enough to switch.
-- See [DESIGN.md](./DESIGN.md) for the brand kit as applied (mark, type, palette, components), how the interface follows the Human Interface Guidelines, and PathedIn's own visual language.
+- **Fonts.** All shipped fonts are under the SIL Open Font License:
+  - **Inter** is the interface font, standing in for Medium's Söhne.
+  - **Playfair Display** is the display serif, for the brand's Noe Display.
+  - **Source Serif 4** is the reading serif. Charter is used instead on Apple devices, which include it.
+- **Sign-in** is a prototype: no passwords are requested and nothing leaves the browser.
+- See [DESIGN.md](./DESIGN.md) for:
+  - the analysis of Medium's layout and how PathedIn maps it
+  - type, colour and components
+  - how the interface follows the Human Interface Guidelines
+  - PathedIn's own visual language

@@ -1,22 +1,20 @@
 /*
-  PathedIn design tokens — from the PathedIn Brand Kit, laid onto Apple's HIG structure.
+  PathedIn design tokens.
 
-  Palette ("Minimal Blue Principle": ~90% gallery neutrals, ~10% purposeful celestial accents)
-    Gallery White   #FFFFFF  canvas
-    Warm Porcelain  #F8FAFC  surfaces
-    Deep Slate Navy #0F172A  text, primary actions, the walked Path
-    Mineral Slate   #64748B  secondary text
-    Hairline        #E2E8F0  1px dividers
-    Celestial Blue  #38BDF8  the future: where you want to go
+  Look: Medium's quiet, premium reading surface — white canvas, near-black type, soft grey
+  secondary text, whisper-light hairlines, black pill buttons, a warm cream intro page.
+  Brand: the PathedIn Path mark and its one accent, Celestial Blue, kept for the future,
+  "you", links and focus (the brand kit's Minimal Blue Principle).
+  Structure and behaviour: Apple's HIG.
 */
 
 :root {
   color-scheme: light dark;
 
   /* ── Type families ─────────────────────────────────────────── */
-  --font-sans: 'Marat Sans', 'Plus Jakarta Sans', Inter, -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
-  /* Interface headings use the sans at demibold; the brand serif is reserved for hero moments. */
+  --font-sans: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
   --font-display: var(--font-sans);
+  /* The high-contrast serif: landing hero, sign-in and the wordmark only. */
   --font-brand: 'Noe Display', 'Playfair Display', Georgia, serif;
   --font-serif: Charter, 'Source Serif 4', 'Bitstream Charter', Georgia, serif;
   --font-rounded: var(--font-sans);
@@ -24,68 +22,69 @@
   /* ── Semantic colors (light) ───────────────────────────────── */
   --bg: #ffffff;
   --bg-elevated: #ffffff;
-  --bg-grouped: #f8fafc;
-  --bg-sunken: #f8fafc;
-  --bg-hover: rgba(15, 23, 42, 0.04);
-  --bg-press: rgba(15, 23, 42, 0.07);
+  --bg-grouped: #f9f9f9;
+  --bg-sunken: #fafafa;
+  --bg-cream: #f7f4ed; /* the signed-out intro page */
+  --bg-hover: rgba(0, 0, 0, 0.035);
+  --bg-press: rgba(0, 0, 0, 0.06);
 
-  --label: #0f172a;
-  --label-2: #64748b;
-  --label-3: #94a3b8;
-  --label-4: #cbd5e1;
+  --label: #242424;
+  --label-2: #6b6b6b;
+  --label-3: #a3a3a3;
+  --label-4: #dadada;
 
-  --fill: #f1f5f9;
-  --fill-2: #f1f5f9;
-  --fill-3: #f8fafc;
+  --fill: #f2f2f2;
+  --fill-2: #f2f2f2;
+  --fill-3: #f9f9f9;
 
-  --separator: #e2e8f0;
-  --separator-strong: #cbd5e1;
+  --separator: #f2f2f2;
+  --separator-strong: #e5e5e5;
 
-  /* Celestial Blue: the future, and the brand's accent. Graphics use --tint; small text uses --tint-text. */
+  /* Celestial Blue: the future, and the brand's only accent. Graphics use --tint; small text uses --tint-text. */
   --tint: #38bdf8;
   --tint-strong: #0284c7;
   --tint-text: #0369a1;
   --tint-soft: #e0f2fe;
   --tint-softer: #f0f9ff;
   --tint-border: #bae6fd;
-  --on-tint: #0f172a;
+  --on-tint: #242424;
   --future-soft: #bae6fd; /* routes you're considering but not focused on */
 
-  /* Deep Slate Navy: primary actions and the walked Path. */
-  --primary: #0f172a;
-  --primary-hover: #1e293b;
+  /* Ink: primary actions (Medium's black pill) and the walked Path. */
+  --primary: #191919;
+  --primary-hover: #000000;
   --on-primary: #ffffff;
-  --ink: #0f172a;
-  --ink-soft: rgba(15, 23, 42, 0.08);
-  --path-them: #94a3b8; /* the other Path when two are aligned */
+  --ink: #242424;
+  --ink-soft: rgba(0, 0, 0, 0.06);
+  --path-them: #a3a3a3; /* the other Path when two are aligned */
 
-  /* The brand has no green or red: availability and counts use the celestial family. */
   --green: #0369a1;
   --red: #0284c7;
   --badge: #0284c7;
 
-  /* Bars use the HIG chrome material, in Gallery White. */
-  --bar-bg: rgba(255, 255, 255, 0.9);
+  --bar-bg: rgba(255, 255, 255, 0.94);
   --bar-blur: saturate(160%) blur(20px);
 
-  --panel-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
-  --shadow-popover: 0 12px 40px rgba(15, 23, 42, 0.12), 0 2px 8px rgba(15, 23, 42, 0.06), 0 0 0 1px rgba(15, 23, 42, 0.04);
-  --shadow-lift: 0 1px 2px rgba(15, 23, 42, 0.05), 0 4px 16px rgba(15, 23, 42, 0.06);
-  --scrim: rgba(15, 23, 42, 0.32);
+  --panel-shadow: none;
+  --shadow-popover: 0 2px 10px rgba(0, 0, 0, 0.12), 0 0 0 1px rgba(0, 0, 0, 0.04);
+  --shadow-lift: 0 1px 4px rgba(0, 0, 0, 0.08);
+  --scrim: rgba(0, 0, 0, 0.28);
 
   /* ── Geometry ─────────────────────────────────────────────── */
   --gutter: 16px;
-  --r-xs: 6px;
-  --r-sm: 8px;
-  --r-md: 12px;
-  --r-lg: 16px;
-  --r-xl: 16px;
+  --r-xs: 4px;
+  --r-sm: 6px;
+  --r-md: 8px;
+  --r-lg: 12px;
+  --r-xl: 8px;
+  --r-pill: 999px;
   --hairline: 1px;
   --hit: 44px;
 
   --tabbar-h: 50px;
   --navbar-h: 44px;
-  --topbar-h: 60px;
+  --topbar-h: 57px;
+  --sidebar-w: 240px;
   --safe-top: env(safe-area-inset-top, 0px);
   --safe-bottom: env(safe-area-inset-bottom, 0px);
 
@@ -97,31 +96,29 @@
   --dur-3: 360ms;
 }
 
-/*
-  Dark appearance, derived from the brand palette: Deep Slate Navy becomes the ground,
-  Porcelain becomes the ink, Celestial Blue keeps its role.
-*/
+/* Dark appearance: a neutral charcoal ground with soft white ink; Celestial Blue keeps its role. */
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme='light']) {
     color-scheme: dark;
-    --bg: #0b1120;
-    --bg-elevated: #111a2e;
-    --bg-grouped: #0f172a;
-    --bg-sunken: #0f172a;
-    --bg-hover: rgba(248, 250, 252, 0.05);
-    --bg-press: rgba(248, 250, 252, 0.09);
+    --bg: #121212;
+    --bg-elevated: #1b1b1b;
+    --bg-grouped: #181818;
+    --bg-sunken: #161616;
+    --bg-cream: #141312;
+    --bg-hover: rgba(255, 255, 255, 0.05);
+    --bg-press: rgba(255, 255, 255, 0.09);
 
-    --label: #f8fafc;
-    --label-2: #94a3b8;
-    --label-3: #64748b;
-    --label-4: #334155;
+    --label: #ececec;
+    --label-2: #a3a3a3;
+    --label-3: #737373;
+    --label-4: #3a3a3a;
 
-    --fill: #1e293b;
-    --fill-2: #1e293b;
-    --fill-3: #152033;
+    --fill: #262626;
+    --fill-2: #262626;
+    --fill-3: #1d1d1d;
 
-    --separator: #1e293b;
-    --separator-strong: #334155;
+    --separator: #262626;
+    --separator-strong: #333333;
 
     --tint: #38bdf8;
     --tint-strong: #38bdf8;
@@ -129,67 +126,75 @@
     --tint-soft: rgba(56, 189, 248, 0.16);
     --tint-softer: rgba(56, 189, 248, 0.08);
     --tint-border: rgba(56, 189, 248, 0.35);
-    --on-tint: #0f172a;
+    --on-tint: #121212;
     --future-soft: rgba(56, 189, 248, 0.4);
 
-    --primary: #f8fafc;
-    --primary-hover: #e2e8f0;
-    --on-primary: #0f172a;
-    --ink: #e2e8f0;
-    --ink-soft: rgba(226, 232, 240, 0.1);
-    --path-them: #64748b;
+    --primary: #f2f2f2;
+    --primary-hover: #ffffff;
+    --on-primary: #121212;
+    --ink: #e6e6e6;
+    --ink-soft: rgba(255, 255, 255, 0.08);
+    --path-them: #737373;
 
     --green: #7dd3fc;
     --red: #38bdf8;
     --badge: #38bdf8;
 
-    --bar-bg: rgba(11, 17, 32, 0.86);
+    --bar-bg: rgba(18, 18, 18, 0.9);
     --panel-shadow: none;
-    --shadow-popover: 0 12px 40px rgba(0, 0, 0, 0.55), 0 0 0 1px rgba(248, 250, 252, 0.08);
-    --shadow-lift: 0 0 0 1px rgba(248, 250, 252, 0.08);
-    --scrim: rgba(2, 6, 23, 0.6);
+    --shadow-popover: 0 8px 30px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.08);
+    --shadow-lift: 0 0 0 1px rgba(255, 255, 255, 0.08);
+    --scrim: rgba(0, 0, 0, 0.6);
   }
 }
 
 :root[data-theme='dark'] {
   color-scheme: dark;
-  --bg: #0b1120;
-  --bg-elevated: #111a2e;
-  --bg-grouped: #0f172a;
-  --bg-sunken: #0f172a;
-  --bg-hover: rgba(248, 250, 252, 0.05);
-  --bg-press: rgba(248, 250, 252, 0.09);
-  --label: #f8fafc;
-  --label-2: #94a3b8;
-  --label-3: #64748b;
-  --label-4: #334155;
-  --fill: #1e293b;
-  --fill-2: #1e293b;
-  --fill-3: #152033;
-  --separator: #1e293b;
-  --separator-strong: #334155;
+  --bg: #121212;
+  --bg-elevated: #1b1b1b;
+  --bg-grouped: #181818;
+  --bg-sunken: #161616;
+  --bg-cream: #141312;
+  --bg-hover: rgba(255, 255, 255, 0.05);
+  --bg-press: rgba(255, 255, 255, 0.09);
+
+  --label: #ececec;
+  --label-2: #a3a3a3;
+  --label-3: #737373;
+  --label-4: #3a3a3a;
+
+  --fill: #262626;
+  --fill-2: #262626;
+  --fill-3: #1d1d1d;
+
+  --separator: #262626;
+  --separator-strong: #333333;
+
   --tint: #38bdf8;
   --tint-strong: #38bdf8;
   --tint-text: #7dd3fc;
   --tint-soft: rgba(56, 189, 248, 0.16);
   --tint-softer: rgba(56, 189, 248, 0.08);
   --tint-border: rgba(56, 189, 248, 0.35);
-  --on-tint: #0f172a;
+  --on-tint: #121212;
   --future-soft: rgba(56, 189, 248, 0.4);
-  --primary: #f8fafc;
-  --primary-hover: #e2e8f0;
-  --on-primary: #0f172a;
-  --ink: #e2e8f0;
-  --ink-soft: rgba(226, 232, 240, 0.1);
-  --path-them: #64748b;
+
+  --primary: #f2f2f2;
+  --primary-hover: #ffffff;
+  --on-primary: #121212;
+  --ink: #e6e6e6;
+  --ink-soft: rgba(255, 255, 255, 0.08);
+  --path-them: #737373;
+
   --green: #7dd3fc;
   --red: #38bdf8;
   --badge: #38bdf8;
-  --bar-bg: rgba(11, 17, 32, 0.86);
+
+  --bar-bg: rgba(18, 18, 18, 0.9);
   --panel-shadow: none;
-  --shadow-popover: 0 12px 40px rgba(0, 0, 0, 0.55), 0 0 0 1px rgba(248, 250, 252, 0.08);
-  --shadow-lift: 0 0 0 1px rgba(248, 250, 252, 0.08);
-  --scrim: rgba(2, 6, 23, 0.6);
+  --shadow-popover: 0 8px 30px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.08);
+  --shadow-lift: 0 0 0 1px rgba(255, 255, 255, 0.08);
+  --scrim: rgba(0, 0, 0, 0.6);
 }
 
 :root[data-theme='light'] {

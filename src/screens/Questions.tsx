@@ -1,5 +1,6 @@
 import { AnimatePresence, motion } from 'framer-motion';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { Page } from '../components/chrome';
 import { QuestionItem } from '../components/content';
 import { AvatarStack, Button, TextTabs } from '../components/ui';
@@ -24,6 +25,12 @@ function AskBox() {
   const [seg, setSeg] = useState(0);
   const [q, setQ] = useState('');
   const toast = useUI((s) => s.showToast);
+  const [params] = useSearchParams();
+  const input = useRef<HTMLTextAreaElement>(null);
+  // "Ask" in the top bar lands here with the composer focused, like Medium's "Write".
+  useEffect(() => {
+    if (params.get('ask')) input.current?.focus({ preventScroll: false });
+  }, [params]);
   const [a, b] = segments[seg];
   const answerers = [...peopleThrough(a), ...peopleAt(b), ...peopleThrough(b)].filter((p, i, arr) => arr.findIndex((x) => x.id === p.id) === i && p.id !== ME && p.path.some((s) => s.wp === b));
   return (
@@ -37,7 +44,7 @@ function AskBox() {
           </button>
         ))}
       </div>
-      <textarea className="ask__input" rows={2} placeholder={`What do you want to know about ${wp(a).label} → ${wp(b).label}?`} value={q} onChange={(e) => setQ(e.target.value)} />
+      <textarea ref={input} className="ask__input" rows={2} placeholder={`What do you want to know about ${wp(a).label} → ${wp(b).label}?`} value={q} onChange={(e) => setQ(e.target.value)} />
       <div className="ask__foot">
         <span className="t-footnote c-2 ask__who">
           {answerers.length > 0 && <AvatarStack ids={answerers.map((p) => p.id)} size={22} max={4} />}

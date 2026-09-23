@@ -5,6 +5,12 @@
 .app--desktop {
   padding-top: var(--topbar-h);
 }
+.app--desktop > main {
+  transition: margin-left 260ms var(--ease-out);
+}
+.app--sidebar > main {
+  margin-left: var(--sidebar-w);
+}
 .app--mobile {
   padding-bottom: calc(var(--tabbar-h) + var(--safe-bottom));
 }
@@ -18,135 +24,257 @@
 .wordmark__inner {
   display: inline-flex;
   align-items: center;
-  gap: 9px;
+  gap: 8px;
 }
-/* Brand kit: the wordmark is set in Noe Display Medium. */
+/* Set like Medium's masthead: a heavy, high-contrast serif. */
 .wordmark__text {
   font-family: var(--font-brand);
-  font-weight: 500;
-  font-size: 22px;
+  font-weight: 700;
+  font-size: 27px;
   line-height: 1;
-  letter-spacing: -0.025em;
+  letter-spacing: -0.035em;
   color: var(--label);
-  padding-bottom: 2px;
+  padding-bottom: 3px;
 }
 
-/* ── Desktop top bar ──────────────────────────────────── */
-.topbar {
+/* ── Desktop: Medium-style top bar ─────────────────────── */
+.mbar {
   position: fixed;
   inset: 0 0 auto 0;
-  height: var(--topbar-h);
   z-index: 40;
-  background: var(--bar-bg);
-  -webkit-backdrop-filter: var(--bar-blur);
-  backdrop-filter: var(--bar-blur);
-  border-bottom: var(--hairline) solid var(--separator);
-}
-.topbar__inner {
-  height: 100%;
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 0 var(--gutter);
-  display: grid;
-  grid-template-columns: 1fr auto 1fr;
-  align-items: center;
-  gap: 24px;
-}
-.topbar__nav {
+  height: var(--topbar-h);
   display: flex;
-  gap: 4px;
-  height: 100%;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 0 24px 0 16px;
+  background: var(--bg);
+  border-bottom: 1px solid var(--separator);
 }
-.topbar__link {
-  position: relative;
+.mbar__left,
+.mbar__right {
+  display: flex;
+  align-items: center;
+  min-width: 0;
+}
+.mbar__left {
+  gap: 14px;
+}
+.mbar__right {
+  gap: 6px;
+}
+.mbar__menu {
   display: inline-flex;
   align-items: center;
-  height: 100%;
-  padding: 0 14px;
-  font-size: 14px;
-  font-weight: 400;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
   color: var(--label-2);
-  letter-spacing: 0;
   transition: color var(--dur-2);
 }
-.topbar__link:hover {
+.mbar__menu:hover {
   color: var(--label);
 }
-.topbar__link.is-active {
-  color: var(--label);
-  font-weight: 600;
-}
-.topbar__indicator {
-  position: absolute;
-  left: 14px;
-  right: 14px;
-  bottom: -1px;
-  height: 2px;
-  border-radius: 2px;
-  background: var(--tint);
-}
-.topbar__actions {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  gap: 2px;
-}
-.topbar__search {
+.mbar__search {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  height: 36px;
-  padding: 0 10px 0 12px;
-  margin-right: 8px;
-  border-radius: 8px;
-  background: var(--bg-elevated);
-  box-shadow: inset 0 0 0 1px var(--separator);
+  gap: 10px;
+  width: 240px;
+  height: 40px;
+  margin-left: 10px;
+  padding: 0 14px 0 12px;
+  border-radius: var(--r-pill);
+  background: var(--bg-grouped);
   color: var(--label-2);
-  font-size: 13px;
-  font-weight: 400;
-  width: 260px;
-  transition:
-    background-color var(--dur-2),
-    box-shadow var(--dur-2);
+  font-size: 14px;
+  transition: background-color var(--dur-2);
 }
-.topbar__search span {
+.mbar__search span {
   flex: 1;
   text-align: left;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
-.topbar__search:hover {
-  box-shadow: inset 0 0 0 1px var(--separator-strong);
-}
-.topbar__search kbd {
+.mbar__search kbd {
   font: inherit;
   font-size: 12px;
   color: var(--label-3);
-  font-weight: 500;
 }
-@media (max-width: 1180px) {
-  .topbar__search {
+.mbar__search:hover {
+  background: var(--fill);
+}
+.mbar__write {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 40px;
+  padding: 0 12px;
+  margin-right: 8px;
+  color: var(--label-2);
+  font-size: 14px;
+  transition: color var(--dur-2);
+}
+.mbar__write:hover {
+  color: var(--label);
+}
+.mbar .icon-btn {
+  color: var(--label-2);
+}
+.mbar .icon-btn:hover,
+.mbar .icon-btn.is-active {
+  color: var(--label);
+}
+@media (max-width: 960px) {
+  .mbar__search {
     width: 40px;
     padding: 0;
     justify-content: center;
+    margin-left: 0;
   }
-  .topbar__search span,
-  .topbar__search kbd {
+  .mbar__search span,
+  .mbar__search kbd,
+  .mbar__write span {
     display: none;
   }
 }
-@media (max-width: 900px) {
-  .topbar__inner {
-    grid-template-columns: auto 1fr auto;
-  }
-  .topbar__link {
-    padding: 0 9px;
-  }
-  .topbar__indicator {
-    left: 9px;
-    right: 9px;
-  }
+
+/* ── Desktop: left sidebar ─────────────────────────────── */
+.sidebar {
+  position: fixed;
+  top: var(--topbar-h);
+  bottom: 0;
+  left: 0;
+  z-index: 35;
+  width: var(--sidebar-w);
+  padding: 24px 0 40px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: none;
+  background: var(--bg);
+  border-right: 1px solid var(--separator);
+  transform: translateX(-100%);
+  visibility: hidden;
+  transition:
+    transform 260ms var(--ease-out),
+    visibility 0s linear 260ms;
+}
+.sidebar::-webkit-scrollbar {
+  display: none;
+}
+.sidebar.is-open {
+  transform: none;
+  visibility: visible;
+  transition: transform 260ms var(--ease-out);
+}
+.sidebar.is-overlay.is-open {
+  box-shadow: 0 0 24px rgba(0, 0, 0, 0.12);
+  z-index: 45;
+}
+.sidebar-scrim {
+  position: fixed;
+  inset: var(--topbar-h) 0 0 0;
+  z-index: 44;
+  background: rgba(0, 0, 0, 0.12);
+}
+.sidebar__group {
+  padding: 0 16px 0 24px;
+}
+.sidebar__group + .sidebar__group {
+  margin-top: 20px;
+  padding-top: 20px;
+  position: relative;
+}
+.sidebar__group + .sidebar__group::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 24px;
+  right: 24px;
+  border-top: 1px solid var(--separator);
+}
+.sidebar__item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  height: 44px;
+  color: var(--label-2);
+  font-size: 15px;
+  transition: color var(--dur-2);
+}
+.sidebar__item:hover {
+  color: var(--label);
+}
+.sidebar__item.is-active {
+  color: var(--label);
+  font-weight: 500;
+}
+.sidebar__icon {
+  display: inline-flex;
+  flex: none;
+}
+.sidebar__label {
+  flex: 1;
+  min-width: 0;
+}
+.sidebar__badge {
+  min-width: 20px;
+  height: 20px;
+  padding: 0 6px;
+  border-radius: var(--r-pill);
+  background: var(--badge);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 20px;
+  text-align: center;
+}
+.sidebar__mine {
+  display: flex;
+  flex-direction: column;
+  margin: 2px 0 12px;
+}
+.sidebar__community {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  height: 36px;
+  padding-left: 4px;
+  color: var(--label-2);
+  font-size: 14px;
+  min-width: 0;
+}
+.sidebar__community:hover,
+.sidebar__community.is-active {
+  color: var(--label);
+}
+.sidebar__dot {
+  width: 16px;
+  height: 16px;
+  flex: none;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--tint) 0 2.6px, transparent 3.2px);
+  box-shadow: inset 0 0 0 2px var(--ink);
+}
+.sidebar__suggest {
+  display: flex;
+  gap: 16px;
+  color: var(--label-2);
+  font-size: 14px;
+  line-height: 20px;
+  padding-right: 8px;
+}
+.sidebar__suggest svg {
+  flex: none;
+  margin-top: 1px;
+}
+.sidebar__suggest a {
+  display: block;
+  margin-top: 12px;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  color: var(--label-2);
+}
+.sidebar__suggest a:hover {
+  color: var(--label);
 }
 
 .account {
@@ -218,6 +346,9 @@
 .menu__profile:hover,
 .menu__item:hover {
   background: var(--bg-hover);
+}
+.menu__item--quiet {
+  color: var(--label-2);
 }
 .menu__count {
   margin-left: auto;
@@ -327,19 +458,17 @@
   text-transform: uppercase;
   color: var(--tint-text);
 }
-/* Hero headings in the brand serif (Noe Display Medium). */
+/* Page titles the way Medium sets them: large, bold, close-tracked grotesk. */
 .page__title {
-  font-size: 44px;
-  line-height: 50px;
-  letter-spacing: -0.025em;
+  font-size: 42px;
+  line-height: 52px;
+  letter-spacing: -0.032em;
 }
-/* Brand sub-display: Marat Sans Light for airy subtitles and hero preamble. */
 .page__subtitle {
-  margin-top: 8px;
+  margin-top: 6px;
   max-width: 620px;
-  font-size: 18px;
-  line-height: 27px;
-  font-weight: 300;
+  font-size: 16px;
+  line-height: 24px;
 }
 .page__trailing {
   display: flex;

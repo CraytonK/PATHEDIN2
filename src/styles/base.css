@@ -16,8 +16,8 @@ body {
   color: var(--label);
   font-family: var(--font-sans);
   font-size: 16px;
-  line-height: 1.4;
-  letter-spacing: -0.004em;
+  line-height: 1.45;
+  letter-spacing: -0.011em;
   font-optical-sizing: auto;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -84,16 +84,16 @@ ol {
   background: color-mix(in srgb, var(--tint) 24%, transparent);
 }
 
-/* ── Type ramp: HIG sizes (Dynamic Type "Large"), PathedIn brand faces and weights ──
-   Hero titles use the brand serif (Noe Display). Everything else is Marat Sans:
-   Light for captions and subtitles, Regular for UI, Demibold for headings and actions,
-   Bold only for metrics and data chips. Charter carries editorial content. */
+/* ── Type ramp: HIG roles, set the way Medium sets them ──
+   One tight grotesk for the whole interface: bold, close-tracked titles; regular grey
+   secondary text; no light weights. The display serif appears only on the intro page,
+   sign-in and the wordmark. The editorial serif carries stories and reflections. */
 .t-large-title {
-  font-family: var(--font-brand);
+  font-family: var(--font-sans);
   font-size: 34px;
   line-height: 40px;
-  font-weight: 500;
-  letter-spacing: -0.025em;
+  font-weight: 700;
+  letter-spacing: -0.03em;
 }
 .t-title1 {
   font-family: var(--font-display);
@@ -171,10 +171,11 @@ ol {
   text-transform: uppercase;
   color: var(--tint-text);
 }
-/* Reflections in someone's own words: Marat Sans Light Italic. */
+/* Reflections in someone's own words: the editorial serif, italic. */
 .t-reflection {
+  font-family: var(--font-serif);
   font-style: italic;
-  font-weight: 300;
+  font-weight: 400;
   color: var(--label-2);
 }
 .t-num {
@@ -183,7 +184,6 @@ ol {
 
 .c-2 {
   color: var(--label-2);
-  font-weight: 300;
 }
 .c-2 strong,
 .c-2 b {

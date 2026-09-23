@@ -9,7 +9,7 @@ import { useUI, scheduleClosePeek, cancelClosePeek } from '../lib/ui';
 import { useApp } from '../lib/store';
 import { PathStrip } from './path/PathStrip';
 import { IconAlign, IconBookmark, IconMessage, IconSend, IconChevronRight } from './icons';
-import { PathChips, RelationTag } from './ui';
+import { Avatar, PathChips, RelationTag } from './ui';
 import { conversationList } from '../data/social';
 import './peek.css';
 
@@ -118,9 +118,7 @@ function PeekBody({ id, onDone }: { id: string; onDone: () => void }) {
           navigate(`/p/${id}`);
         }}
       >
-        <span className="avatar peek__avatar" style={{ width: 52, height: 52 }}>
-          <img src={p.photo} alt="" />
-        </span>
+        <Avatar id={id} size={52} peek={false} className="peek__avatar" />
         <span className="peek__who">
           <span className="t-headline">{p.name}</span>
           <span className="t-footnote c-2 clamp-2">{p.headline}</span>

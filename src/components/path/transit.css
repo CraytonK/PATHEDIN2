@@ -191,14 +191,13 @@
   font-weight: 600;
   letter-spacing: -0.012em;
 }
-/* "Where you are" and "where you want to go" are milestone moments: the brand serif. */
+/* "Where you are" and "where you want to go" are milestone moments: set larger and bolder. */
 .tmap__row--present .tmap__title,
 .tmap__row--destination .tmap__title {
-  font-family: var(--font-brand);
-  font-weight: 500;
-  font-size: 22px;
-  line-height: 22px;
-  letter-spacing: -0.02em;
+  font-weight: 700;
+  font-size: 21px;
+  line-height: 24px;
+  letter-spacing: -0.025em;
 }
 .tmap__row--junction .tmap__title,
 .tmap__row--route .tmap__title,
@@ -226,8 +225,8 @@
   color: var(--label-2);
   margin-top: 6px;
   max-width: 460px;
+  font-family: var(--font-serif);
   font-style: italic;
-  font-weight: 300;
 }
 .tmap__shared {
   display: inline-flex;

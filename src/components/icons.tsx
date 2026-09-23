@@ -7,7 +7,8 @@ import type { SVGProps } from 'react';
 
 type P = SVGProps<SVGSVGElement> & { size?: number };
 
-function Svg({ size = 24, children, strokeWidth = 1.75, ...rest }: P) {
+// `filled` is consumed by glyphs that have a filled variant; never let it reach the DOM.
+function Svg({ size = 24, children, strokeWidth = 1.75, filled: _filled, ...rest }: P & { filled?: boolean }) {
   return (
     <svg
       width={size}
@@ -270,5 +271,33 @@ export const IconGear = (p: P) => (
   <Svg {...p}>
     <circle cx="12" cy="12" r="3" />
     <path d="M12 3.5v2.2M12 18.3v2.2M20.5 12h-2.2M5.7 12H3.5M18 6l-1.6 1.6M7.6 16.4 6 18M18 18l-1.6-1.6M7.6 7.6 6 6" />
+  </Svg>
+);
+
+export const IconMenu = (p: P) => (
+  <Svg {...p}>
+    <path d="M4 7h16M4 12h16M4 17h16" />
+  </Svg>
+);
+
+export const IconUser = ({ filled, ...p }: P & { filled?: boolean }) => (
+  <Svg {...p}>
+    <circle cx="12" cy="8" r="3.6" fill={filled ? 'currentColor' : 'none'} />
+    <path d="M4.8 19.5c.9-3.4 3.6-5.3 7.2-5.3s6.3 1.9 7.2 5.3" fill={filled ? 'currentColor' : 'none'} />
+  </Svg>
+);
+
+/** Compose: a square with a pencil, like a "Write" action. */
+export const IconCompose = (p: P) => (
+  <Svg {...p}>
+    <path d="M11 4.5H6A1.5 1.5 0 0 0 4.5 6v12A1.5 1.5 0 0 0 6 19.5h12a1.5 1.5 0 0 0 1.5-1.5v-5" />
+    <path d="M17.6 3.9a1.6 1.6 0 0 1 2.3 2.3L12 14.1l-3 .8.8-3z" />
+  </Svg>
+);
+
+export const IconDoc = ({ filled, ...p }: P & { filled?: boolean }) => (
+  <Svg {...p}>
+    <path d="M6.5 3.5h8l4 4v12a1 1 0 0 1-1 1h-11a1 1 0 0 1-1-1v-15a1 1 0 0 1 1-1z" fill={filled ? 'currentColor' : 'none'} />
+    <path d="M9 11h6M9 14.5h6M9 18h4" stroke={filled ? 'var(--bg)' : 'currentColor'} />
   </Svg>
 );

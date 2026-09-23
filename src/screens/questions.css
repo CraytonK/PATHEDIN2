@@ -132,11 +132,11 @@
   text-decoration: underline;
 }
 .qd__title {
-  font-family: var(--font-brand);
+  font-family: var(--font-sans);
   font-size: 36px;
   line-height: 42px;
-  font-weight: 500;
-  letter-spacing: -0.025em;
+  font-weight: 700;
+  letter-spacing: -0.03em;
   margin: 10px 0 14px;
   text-wrap: balance;
 }

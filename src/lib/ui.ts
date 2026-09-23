@@ -11,6 +11,8 @@ interface UIState {
   compare: string | null;
   request: { to: string; segment?: [string, string] } | null;
   search: boolean;
+  /** The sidebar drawer on desktop widths too narrow to dock it. */
+  drawer: boolean;
   toast: { text: string; id: number } | null;
   openPeek: (p: PeekState) => void;
   closePeek: () => void;
@@ -19,6 +21,7 @@ interface UIState {
   openRequest: (to: string, segment?: [string, string]) => void;
   closeRequest: () => void;
   setSearch: (open: boolean) => void;
+  setDrawer: (open: boolean) => void;
   showToast: (text: string) => void;
 }
 
@@ -29,6 +32,7 @@ export const useUI = create<UIState>()((set) => ({
   compare: null,
   request: null,
   search: false,
+  drawer: false,
   toast: null,
   openPeek: (peek) => set({ peek }),
   closePeek: () => set({ peek: null }),
@@ -37,6 +41,7 @@ export const useUI = create<UIState>()((set) => ({
   openRequest: (to, segment) => set({ request: { to, segment }, peek: null }),
   closeRequest: () => set({ request: null }),
   setSearch: (search) => set({ search }),
+  setDrawer: (drawer) => set({ drawer }),
   showToast: (text) => {
     clearTimeout(toastTimer);
     set({ toast: { text, id: Date.now() } });

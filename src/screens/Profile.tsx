@@ -5,7 +5,7 @@ import { TransitMap } from '../components/path/TransitMap';
 import { AlignMap, compareSummary } from '../components/path/Compare';
 import { CommunityRow, ConnectButton, CredibilityLabel, DecisionItem, RequestButton, StoryItem } from '../components/content';
 import { Button, GroupedList, PathChips, RelationTag, SaveToggle } from '../components/ui';
-import { IconAlign, IconBell, IconBookmark, IconCalendar, IconClock, IconMoon, IconPeople, IconPin, IconSend, IconSun } from '../components/icons';
+import { IconAlign, IconBell, IconBookmark, IconCalendar, IconClock, IconMoon, IconPeople, IconPin, IconSend, IconSun, IconUser } from '../components/icons';
 import { people, ME } from '../data/people';
 import { wp } from '../data/waypoints';
 import { storyList } from '../data/stories';
@@ -25,6 +25,7 @@ function YourSpace() {
   const saved = useApp((s) => s.saved);
   const theme = useApp((s) => s.theme);
   const setTheme = useApp((s) => s.setTheme);
+  const signOut = useApp((s) => s.signOut);
   const incoming = requests.filter((r) => r.to === ME && r.status === 'pending').length;
   const next = { system: 'light', light: 'dark', dark: 'system' } as const;
   return (
@@ -41,6 +42,7 @@ function YourSpace() {
             value: theme === 'system' ? 'Automatic' : theme === 'dark' ? 'Dark' : 'Light',
             onClick: () => setTheme(next[theme]),
           },
+          { icon: <IconUser />, title: 'Sign out', onClick: signOut },
         ]}
       />
     </section>
