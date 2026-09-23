@@ -222,9 +222,10 @@
 }
 .seg-card__kicker {
   color: var(--tint-text);
-  font-weight: 500;
-  letter-spacing: -0.005em;
-  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  font-size: 11px;
+  text-transform: uppercase;
 }
 .composer-bar {
   position: relative;

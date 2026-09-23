@@ -104,10 +104,10 @@ export function PathSplash({ onCovered, onDone }: { onCovered: () => void; onDon
           <line x1={N2.x} y1={N2.y} x2={N3.x} y2={N3.y} stroke="var(--tint)" strokeWidth="7" strokeLinecap="round" strokeDasharray="7 12" mask="url(#splash-future)" />
           <motion.circle cx={N1.x} cy={N1.y} r="13" fill="var(--ink)" style={{ transformOrigin: `${N1.x}px ${N1.y}px` }} {...pop(80)} />
           <motion.g style={{ transformOrigin: `${N2.x}px ${N2.y}px` }} {...pop(820)}>
-            <circle cx={N2.x} cy={N2.y} r="14" fill="var(--bg-cream)" stroke="var(--ink)" strokeWidth="5.5" />
+            <circle cx={N2.x} cy={N2.y} r="14" fill="var(--bg-intro)" stroke="var(--ink)" strokeWidth="5.5" />
             <circle cx={N2.x} cy={N2.y} r="5" fill="var(--tint)" />
           </motion.g>
-          <motion.circle cx={N3.x} cy={N3.y} r="14" fill="var(--bg-cream)" stroke="var(--tint)" strokeWidth="5.5" style={{ transformOrigin: `${N3.x}px ${N3.y}px` }} {...pop(1540)} />
+          <motion.circle cx={N3.x} cy={N3.y} r="14" fill="var(--bg-intro)" stroke="var(--tint)" strokeWidth="5.5" style={{ transformOrigin: `${N3.x}px ${N3.y}px` }} {...pop(1540)} />
         </svg>
         <div className="splash__label" style={{ left: `${((N1.x + 30) / 560) * 100}%`, top: `${(N1.y / 340) * 100}%` }}>
           <Typed text={been} start={160} skip={reduce} className="splash__text" />

@@ -17,7 +17,7 @@ body {
   font-family: var(--font-sans);
   font-size: 16px;
   line-height: 1.45;
-  letter-spacing: -0.011em;
+  letter-spacing: -0.004em;
   font-optical-sizing: auto;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -84,16 +84,17 @@ ol {
   background: color-mix(in srgb, var(--tint) 24%, transparent);
 }
 
-/* ── Type ramp: HIG roles, set the way Medium sets them ──
-   One tight grotesk for the whole interface: bold, close-tracked titles; regular grey
-   secondary text; no light weights. The display serif appears only on the intro page,
-   sign-in and the wordmark. The editorial serif carries stories and reflections. */
+/* ── Type ramp: HIG roles, in the brand kit's three faces ──
+   Brand — Noe Display Medium: wordmark, hero headings, milestone moments.
+   UI — Marat Sans: Light for captions and subtitles, Regular for UI, Demibold for headers
+   and actions, Bold for metrics and data chips.
+   Content — Charter: story text, story titles, quotes. */
 .t-large-title {
-  font-family: var(--font-sans);
+  font-family: var(--font-brand);
   font-size: 34px;
   line-height: 40px;
-  font-weight: 700;
-  letter-spacing: -0.03em;
+  font-weight: 500;
+  letter-spacing: -0.025em;
 }
 .t-title1 {
   font-family: var(--font-display);
@@ -162,27 +163,31 @@ ol {
   letter-spacing: -0.025em;
 }
 /* Brand eyebrow: Marat Sans Demibold, uppercase, widest tracking, in the celestial text tone. */
+/* Category eyebrow: Marat Sans Demibold, uppercase, widest tracking, in Executive Navy. */
 .t-eyebrow {
   font-family: var(--font-sans);
-  font-size: 13px;
-  line-height: 18px;
-  font-weight: 500;
-  letter-spacing: -0.005em;
-  color: var(--label-2);
+  font-size: 11px;
+  line-height: 15px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--tint-text);
 }
-/* Reflections in someone's own words: the editorial serif, italic. */
+/* Reflections in someone's own words: Marat Sans Light Italic. */
 .t-reflection {
-  font-family: var(--font-serif);
+  font-family: var(--font-sans);
   font-style: italic;
-  font-weight: 400;
+  font-weight: 300;
   color: var(--label-2);
 }
 .t-num {
   font-variant-numeric: tabular-nums;
 }
 
+/* Captions and secondary labels: Marat Sans Light. */
 .c-2 {
   color: var(--label-2);
+  font-weight: 300;
 }
 .c-2 strong,
 .c-2 b {

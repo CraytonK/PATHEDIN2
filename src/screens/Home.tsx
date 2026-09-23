@@ -190,6 +190,7 @@ function ForYou() {
         }
         thumb={<SegmentArt story={elena} height={120} labels={false} />}
         saveKey={`story:${elena.id}`}
+        variant="story"
       />
       <Post
         i={i++}
@@ -236,6 +237,7 @@ function ForYou() {
         stats={<span>{tomas.minutes} min read</span>}
         thumb={<SegmentArt story={tomas} height={120} labels={false} />}
         saveKey={`story:${tomas.id}`}
+        variant="story"
       />
       <Post
         i={i++}

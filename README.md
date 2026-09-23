@@ -2,12 +2,16 @@
 
 **Where you've been, where you are, where you want to go — and who you should know to get there.**
 
-PathedIn is a professional network built around one object: the **Path**. A Path is a journey (Past → Present → Possible futures), drawn as a transit line. Stations are steps, drawn with the brand's three nodes. The walked track is solid ink, and the future is a dashed celestial line. An undecided next step is an interchange that opens into the real routes people took. Everything in the product hangs off the Path: the people you should know, the communities you belong to, and the questions, stories and decisions worth your time.
+PathedIn is a professional network built around one object: the **Path**. A Path is a journey (Past → Present → Possible futures), drawn as a transit line. Stations are steps, drawn with the brand's three nodes. The walked track is solid Deep Slate Navy, and the future is a dashed Executive Navy line. An undecided next step is an interchange that opens into the real routes people took. Everything in the product hangs off the Path: the people you should know, the communities you belong to, and the questions, stories and decisions worth your time.
 
 This repository is a working front-end prototype. It's a React + TypeScript single-page app, built mobile-first.
 - **Behaviour** follows Apple's [Human Interface Guidelines](https://developer.apple.com/design/human-interface-guidelines).
-- **Look and layout** follow Medium's reading experience: a cream intro page, a "Join PathedIn." sign-in card, a slim top bar with a left sidebar, and a For you feed beside a quiet right-hand column.
-- **Brand:** the PathedIn Path mark, with Celestial Blue as its one accent.
+- **Layout** follows Medium's reading experience: an intro page, a "Join PathedIn." sign-in card, a slim top bar with a left sidebar, and a For you feed beside a quiet right-hand column.
+- **Colour and type** follow the PathedIn brand identity kit (v2):
+  - slate neutrals, with Executive Navy as the one accent (the Minimal Navy Principle)
+  - Noe Display for brand moments
+  - Marat Sans for the interface
+  - Charter for stories
 
 It ships with a believable, interconnected sample network centred on Maya Okafor, an MSc chemistry student heading for pharmaceutical R&D.
 
@@ -65,17 +69,19 @@ src/
     …            content building blocks (people, stories, questions, decisions, communities)
   screens/       one file per area of the product (Landing.tsx is the signed-out intro page and sign-in card)
   styles/        tokens (type ramp, palette, dark mode), self-hosted fonts and base styles
-  assets/fonts/  WOFF2 fonts: Inter, Playfair Display, Source Serif 4
+  assets/fonts/  WOFF2 fonts: Plus Jakarta Sans, Playfair Display, Source Serif 4
 ```
 
 ## Notes
 
 - **Portraits** are AI-generated faces of people who don't exist, from the public [100k-faces](https://github.com/ozgrozer/100k-faces) set (originally from [generated.photos](https://generated.photos)). They are placeholders: replace them with licensed photography before any real use.
 - **Names, companies and people are fictional.** Universities are real places, used only as settings.
-- **Fonts.** All shipped fonts are under the SIL Open Font License:
-  - **Inter** is the interface font, standing in for Medium's Söhne.
-  - **Playfair Display** is the display serif, for the brand's Noe Display.
-  - **Source Serif 4** is the reading serif. Charter is used instead on Apple devices, which include it.
+- **Fonts.** The brand's Noe Display and Marat Sans are commercial typefaces. The app ships the brand kit's own open-licence stand-ins (SIL Open Font License):
+  - **Playfair Display** for Noe Display
+  - **Plus Jakarta Sans** for Marat Sans
+  - **Source Serif 4** for Charter, which Apple devices already include
+
+  The font stacks name the brand faces first, so adding licensed files is enough to switch.
 - **Sign-in** is a prototype: no passwords are requested and nothing leaves the browser.
 - See [DESIGN.md](./DESIGN.md) for:
   - the analysis of Medium's layout and how PathedIn maps it

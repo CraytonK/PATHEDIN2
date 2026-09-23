@@ -28,16 +28,18 @@ export interface PostProps {
   extra?: ReactNode;
   saveKey?: string;
   i?: number;
+  /** Stories are content, so their titles are set in Charter. */
+  variant?: 'story';
 }
 
 /**
  * A feed row laid out like a Medium story preview: byline, bold title, grey subtitle,
  * a quiet meta row, and a thumbnail on the right.
  */
-export function Post({ author, where, note, ago, to, title, subtitle, why, stats, thumb, thumbKind = 'art', extra, saveKey, i = 0 }: PostProps) {
+export function Post({ author, where, note, ago, to, title, subtitle, why, stats, thumb, thumbKind = 'art', extra, saveKey, i = 0, variant }: PostProps) {
   return (
     <motion.article
-      className="post"
+      className={`post ${variant ? `post--${variant}` : ''}`}
       initial={{ opacity: 0, y: 12 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: '-40px' }}

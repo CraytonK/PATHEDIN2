@@ -3,12 +3,13 @@
 .profile__head {
   padding: 40px 0 8px;
 }
+/* A person's name is a hero heading: Noe Display Medium. */
 .profile__name {
-  font-family: var(--font-sans);
-  font-size: 42px;
-  line-height: 52px;
-  font-weight: 700;
-  letter-spacing: -0.032em;
+  font-family: var(--font-brand);
+  font-size: 44px;
+  line-height: 50px;
+  font-weight: 500;
+  letter-spacing: -0.025em;
 }
 .profile__why {
   margin-top: 10px;
@@ -62,9 +63,10 @@
 }
 .profile__bio {
   margin-top: 12px;
-  font-size: 14px;
-  line-height: 20px;
-  color: var(--label-2);
+  font-family: var(--font-serif);
+  font-size: 15px;
+  line-height: 22px;
+  color: var(--label);
 }
 .profile__chips {
   margin-top: 12px;
@@ -103,8 +105,11 @@
   gap: 1px;
 }
 .profile__facts dt {
-  font-size: 13px;
+  font-size: 11px;
   color: var(--label-2);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
 }
 .profile__facts dd {
   margin: 0;
@@ -180,7 +185,7 @@
 .profile__answer-q {
   font-size: 20px;
   line-height: 26px;
-  font-weight: 700;
+  font-weight: 600;
   letter-spacing: -0.022em;
 }
 .profile__answer-a {
@@ -226,10 +231,11 @@
     height: 76px;
   }
   .profile__card-name {
-    font-size: 26px;
-    line-height: 32px;
-    font-weight: 700;
-    letter-spacing: -0.028em;
+    font-family: var(--font-brand);
+    font-size: 30px;
+    line-height: 36px;
+    font-weight: 500;
+    letter-spacing: -0.025em;
   }
   .profile__bio {
     font-size: 15px;

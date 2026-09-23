@@ -3,7 +3,7 @@
 PathedIn is built in four layers:
 - **Behaviour** comes from Apple's [Human Interface Guidelines](https://developer.apple.com/design/human-interface-guidelines): navigation, controls, presentation, motion and accessibility.
 - **Look and layout** follow Medium's reading experience: its intro page, its sign-in card, its top bar and sidebar, and its feed with a right-hand column.
-- **Brand** comes from the PathedIn **brand identity kit**: the three-node Path mark and its one accent, Celestial Blue.
+- **Brand** — colour and type — comes from the PathedIn **brand identity kit (v2)**: the three-node Path mark, slate neutrals with Executive Navy as the one accent, and Noe Display / Marat Sans / Charter.
 - **PathedIn's own language** sits on top: **the Path drawn as a transit line**.
 
 ## Medium as the reference
@@ -53,7 +53,7 @@ This analysis is based on the signed-in screenshot supplied with the brief and o
 ### How PathedIn maps it
 | Medium | PathedIn |
 | --- | --- |
-| Intro page, "Human stories & ideas" | **"Your path & who’s walked it."** It uses the same cream ground, ruled masthead, black pills and footer. The illustration is the Path mark drawn big and flat: been → now → going, with routes branching off. Below the fold, a three-node row explains the idea: where you’ve been, where you are, where you want to go. |
+| Intro page, "Human stories & ideas" | **"Your path & who’s walked it."** It uses the same ruled masthead, pills and footer, on the brand's Warm Porcelain ground. The illustration is the Path mark drawn big and flat: been → now → going, with routes branching off. Below the fold, a three-node row explains the idea: where you’ve been, where you are, where you want to go. |
 | "Join Medium." card | **"Join PathedIn." / "Welcome back."** Outline pills offer Google or email, with the same switch line and fine print. It's a prototype, so no passwords are asked for and nothing is sent anywhere. |
 | The typing moment on sign-in | **The Path draws itself.** Your first step pops in and its name types out with a caret, then the line draws to "You are here". The dashed future runs on to your destination, and the serif writes "Welcome, Maya." It takes about three seconds and can be skipped with a tap. With Reduce Motion it shows the finished Path briefly instead. |
 | Top bar | A menu button (docks or undocks the sidebar), the wordmark, a pill **Search** (⌘K), then **Ask** (opens the question composer), Messages, Notifications and your photo. |
@@ -97,78 +97,84 @@ All pages share Medium's page shape.
 | Network, Guides, Connections, Requests, Notifications, Saved, Search | Hairline lists with text tabs. Notifications drop the blue unread panels for a small dot. Each page has a right column (people worth knowing, your communities, or office hours). |
 
 ## Typography
-| Role | Face | Used for |
-| --- | --- | --- |
-| Interface | **Inter** (variable, with optical sizes), the open stand-in for Medium's Söhne | Everything in the app: bold, close-tracked titles, 16px body, regular grey secondary text. No light weights. |
-| Display | **Playfair Display**, the kit's stand-in for Noe Display and close in spirit to Medium's GT Super | The intro-page hero, the sign-in title, the welcome in the Path splash, and the wordmark. |
-| Editorial | **Charter** where installed (Apple devices), else **Source Serif 4** | Story bodies, pull quotes, bios and reflections, as Medium sets its articles. |
+Type follows the brand identity kit (v2): three faces, three tiers.
+
+| Tier | Brand face | What ships | Used for |
+| --- | --- | --- | --- |
+| Brand | **Noe Display Medium** | Playfair Display 500 | The wordmark, page titles and other hero headings (profile names, question, decision and community titles, the intro page, sign-in, the welcome in the Path splash), and milestone moments ("you are here" and destination stations) |
+| UI | **Marat Sans**: Light, Regular, Demibold, Bold | Plus Jakarta Sans | Light for subtitles, captions and secondary labels. Regular for UI and inputs. Demibold for buttons, card headers and feed titles. Bold for metrics and data chips. Light Italic for reflections in someone's own words. |
+| Content | **Charter**: Regular, Italic, Bold, Bold Italic | Charter where installed (Apple devices), else Source Serif 4 | Story text; story titles in Bold; quotes in Italic; pull quotes in Bold Italic; bios |
+
+Noe Display and Marat Sans are commercial typefaces. The font stacks name them first, so adding licensed files is enough to switch.
 
 The ramp keeps the HIG's roles:
 
 | Role | Size / line height |
 | --- | --- |
-| Page title | 42/52 bold on desktop, 34/40 on iPhone |
+| Page title | 44/50 Noe Display on desktop, 34/40 on iPhone |
 | Title 1 | 28/34 |
 | Title 2 | 22/28 |
 | Title 3 | 19/25 |
-| Headline | 16/22 semibold |
+| Headline | 16/22 demibold |
 | Body | 16/24 |
 | Callout | 15/22 |
 | Subhead | 14/20 |
 | Footnote | 13/18 |
 | Caption | 12/16 and 11/13 |
 
-Feed titles are 22/28 bold with −0.024em tracking, with 16/24 grey subtitles. As on Medium, labels are sentence case, never shouted:
-- small labels above titles are 13px medium, in grey
-- section heads are 16px semibold, like *Staff Picks*
-- list headings are 20px bold
+**Feed and section headings**
+- Feed titles are 21/27 demibold; stories use Charter Bold.
+- Subtitles are 16/24 light grey.
+- Section heads are 16px demibold; list headings are 20px demibold.
+
+**Eyebrows** follow the kit's *category eyebrow*: 11px demibold, uppercase, 0.1em tracking, in Executive Navy. Examples are "THE LIVING CAREER PATH", "YOU ARE HERE" and "PATH COMMUNITY".
+
+**Data chips** follow *metrics & data chips*: 11px bold, uppercase ("99% PATH MATCH").
 
 ## Color
+The kit's **Minimal Navy Principle**: about 90% gallery neutrals, and about 10% purposeful deep navy.
+
 | Token | Light | Role |
 | --- | --- | --- |
-| Canvas | `#FFFFFF` | The app |
-| Cream | `#F7F4ED` | The intro page and the Path splash |
-| Ink | `#242424` | Text, the walked Path, past nodes |
-| Primary | `#191919` | Black pill buttons, your message bubbles |
-| Secondary text | `#6B6B6B` | Bylines, subtitles, sidebar labels |
-| Hairline | `#F2F2F2` | Dividers, the sidebar and right-column edges |
-| Fill | `#F9F9F9` / `#F2F2F2` | Search pill, soft cards, topic pills |
-| Celestial Blue | `#38BDF8` | The future: dashed lines, open nodes, the "you" dot |
-| Deep Sky | `#0284C7` / `#0369A1` | Icons, links, the "why it's here" line, badges |
+| Gallery White | `#FFFFFF` | The app canvas (≈60%) |
+| Warm Porcelain | `#F8FAFC` | Soft cards, the right column's card, the intro page and the Path splash (≈25%) |
+| Deep Slate Navy | `#0F172A` | Text, primary buttons, your message bubbles, the walked Path and past nodes (≈10%) |
+| Mineral Slate | `#64748B` | Secondary text; `#94A3B8` for the quietest labels |
+| Hairline | `#E2E8F0` | 1px dividers, the sidebar and right-column edges, field borders |
+| Executive Navy | `#1E3A8A` | The one accent: the dashed future, the "you" dot, open destination nodes, links, eyebrows, badges, the secondary button |
+| Navy washes | `#EFF6FF` / `#DBEAFE` / `#BFDBFE` | Chip and selection backgrounds, chip borders, routes you're considering |
 
-Celestial Blue is the only accent, following the brand's Minimal Blue Principle.
+**Light is the default**, as Medium is on the web.
+- The app doesn't follow the device's dark setting, and it holds its light background even when embedded somewhere dark.
+- The saved appearance is applied before first paint, so there's no dark flash.
 
-**Light is the default**, as Medium is on the web. The app no longer follows the device's dark setting, and it holds its light background even when the page is embedded somewhere dark. The saved appearance is applied before first paint, so there's no dark flash.
-
-Dark is an opt-in, set from the account menu or Appearance on your profile. It's a **warm charcoal**, never pure black or navy:
-- canvas `#1F1E1C`
-- surfaces `#262522` and `#292825`
-- paper-white text `#EDE9E2`
-- warm grey secondary text
-
-Celestial keeps its role there.
+**Dark is opt-in**, set from the account menu or Appearance on your profile.
+- It's a warm charcoal, never pure black or navy: canvas `#1F1E1C`, surfaces `#262522` / `#292825`, paper-white text `#EDE9E2`.
+- Executive Navy is too deep to read on charcoal, so the accent lifts to a soft periwinkle from the same family (`#8FA7EE`).
 
 ## Components
-- **Buttons:** Medium's pills.
-  - **Filled** is solid ink.
+- **Buttons** keep Medium's pill shape in the kit's colours, with Demibold labels.
+  - **Filled** is Deep Slate Navy.
+  - **Secondary** (tinted) is porcelain with an Executive Navy line and label, as in the kit's "Compare Waypoint".
   - **Outline** is a 1px ink line.
-  - **Gray** is a soft fill.
-  - **Tinted** is the celestial wash, used for Path actions (Align, Ask, Connect).
-- **Text tabs** are grey labels. The active tab is near-black with a 1px ink underline.
-- **Cards** are used sparingly: soft `#F9F9F9` panels with 8px corners. Everything else is separated by hairlines.
-- **Data chips** ("99% path match") are small sentence-case pills.
-- **Segmented controls** are pills too: a soft fill with a white sliding thumb.
-- **Text fields** are white with a hairline. On focus they gain a celestial line and a soft wash ring.
+  - **Gray** is a soft slate fill.
+- **Text tabs** are grey labels; the active tab is ink with a 1px underline.
+- **Cards** are used sparingly: porcelain panels with 8px corners. Everything else is separated by hairlines.
+- **Data chips**:
+  - **Navy** chips carry facts ("2 steps ahead").
+  - **Wash** chips carry the match ("99% path match") on `#EFF6FF` with a `#BFDBFE` border.
+- **Segmented controls** are pills: a slate fill with a white sliding thumb.
+- **Text fields and the search pill** are white with a hairline. On focus they gain a navy line and a soft wash ring.
 
 ## Brand identity kit
 
 ### The mark
 The logo is the Path itself, on a 45° axis:
 - **Node 1, where you've been:** a solid dot.
-- **Node 2, where you are now:** a ring with a Celestial Blue dot at its centre.
-- **Node 3, where you want to go:** an open Celestial Blue circle.
+- **Node 2, where you are now:** a Deep Slate Navy ring with an Executive Navy dot at its centre.
+- **Node 3, where you want to go:** an open Executive Navy circle.
 
-The past is a solid line, and the future is a dashed celestial line. The wordmark is set heavy in the display serif, like Medium's masthead. The mark is also the favicon and the My Path icon.
+The past is a solid Deep Slate Navy line. The future is a dashed Executive Navy line. The wordmark is set in Noe Display Medium. The mark is also the favicon and the My Path icon.
 
 ### Voice
 The brand tenet runs through the product: *"Don't just ask who you know. Ask who you should know to get where you want to go."* It is the Network page's subtitle. My Path carries the kit's name for it, **The Living Career Path**.
@@ -203,19 +209,19 @@ The brand tenet runs through the product: *"Don't just ask who you know. Ask who
   - Controls are real buttons and links with labels, and focus is visible.
   - Decorative graphics are hidden from assistive tech, and each Path has a text equivalent.
   - The splash announces the Path it draws.
-- **Contrast:** Celestial Blue is used for lines and shapes. Text and icons use the deeper sky tones, which read clearly on white.
+- **Contrast:** Executive Navy reads clearly on white for text, icons and lines alike.
 
 ## PathedIn's own language
 
 ### The transit metaphor
 A career is drawn like a transit line. Stations are steps, and 45° bends and rounded joins give the lines their shape. The brand's three nodes are the station vocabulary everywhere:
 - **Walked track and past stations:** solid ink line, solid ink nodes.
-- **Present:** the ink ring with a celestial dot, with a slow celestial pulse. On My Path your photo sits on it, and you can drag it along your future.
-- **Future:** dashed celestial line. **Other possibilities:** fainter dashed sky.
-- **Undecided:** a dashed celestial interchange with a "?" that opens into parallel routes.
-- **Destination:** an open celestial circle, or an open capsule when routes converge.
-- **Shared steps:** where two Paths share a station, they run together on a celestial wash. In Align, your Path is ink and theirs is grey.
-- **Decisions:** the road taken is solid, and roads still open are dashed celestial.
+- **Present:** the ink ring with a navy dot, with a slow navy pulse. On My Path your photo sits on it, and you can drag it along your future.
+- **Future:** dashed Executive Navy line. **Other possibilities:** fainter dashed navy wash.
+- **Undecided:** a dashed navy interchange with a "?" that opens into parallel routes.
+- **Destination:** an open navy circle, or an open capsule when routes converge.
+- **Shared steps:** where two Paths share a station, they run together on a navy wash. In Align, your Path is ink and theirs is grey.
+- **Decisions:** the road taken is solid, and roads still open are dashed navy.
 
 The same vocabulary appears at every scale:
 - the Path strip

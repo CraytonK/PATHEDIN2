@@ -111,9 +111,10 @@
 }
 .walk-card__kicker {
   color: var(--tint-text);
-  font-weight: 500;
-  letter-spacing: -0.005em;
-  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  font-size: 11px;
+  text-transform: uppercase;
 }
 .walk-card__people {
   display: flex;
@@ -128,10 +129,11 @@
 }
 .insp__kicker {
   color: var(--tint-text);
-  font-weight: 500;
-  letter-spacing: -0.005em;
-  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  font-size: 11px;
   margin-bottom: 4px;
+  text-transform: uppercase;
 }
 .insp__head h2 {
   margin-bottom: 4px;

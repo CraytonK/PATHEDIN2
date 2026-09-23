@@ -1,11 +1,12 @@
 /* ── Signed-out intro page, after Medium's ─────────────────────── */
+/* The illustration keeps to the kit's Minimal Navy Principle: soft blue washes, one deep navy. */
 .landing {
-  --landing-bg: var(--bg-cream);
-  --landing-sky: #e0f2fe;
-  --landing-sky-2: #bae6fd;
-  --landing-celestial: #38bdf8;
-  --landing-future: #0ea5e9;
-  --landing-route: #7dd3fc;
+  --landing-bg: var(--bg-intro);
+  --landing-sky: #eff6ff;
+  --landing-sky-2: #dbeafe;
+  --landing-celestial: #bfdbfe;
+  --landing-future: #1e3a8a;
+  --landing-route: #9fb2dd;
   min-height: 100dvh;
   display: flex;
   flex-direction: column;
@@ -13,19 +14,19 @@
   color: var(--label);
 }
 :root[data-theme='dark'] .landing {
-  --landing-sky: rgba(56, 189, 248, 0.14);
-  --landing-sky-2: rgba(56, 189, 248, 0.22);
-  --landing-celestial: rgba(56, 189, 248, 0.5);
-  --landing-future: #38bdf8;
-  --landing-route: rgba(125, 211, 252, 0.6);
+  --landing-sky: rgba(143, 167, 238, 0.1);
+  --landing-sky-2: rgba(143, 167, 238, 0.16);
+  --landing-celestial: rgba(143, 167, 238, 0.28);
+  --landing-future: #8fa7ee;
+  --landing-route: rgba(169, 188, 244, 0.55);
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme='light']) .landing {
-    --landing-sky: rgba(56, 189, 248, 0.14);
-    --landing-sky-2: rgba(56, 189, 248, 0.22);
-    --landing-celestial: rgba(56, 189, 248, 0.5);
-    --landing-future: #38bdf8;
-    --landing-route: rgba(125, 211, 252, 0.6);
+    --landing-sky: rgba(143, 167, 238, 0.1);
+    --landing-sky-2: rgba(143, 167, 238, 0.16);
+    --landing-celestial: rgba(143, 167, 238, 0.28);
+    --landing-future: #8fa7ee;
+    --landing-route: rgba(169, 188, 244, 0.55);
   }
 }
 
@@ -97,9 +98,9 @@
 .landing__title {
   font-family: var(--font-brand);
   font-size: clamp(64px, 9vw, 112px);
-  line-height: 0.92;
-  font-weight: 400;
-  letter-spacing: -0.045em;
+  line-height: 0.94;
+  font-weight: 500;
+  letter-spacing: -0.035em;
   text-wrap: balance;
 }
 .landing__amp {
@@ -318,8 +319,8 @@
   font-family: var(--font-brand);
   font-size: 30px;
   line-height: 36px;
-  font-weight: 400;
-  letter-spacing: -0.02em;
+  font-weight: 500;
+  letter-spacing: -0.025em;
 }
 .auth__options {
   display: flex;

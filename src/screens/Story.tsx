@@ -79,7 +79,7 @@ export function StoryScreen() {
 
         <figure className="story__art">
           <SegmentArt story={s} height={140} />
-          <figcaption>{a.first}’s Path. This story happens on the stretch in blue.</figcaption>
+          <figcaption>{a.first}’s Path. This story happens on the stretch in navy.</figcaption>
         </figure>
 
         <div className="story__body">

@@ -262,6 +262,7 @@ export function StoryItem({ story, withArt = true, i }: { story: Story; withArt?
       }
       thumb={withArt ? <SegmentArt story={story} height={120} labels={false} /> : undefined}
       saveKey={`story:${story.id}`}
+      variant="story"
     />
   );
 }

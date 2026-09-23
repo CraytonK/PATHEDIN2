@@ -1,74 +1,81 @@
 /*
-  PathedIn design tokens.
+  PathedIn design tokens, from the PathedIn Brand Kit (v2), laid onto Medium's reading layout
+  and Apple's HIG behaviour.
 
-  Look: Medium's quiet, premium reading surface — white canvas, near-black type, soft grey
-  secondary text, whisper-light hairlines, black pill buttons, a warm cream intro page.
-  Brand: the PathedIn Path mark and its one accent, Celestial Blue, kept for the future,
-  "you", links and focus (the brand kit's Minimal Blue Principle).
-  Structure and behaviour: Apple's HIG.
+  Palette — the Minimal Navy Principle: ~90% gallery neutrals, ~10% purposeful deep navy.
+    Gallery White   #FFFFFF  canvas (60%)
+    Warm Porcelain  #F8FAFC  surfaces (25%)
+    Deep Slate Navy #0F172A  text, primary actions, the walked Path (10%)
+    Mineral Slate   #64748B  secondary text
+    Hairline        #E2E8F0  1px dividers
+    Executive Navy  #1E3A8A  the accent: the future, "you", links, eyebrows, focus
+
+  Type — Noe Display (brand), Marat Sans (interface), Charter (content).
 */
 
 :root {
   color-scheme: light dark;
 
   /* ── Type families ─────────────────────────────────────────── */
-  --font-sans: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  --font-sans: 'Marat Sans', 'Plus Jakarta Sans', Inter, -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
   --font-display: var(--font-sans);
-  /* The high-contrast serif: landing hero, sign-in and the wordmark only. */
+  /* Noe Display Medium: wordmark, hero headings, milestone moments. */
   --font-brand: 'Noe Display', 'Playfair Display', Georgia, serif;
+  /* Charter: editorial content — stories, quotes, bios. */
   --font-serif: Charter, 'Source Serif 4', 'Bitstream Charter', Georgia, serif;
   --font-rounded: var(--font-sans);
 
   /* ── Semantic colors (light) ───────────────────────────────── */
   --bg: #ffffff;
   --bg-elevated: #ffffff;
-  --bg-grouped: #f9f9f9;
-  --bg-sunken: #fafafa;
-  --bg-cream: #f7f4ed; /* the signed-out intro page */
-  --bg-hover: rgba(0, 0, 0, 0.035);
-  --bg-press: rgba(0, 0, 0, 0.06);
+  --bg-grouped: #f8fafc;
+  --bg-sunken: #f8fafc;
+  --bg-intro: #f8fafc; /* the signed-out intro page and the sign-in splash */
+  --bg-hover: rgba(15, 23, 42, 0.04);
+  --bg-press: rgba(15, 23, 42, 0.07);
 
-  --label: #242424;
-  --label-2: #6b6b6b;
-  --label-3: #a3a3a3;
-  --label-4: #dadada;
+  --label: #0f172a;
+  --label-2: #64748b;
+  --label-3: #94a3b8;
+  --label-4: #cbd5e1;
 
-  --fill: #f2f2f2;
-  --fill-2: #f2f2f2;
-  --fill-3: #f9f9f9;
+  --fill: #f1f5f9;
+  --fill-2: #f1f5f9;
+  --fill-3: #f8fafc;
 
-  --separator: #f2f2f2;
-  --separator-strong: #e5e5e5;
+  --separator: #e2e8f0;
+  --separator-strong: #cbd5e1;
 
-  /* Celestial Blue: the future, and the brand's only accent. Graphics use --tint; small text uses --tint-text. */
-  --tint: #38bdf8;
-  --tint-strong: #0284c7;
-  --tint-text: #0369a1;
-  --tint-soft: #e0f2fe;
-  --tint-softer: #f0f9ff;
-  --tint-border: #bae6fd;
-  --on-tint: #242424;
-  --future-soft: #bae6fd; /* routes you're considering but not focused on */
+  /* Executive Navy: the brand's one accent. */
+  --tint: #1e3a8a;
+  --tint-strong: #1e3a8a;
+  --tint-text: #1e3a8a;
+  --tint-soft: #dbeafe;
+  --tint-softer: #eff6ff;
+  --tint-border: #bfdbfe;
+  --on-tint: #ffffff;
+  --future-soft: #bfdbfe; /* routes you're considering but not focused on */
 
-  /* Ink: primary actions (Medium's black pill) and the walked Path. */
-  --primary: #191919;
-  --primary-hover: #000000;
+  /* Deep Slate Navy: primary actions and the walked Path. */
+  --primary: #0f172a;
+  --primary-hover: #1e293b;
   --on-primary: #ffffff;
-  --ink: #242424;
-  --ink-soft: rgba(0, 0, 0, 0.06);
-  --path-them: #a3a3a3; /* the other Path when two are aligned */
+  --ink: #0f172a;
+  --ink-soft: rgba(15, 23, 42, 0.06);
+  --path-them: #94a3b8; /* the other Path when two are aligned */
 
-  --green: #0369a1;
-  --red: #0284c7;
-  --badge: #0284c7;
+  /* The kit has no green or red: availability and counts use the navy. */
+  --green: #1e3a8a;
+  --red: #1e3a8a;
+  --badge: #1e3a8a;
 
   --bar-bg: rgba(255, 255, 255, 0.94);
   --bar-blur: saturate(160%) blur(20px);
 
-  --panel-shadow: none;
-  --shadow-popover: 0 2px 10px rgba(0, 0, 0, 0.12), 0 0 0 1px rgba(0, 0, 0, 0.04);
-  --shadow-lift: 0 1px 4px rgba(0, 0, 0, 0.08);
-  --scrim: rgba(0, 0, 0, 0.28);
+  --panel-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+  --shadow-popover: 0 10px 30px rgba(15, 23, 42, 0.1), 0 0 0 1px rgba(15, 23, 42, 0.06);
+  --shadow-lift: 0 1px 4px rgba(15, 23, 42, 0.08);
+  --scrim: rgba(15, 23, 42, 0.28);
 
   /* ── Geometry ─────────────────────────────────────────────── */
   --gutter: 16px;
@@ -96,7 +103,11 @@
   --dur-3: 360ms;
 }
 
-/* Dark appearance (opt-in): a warm charcoal ground with paper-white ink, never pure black or navy; Celestial Blue keeps its role. */
+/*
+  Dark appearance (opt-in; the app is light by default): a warm charcoal ground with paper-white
+  ink, never pure black or navy. Executive Navy is too deep to read on charcoal, so the accent
+  lifts to a soft periwinkle from the same family.
+*/
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme='light']) {
     color-scheme: dark;
@@ -104,7 +115,7 @@
     --bg-elevated: #292825;
     --bg-grouped: #262522;
     --bg-sunken: #232220;
-    --bg-cream: #24221e;
+    --bg-intro: #24221e;
     --bg-hover: rgba(255, 248, 235, 0.05);
     --bg-press: rgba(255, 248, 235, 0.09);
 
@@ -120,14 +131,14 @@
     --separator: #34322e;
     --separator-strong: #423f3a;
 
-    --tint: #38bdf8;
-    --tint-strong: #38bdf8;
-    --tint-text: #7dd3fc;
-    --tint-soft: rgba(56, 189, 248, 0.16);
-    --tint-softer: rgba(56, 189, 248, 0.08);
-    --tint-border: rgba(56, 189, 248, 0.35);
+    --tint: #8fa7ee;
+    --tint-strong: #8fa7ee;
+    --tint-text: #a9bcf4;
+    --tint-soft: rgba(143, 167, 238, 0.18);
+    --tint-softer: rgba(143, 167, 238, 0.1);
+    --tint-border: rgba(143, 167, 238, 0.4);
     --on-tint: #1f1e1c;
-    --future-soft: rgba(56, 189, 248, 0.4);
+    --future-soft: rgba(143, 167, 238, 0.42);
 
     --primary: #ede9e2;
     --primary-hover: #ffffff;
@@ -136,9 +147,9 @@
     --ink-soft: rgba(255, 255, 255, 0.08);
     --path-them: #7d7870;
 
-    --green: #7dd3fc;
-    --red: #38bdf8;
-    --badge: #38bdf8;
+    --green: #a9bcf4;
+    --red: #8fa7ee;
+    --badge: #4f6bc8;
 
     --bar-bg: rgba(31, 30, 28, 0.92);
     --panel-shadow: none;
@@ -154,7 +165,7 @@
   --bg-elevated: #292825;
   --bg-grouped: #262522;
   --bg-sunken: #232220;
-  --bg-cream: #24221e;
+  --bg-intro: #24221e;
   --bg-hover: rgba(255, 248, 235, 0.05);
   --bg-press: rgba(255, 248, 235, 0.09);
 
@@ -170,14 +181,14 @@
   --separator: #34322e;
   --separator-strong: #423f3a;
 
-  --tint: #38bdf8;
-  --tint-strong: #38bdf8;
-  --tint-text: #7dd3fc;
-  --tint-soft: rgba(56, 189, 248, 0.16);
-  --tint-softer: rgba(56, 189, 248, 0.08);
-  --tint-border: rgba(56, 189, 248, 0.35);
+  --tint: #8fa7ee;
+  --tint-strong: #8fa7ee;
+  --tint-text: #a9bcf4;
+  --tint-soft: rgba(143, 167, 238, 0.18);
+  --tint-softer: rgba(143, 167, 238, 0.1);
+  --tint-border: rgba(143, 167, 238, 0.4);
   --on-tint: #1f1e1c;
-  --future-soft: rgba(56, 189, 248, 0.4);
+  --future-soft: rgba(143, 167, 238, 0.42);
 
   --primary: #ede9e2;
   --primary-hover: #ffffff;
@@ -186,9 +197,9 @@
   --ink-soft: rgba(255, 255, 255, 0.08);
   --path-them: #7d7870;
 
-  --green: #7dd3fc;
-  --red: #38bdf8;
-  --badge: #38bdf8;
+  --green: #a9bcf4;
+  --red: #8fa7ee;
+  --badge: #4f6bc8;
 
   --bar-bg: rgba(31, 30, 28, 0.92);
   --panel-shadow: none;

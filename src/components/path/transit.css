@@ -191,13 +191,14 @@
   font-weight: 600;
   letter-spacing: -0.012em;
 }
-/* "Where you are" and "where you want to go" are milestone moments: set larger and bolder. */
+/* "Where you are" and "where you want to go" are milestone moments: Noe Display Medium. */
 .tmap__row--present .tmap__title,
 .tmap__row--destination .tmap__title {
-  font-weight: 700;
-  font-size: 21px;
-  line-height: 24px;
-  letter-spacing: -0.025em;
+  font-family: var(--font-brand);
+  font-weight: 500;
+  font-size: 22px;
+  line-height: 26px;
+  letter-spacing: -0.02em;
 }
 .tmap__row--junction .tmap__title,
 .tmap__row--route .tmap__title,
@@ -214,18 +215,19 @@
 }
 .tmap__here {
   margin-bottom: 4px;
-  font-weight: 500;
+  font-weight: 600;
   color: var(--tint-text);
-  letter-spacing: -0.005em;
-  font-size: 13px;
+  letter-spacing: 0.1em;
+  font-size: 11px;
+  text-transform: uppercase;
 }
 /* A step's note is a reflection in the person's own words: Marat Sans Light Italic. */
 .tmap__note {
   color: var(--label-2);
   margin-top: 6px;
   max-width: 460px;
-  font-family: var(--font-serif);
   font-style: italic;
+  font-weight: 300;
 }
 .tmap__shared {
   display: inline-flex;
@@ -271,11 +273,12 @@
 }
 .tmap__story-mark {
   font-family: var(--font-sans);
-  font-size: 13px;
-  font-weight: 500;
-  letter-spacing: -0.005em;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
   color: var(--tint-text);
   flex: none;
+  text-transform: uppercase;
 }
 
 /* ── Walk ahead ───────────────────────────── */

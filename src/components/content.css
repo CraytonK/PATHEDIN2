@@ -162,10 +162,11 @@
 }
 .story-lead__title {
   margin: 12px 0 8px;
+  font-family: var(--font-serif);
   font-size: 30px;
-  line-height: 36px;
+  line-height: 37px;
   font-weight: 700;
-  letter-spacing: -0.028em;
+  letter-spacing: -0.015em;
   text-wrap: balance;
 }
 .story-lead__dek {
@@ -446,14 +447,16 @@
     line-height: 36px;
   }
 }
+/* A community's name is a hero heading: Noe Display Medium. */
 .community-title--lg {
-  letter-spacing: -0.03em;
+  font-family: var(--font-brand);
+  letter-spacing: -0.025em;
 }
 .community-title--lg .community-title__to {
-  font-weight: 700;
+  font-weight: 500;
 }
 .community-title--lg .community-title__from {
-  font-weight: 500;
+  font-weight: 400;
 }
 .community-title__from {
   font-weight: 500;

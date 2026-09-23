@@ -29,10 +29,10 @@
 /* Set like Medium's masthead: a heavy, high-contrast serif. */
 .wordmark__text {
   font-family: var(--font-brand);
-  font-weight: 700;
+  font-weight: 500;
   font-size: 27px;
   line-height: 1;
-  letter-spacing: -0.035em;
+  letter-spacing: -0.025em;
   color: var(--label);
   padding-bottom: 3px;
 }
@@ -85,9 +85,11 @@
   margin-left: 10px;
   padding: 0 14px 0 12px;
   border-radius: var(--r-pill);
-  background: var(--bg-grouped);
+  background: var(--bg-elevated);
+  box-shadow: inset 0 0 0 1px var(--separator);
   color: var(--label-2);
   font-size: 14px;
+  font-weight: 300;
   transition: background-color var(--dur-2);
 }
 .mbar__search span {
@@ -495,23 +497,26 @@
 }
 .page__eyebrow {
   margin-bottom: 8px;
-  font-size: 13px;
-  line-height: 18px;
-  font-weight: 500;
-  letter-spacing: -0.005em;
-  color: var(--label-2);
+  font-size: 11px;
+  line-height: 15px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--tint-text);
 }
-/* Page titles the way Medium sets them: large, bold, close-tracked grotesk. */
+/* Page titles are hero headings: the brand serif, Noe Display Medium. */
 .page__title {
-  font-size: 42px;
-  line-height: 52px;
-  letter-spacing: -0.032em;
+  font-size: 44px;
+  line-height: 50px;
+  letter-spacing: -0.025em;
 }
+/* Brand sub-display: Marat Sans Light for airy subtitles. */
 .page__subtitle {
-  margin-top: 6px;
+  margin-top: 8px;
   max-width: 620px;
-  font-size: 16px;
-  line-height: 24px;
+  font-size: 17px;
+  line-height: 26px;
+  font-weight: 300;
 }
 .page__trailing {
   display: flex;
