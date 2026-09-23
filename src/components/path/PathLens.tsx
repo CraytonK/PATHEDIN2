@@ -123,15 +123,15 @@ export function PathLens({ filter, width }: { filter: Kind | 'all'; width: numbe
   return (
     <div className="lens" style={{ width: W, height: H }}>
       <svg className="lens__svg" width={W} height={H} aria-hidden="true">
-        <motion.line x1={sx('bsc')} y1={lineY} x2={you} y2={lineY} stroke="var(--ink)" strokeWidth={4} strokeLinecap="round" initial={{ pathLength: 0 }} animate={{ pathLength: 1 }} transition={{ duration: 0.6, ease: [0.45, 0, 0.2, 1] }} />
-        <motion.line x1={you} y1={lineY} x2={dest} y2={lineY} stroke="var(--tint)" strokeWidth={4} strokeLinecap="round" strokeDasharray="0 9" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.5, duration: 0.4 }} />
+        <motion.line x1={sx('bsc')} y1={lineY} x2={you} y2={lineY} stroke="var(--ink)" strokeWidth={3.5} strokeLinecap="round" initial={{ pathLength: 0 }} animate={{ pathLength: 1 }} transition={{ duration: 0.6, ease: [0.45, 0, 0.2, 1] }} />
+        <motion.line x1={you} y1={lineY} x2={dest} y2={lineY} stroke="var(--tint)" strokeWidth={3.5} strokeLinecap="round" strokeDasharray="5 8" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.5, duration: 0.4 }} />
         <motion.path
           d={`M 0 ${exploreY} L ${W * 0.62} ${exploreY} C ${W * 0.76} ${exploreY} ${dest - 40} ${lineY + 30} ${dest} ${lineY}`}
           fill="none"
-          stroke="var(--label-3)"
+          stroke="var(--future-soft)"
           strokeWidth={3}
           strokeLinecap="round"
-          strokeDasharray="0 7"
+          strokeDasharray="3 7"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.8, duration: 0.5 }}
@@ -157,17 +157,16 @@ export function PathLens({ filter, width }: { filter: Kind | 'all'; width: numbe
               <motion.circle
                 cx={x}
                 cy={lineY}
-                r={s.you ? 11 : s.dest ? 12 : 8}
-                fill={s.you ? 'var(--tint)' : 'var(--bg)'}
-                stroke={s.dest ? 'var(--tint)' : s.unknown ? 'var(--label-3)' : s.you ? 'var(--bg)' : 'var(--ink)'}
-                strokeWidth={s.you ? 3 : 3.5}
+                r={s.you ? 11 : s.dest ? 11 : 7.5}
+                fill={s.you || s.dest || s.unknown ? 'var(--bg)' : 'var(--ink)'}
+                stroke={s.dest || s.unknown ? 'var(--tint)' : s.you ? 'var(--ink)' : 'var(--bg-grouped)'}
+                strokeWidth={s.you || s.dest ? 3.5 : 3}
                 strokeDasharray={s.unknown ? '3 3' : undefined}
                 initial={{ scale: 0 }}
                 animate={{ scale: 1 }}
                 transition={{ ...springs.settle, delay: 0.1 + i * 0.1 }}
               />
-              {s.dest && <circle cx={x} cy={lineY} r={5} fill="var(--tint)" />}
-              {s.you && <circle cx={x} cy={lineY} r={13.5} fill="none" stroke="var(--tint)" strokeWidth={1.5} />}
+              {s.you && <circle cx={x} cy={lineY} r={4} fill="var(--tint)" />}
               <text x={x} y={lineY + (s.key === 'ra' || s.key === 'next' ? -16 : 30)} textAnchor="middle" className={`lens__label ${s.you ? 'is-you' : ''}`} opacity={s.key === 'ra' || s.key === 'next' ? 0 : 1}>
                 {s.you ? 'You · MSc Chemistry' : s.label}
               </text>

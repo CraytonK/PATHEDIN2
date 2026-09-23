@@ -62,34 +62,42 @@
   left: 6px;
   right: -8px;
   top: 50%;
-  height: 4px;
-  margin-top: -2px;
-  background: var(--label-4);
+  height: 3.5px;
+  margin-top: -1.75px;
+  background: linear-gradient(90deg, var(--future-soft) 0 5px, transparent 5px 10px) left center / 10px 3.5px repeat-x;
   border-radius: 2px;
 }
 .croute__stop.is-passed .croute__track::after {
   background: var(--ink);
 }
 .croute__stop.is-mine .croute__track::after {
-  background: radial-gradient(circle, var(--tint) 1.9px, transparent 2.1px) left center / 9px 4px repeat-x;
+  background: linear-gradient(90deg, var(--tint) 0 5px, transparent 5px 10px) left center / 10px 3.5px repeat-x;
 }
+/* Brand nodes: stops you've passed are solid navy; yours is the ring with a celestial dot;
+   stops still ahead of you are open celestial circles. */
 .croute__dot {
   position: relative;
   z-index: 1;
   border-radius: 50%;
   background: var(--bg);
-  box-shadow: inset 0 0 0 3.5px var(--ink);
+  box-shadow: inset 0 0 0 3px var(--future-soft);
   flex: none;
 }
+.croute__stop.is-passed .croute__dot {
+  background: var(--ink);
+  box-shadow: 0 0 0 3px var(--bg-grouped);
+}
 .croute__stop.is-mine .croute__dot {
-  background: var(--tint);
+  width: 22px !important;
+  height: 22px !important;
+  background: radial-gradient(circle, var(--tint) 0 3.4px, var(--bg) 4px);
   box-shadow:
-    0 0 0 3px var(--bg),
-    0 0 0 4.5px var(--tint);
+    inset 0 0 0 3px var(--ink),
+    0 0 0 3px var(--bg-grouped);
 }
 .croute__stop.is-last .croute__dot {
   box-shadow: inset 0 0 0 3.5px var(--tint);
-  background: var(--tint-soft);
+  background: var(--bg);
 }
 .croute__label {
   margin-top: 8px;

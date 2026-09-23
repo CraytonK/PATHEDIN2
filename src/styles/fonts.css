@@ -1,25 +1,44 @@
 /*
-  Apple platforms render SF Pro and New York (the HIG system faces) via the font stacks in tokens.css.
-  Everywhere else, these self-hosted variable fonts are the closest open equivalents.
+  PathedIn brand type (see DESIGN.md → Brand kit):
+    Noe Display  — wordmark, hero headings, milestone moments   → fallback Playfair Display
+    Marat Sans   — interface: light, regular, demibold, bold     → fallback Plus Jakarta Sans
+    Charter      — editorial content: stories, reflections       → fallback Source Serif 4
+  Noe Display and Marat Sans are licensed faces and are used when installed. Charter ships with
+  macOS and iOS. The open fallbacks the brand kit names are self-hosted here so the brand renders
+  consistently everywhere else.
 */
 @font-face {
-  font-family: 'Inter';
-  font-style: normal;
-  font-weight: 100 900;
-  font-display: swap;
-  src: url('../assets/fonts/inter-latin.woff2') format('woff2');
-}
-@font-face {
-  font-family: 'Newsreader';
+  font-family: 'Plus Jakarta Sans';
   font-style: normal;
   font-weight: 200 800;
   font-display: swap;
-  src: url('../assets/fonts/newsreader-latin.woff2') format('woff2');
+  src: url('../assets/fonts/plus-jakarta-sans-latin.woff2') format('woff2');
 }
 @font-face {
-  font-family: 'Newsreader';
+  font-family: 'Plus Jakarta Sans';
   font-style: italic;
   font-weight: 200 800;
   font-display: swap;
-  src: url('../assets/fonts/newsreader-italic-latin.woff2') format('woff2');
+  src: url('../assets/fonts/plus-jakarta-sans-italic-latin.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Playfair Display';
+  font-style: normal;
+  font-weight: 400 900;
+  font-display: swap;
+  src: url('../assets/fonts/playfair-display-latin.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Source Serif 4';
+  font-style: normal;
+  font-weight: 200 900;
+  font-display: swap;
+  src: url('../assets/fonts/source-serif-4-latin.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Source Serif 4';
+  font-style: italic;
+  font-weight: 200 900;
+  font-display: swap;
+  src: url('../assets/fonts/source-serif-4-italic-latin.woff2') format('woff2');
 }

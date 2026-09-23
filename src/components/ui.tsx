@@ -3,7 +3,7 @@ import { forwardRef, useLayoutEffect, useRef, useState, type ReactNode } from 'r
 import { Link } from 'react-router-dom';
 import { springs, haptic } from '../lib/motion';
 import { people } from '../data/people';
-import type { RelationKind } from '../lib/relations';
+import { pathMatch, relationTo, type RelationKind } from '../lib/relations';
 import { IconBookmark, IconChevronRight } from './icons';
 import { usePeek } from './Peek';
 import { useApp } from '../lib/store';
@@ -427,6 +427,29 @@ export function GroupedList({ rows, header }: { rows: ListRow[]; header?: string
         })}
       </ul>
     </div>
+  );
+}
+
+/* ── Data chips (brand kit: quantitative badges) ────────────── */
+
+export function Chip({ children, tone = 'sky' }: { children: ReactNode; tone?: 'navy' | 'sky' | 'plain' }) {
+  return <span className={`chip chip--${tone}`}>{children}</span>;
+}
+
+/** The brand's metric pair for a person: how far ahead they are, and how closely their Path matches yours. */
+export function PathChips({ id, className = '', matchOnly = false }: { id: string; className?: string; matchOnly?: boolean }) {
+  const rel = relationTo(id);
+  if (rel.kind === 'self') return null;
+  // The relation tag beside these chips already names the relation; the navy chip only adds a step count it doesn't say.
+  const ahead =
+    rel.kind === 'ahead' && rel.stepsAhead && rel.stepsAhead < 3 && !/ahead/i.test(rel.label)
+      ? `${rel.stepsAhead} ${rel.stepsAhead === 1 ? 'step' : 'steps'} ahead`
+      : null;
+  return (
+    <span className={`chips ${className}`}>
+      {!matchOnly && ahead && <Chip tone="navy">{ahead}</Chip>}
+      <Chip tone="sky">{pathMatch(id)}% path match</Chip>
+    </span>
   );
 }
 

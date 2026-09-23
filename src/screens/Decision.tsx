@@ -32,21 +32,34 @@ function ForkMap({ d, focus, setFocus }: { d: Decision; focus: string | null; se
         {d.options.map((o, i) => {
           const y = ys[i];
           const lit = chosen ? chosen === o.id : focus ? focus === o.id : true;
-          const tint = chosen === o.id || focus === o.id;
-          return (
+          // Brand vocabulary: a road taken is solid navy; roads still open are dashed celestial.
+          const taken = chosen === o.id;
+          const stroke = taken ? 'var(--ink)' : chosen ? 'var(--label-4)' : 'var(--tint)';
+          return taken ? (
             <motion.path
               key={o.id}
               d={`M 20 ${y0} L ${W * 0.3} ${y0} C ${W * 0.6} ${y0} ${W * 0.55} ${y} ${W * 0.85} ${y} L ${W} ${y}`}
               fill="none"
-              stroke={tint ? 'var(--tint)' : 'var(--ink)'}
-              strokeWidth={4}
+              stroke={stroke}
+              strokeWidth={3.5}
               strokeLinecap="round"
-              strokeDasharray={chosen && chosen !== o.id ? '0 8' : undefined}
-              opacity={lit ? 1 : 0.25}
               initial={{ pathLength: 0 }}
               animate={{ pathLength: 1 }}
               transition={{ duration: 0.7, delay: 0.2 + i * 0.1, ease: [0.45, 0, 0.2, 1] }}
-              style={{ transition: 'opacity .2s, stroke .2s' }}
+            />
+          ) : (
+            <motion.path
+              key={o.id}
+              d={`M 20 ${y0} L ${W * 0.3} ${y0} C ${W * 0.6} ${y0} ${W * 0.55} ${y} ${W * 0.85} ${y} L ${W} ${y}`}
+              fill="none"
+              stroke={stroke}
+              strokeWidth={3.5}
+              strokeLinecap="round"
+              strokeDasharray="5 8"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: lit ? 1 : 0.3 }}
+              transition={{ duration: 0.4, delay: 0.2 + i * 0.1 }}
+              style={{ transition: 'stroke .2s' }}
             />
           );
         })}
@@ -114,7 +127,7 @@ export function DecisionScreen() {
     <Page title={d.title} large={false} back="Decisions" wide>
       <div className="dd">
         <div className="dd__main">
-          <p className="dd__kicker t-footnote">
+          <p className="dd__kicker t-eyebrow">
             Decision Point · {d.status === 'open' ? 'Deciding now' : 'Decided'} · at {wp(d.at).label}
           </p>
           <h1 className="dd__title">{d.title}</h1>

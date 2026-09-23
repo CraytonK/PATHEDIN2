@@ -111,7 +111,7 @@
   transition: background-color var(--dur-2);
 }
 .peek__chip svg {
-  color: var(--tint);
+  color: var(--tint-strong);
 }
 .peek__chip.is-on svg {
   color: var(--tint);
@@ -120,4 +120,7 @@
   .peek__chip:hover {
     background: var(--bg-hover);
   }
+}
+.peek__chips {
+  margin-top: 10px;
 }

@@ -33,7 +33,7 @@ export function StoryScreen() {
       <motion.div className="story__progress" style={{ scaleX: progress }} />
       <article className="story">
         <header className="story__head">
-          <p className="story-kicker t-subhead">
+          <p className="story-kicker t-eyebrow">
             {wp(s.segment[0]).label} → {wp(s.segment[1]).label}
           </p>
           <h1 className="story__title t-serif">{s.title}</h1>
@@ -70,7 +70,7 @@ export function StoryScreen() {
         <figure className="story__art">
           <SegmentArt story={s} height={140} />
           <figcaption className="t-footnote c-2">
-            {a.first}’s Path. This story happens on the stretch in orange.
+            {a.first}’s Path. This story happens on the stretch in blue.
           </figcaption>
         </figure>
 

@@ -27,12 +27,7 @@
   margin-bottom: 18px;
 }
 .guides__num {
-  font-family: var(--font-display);
-  font-size: 15px;
-  font-weight: 700;
-  color: var(--tint-text);
-  padding-top: 6px;
-  min-width: 22px;
+  margin-top: 2px;
 }
 .guides__move {
   display: flex;

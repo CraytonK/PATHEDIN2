@@ -172,19 +172,25 @@ function AccountMenu() {
   );
 }
 
-export function Wordmark({ size = 22 }: { size?: number }) {
+/** The PathedIn symbol from the brand kit: three nodes on a 45° vector — been, now, going. */
+export function BrandMark({ size = 26 }: { size?: number }) {
   return (
-    <span className="wordmark__inner" style={{ fontSize: size * 0.86 }}>
-      <svg width={size} height={size} viewBox="0 0 24 24" aria-hidden="true">
-        <path d="M5 20v-6.5a3 3 0 0 1 3-3h4" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" />
-        <path d="M14.8 9.2 19 5" fill="none" stroke="var(--tint)" strokeWidth="2.4" strokeLinecap="round" strokeDasharray="0.1 3.6" />
-        <circle cx="5" cy="20" r="1.8" fill="currentColor" />
-        <circle cx="13" cy="10.5" r="3" fill="var(--tint)" stroke="var(--bg)" strokeWidth="1.4" />
-        <circle cx="19.6" cy="4.4" r="1.9" fill="none" stroke="var(--tint)" strokeWidth="1.8" />
-      </svg>
-      <span>
-        Pathed<span className="wordmark__in">In</span>
-      </span>
+    <svg width={size} height={size} viewBox="16 16 68 68" aria-hidden="true" className="brandmark">
+      <line x1="30" y1="70" x2="50" y2="50" stroke="var(--ink)" strokeWidth="5" strokeLinecap="round" />
+      <line x1="50" y1="50" x2="70" y2="30" stroke="var(--tint)" strokeWidth="5" strokeLinecap="round" strokeDasharray="4 7" />
+      <circle cx="30" cy="70" r="8.5" fill="var(--ink)" />
+      <circle cx="50" cy="50" r="8.5" fill="var(--bg)" stroke="var(--ink)" strokeWidth="3.5" />
+      <circle cx="50" cy="50" r="3.2" fill="var(--tint)" />
+      <circle cx="70" cy="30" r="8.5" fill="var(--bg)" stroke="var(--tint)" strokeWidth="3.5" />
+    </svg>
+  );
+}
+
+export function Wordmark({ size = 26 }: { size?: number }) {
+  return (
+    <span className="wordmark__inner">
+      <BrandMark size={size} />
+      <span className="wordmark__text">PathedIn</span>
     </span>
   );
 }
@@ -305,7 +311,7 @@ export function Page({
         )}
         <div className={`page__title-row ${!large ? 'visually-hidden' : ''}`}>
           <div className="page__title-block">
-            {eyebrow && <div className="page__eyebrow t-footnote">{eyebrow}</div>}
+            {eyebrow && <div className="page__eyebrow t-eyebrow">{eyebrow}</div>}
             <h1 className="t-large-title page__title">{title}</h1>
             {subtitle && <p className="page__subtitle t-callout c-2">{subtitle}</p>}
           </div>

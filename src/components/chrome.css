@@ -18,13 +18,17 @@
 .wordmark__inner {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  font-family: var(--font-display);
-  font-weight: 700;
-  letter-spacing: -0.03em;
+  gap: 9px;
 }
-.wordmark__in {
-  color: var(--tint);
+/* Brand kit: the wordmark is set in Noe Display Medium. */
+.wordmark__text {
+  font-family: var(--font-brand);
+  font-weight: 500;
+  font-size: 22px;
+  line-height: 1;
+  letter-spacing: -0.025em;
+  color: var(--label);
+  padding-bottom: 2px;
 }
 
 /* ── Desktop top bar ──────────────────────────────────── */
@@ -59,24 +63,27 @@
   align-items: center;
   height: 100%;
   padding: 0 14px;
-  font-size: 15px;
-  font-weight: 500;
+  font-size: 14px;
+  font-weight: 400;
   color: var(--label-2);
-  letter-spacing: -0.012em;
+  letter-spacing: 0;
   transition: color var(--dur-2);
 }
-.topbar__link:hover,
+.topbar__link:hover {
+  color: var(--label);
+}
 .topbar__link.is-active {
   color: var(--label);
+  font-weight: 600;
 }
 .topbar__indicator {
   position: absolute;
   left: 14px;
   right: 14px;
-  bottom: -0.5px;
+  bottom: -1px;
   height: 2px;
   border-radius: 2px;
-  background: var(--label);
+  background: var(--tint);
 }
 .topbar__actions {
   display: flex;
@@ -88,15 +95,19 @@
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  height: 34px;
+  height: 36px;
   padding: 0 10px 0 12px;
   margin-right: 8px;
-  border-radius: 10px;
-  background: var(--fill-2);
+  border-radius: 8px;
+  background: var(--bg-elevated);
+  box-shadow: inset 0 0 0 1px var(--separator);
   color: var(--label-2);
-  font-size: 14px;
-  width: 240px;
-  transition: background-color var(--dur-2);
+  font-size: 13px;
+  font-weight: 400;
+  width: 260px;
+  transition:
+    background-color var(--dur-2),
+    box-shadow var(--dur-2);
 }
 .topbar__search span {
   flex: 1;
@@ -106,7 +117,7 @@
   text-overflow: ellipsis;
 }
 .topbar__search:hover {
-  background: var(--fill);
+  box-shadow: inset 0 0 0 1px var(--separator-strong);
 }
 .topbar__search kbd {
   font: inherit;
@@ -236,11 +247,12 @@
   justify-content: flex-start;
   padding-top: 5px;
   gap: 1px;
-  color: #8e8e93;
+  color: var(--label-3);
   -webkit-touch-callout: none;
 }
+/* Restrained by the brand's Minimal Blue Principle: the selected tab is Deep Slate Navy. */
 .tabbar__item.is-active {
-  color: var(--tint);
+  color: var(--label);
 }
 .tabbar__icon {
   position: relative;
@@ -255,8 +267,11 @@
 .tabbar__label {
   font-size: 10px;
   line-height: 12px;
-  font-weight: 500;
+  font-weight: 400;
   letter-spacing: 0.01em;
+}
+.tabbar__item.is-active .tabbar__label {
+  font-weight: 600;
 }
 
 /* ── Page & navigation bar ────────────────────────────── */
@@ -304,18 +319,27 @@
   min-width: 0;
 }
 .page__eyebrow {
-  color: var(--label-2);
+  margin-bottom: 8px;
+  font-size: 11px;
+  line-height: 14px;
   font-weight: 600;
-  margin-bottom: 4px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--tint-text);
 }
+/* Hero headings in the brand serif (Noe Display Medium). */
 .page__title {
-  font-size: 40px;
-  line-height: 46px;
-  letter-spacing: -0.03em;
+  font-size: 44px;
+  line-height: 50px;
+  letter-spacing: -0.025em;
 }
+/* Brand sub-display: Marat Sans Light for airy subtitles and hero preamble. */
 .page__subtitle {
-  margin-top: 6px;
+  margin-top: 8px;
   max-width: 620px;
+  font-size: 18px;
+  line-height: 27px;
+  font-weight: 300;
 }
 .page__trailing {
   display: flex;
@@ -388,13 +412,13 @@
   }
   .page__title {
     font-size: 34px;
-    line-height: 41px;
-    letter-spacing: -0.024em;
+    line-height: 40px;
+    letter-spacing: -0.025em;
   }
   .page__subtitle {
-    font-size: 15px;
-    line-height: 20px;
-    margin-top: 4px;
+    font-size: 16px;
+    line-height: 23px;
+    margin-top: 6px;
   }
   .page__title-row {
     align-items: center;

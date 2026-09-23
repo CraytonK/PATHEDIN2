@@ -4,7 +4,7 @@ import { Page } from '../components/chrome';
 import { TransitMap } from '../components/path/TransitMap';
 import { AlignMap, compareSummary } from '../components/path/Compare';
 import { CommunityRow, ConnectButton, CredibilityLabel, DecisionItem, RequestButton, StoryItem } from '../components/content';
-import { Button, GroupedList, RelationTag, SaveToggle } from '../components/ui';
+import { Button, GroupedList, PathChips, RelationTag, SaveToggle } from '../components/ui';
 import { IconAlign, IconBell, IconBookmark, IconCalendar, IconClock, IconMoon, IconPeople, IconPin, IconSend, IconSun } from '../components/icons';
 import { people, ME } from '../data/people';
 import { wp } from '../data/waypoints';
@@ -105,6 +105,7 @@ export function Profile() {
               <IconPin size={14} /> {p.location}
             </span>
           </p>
+          {!self && <PathChips id={id} className="profile__chips" />}
           <p className="profile__bio t-serif">{p.bio}</p>
           <dl className="profile__facts">
             <div>
@@ -135,7 +136,7 @@ export function Profile() {
       {p.guide && (
         <section className="guide-card">
           <div className="guide-card__main">
-            <p className="guide-card__kicker t-footnote">Path Guide</p>
+            <p className="guide-card__kicker t-eyebrow">Path Guide</p>
             <h2 className="t-title3">
               Has made the move {p.guide.transitions.map(([a, b]) => `${wp(a).short} → ${wp(b).short}`).join(' and ')}
             </h2>

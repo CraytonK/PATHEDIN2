@@ -92,14 +92,15 @@ export function Guides() {
       {sections.map((s, i) => (
         <section key={`${s.from}-${s.to}`} className="guides__section">
           <header className="guides__head">
-            <span className="guides__num t-num">{String(i + 1).padStart(2, '0')}</span>
+            <span className="guides__num num-tag">{String(i + 1).padStart(2, '0')}</span>
             <div>
               <h2 className="t-title2">{s.title}</h2>
               <p className="guides__move t-subhead">
                 <span>{wp(s.from).label}</span>
-                <svg width="30" height="10" viewBox="0 0 30 10" aria-hidden="true">
-                  <path d="M1 5h22" stroke="var(--tint)" strokeWidth="2" strokeLinecap="round" />
-                  <circle cx="25" cy="5" r="3.5" fill="var(--tint)" />
+                <svg width="36" height="12" viewBox="0 0 36 12" aria-hidden="true">
+                  <path d="M9 6h17" stroke="var(--tint)" strokeWidth="2" strokeLinecap="round" strokeDasharray="3 4" />
+                  <circle cx="5" cy="6" r="3.5" fill="var(--ink)" />
+                  <circle cx="30.5" cy="6" r="3.5" fill="none" stroke="var(--tint)" strokeWidth="2" />
                 </svg>
                 <strong>{wp(s.to).label}</strong>
               </p>

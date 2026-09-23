@@ -9,7 +9,7 @@ import { useUI, scheduleClosePeek, cancelClosePeek } from '../lib/ui';
 import { useApp } from '../lib/store';
 import { PathStrip } from './path/PathStrip';
 import { IconAlign, IconBookmark, IconMessage, IconSend, IconChevronRight } from './icons';
-import { RelationTag } from './ui';
+import { PathChips, RelationTag } from './ui';
 import { conversationList } from '../data/social';
 import './peek.css';
 
@@ -129,6 +129,7 @@ function PeekBody({ id, onDone }: { id: string; onDone: () => void }) {
       </button>
       {rel.kind !== 'self' && <RelationTag kind={rel.kind} label={rel.label} className="peek__rel" />}
       {rel.kind !== 'self' && <p className="t-subhead peek__why">{rel.why}</p>}
+      <PathChips id={id} className="peek__chips" />
       <div className="peek__path">
         <PathStrip id={id} animate wrap />
       </div>

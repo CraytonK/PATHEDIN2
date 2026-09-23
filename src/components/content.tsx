@@ -10,7 +10,7 @@ import { useApp } from '../lib/store';
 import { useUI } from '../lib/ui';
 import { springs, haptic } from '../lib/motion';
 import { PathStrip } from './path/PathStrip';
-import { Avatar, AvatarStack, Button, PersonName, RelationGlyph, RelationTag, SaveToggle, formatCount } from './ui';
+import { Avatar, AvatarStack, Button, PathChips, PersonName, RelationGlyph, RelationTag, SaveToggle, formatCount } from './ui';
 import { IconCheck, IconChevronRight, IconFlag, IconMessage, IconPersonAdd, IconSend } from './icons';
 import { usePeek } from './Peek';
 import './content.css';
@@ -106,6 +106,7 @@ export function PersonTile({ id, why }: { id: string; why?: string }) {
       <RelationTag kind={rel.kind} label={rel.label} className="person-tile__rel" />
       <h3 className="t-headline person-tile__name">{p.name}</h3>
       <p className="t-footnote c-2 truncate">{p.headline}</p>
+      <PathChips id={id} className="person-tile__chips" matchOnly />
       <p className="t-subhead person-tile__why clamp-3">{why ?? rel.why}</p>
       <PathStrip id={id} />
       <div className="person-tile__actions">
@@ -145,7 +146,7 @@ export function SegmentArt({ story, height = 150, labels = true }: { story: Stor
   const W = 400;
   const H = height;
   const n = steps.length;
-  const pad = 34;
+  const pad = 46;
   const xs = steps.map((_, i) => pad + (i * (W - pad * 2)) / Math.max(1, n - 1));
   const y = H * 0.56;
   const a = steps.findIndex((s) => s.wp === story.segment[0]);
@@ -161,7 +162,7 @@ export function SegmentArt({ story, height = 150, labels = true }: { story: Stor
         </clipPath>
       </defs>
       <line x1={xs[0]} y1={y} x2={xs[n - 1]} y2={y} stroke="var(--label-4)" strokeWidth={4} strokeLinecap="round" />
-      {a >= 0 && b >= 0 && <line x1={xs[a]} y1={y} x2={xs[b]} y2={y} stroke="var(--tint)" strokeWidth={7} strokeLinecap="round" />}
+      {a >= 0 && b >= 0 && <line x1={xs[a]} y1={y} x2={xs[b]} y2={y} stroke="var(--tint)" strokeWidth={6} strokeLinecap="round" />}
       {a >= 0 && b >= 0 && from && to && (
         <text x={(xs[a] + xs[b]) / 2} y={y - 22} textAnchor="middle" className="seg-art__years">
           {from === to ? `${to}` : `${from} → ${to}`}
@@ -183,7 +184,7 @@ export function SegmentArt({ story, height = 150, labels = true }: { story: Stor
           );
         return (
           <g key={i}>
-            <circle cx={xs[i]} cy={y} r={on ? 8.5 : 6} fill="var(--bg-elevated)" stroke={on ? 'var(--tint)' : 'var(--label-3)'} strokeWidth={on ? 3.5 : 2.5} />
+            <circle cx={xs[i]} cy={y} r={on ? 9 : 6} fill={on ? 'var(--ink)' : 'var(--label-3)'} stroke={on ? 'var(--tint)' : 'var(--bg-sunken)'} strokeWidth={on ? 3 : 2.5} />
             {labels && (
               <text x={xs[i]} y={y + 32} textAnchor="middle" className={`seg-art__label ${on ? 'is-on' : ''}`}>
                 {wp(s.wp).short}
@@ -204,7 +205,7 @@ export function StoryLead({ story }: { story: Story }) {
         <SegmentArt story={story} height={170} />
       </div>
       <div className="story-lead__text">
-        <p className="story-kicker t-footnote">
+        <p className="story-kicker t-eyebrow">
           {wp(story.segment[0]).label} → {wp(story.segment[1]).label}
         </p>
         <h3 className="story-lead__title t-serif">{story.title}</h3>
@@ -241,7 +242,7 @@ export function StoryItem({ story, withArt = true }: { story: Story; withArt?: b
         </div>
       )}
       <div className="story-item__text">
-        <p className="story-kicker t-caption1">
+        <p className="story-kicker t-eyebrow">
           {wp(story.segment[0]).short} → {wp(story.segment[1]).short}
         </p>
         <h3 className="story-item__title t-serif">{story.title}</h3>
@@ -302,8 +303,13 @@ export function DecisionFork({ d, width = 280, height = 116 }: { d: Decision; wi
         const on = chosen ? chosen === o.id : true;
         return (
           <g key={o.id}>
-            <path d={path(y)} fill="none" stroke={chosen === o.id ? 'var(--tint)' : on ? 'var(--label-3)' : 'var(--label-4)'} strokeWidth={3.5} strokeLinecap="round" strokeDasharray={chosen === o.id ? undefined : '0 7'} />
-            <circle cx={end} cy={y} r={6} fill="var(--bg-elevated)" stroke={chosen === o.id ? 'var(--tint)' : 'var(--label-3)'} strokeWidth={2.5} />
+            {/* A road taken is walked (navy); roads still open are the dashed celestial future. */}
+            <path d={path(y)} fill="none" stroke={chosen === o.id ? 'var(--ink)' : on ? 'var(--tint)' : 'var(--label-4)'} strokeWidth={3.5} strokeLinecap="round" strokeDasharray={chosen === o.id ? undefined : '5 8'} />
+            {chosen === o.id ? (
+              <circle cx={end} cy={y} r={6.5} fill="var(--ink)" />
+            ) : (
+              <circle cx={end} cy={y} r={6} fill="var(--bg-elevated)" stroke={on ? 'var(--tint)' : 'var(--label-3)'} strokeWidth={2.5} />
+            )}
             <text x={split + 40} y={y - 9} className="fork__label">
               {o.label}
             </text>
@@ -313,7 +319,8 @@ export function DecisionFork({ d, width = 280, height = 116 }: { d: Decision; wi
           </g>
         );
       })}
-      <circle cx={x0} cy={y0} r={9} fill="var(--tint)" stroke="var(--bg-elevated)" strokeWidth={3} />
+      <circle cx={x0} cy={y0} r={9.5} fill="var(--bg-elevated)" stroke="var(--ink)" strokeWidth={3} />
+      <circle cx={x0} cy={y0} r={3.5} fill="var(--tint)" />
     </svg>
   );
 }
@@ -327,7 +334,7 @@ export function DecisionItem({ d }: { d: Decision }) {
         <DecisionFork d={d} />
       </div>
       <div>
-        <p className="decision-item__kicker t-caption1">
+        <p className="decision-item__kicker t-eyebrow">
           Decision Point · {d.status === 'open' ? 'Deciding now' : 'Decided'}
         </p>
         <h3 className="decision-item__title">{d.title}</h3>
@@ -363,7 +370,7 @@ export function ThreadItem({ t, showCommunity }: { t: Thread; showCommunity?: bo
         <PersonName id={t.author} className="t-subhead" />
         <RouteStamp id={t.author} />
         <span className="t-footnote c-3">{t.ago}</span>
-        {t.pinned && <span className="thread-item__pin t-caption1">Pinned</span>}
+        {t.pinned && <span className="thread-item__pin t-eyebrow">Pinned</span>}
       </div>
       <Link to={`/c/${c.id}#${t.id}`} className="thread-item__link">
         <h3 className="thread-item__title">{t.title}</h3>

@@ -71,6 +71,7 @@ export function MyPath() {
   return (
     <Page
       title="My Path"
+      eyebrow="The Living Career Path"
       subtitle="Where you’ve been, where you are, and where you’re heading."
       wide
       trailing={
@@ -175,7 +176,7 @@ function WalkCard({ node }: { node: MapNode }) {
   const ppl = stationPeople(ME, node);
   return (
     <div className="walk-card__inner">
-      <p className="walk-card__kicker t-caption1">Walking ahead</p>
+      <p className="walk-card__kicker t-eyebrow">Walking ahead</p>
       <p className="t-headline">{node.title}</p>
       {ppl ? (
         <div className="walk-card__people">
@@ -205,7 +206,7 @@ function PresentInspector({ hideTitle }: { hideTitle?: boolean }) {
     <div className="insp">
       {!hideTitle && (
         <header className="insp__head">
-          <p className="insp__kicker t-footnote">You are here</p>
+          <p className="insp__kicker t-eyebrow">You are here</p>
           <h2 className="t-title2">MSc Chemistry</h2>
           <p className="t-subhead c-2">University of Toronto · defending in December</p>
         </header>
@@ -233,7 +234,7 @@ function JunctionInspector() {
   return (
     <div className="insp">
       <header className="insp__head">
-        <p className="insp__kicker t-footnote">Your next step</p>
+        <p className="insp__kicker t-eyebrow">Your next step</p>
         <h2 className="t-title2">Still open — and that’s fine</h2>
         <p className="t-subhead c-2">Here’s how people with a BSc, bench research and an MSc in chemistry moved on. Tap a route on your Path to focus it.</p>
       </header>
@@ -258,7 +259,7 @@ function StationInspector({ node, walking, hideTitle }: { node: MapNode; walking
     <div className="insp">
       {!hideTitle && (
         <header className="insp__head">
-          <p className="insp__kicker t-footnote">{walking ? 'Walking ahead' : node.route?.label}</p>
+          <p className="insp__kicker t-eyebrow">{walking ? 'Walking ahead' : node.route?.label}</p>
           <h2 className="t-title2">{node.title}</h2>
           <p className="t-subhead c-2">
             {node.route ? `${node.route.people} people from backgrounds like yours took this route · ${Math.round(node.route.share * 100)}%` : node.sub}
@@ -309,7 +310,7 @@ function PastInspector({ node, hideTitle }: { node: MapNode; hideTitle?: boolean
     <div className="insp">
       {!hideTitle && (
         <header className="insp__head">
-          <p className="insp__kicker t-footnote">Where you’ve been</p>
+          <p className="insp__kicker t-eyebrow">Where you’ve been</p>
           <h2 className="t-title2">{node.title}</h2>
           <p className="t-subhead c-2">{node.sub}</p>
         </header>

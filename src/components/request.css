@@ -21,14 +21,17 @@
   font-weight: 600;
   color: var(--label-2);
   text-transform: uppercase;
-  letter-spacing: 0.04em;
-  font-size: 12px;
+  letter-spacing: 0.1em;
+  font-size: 11px;
   margin: 24px 0 10px;
 }
 .req__segs {
   border-radius: 12px;
   background: var(--bg-grouped);
   overflow: hidden;
+  box-shadow:
+    inset 0 0 0 1px var(--separator),
+    var(--panel-shadow);
 }
 :root[data-theme='dark'] .req__segs {
   background: var(--bg-sunken);
@@ -57,28 +60,32 @@
   width: 12px;
   flex: none;
 }
+/* Brand nodes: the segment starts where they'd been (solid navy) and ends where
+   you're heading (open celestial). */
 .req__dot {
-  width: 9px;
-  height: 9px;
+  width: 10px;
+  height: 10px;
   border-radius: 50%;
-  box-shadow: inset 0 0 0 2px var(--label-3);
+  box-shadow: inset 0 0 0 2px var(--label-4);
 }
 .req__dot--end {
-  background: var(--label-3);
+  background: var(--bg);
 }
 .req__line {
-  width: 2px;
+  width: 2.5px;
   height: 14px;
   background: var(--label-4);
 }
 .req__seg.is-on .req__dot {
-  box-shadow: inset 0 0 0 2px var(--tint);
+  background: var(--ink);
+  box-shadow: none;
 }
 .req__seg.is-on .req__dot--end {
-  background: var(--tint);
+  background: var(--bg);
+  box-shadow: inset 0 0 0 2.5px var(--tint);
 }
 .req__seg.is-on .req__line {
-  background: var(--tint);
+  background: repeating-linear-gradient(180deg, var(--tint) 0 4px, transparent 4px 7px);
 }
 .req__seg-text {
   display: flex;
@@ -108,19 +115,14 @@
   resize: vertical;
   min-height: 108px;
   padding: 12px 14px;
-  border-radius: 12px;
+  border-radius: 8px;
   border: 0;
-  background: var(--bg-grouped);
+  background: var(--bg-elevated);
+  box-shadow: inset 0 0 0 1px var(--separator);
   font-size: 16px;
-  line-height: 22px;
+  line-height: 24px;
   outline: none;
   transition: box-shadow var(--dur-2);
-}
-:root[data-theme='dark'] .req__msg textarea {
-  background: var(--bg-sunken);
-}
-.req__msg textarea:focus {
-  box-shadow: 0 0 0 3px color-mix(in srgb, var(--tint) 30%, transparent);
 }
 .req__meta {
   display: flex;

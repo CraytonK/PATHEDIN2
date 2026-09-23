@@ -2,9 +2,9 @@
 
 **Where you've been, where you are, where you want to go — and who you should know to get there.**
 
-PathedIn is a professional network built around one object: the **Path**. A Path is a journey (Past → Present → Possible futures), drawn as a transit line. Stations are steps. The walked track is solid, and the future is dotted. An undecided next step is an interchange that opens into the real routes people took. Everything in the product hangs off the Path: the people you should know, the communities you belong to, and the questions, stories and decisions worth your time.
+PathedIn is a professional network built around one object: the **Path**. A Path is a journey (Past → Present → Possible futures), drawn as a transit line. Stations are steps, drawn with the brand's three nodes. The walked track is solid navy, and the future is a dashed celestial line. An undecided next step is an interchange that opens into the real routes people took. Everything in the product hangs off the Path: the people you should know, the communities you belong to, and the questions, stories and decisions worth your time.
 
-This repository is a working front-end prototype. It's a React + TypeScript single-page app, designed to Apple's [Human Interface Guidelines](https://developer.apple.com/design/human-interface-guidelines) and built mobile-first. It ships with a believable, interconnected sample network centred on Maya Okafor, an MSc chemistry student heading for pharmaceutical R&D.
+This repository is a working front-end prototype. It's a React + TypeScript single-page app, built mobile-first. Its structure and behaviour follow Apple's [Human Interface Guidelines](https://developer.apple.com/design/human-interface-guidelines), and its look follows the PathedIn brand identity kit: the three-node Path mark, Deep Slate Navy with Celestial Blue kept for the future, and Noe Display / Marat Sans / Charter typography. It ships with a believable, interconnected sample network centred on Maya Okafor, an MSc chemistry student heading for pharmaceutical R&D.
 
 ## Run it
 
@@ -53,11 +53,13 @@ src/
     Peek.tsx     press-and-hold / hover previews
     …            content building blocks (people, stories, questions, decisions, communities)
   screens/       one file per area of the product
-  styles/        design tokens (HIG type ramp, semantic colors, dark mode) and base styles
+  styles/        brand tokens (type ramp, palette, dark mode), self-hosted fonts and base styles
+  assets/fonts/  WOFF2 stand-ins for the brand faces (Playfair Display, Plus Jakarta Sans, Source Serif 4)
 ```
 
 ## Notes
 
 - **Portraits** are AI-generated faces of people who don't exist, from the public [100k-faces](https://github.com/ozgrozer/100k-faces) set (originally from [generated.photos](https://generated.photos)). They are placeholders: replace them with licensed photography before any real use.
 - **Names, companies and people are fictional.** Universities are real places, used only as settings.
-- See [DESIGN.md](./DESIGN.md) for how the interface follows the Human Interface Guidelines, and for PathedIn's own visual language.
+- **Fonts.** The brand's Noe Display and Marat Sans are commercial typefaces, and Charter comes with Apple devices. The app ships the brand kit's suggested open-licence stand-ins: Playfair Display, Plus Jakarta Sans and Source Serif 4 (SIL Open Font License). The font stacks name the brand faces first, so adding licensed files is enough to switch.
+- See [DESIGN.md](./DESIGN.md) for the brand kit as applied (mark, type, palette, components), how the interface follows the Human Interface Guidelines, and PathedIn's own visual language.

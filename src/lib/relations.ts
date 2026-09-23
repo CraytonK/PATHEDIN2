@@ -193,7 +193,23 @@ function computeRelation(v: Person, o: Person): Relation {
   return make('other', 'Different Path', `${o.first} went from ${wp(O[0]).label} to ${wp(oCur).label}.`);
 }
 
-export const relationOrder: RelationKind[] = ['twin', 'peer', 'ahead', 'guide', 'explorer', 'behind', 'other'];
+/**
+ * Path match: how closely someone's journey (walked steps plus where they're heading)
+ * follows yours, as a percentage. Built from the longest shared sequence of steps.
+ */
+export function pathMatch(otherId: string, viewerId = ME): number {
+  const seq = (p: Person) => {
+    const w = walked(p);
+    const d = primaryDestination(p);
+    return d && !w.includes(d) ? [...w, d] : w;
+  };
+  const a = seq(people[viewerId]);
+  const b = seq(people[otherId]);
+  const shared = lcs(a, b).length;
+  return Math.min(99, Math.round(40 + 59 * ((2 * shared) / (a.length + b.length))));
+}
+
+export const relationOrder: RelationKind[] =['twin', 'peer', 'ahead', 'guide', 'explorer', 'behind', 'other'];
 
 export const relationCopy: Record<Exclude<RelationKind, 'self' | 'other'>, { title: string; plural: string; blurb: string }> = {
   twin: { title: 'Path Twin', plural: 'Path Twins', blurb: 'Journeys that closely mirror yours, heading the same way.' },

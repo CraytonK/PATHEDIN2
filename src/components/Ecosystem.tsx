@@ -76,7 +76,7 @@ export function Ecosystem({ dest, compact, bare }: { dest: string; compact?: boo
     <div className={`eco ${compact ? 'eco--compact' : ''} ${bare ? 'eco--bare' : ''}`}>
       {!bare && (
       <div className="eco__head">
-        <p className="eco__kicker t-footnote">{people[ME].futures.some((f) => f.destination === dest) ? 'Your destination' : 'Destination'}</p>
+        <p className="eco__kicker t-eyebrow">{people[ME].futures.some((f) => f.destination === dest) ? 'Your destination' : 'Destination'}</p>
         <div className="eco__title-row">
           <h2 className="t-title1">{w.label}</h2>
           <SaveToggle saveKey={`destination:${dest}`} compact />

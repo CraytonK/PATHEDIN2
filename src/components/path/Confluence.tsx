@@ -101,7 +101,7 @@ export function Confluence({ dest, selected, onSelect }: { dest: Destination; se
                   x2={firstX}
                   y2={y}
                   stroke="url(#cf-fade)"
-                  strokeWidth={isSel ? 5 : 4}
+                  strokeWidth={isSel ? 4.5 : 3.5}
                   initial={{ pathLength: 0 }}
                   animate={{ pathLength: 1 }}
                   transition={{ duration: 0.4, delay: 0.05 * i }}
@@ -112,7 +112,7 @@ export function Confluence({ dest, selected, onSelect }: { dest: Destination; se
                   x2={destX}
                   y2={y}
                   stroke={color}
-                  strokeWidth={isSel ? 5 : 4}
+                  strokeWidth={isSel ? 4.5 : 3.5}
                   strokeLinecap="round"
                   initial={{ pathLength: 0 }}
                   animate={{ pathLength: 1 }}
@@ -127,10 +127,10 @@ export function Confluence({ dest, selected, onSelect }: { dest: Destination; se
                       key={w}
                       cx={x}
                       cy={y}
-                      r={7.5}
-                      fill="var(--bg)"
-                      stroke={color}
-                      strokeWidth={3.5}
+                      r={7}
+                      fill={color}
+                      stroke="var(--bg-grouped)"
+                      strokeWidth={3}
                       initial={{ scale: 0 }}
                       animate={{ scale: 1 }}
                       transition={{ ...springs.settle, delay: 0.45 + 0.07 * i + 0.1 * k }}
@@ -168,8 +168,8 @@ export function Confluence({ dest, selected, onSelect }: { dest: Destination; se
                   height={y2 - y1 + 20}
                   rx={10}
                   fill="var(--bg)"
-                  stroke={mine ? 'var(--tint)' : 'var(--ink)'}
-                  strokeWidth={3.5}
+                  stroke="var(--ink)"
+                  strokeWidth={3}
                   initial={{ opacity: 0, scaleY: 0.3 }}
                   animate={{ opacity: 1, scaleY: 1 }}
                   transition={{ ...springs.settle, delay: 0.5 }}
@@ -190,12 +190,13 @@ export function Confluence({ dest, selected, onSelect }: { dest: Destination; se
             width={18}
             height={(n - 1) * gap + 32}
             rx={9}
-            fill="var(--tint)"
+            fill="var(--bg)"
+            stroke="var(--tint)"
+            strokeWidth={3.5}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.9, duration: 0.3 }}
           />
-          <rect x={destX - 3.5} y={yAt(0) - 10} width={7} height={(n - 1) * gap + 20} rx={3.5} fill="var(--bg)" opacity={0.9} />
         </svg>
       )}
 

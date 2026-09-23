@@ -8,7 +8,7 @@ import { alignSteps, futureWaypoints, relationTo, stepsWithFuture, yearsLabel, t
 import { springs, useIsMobile } from '../../lib/motion';
 import { useUI } from '../../lib/ui';
 import { Sheet } from '../chrome';
-import { Button, RelationTag } from '../ui';
+import { Button, PathChips, RelationTag } from '../ui';
 import { IconMessage, IconSend } from '../icons';
 import './compare.css';
 
@@ -117,8 +117,8 @@ export function AlignMap({ otherId, autoAlign = true }: { otherId: string; autoA
             transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1], delay: aligned ? 0.25 + k * 0.1 : 0 }}
           />
         ))}
-        <TrackPair seg={bSeg} color="var(--ink)" />
-        <TrackPair seg={aSeg} color="var(--tint)" />
+        <TrackPair seg={bSeg} color="var(--path-them)" future="var(--path-them)" />
+        <TrackPair seg={aSeg} color="var(--ink)" future="var(--tint)" />
         {rows.map((r, i) => {
           const y = TOP + i * ROW;
           if (r.kind === 'shared')
@@ -144,9 +144,9 @@ export function AlignMap({ otherId, autoAlign = true }: { otherId: string; autoA
           const y = TOP + i * ROW;
           const els = [];
           if (r.kind === 'a' || (r.kind === 'shared' && !aligned))
-            els.push(<Station key={`a${i}`} x={x.a} y={y} color="var(--tint)" future={r.a?.status === 'future'} present={r.a?.status === 'present'} />);
+            els.push(<Station key={`a${i}`} x={x.a} y={y} color="var(--ink)" future={r.a?.status === 'future'} present={r.a?.status === 'present'} />);
           if (r.kind === 'b' || (r.kind === 'shared' && !aligned))
-            els.push(<Station key={`b${i}`} x={x.b} y={y} color="var(--ink)" future={r.b?.status === 'future'} present={r.b?.status === 'present'} />);
+            els.push(<Station key={`b${i}`} x={x.b} y={y} color="var(--path-them)" future={r.b?.status === 'future'} present={r.b?.status === 'present'} />);
           return els;
         })}
       </svg>
@@ -198,7 +198,7 @@ function describe(s?: { org?: string; status: string; start?: number; end?: numb
   return [s.org, yrs].filter(Boolean).join(', ');
 }
 
-function TrackPair({ seg, color }: { seg: ReturnType<typeof segments>; color: string }) {
+function TrackPair({ seg, color, future }: { seg: ReturnType<typeof segments>; color: string; future: string }) {
   return (
     <>
       {seg.solid.length > 1 && (
@@ -217,10 +217,10 @@ function TrackPair({ seg, color }: { seg: ReturnType<typeof segments>; color: st
         <motion.path
           d={trackPath(seg.dotted)}
           fill="none"
-          stroke={color}
+          stroke={future}
           strokeWidth={3.5}
           strokeLinecap="round"
-          strokeDasharray="0 7.5"
+          strokeDasharray="5 8"
           initial={{ opacity: 0, d: trackPath(seg.dotted) }}
           animate={{ opacity: 1, d: trackPath(seg.dotted) }}
           transition={{ opacity: { delay: 0.6, duration: 0.3 }, d: springs.settle }}
@@ -230,18 +230,21 @@ function TrackPair({ seg, color }: { seg: ReturnType<typeof segments>; color: st
   );
 }
 
+/* Brand nodes: been = solid, now = ring with a celestial dot, going = open circle. */
 function Station({ x, y, color, future, present }: { x: number; y: number; color: string; future?: boolean; present?: boolean }) {
   return (
-    <motion.circle
-      initial={{ scale: 0, cx: x, cy: y }}
-      animate={{ scale: 1, cx: x, cy: y }}
-      transition={springs.settle}
-      r={present ? 8 : 7}
-      fill={present ? color : 'var(--bg)'}
-      stroke={color}
-      strokeWidth={future ? 2 : 3}
-      strokeDasharray={future ? '2.5 2.5' : undefined}
-    />
+    <motion.g initial={{ scale: 0 }} animate={{ scale: 1 }} transition={springs.settle}>
+      <motion.circle
+        initial={{ cx: x, cy: y }}
+        animate={{ cx: x, cy: y }}
+        transition={springs.settle}
+        r={present ? 8.5 : 7}
+        fill={future || present ? 'var(--bg)' : color}
+        stroke={future ? (color === 'var(--ink)' ? 'var(--tint)' : color) : present ? color : 'var(--bg)'}
+        strokeWidth={present ? 3 : future ? 2.5 : 2}
+      />
+      {present && <motion.circle initial={{ cx: x, cy: y }} animate={{ cx: x, cy: y }} transition={springs.settle} r={3} fill="var(--tint)" />}
+    </motion.g>
   );
 }
 
@@ -295,7 +298,10 @@ export function CompareLayer() {
             </div>
             <div>
               <h2 className="t-title2">You & {o.first}</h2>
-              <RelationTag kind={rel.kind} label={rel.label} />
+              <div className="compare__tags">
+                <RelationTag kind={rel.kind} label={rel.label} />
+                <PathChips id={o.id} matchOnly />
+              </div>
             </div>
           </div>
           <p className="compare__lede t-body">{rel.why}</p>

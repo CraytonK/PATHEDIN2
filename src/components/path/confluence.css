@@ -36,7 +36,7 @@
   fill: var(--label-2);
 }
 .confluence__stop.is-cap {
-  font-weight: 700;
+  font-weight: 600;
   fill: var(--label);
 }
 .confluence__people {
@@ -73,7 +73,7 @@
 }
 .confluence__me span {
   color: var(--tint-text);
-  font-weight: 700;
+  font-weight: 600;
   white-space: nowrap;
 }
 @media (max-width: 767px) {

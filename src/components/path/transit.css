@@ -28,38 +28,41 @@
   width: 0;
   height: 0;
 }
+/*
+  Brand node vocabulary:
+    Node 1 — where you've been: solid Deep Slate Navy
+    Node 2 — where you are now: navy ring with a celestial dot
+    Node 3 — where you want to go: open Celestial Blue circle
+*/
 .station__mark {
   position: absolute;
   left: 0;
   top: 0;
   display: block;
-  width: 16px;
-  height: 16px;
+  width: 15px;
+  height: 15px;
   transform: translate(-50%, -50%);
   border-radius: 999px;
-  background: var(--bg);
-  box-shadow: inset 0 0 0 3.5px var(--ink);
+  background: var(--ink);
+  box-shadow: 0 0 0 3px var(--bg);
   transition:
     box-shadow var(--dur-2) var(--ease-out),
     background-color var(--dur-2) var(--ease-out);
 }
 .station--past.is-active .station__mark,
-.station--past.is-highlight .station__mark {
-  box-shadow: inset 0 0 0 3.5px var(--tint);
-}
+.station--past.is-highlight .station__mark,
 .station.is-shared .station__mark {
-  background: var(--tint);
   box-shadow:
-    inset 0 0 0 3.5px var(--ink),
-    inset 0 0 0 5px var(--bg);
+    0 0 0 2.5px var(--bg),
+    0 0 0 4.5px var(--tint);
 }
 .station--present .station__mark {
   width: 22px;
   height: 22px;
-  background: var(--tint);
+  background: radial-gradient(circle, var(--tint) 0 3.6px, var(--bg) 4.2px);
   box-shadow:
-    0 0 0 3px var(--bg),
-    0 0 0 4.5px var(--tint);
+    inset 0 0 0 3px var(--ink),
+    0 0 0 3px var(--bg);
 }
 .station__pulse {
   position: absolute;
@@ -95,7 +98,7 @@
 .station--junction .station__mark {
   background: var(--bg);
   box-shadow: none;
-  border: 2px dashed var(--label-3);
+  border: 2px dashed var(--tint);
   display: flex;
   align-items: center;
   justify-content: flex-start;
@@ -103,7 +106,7 @@
 }
 .station__q {
   font-size: 12px;
-  font-weight: 800;
+  font-weight: 700;
   color: var(--label);
   line-height: 1;
 }
@@ -111,18 +114,17 @@
   background: var(--bg);
   box-shadow:
     inset 0 0 0 3.5px var(--tint),
-    inset 0 0 0 7px var(--bg),
-    inset 0 0 0 20px var(--tint);
+    0 0 0 3px var(--bg);
 }
 .station--destination.is-capsule .station__mark {
-  background: var(--tint-soft);
-  box-shadow: inset 0 0 0 3.5px var(--tint);
+  background: var(--tint-softer);
 }
 
 .station--route .station__mark {
   width: 15px;
   height: 15px;
-  box-shadow: inset 0 0 0 3px var(--label-3);
+  background: var(--bg);
+  box-shadow: inset 0 0 0 3px var(--future-soft);
 }
 .station--route.is-focus .station__mark,
 .station--route.is-active .station__mark {
@@ -134,7 +136,8 @@
 .station--explore .station__mark {
   width: 14px;
   height: 14px;
-  box-shadow: inset 0 0 0 2.5px var(--label-3);
+  background: var(--bg);
+  box-shadow: inset 0 0 0 2.5px var(--future-soft);
 }
 
 /* ── Rows ────────────────────────────────── */
@@ -183,18 +186,18 @@
   background: var(--tint-softer);
 }
 .tmap__title {
-  font-size: 17px;
+  font-size: 16px;
   line-height: 22px;
   font-weight: 600;
-  letter-spacing: -0.016em;
+  letter-spacing: -0.012em;
 }
-.tmap__row--present .tmap__title {
-  font-size: 20px;
-  line-height: 22px;
-  letter-spacing: -0.02em;
-}
+/* "Where you are" and "where you want to go" are milestone moments: the brand serif. */
+.tmap__row--present .tmap__title,
 .tmap__row--destination .tmap__title {
-  font-size: 20px;
+  font-family: var(--font-brand);
+  font-weight: 500;
+  font-size: 22px;
+  line-height: 22px;
   letter-spacing: -0.02em;
 }
 .tmap__row--junction .tmap__title,
@@ -211,17 +214,20 @@
   margin-top: 1px;
 }
 .tmap__here {
-  margin-bottom: 2px;
-  font-weight: 700;
+  margin-bottom: 4px;
+  font-weight: 600;
   color: var(--tint-text);
   text-transform: uppercase;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.1em;
   font-size: 11px;
 }
+/* A step's note is a reflection in the person's own words: Marat Sans Light Italic. */
 .tmap__note {
   color: var(--label-2);
   margin-top: 6px;
   max-width: 460px;
+  font-style: italic;
+  font-weight: 300;
 }
 .tmap__shared {
   display: inline-flex;
@@ -268,8 +274,8 @@
 .tmap__story-mark {
   font-family: var(--font-sans);
   font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.06em;
+  font-weight: 600;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--tint-text);
   flex: none;

@@ -76,8 +76,11 @@
 .add-routes {
   margin-top: 36px;
   padding: 16px 18px 6px;
-  border-radius: 16px;
+  border-radius: var(--r-xl);
   background: var(--bg-grouped);
+  box-shadow:
+    inset 0 0 0 1px var(--separator),
+    var(--panel-shadow);
 }
 .add-routes__h {
   font-weight: 600;
@@ -108,9 +111,9 @@
 }
 .walk-card__kicker {
   color: var(--tint-text);
-  font-weight: 700;
+  font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.1em;
   font-size: 11px;
 }
 .walk-card__people {
@@ -126,9 +129,9 @@
 }
 .insp__kicker {
   color: var(--tint-text);
-  font-weight: 700;
+  font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.1em;
   font-size: 11px;
   margin-bottom: 4px;
 }
@@ -140,12 +143,12 @@
   margin-top: 28px;
 }
 .insp__h {
-  font-size: 13px;
-  line-height: 18px;
+  font-size: 11px;
+  line-height: 16px;
   font-weight: 600;
   color: var(--label-2);
   text-transform: uppercase;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.1em;
   padding-bottom: 8px;
   border-bottom: var(--hairline) solid var(--separator);
   margin-bottom: 4px;

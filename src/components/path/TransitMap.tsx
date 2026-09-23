@@ -12,7 +12,7 @@ import './transit.css';
 
 /*
   The Transit Map — PathedIn's signature view of a Path.
-  Stations are steps. Walked track is solid ink; the future is dotted.
+  Stations are steps. Walked track is solid Deep Slate Navy; the future is dashed Celestial Blue.
   An undecided next step is an interchange ("?") that opens into parallel routes,
   which run side by side and rejoin at the destination terminus.
 */
@@ -380,12 +380,13 @@ export function TransitMap({
     return classes.join(' ');
   };
 
+  // Brand vocabulary: the walked Path is Deep Slate Navy; the future is dashed Celestial Blue.
+  // Routes you're weighing but not focused on sit in a lighter celestial.
   const edgeColor = (e: Edge) => {
     if (e.style === 'walked') return inHighlight && inHighlight.has(e.from) && inHighlight.has(e.to) ? 'var(--tint)' : 'var(--ink)';
-    if (e.style === 'explore') return 'var(--label-3)';
-    if (e.route) return focusRoute === e.route ? 'var(--tint)' : focusRoute ? 'var(--label-4)' : 'var(--label-3)';
-    if (personId === ME || interactive) return 'var(--tint)';
-    return 'var(--label-3)';
+    if (e.style === 'explore') return 'var(--future-soft)';
+    if (e.route) return focusRoute === e.route ? 'var(--tint)' : focusRoute ? 'var(--label-4)' : 'var(--future-soft)';
+    return 'var(--tint)';
   };
 
   const nodeDelay = (i: number) => (version === 0 ? 0.15 + i * 0.12 : 0.18);
@@ -425,7 +426,7 @@ export function TransitMap({
                   d={d}
                   fill="none"
                   stroke={edgeColor(e)}
-                  strokeWidth={4}
+                  strokeWidth={3.5}
                   strokeLinecap="round"
                   initial={{ pathLength: 0 }}
                   animate={{ pathLength: 1 }}
@@ -438,9 +439,9 @@ export function TransitMap({
                 d={d}
                 fill="none"
                 stroke={edgeColor(e)}
-                strokeWidth={e.style === 'explore' ? 3 : 4}
+                strokeWidth={e.style === 'explore' ? 3 : 3.5}
                 strokeLinecap="round"
-                strokeDasharray={e.style === 'explore' ? '0 7' : '0 8.5'}
+                strokeDasharray={e.style === 'explore' ? '3 7' : '5 8'}
                 mask={`url(#${uid}-m-${e.from}-${e.to})`}
                 className="tmap__future"
               />

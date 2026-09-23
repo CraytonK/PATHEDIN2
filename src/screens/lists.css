@@ -8,12 +8,12 @@
   margin-top: 12px;
 }
 .list-group__h {
-  font-size: 13px;
-  line-height: 18px;
+  font-size: 11px;
+  line-height: 16px;
   font-weight: 600;
   color: var(--label-2);
   text-transform: uppercase;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.1em;
   padding-bottom: 8px;
   border-bottom: var(--hairline) solid var(--separator);
 }
@@ -39,7 +39,7 @@
   height: 44px;
   border-radius: 50%;
   background: var(--tint-soft);
-  color: var(--tint);
+  color: var(--tint-strong);
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -92,8 +92,11 @@
   gap: 8px;
   margin: 16px 0 12px;
   padding: 12px 14px;
-  border-radius: 14px;
+  border-radius: var(--r-xl);
   background: var(--bg-grouped);
+  box-shadow:
+    inset 0 0 0 1px var(--separator),
+    var(--panel-shadow);
 }
 :root[data-theme='dark'] .req-card__about {
   background: var(--bg-sunken);
@@ -133,8 +136,11 @@
   display: flex;
   flex-direction: column;
   padding: 16px 20px;
-  border-radius: 16px;
+  border-radius: var(--r-xl);
   background: var(--bg-grouped);
+  box-shadow:
+    inset 0 0 0 1px var(--separator),
+    var(--panel-shadow);
 }
 .empty {
   display: flex;

@@ -33,14 +33,15 @@ export const IconHome = ({ filled, ...p }: P & { filled?: boolean }) => (
   </Svg>
 );
 
-/** The PathedIn glyph: a walked line, the present, and a dotted future. */
+/** The PathedIn symbol as a monochrome glyph: been (solid), now (ring with dot), going (open, dashed). */
 export const IconPath = ({ filled, ...p }: P & { filled?: boolean }) => (
   <Svg {...p}>
-    <path d="M5 20v-6.5a3 3 0 0 1 3-3h4" />
-    <path d="M14.5 9.5 19 5" strokeDasharray="0.1 3.4" strokeWidth={2.1} />
-    <circle cx="5" cy="20" r="1.4" fill="currentColor" stroke="none" />
-    <circle cx="13" cy="10.5" r={filled ? 3 : 2.6} fill={filled ? 'currentColor' : 'var(--bg, #fff)'} />
-    <circle cx="19.5" cy="4.5" r="1.7" />
+    <path d="M6.2 17.8 12 12" />
+    <path d="M12 12l5.8-5.8" strokeDasharray="1.6 2.6" />
+    <circle cx="5.2" cy="18.8" r="2.3" fill="currentColor" stroke="none" />
+    <circle cx="12" cy="12" r="2.6" fill="var(--bg, #fff)" />
+    <circle cx="12" cy="12" r={filled ? 1.1 : 0.9} fill="currentColor" stroke="none" />
+    <circle cx="18.8" cy="5.2" r="2.3" fill="var(--bg, #fff)" />
   </Svg>
 );
 

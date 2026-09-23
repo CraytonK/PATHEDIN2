@@ -107,7 +107,7 @@
 }
 .cred__glyph {
   display: inline-flex;
-  color: var(--tint);
+  color: var(--tint-strong);
 }
 
 /* ── Stories ──────────────────────────────────── */
@@ -115,6 +115,7 @@
   display: block;
   width: 100%;
   height: auto;
+  overflow: visible;
 }
 .seg-art__label {
   font-family: var(--font-sans);
@@ -124,7 +125,7 @@
 }
 .seg-art__label.is-on {
   fill: var(--label);
-  font-weight: 700;
+  font-weight: 600;
 }
 .seg-art__years {
   font-family: var(--font-sans);
@@ -165,9 +166,12 @@
 }
 .story-lead__art {
   background: var(--bg-sunken);
-  border-radius: 20px;
+  border-radius: var(--r-xl);
   padding: 18px 20px;
   transition: transform var(--dur-3) var(--ease-out);
+  box-shadow:
+    inset 0 0 0 1px var(--separator),
+    var(--panel-shadow);
 }
 .story-lead:hover .story-lead__art {
   transform: scale(1.01);
@@ -175,7 +179,7 @@
 .story-lead__title {
   font-size: 30px;
   line-height: 36px;
-  font-weight: 500;
+  font-weight: 700;
   letter-spacing: -0.02em;
   margin: 8px 0 10px;
   text-wrap: balance;
@@ -211,9 +215,12 @@
 }
 .story-item__art {
   background: var(--bg-sunken);
-  border-radius: 16px;
+  border-radius: var(--r-xl);
   padding: 10px 6px;
   transition: transform var(--dur-3) var(--ease-out);
+  box-shadow:
+    inset 0 0 0 1px var(--separator),
+    var(--panel-shadow);
 }
 .story-item:hover .story-item__art {
   transform: scale(1.015);
@@ -221,7 +228,7 @@
 .story-item__title {
   font-size: 21px;
   line-height: 26px;
-  font-weight: 500;
+  font-weight: 700;
   letter-spacing: -0.015em;
   margin: 4px 0 6px;
   text-wrap: balance;
@@ -329,9 +336,12 @@
 }
 .decision-item__fork {
   background: var(--bg-sunken);
-  border-radius: 16px;
+  border-radius: var(--r-xl);
   padding: 14px 16px 12px;
   transition: transform var(--dur-3) var(--ease-out);
+  box-shadow:
+    inset 0 0 0 1px var(--separator),
+    var(--panel-shadow);
 }
 .decision-item:hover .decision-item__fork {
   transform: scale(1.012);
@@ -445,15 +455,25 @@
     line-height: 36px;
   }
 }
+.community-title--lg {
+  font-family: var(--font-brand);
+  letter-spacing: -0.025em;
+}
+.community-title--lg .community-title__to {
+  font-weight: 500;
+}
+.community-title--lg .community-title__from {
+  font-weight: 400;
+}
 .community-title__from {
   font-weight: 500;
   color: var(--label-2);
 }
 .community-title__to {
-  font-weight: 700;
+  font-weight: 600;
 }
 .community-title__arrow {
-  color: var(--tint);
+  color: var(--tint-strong);
   display: inline-flex;
   align-self: center;
 }
@@ -542,7 +562,10 @@
   flex: none;
 }
 .stage-line__stop:last-child .stage-line__dot {
-  background: var(--tint);
+  background: var(--bg);
+  box-shadow:
+    inset 0 0 0 2.5px var(--tint),
+    0 0 0 2px var(--bg);
 }
 .stage-line__label {
   font-size: 11px;
@@ -570,4 +593,7 @@
 }
 .more-link:hover {
   opacity: 0.7;
+}
+.person-tile__chips {
+  margin-top: 8px;
 }
