@@ -178,7 +178,7 @@
   margin-top: 2px;
   font-size: 14px;
   line-height: 20px;
-  font-weight: 300;
+  font-weight: 400;
   color: var(--label-2);
 }
 .fguide__move {
@@ -422,7 +422,7 @@
   padding: 20px 0 4px;
   font-size: 15px;
   line-height: 22px;
-  font-weight: 300;
+  font-weight: 400;
   color: var(--label-2);
 }
 .kind-intro a {

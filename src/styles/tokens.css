@@ -10,14 +10,14 @@
     Hairline        #E2E8F0  1px dividers
     Executive Navy  #1E3A8A  the accent: the future, "you", links, eyebrows, focus
 
-  Type — Noe Display (brand), Marat Sans (interface), Charter (content).
+  Type — Noe Display (brand), Inter (interface, in the spirit of Medium's sohne), Charter (content).
 */
 
 :root {
   color-scheme: light dark;
 
   /* ── Type families ─────────────────────────────────────────── */
-  --font-sans: 'Marat Sans', 'Plus Jakarta Sans', Inter, -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  --font-sans: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
   --font-display: var(--font-sans);
   /* Noe Display Medium: wordmark, hero headings, milestone moments. */
   --font-brand: 'Noe Display', 'Playfair Display', Georgia, serif;
@@ -26,11 +26,13 @@
   --font-rounded: var(--font-sans);
 
   /* ── Semantic colors (light) ───────────────────────────────── */
-  --bg: #ffffff;
+  /* A warm paper ground, like Medium's: never pure white. Floating things (menus, sheets,
+     cards that lift) stay white, and panels sit a shade deeper than the page. */
+  --bg: #f8f6f1;
   --bg-elevated: #ffffff;
-  --bg-grouped: #f8fafc;
-  --bg-sunken: #f8fafc;
-  --bg-intro: #f8fafc; /* the signed-out intro page and the sign-in splash */
+  --bg-grouped: #f1eee7;
+  --bg-sunken: #f1eee7;
+  --bg-intro: #f7f4ed; /* Medium's cream: the signed-out intro page and the sign-in splash */
   --bg-hover: rgba(15, 23, 42, 0.04);
   --bg-press: rgba(15, 23, 42, 0.07);
 
@@ -39,12 +41,13 @@
   --label-3: #94a3b8;
   --label-4: #cbd5e1;
 
-  --fill: #f1f5f9;
-  --fill-2: #f1f5f9;
-  --fill-3: #f8fafc;
+  --fill: #ece8df;
+  --fill-2: #ece8df;
+  --fill-3: #f3f0ea;
 
-  --separator: #e2e8f0;
-  --separator-strong: #cbd5e1;
+  /* Hairlines are warm too, so they sit in the paper instead of on it. */
+  --separator: #e4dfd4;
+  --separator-strong: #d3ccbe;
 
   /* Executive Navy: the brand's one accent. */
   --tint: #1e3a8a;
@@ -69,7 +72,7 @@
   --red: #1e3a8a;
   --badge: #1e3a8a;
 
-  --bar-bg: rgba(255, 255, 255, 0.94);
+  --bar-bg: rgba(248, 246, 241, 0.94);
   --bar-blur: saturate(160%) blur(20px);
 
   --panel-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
@@ -78,7 +81,7 @@
   --shadow-lift: 0 1px 4px rgba(15, 23, 42, 0.08);
   --scrim: rgba(15, 23, 42, 0.28);
   /* Side drawers fade the page to 60% white instead of darkening it. */
-  --scrim-soft: rgba(255, 255, 255, 0.6);
+  --scrim-soft: rgba(248, 246, 241, 0.6);
   --tip-bg: #0f172a;
   --tip-fg: #ffffff;
   /* Highlights on a story: the passage most readers marked, and your own. */

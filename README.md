@@ -7,11 +7,11 @@ PathedIn is a professional network built around one object: the **Path**. A Path
 This repository is a working front-end prototype. It's a React + TypeScript single-page app, built mobile-first.
 - **Behaviour** follows Apple's [Human Interface Guidelines](https://developer.apple.com/design/human-interface-guidelines).
 - **Layout** follows Medium's reading experience: an intro page, a "Join PathedIn." sign-in card, a slim top bar with a left sidebar, and a For you feed beside a quiet right-hand column.
-- **Colour and type** follow the PathedIn brand identity kit (v2):
-  - slate neutrals, with Executive Navy as the one accent (the Minimal Navy Principle)
+- **Colour and type** follow the PathedIn brand identity kit (v2), with two things taken from Medium:
+  - a warm paper ground (never pure white), with Executive Navy as the one accent (the Minimal Navy Principle)
   - Noe Display for brand moments
-  - Marat Sans for the interface
-  - Charter for stories
+  - Inter for the interface, plain and professional like Medium's sohne
+  - Charter for stories and the editor
 
 It ships with a believable, interconnected sample network centred on Maya Okafor, an MSc chemistry student heading for pharmaceutical R&D.
 
@@ -40,6 +40,7 @@ Requires Node 20+.
 | **Destination ecosystem.** Select the destination to see the routes people took, the Guides who made it, who's heading there, and the communities, questions, stories and decisions around it. | My Path → Pharmaceutical R&D |
 | **Route Confluence.** Every real route into a destination runs as its own line into one terminus. Where routes share a station you'll see an interchange, and if you're standing on it, you'll see yourself there. Tap a route to follow it into people and its community. | Discover → Pharmaceutical R&D |
 | **Path Lens.** Your network placed *on* your Path: Twins beside you, Peers at your station, People Ahead on your next step, Guides at your destination, Explorers arriving from elsewhere. | Network |
+| **Write.** A Medium-style editor. Start a new line and click ⊕ to add a photo, your Path or a new section. Select text to format it. **Publish** asks whether it's a Story, a Question or a community post, and which stretch of your Path it's about. | Write (top bar), or the pencil on iPhone Home |
 | **Tell posts apart.** Every post in For you says what it is (Story, Question, Community, Path Guide, Decision Point, Route, Milestone) with its sidebar icon, and each kind has its own shape. Use the pills under For you to see one kind at a time. | Home |
 | **Path hints.** Posts and people show a Path in one line ("CRO → Pharma R&D"). Hover it, or tap it on a phone, to see the whole Path drawn top to bottom, with the steps you share marked. | Home, Network, Discover, Questions |
 | **Discover.** Tabs for People, Path Guides, Communities and Destinations, with a For you mix of each. | Discover |
@@ -64,6 +65,7 @@ src/
     motion.ts    springs expressed as iOS response/damping, media-query hooks, haptics
     store.ts     persisted app state (zustand)
     ui.ts        overlay state: Peek, Align, Path Request, search, toasts
+    writing.ts   your draft and published posts, kept apart from the main state, and the HTML allow-list
   components/
     path/        TransitMap, PathStrip, PathHint (one-line Path + hover card), Align (Compare), Confluence, PathLens
     chrome.tsx   Medium-style top bar and sidebar, iPhone tab bar, navigation bars with large titles, sheets
@@ -73,21 +75,20 @@ src/
     Reading.tsx  story reading: highlights, the selection toolbar, topic pills, the responses drawer
     Peek.tsx     press-and-hold / hover previews
     …            content building blocks (people, stories, questions, decisions, communities)
-  screens/       one file per area of the product (Landing.tsx is the signed-out intro page and sign-in card)
+  screens/       one file per area of the product (Landing.tsx is the signed-out intro page and sign-in card;
+                 Write.tsx is the editor and MyPost.tsx a published post)
   styles/        tokens (type ramp, palette, dark mode), self-hosted fonts and base styles
-  assets/fonts/  WOFF2 fonts: Plus Jakarta Sans, Playfair Display, Source Serif 4
+  assets/fonts/  WOFF2 fonts: Inter, Playfair Display, Source Serif 4
 ```
 
 ## Notes
 
 - **Portraits** are AI-generated faces of people who don't exist, from the public [100k-faces](https://github.com/ozgrozer/100k-faces) set (originally from [generated.photos](https://generated.photos)). They are placeholders: replace them with licensed photography before any real use.
 - **Names, companies and people are fictional.** Universities are real places, used only as settings.
-- **Fonts.** The brand's Noe Display and Marat Sans are commercial typefaces. The app ships the brand kit's own open-licence stand-ins (SIL Open Font License):
-  - **Playfair Display** for Noe Display
-  - **Plus Jakarta Sans** for Marat Sans
+- **Fonts** (all SIL Open Font License):
+  - **Inter** for the interface
+  - **Playfair Display** standing in for the brand's Noe Display, a commercial face (the font stack names it first, so adding licensed files is enough to switch)
   - **Source Serif 4** for Charter, which Apple devices already include
-
-  The font stacks name the brand faces first, so adding licensed files is enough to switch.
 - **Sign-in** is a prototype: no passwords are requested and nothing leaves the browser.
 - See [DESIGN.md](./DESIGN.md) for:
   - the analysis of Medium's layout and how PathedIn maps it

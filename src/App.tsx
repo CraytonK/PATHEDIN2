@@ -32,6 +32,8 @@ import { SearchScreen } from './screens/Search';
 import { Saved } from './screens/Saved';
 import { NotFound } from './screens/NotFound';
 import { Landing } from './screens/Landing';
+import { WriteScreen } from './screens/Write';
+import { MyPostScreen } from './screens/MyPost';
 
 const Router = __HASH_ROUTER__ ? HashRouter : BrowserRouter;
 
@@ -111,6 +113,8 @@ function Shell() {
   const inThread = isMobile && (/^\/messages\/.+/.test(location.pathname) || (location.pathname === '/messages' && location.search.includes('to=')));
   // A story replaces the tab bar with its own reading dock.
   const inStory = isMobile && /^\/stories\/[^/]+/.test(location.pathname);
+  // Write is a page of its own, like Medium's editor: no top bar, sidebar or tab bar.
+  const inWrite = location.pathname === '/write';
   // Messages keeps its own split view on desktop, so thread changes shouldn't animate the whole page.
   const routeKey = location.pathname.startsWith('/messages') && !isMobile ? '/messages' : location.pathname;
 
@@ -128,9 +132,9 @@ function Shell() {
 
   return (
     <>
-      <div className={`app ${isMobile ? (inThread ? 'app--thread' : 'app--mobile') : 'app--desktop'} ${!isMobile && sidebar ? 'app--sidebar' : ''}`}>
-        {!isMobile && <TopBar />}
-        {!isMobile && <Sidebar />}
+      <div className={`app ${inWrite ? 'app--write' : isMobile ? (inThread ? 'app--thread' : 'app--mobile') : 'app--desktop'} ${!isMobile && sidebar && !inWrite ? 'app--sidebar' : ''}`}>
+        {!isMobile && !inWrite && <TopBar />}
+        {!isMobile && !inWrite && <Sidebar />}
         <AnimatePresence mode="wait" initial={false} onExitComplete={restore}>
           <motion.main
             key={routeKey}
@@ -161,11 +165,13 @@ function Shell() {
               <Route path="/notifications" element={<Notifications />} />
               <Route path="/search" element={<SearchScreen />} />
               <Route path="/saved" element={<Saved />} />
+              <Route path="/write" element={<WriteScreen />} />
+              <Route path="/posts/:id" element={<MyPostScreen />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </motion.main>
         </AnimatePresence>
-        {isMobile && !inThread && !inStory && <TabBar />}
+        {isMobile && !inThread && !inStory && !inWrite && <TabBar />}
         <PeekLayer />
         <CompareLayer />
         <RequestLayer />

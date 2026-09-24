@@ -13,6 +13,7 @@ import { wp } from '../data/waypoints';
 import { compactSteps, current, futureWaypoints, pathMatch, relationTo, walked, type RelationKind } from '../lib/relations';
 import { springs } from '../lib/motion';
 import { useApp } from '../lib/store';
+import { agoLabel, useWriting, type MyPost } from '../lib/writing';
 import { DecisionFork, RequestButton, SegmentArt } from './content';
 import { RouteLine } from './Ecosystem';
 import { IconCalendar, IconCheck, IconChevronLeft, IconChevronRight, IconPlus } from './icons';
@@ -349,6 +350,32 @@ export function MilestonePost({ id, reached, words, ago, why, i, coach }: { id: 
   );
 }
 
+/* ── What you published from Write ───────────────────────────── */
+
+export function MyPostItem({ post, i }: { post: MyPost; i?: number }) {
+  const c = post.community ? communities[post.community] : undefined;
+  const seg = post.segment ? `${short(post.segment[0])} → ${short(post.segment[1])}` : undefined;
+  const excerpt = post.subtitle ?? post.html.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim().slice(0, 160);
+  return (
+    <Post
+      i={i}
+      kind={post.kind}
+      kindNote={post.kind === 'community' && c ? <Link to={`/c/${c.id}`}>{c.title}</Link> : seg}
+      author={ME}
+      note="You"
+      where={post.kind !== 'community' && c ? <Link to={`/c/${c.id}`}>{c.title}</Link> : undefined}
+      ago={agoLabel(post.at)}
+      to={`/posts/${post.id}`}
+      title={post.title}
+      subtitle={excerpt}
+      why={{ kind: 'peer', text: post.kind === 'question' ? 'Your question · sent first to people who made this move' : seg ? `You published this · shown first to people on ${seg}` : 'You published this' }}
+      thumb={post.image ? <img src={post.image} alt="" /> : undefined}
+      thumbKind="photo"
+      variant={post.kind === 'story' ? 'story' : undefined}
+    />
+  );
+}
+
 /* ── One For you per kind ────────────────────────────────────── */
 
 const mineWalked = new Set(walked(me));
@@ -459,7 +486,9 @@ function kindItems(kind: PostKind, joined: Record<string, boolean>): ReactNode[]
 /** For you, narrowed to one kind of post. */
 export function KindFeed({ kind }: { kind: PostKind }) {
   const joined = useApp((s) => s.joined);
-  const items = kindItems(kind, joined);
+  const posts = useWriting((s) => s.posts);
+  const mine = posts.filter((p) => p.kind === kind).map((p, i) => <MyPostItem key={p.id} post={p} i={i} />);
+  const items = [...mine, ...kindItems(kind, joined)];
   const k = intro[kind];
   return (
     <div className="feed">

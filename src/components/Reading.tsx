@@ -305,11 +305,12 @@ function SelectionToolbar({ scope, story, onRespond }: { scope: React.RefObject<
           ref={bar}
           key="selbar"
           className={`selbar ${sel.below ? 'is-below' : ''}`}
-          style={{ left: sel.x + shift, top: sel.y }}
+          // Centre above (or below) the selection. Set through Motion so its scale animation doesn't wipe it.
+          style={{ left: sel.x + shift, top: sel.y, x: '-50%', y: sel.below ? 0 : '-100%' }}
           role="toolbar"
           aria-label="Selected text"
-          initial={{ opacity: 0, scale: 0.92, y: sel.below ? -4 : 4 }}
-          animate={{ opacity: 1, scale: 1, y: 0 }}
+          initial={{ opacity: 0, scale: 0.92 }}
+          animate={{ opacity: 1, scale: 1 }}
           exit={{ opacity: 0, scale: 0.96, transition: { duration: 0.1 } }}
           transition={springs.snappy}
           // Keep the selection alive while pressing a button.

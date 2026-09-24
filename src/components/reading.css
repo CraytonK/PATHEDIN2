@@ -97,15 +97,11 @@
   z-index: 60;
   display: flex;
   align-items: center;
-  transform: translate(-50%, -100%);
   padding: 0 6px;
   border-radius: var(--r-pill);
   background: var(--tip-bg);
   box-shadow: var(--shadow-popover);
   white-space: nowrap;
-}
-.selbar.is-below {
-  transform: translate(-50%, 0);
 }
 .selbar__btn {
   height: 40px;
@@ -240,7 +236,7 @@
 .resp__note {
   margin-right: auto;
   font-size: 12px;
-  font-weight: 300;
+  font-weight: 400;
   color: var(--label-2);
 }
 .resp__cancel {

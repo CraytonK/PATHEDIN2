@@ -116,9 +116,9 @@ export function TopBar() {
         </button>
       </div>
       <div className="mbar__right">
-        <Link to="/questions?ask=1" className="mbar__write">
+        <Link to="/write" className="mbar__write">
           <IconCompose size={22} strokeWidth={1.5} />
-          <span>Ask</span>
+          <span>Write</span>
         </Link>
         <IconButton label="Messages" tipPos="below" badge={unread.messages} onClick={() => navigate('/messages')} active={pathname.startsWith('/messages')}>
           <IconMessage size={23} strokeWidth={1.5} filled={pathname.startsWith('/messages')} />

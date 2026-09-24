@@ -159,10 +159,10 @@ ol {
   }
 }
 
-/* ── Type ramp: HIG roles, in the brand kit's three faces ──
+/* ── Type ramp: HIG roles, in three faces ──
    Brand — Noe Display Medium: wordmark, hero headings, milestone moments.
-   UI — Marat Sans: Light for captions and subtitles, Regular for UI, Demibold for headers
-   and actions, Bold for metrics and data chips.
+   UI — Inter, plain and professional like Medium's sohne: Regular for UI, captions and grey
+   subtitles, Semibold for headers and actions, Bold for metrics and data chips.
    Content — Charter: story text, story titles, quotes. */
 .t-large-title {
   font-family: var(--font-brand);
@@ -237,8 +237,8 @@ ol {
   font-weight: 500;
   letter-spacing: -0.025em;
 }
-/* Brand eyebrow: Marat Sans Demibold, uppercase, widest tracking, in the celestial text tone. */
-/* Category eyebrow: Marat Sans Demibold, uppercase, widest tracking, in Executive Navy. */
+/* Brand eyebrow: semibold, uppercase, widest tracking. */
+/* Category eyebrow: semibold, uppercase, widest tracking, in Executive Navy. */
 .t-eyebrow {
   font-family: var(--font-sans);
   font-size: 11px;
@@ -248,21 +248,21 @@ ol {
   text-transform: uppercase;
   color: var(--tint-text);
 }
-/* Reflections in someone's own words: Marat Sans Light Italic. */
+/* Reflections in someone's own words: italic. */
 .t-reflection {
   font-family: var(--font-sans);
   font-style: italic;
-  font-weight: 300;
+  font-weight: 400;
   color: var(--label-2);
 }
 .t-num {
   font-variant-numeric: tabular-nums;
 }
 
-/* Captions and secondary labels: Marat Sans Light. */
+/* Captions and secondary labels: regular weight, in grey. */
 .c-2 {
   color: var(--label-2);
-  font-weight: 300;
+  font-weight: 400;
 }
 .c-2 strong,
 .c-2 b {
@@ -347,4 +347,17 @@ ol {
 .edge-fade.has-left.has-right {
   -webkit-mask-image: linear-gradient(to right, transparent, #000 48px, #000 calc(100% - 48px), transparent);
   mask-image: linear-gradient(to right, transparent, #000 48px, #000 calc(100% - 48px), transparent);
+}
+
+/* Inside anything that floats on white, "the background" is white: knockout rings around
+   avatars and Path nodes, sticky headers and fades all match the surface they sit on. */
+.sheet,
+.pcard,
+.peek,
+.menu,
+.post-more__menu,
+.auth,
+.resp__composer,
+.resp__sort-menu {
+  --bg: var(--bg-elevated);
 }

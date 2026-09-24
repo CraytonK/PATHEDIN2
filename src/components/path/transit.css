@@ -221,13 +221,13 @@
   font-size: 11px;
   text-transform: uppercase;
 }
-/* A step's note is a reflection in the person's own words: Marat Sans Light Italic. */
+/* A step's note is a reflection in the person's own words: set in italic. */
 .tmap__note {
   color: var(--label-2);
   margin-top: 6px;
   max-width: 460px;
   font-style: italic;
-  font-weight: 300;
+  font-weight: 400;
 }
 .tmap__shared {
   display: inline-flex;

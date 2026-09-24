@@ -1,25 +1,25 @@
 /*
-  PathedIn brand type (see DESIGN.md → Brand kit):
+  PathedIn type:
+    Interface    — Inter, a plain, professional grotesk in the spirit of Medium's sohne
+                   (variable, with optical sizes, so large text tightens the way display cuts do)
     Noe Display  — wordmark, hero headings, milestone moments   → fallback Playfair Display
-    Marat Sans   — interface: light, regular, demibold, bold     → fallback Plus Jakarta Sans
     Charter      — editorial content: stories, reflections       → fallback Source Serif 4
-  Noe Display and Marat Sans are licensed faces and are used when installed. Charter ships with
-  macOS and iOS. The open fallbacks the brand kit names are self-hosted here so the brand renders
-  consistently everywhere else.
+  Noe Display is a licensed face and is used when installed. Charter ships with macOS and iOS.
+  Everything else is self-hosted here (SIL Open Font License) so it renders the same everywhere.
 */
 @font-face {
-  font-family: 'Plus Jakarta Sans';
+  font-family: 'Inter';
   font-style: normal;
-  font-weight: 200 800;
+  font-weight: 100 900;
   font-display: swap;
-  src: url('../assets/fonts/plus-jakarta-sans-latin.woff2') format('woff2');
+  src: url('../assets/fonts/inter-latin.woff2') format('woff2');
 }
 @font-face {
-  font-family: 'Plus Jakarta Sans';
+  font-family: 'Inter';
   font-style: italic;
-  font-weight: 200 800;
+  font-weight: 100 900;
   font-display: swap;
-  src: url('../assets/fonts/plus-jakarta-sans-italic-latin.woff2') format('woff2');
+  src: url('../assets/fonts/inter-italic-latin.woff2') format('woff2');
 }
 @font-face {
   font-family: 'Playfair Display';

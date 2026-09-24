@@ -312,3 +312,19 @@ export const IconMilestone = (p: P) => (
     <circle cx="12" cy="12" r="3.4" fill="currentColor" stroke="none" />
   </Svg>
 );
+
+/** A photo: a frame with a hill and the sun. */
+export const IconImage = (p: P) => (
+  <Svg {...p}>
+    <rect x="3.5" y="5" width="17" height="14" rx="2" />
+    <circle cx="9" cy="10" r="1.6" />
+    <path d="m4 17 5-4.5 3.5 3 2.5-2 5 3.5" />
+  </Svg>
+);
+
+export const IconLink = (p: P) => (
+  <Svg {...p}>
+    <path d="M10.5 13.5a3.5 3.5 0 0 0 5 0l3-3a3.5 3.5 0 0 0-5-5l-1 1" />
+    <path d="M13.5 10.5a3.5 3.5 0 0 0-5 0l-3 3a3.5 3.5 0 0 0 5 5l1-1" />
+  </Svg>
+);

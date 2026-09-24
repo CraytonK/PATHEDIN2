@@ -87,7 +87,7 @@
   display: block;
   color: var(--label);
 }
-/* Card headers: Marat Sans Demibold. Stories set their titles in Charter Bold. */
+/* Card headers: the interface face, semibold. Stories set their titles in Charter Bold. */
 .post__title {
   font-size: 21px;
   line-height: 27px;
@@ -101,12 +101,12 @@
   font-weight: 700;
   letter-spacing: -0.01em;
 }
-/* Airy subtitles: Marat Sans Light. */
+/* Subtitles: regular weight, in grey. */
 .post__sub {
   margin-top: 8px;
   font-size: 16px;
   line-height: 24px;
-  font-weight: 300;
+  font-weight: 400;
   color: var(--label-2);
   display: -webkit-box;
   -webkit-line-clamp: 2;

@@ -3,7 +3,7 @@
 PathedIn is built in four layers:
 - **Behaviour** comes from Apple's [Human Interface Guidelines](https://developer.apple.com/design/human-interface-guidelines): navigation, controls, presentation, motion and accessibility.
 - **Look and layout** follow Medium's reading experience: its intro page, its sign-in card, its top bar and sidebar, and its feed with a right-hand column.
-- **Brand** — colour and type — comes from the PathedIn **brand identity kit (v2)**: the three-node Path mark, slate neutrals with Executive Navy as the one accent, and Noe Display / Marat Sans / Charter.
+- **Brand** comes from the PathedIn **brand identity kit (v2)**: the three-node Path mark, Executive Navy as the one accent, Noe Display for brand moments and Charter for stories. Two things follow Medium instead: the **warm paper ground** and the **interface face** (Inter, a plain grotesk in the spirit of Medium's sohne).
 - **PathedIn's own language** sits on top: **the Path drawn as a transit line**.
 
 ## Medium as the reference
@@ -53,7 +53,7 @@ This analysis is based on the signed-in screenshot supplied with the brief and o
 ### How PathedIn maps it
 | Medium | PathedIn |
 | --- | --- |
-| Intro page, "Human stories & ideas" | **"Your path & who’s walked it."** It uses the same ruled masthead, pills and footer, on the brand's Warm Porcelain ground. The illustration is the Path mark drawn big and flat: been → now → going, with routes branching off. Below the fold, a three-node row explains the idea: where you’ve been, where you are, where you want to go. |
+| Intro page, "Human stories & ideas" | **"Your path & who’s walked it."** It uses the same ruled masthead, pills and footer, on Medium's cream ground (`#F7F4ED`). The illustration is the Path mark drawn big and flat: been → now → going, with routes branching off. Below the fold, a three-node row explains the idea: where you’ve been, where you are, where you want to go. |
 | "Join Medium." card | **"Join PathedIn." / "Welcome back."** Outline pills offer Google or email, with the same switch line and fine print. It's a prototype, so no passwords are asked for and nothing is sent anywhere. |
 | The typing moment on sign-in | **The Path draws itself.** Your first step pops in and its name types out with a caret, then the line draws to "You are here". The dashed future runs on to your destination, and the serif writes "Welcome, Maya." It takes about three seconds and can be skipped with a tap. With Reduce Motion it shows the finished Path briefly instead. |
 | Top bar | A menu button (docks or undocks the sidebar), the wordmark, a pill **Search** (⌘K), then **Ask** (opens the question composer), Messages, Notifications and your photo. |
@@ -132,15 +132,15 @@ A surface-by-surface teardown of medium.com (computed styles and observed intera
 - **Paywall, member-only stars, the promo bar and "Get app".** None of these apply to PathedIn.
 
 ## Typography
-Type follows the brand identity kit (v2): three faces, three tiers.
+Three faces, three tiers.
 
-| Tier | Brand face | What ships | Used for |
+| Tier | Face | What ships | Used for |
 | --- | --- | --- | --- |
 | Brand | **Noe Display Medium** | Playfair Display 500 | The wordmark, page titles and other hero headings (profile names, question, decision and community titles, the intro page, sign-in, the welcome in the Path splash), and milestone moments ("you are here" and destination stations) |
-| UI | **Marat Sans**: Light, Regular, Demibold, Bold | Plus Jakarta Sans | Light for subtitles, captions and secondary labels. Regular for UI and inputs. Demibold for buttons, card headers and feed titles. Bold for metrics and data chips. Light Italic for reflections in someone's own words. |
-| Content | **Charter**: Regular, Italic, Bold, Bold Italic | Charter where installed (Apple devices), else Source Serif 4 | Story text; story titles in Bold; quotes in Italic; pull quotes in Bold Italic; bios |
+| UI | **Inter**: Regular, Semibold, Bold | Inter (variable, with optical sizes) | Everything in the interface. It was chosen to match the plain, professional feel of Medium's sidebar (sohne). Regular for UI, inputs, captions and grey subtitles. Semibold for buttons, card headers and feed titles. Bold for metrics and data chips. Italic for reflections in someone's own words. The sidebar is 16px regular in grey, ink when current, as on Medium. |
+| Content | **Charter**: Regular, Italic, Bold, Bold Italic | Charter where installed (Apple devices), else Source Serif 4 | Story text; story titles in Bold; quotes in Italic; pull quotes in Bold Italic; bios; the Write editor |
 
-Noe Display and Marat Sans are commercial typefaces. The font stacks name them first, so adding licensed files is enough to switch.
+Noe Display is a commercial typeface. The font stack names it first, so adding licensed files is enough to switch. Inter's optical sizes tighten large text the way a display cut does.
 
 The ramp keeps the HIG's roles:
 
@@ -159,7 +159,7 @@ The ramp keeps the HIG's roles:
 
 **Feed and section headings**
 - Feed titles are 21/27 demibold; stories use Charter Bold.
-- Subtitles are 16/24 light grey.
+- Subtitles are 16/24 regular grey.
 - Section heads are 16px demibold; list headings are 20px demibold.
 
 **Eyebrows** follow the kit's *category eyebrow*: 11px demibold, uppercase, 0.1em tracking, in Executive Navy. Examples are "THE LIVING CAREER PATH", "YOU ARE HERE" and "PATH COMMUNITY".
@@ -167,15 +167,17 @@ The ramp keeps the HIG's roles:
 **Data chips** follow *metrics & data chips*: 11px bold, uppercase ("99% PATH MATCH").
 
 ## Color
-The kit's **Minimal Navy Principle**: about 90% gallery neutrals, and about 10% purposeful deep navy.
+The kit's **Minimal Navy Principle**: about 90% neutrals and about 10% purposeful deep navy. The neutrals sit on a **warm paper ground**, like Medium's: the page is never pure white, and only things that float are white.
 
 | Token | Light | Role |
 | --- | --- | --- |
-| Gallery White | `#FFFFFF` | The app canvas (≈60%) |
-| Warm Porcelain | `#F8FAFC` | Soft cards, the right column's card, the intro page and the Path splash (≈25%) |
+| Paper | `#F8F6F1` | The app canvas, bars and sidebar (≈60%) |
+| Cream | `#F7F4ED` | Medium's cream: the intro page and the Path splash |
+| Panel | `#F1EEE7` | Panels a shade deeper than the page: the right column's card, Guide cards, route panels, *Who's here* |
+| White | `#FFFFFF` | Only what floats or takes input: menus, sheets, hover cards, the search field, text boxes |
+| Warm hairline | `#E4DFD4` | 1px dividers, the sidebar and right-column edges, field borders (`#D3CCBE` stronger) |
 | Deep Slate Navy | `#0F172A` | Text, primary buttons, your message bubbles, the walked Path and past nodes (≈10%) |
 | Mineral Slate | `#64748B` | Secondary text; `#94A3B8` for the quietest labels |
-| Hairline | `#E2E8F0` | 1px dividers, the sidebar and right-column edges, field borders |
 | Executive Navy | `#1E3A8A` | The one accent: the dashed future, the "you" dot, open destination nodes, links, eyebrows, badges, the secondary button |
 | Navy washes | `#EFF6FF` / `#DBEAFE` / `#BFDBFE` | Chip and selection backgrounds, chip borders, routes you're considering |
 
@@ -194,7 +196,7 @@ The kit's **Minimal Navy Principle**: about 90% gallery neutrals, and about 10% 
   - **Outline** is a 1px ink line.
   - **Gray** is a soft slate fill.
 - **Text tabs** are grey labels; the active tab is ink with a 1px underline.
-- **Cards** are used sparingly: porcelain panels with 8px corners. Everything else is separated by hairlines.
+- **Cards** are used sparingly: panels a shade deeper than the paper, with 8px corners. Everything else is separated by hairlines.
 - **Data chips**:
   - **Navy** chips carry facts ("2 steps ahead").
   - **Wash** chips carry the match ("99% path match") on `#EFF6FF` with a `#BFDBFE` border.
@@ -308,6 +310,21 @@ In a mixed feed, questions, community posts, Guides and stories all looked alike
 - **In a narrow column** a Decision's fork is too small to read, so it's hidden and the text carries the decision.
 - **Class names are unique per component.** A generic name in one stylesheet can silently restyle another component; `.weigh` and `.guide-card` did, and are now `.fweigh` and `.fguide`.
 - An automated check loads every page at phone, tablet and desktop widths. It flags anything that spills out of its container, and text sitting against the edge of a bordered or shaded box.
+
+### Write, after Medium's editor
+**Write** (top bar, or the pencil on iPhone Home) opens a page of its own, with no sidebar or tab bar (`screens/Write.tsx`).
+- **The page:** a quiet header ("Draft · Saved", a navy **Publish** pill that stays washed out until there's a title and some text, "…", your photo), then a serif **Title** and **Tell your story…**. Drafts save as you type.
+- **⊕ in the margin:** start a new line and it appears. Click it and it turns into ×, and three circles slide out 30ms apart:
+  - **Add a photo.** Photos are resized in the browser and get an optional caption. Click one to remove it.
+  - **Add your Path.** Your Path is embedded with the brand's nodes.
+  - **New section:** a "···" break.
+- **iPhone:** the same three actions sit in a dock at the bottom.
+- **Select text** and a dark toolbar appears: **B**, *i*, link | big heading, small heading, quote. Buttons that are on are highlighted, and a link opens an inline field for the address.
+- **First visit:** a tips drawer walks through the three ideas with ‹ › and ×, as Medium's does.
+- **Publish** opens a sheet:
+  - On the left, a preview with the first photo, an editable title and a subtitle.
+  - On the right, **what it is** (Story, Question or Community post), **which stretch of your Path it's about** (so people on that stretch see it first), and a community to share it in.
+- **After publishing,** the post opens as a story and sits at the top of For you, and in its kind's filter, labelled as yours. Posts and drafts are kept in their own store, so photos never crowd out the rest of the saved state. Pasting always comes in as plain text, and saved HTML is rebuilt from an allow-list.
 
 ### Relevance is always explained
 Every person and every post says *why* it is in front of you. People carry a relation ("Path Twin", "One step ahead", "Reached your destination"), and posts carry a "why it's here" line. The Path match chip puts a number to it.

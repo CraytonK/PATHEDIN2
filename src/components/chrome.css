@@ -89,7 +89,7 @@
   box-shadow: inset 0 0 0 1px var(--separator);
   color: var(--label-2);
   font-size: 14px;
-  font-weight: 300;
+  font-weight: 400;
   transition: background-color var(--dur-2);
 }
 .mbar__search span {
@@ -200,7 +200,8 @@
   gap: 16px;
   height: 44px;
   color: var(--label-2);
-  font-size: 15px;
+  /* Medium's rail: 16px regular in grey, ink and medium weight when current. */
+  font-size: 16px;
   transition: color var(--dur-2);
 }
 .sidebar__item:hover {
@@ -524,13 +525,13 @@
   line-height: 50px;
   letter-spacing: -0.025em;
 }
-/* Brand sub-display: Marat Sans Light for airy subtitles. */
+/* Subtitles: the interface face at regular weight, in grey. */
 .page__subtitle {
   margin-top: 8px;
   max-width: 620px;
   font-size: 17px;
   line-height: 26px;
-  font-weight: 300;
+  font-weight: 400;
 }
 .page__trailing {
   display: flex;

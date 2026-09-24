@@ -3,11 +3,12 @@ import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { Page, useUnread } from '../components/chrome';
 import { PathPulse, type PulseStop } from '../components/PathPulse';
 import { type PostKind } from '../components/Post';
-import { DecisionPost, GuidePost, KindFeed, KindFilter, MilestonePost, QuestionPost, RoutePost, StoryPost, ThreadPost, feedKinds } from '../components/FeedItems';
+import { DecisionPost, GuidePost, KindFeed, KindFilter, MilestonePost, MyPostItem, QuestionPost, RoutePost, StoryPost, ThreadPost, feedKinds } from '../components/FeedItems';
+import { useWriting } from '../lib/writing';
 import { RailCommunities, RailFooter, RailPeople } from '../components/Rail';
 import { PersonTile } from '../components/content';
 import { Avatar, AvatarStack, IconButton, PersonName, SectionHeader, TextTabs } from '../components/ui';
-import { IconBell, IconChevronRight, IconMessage } from '../components/icons';
+import { IconBell, IconChevronRight, IconCompose, IconMessage } from '../components/icons';
 import { people, me, ME } from '../data/people';
 import { stories } from '../data/stories';
 import { questions, questionList } from '../data/questions';
@@ -97,9 +98,13 @@ function ForYou() {
   const jonah = decisions['d-jonah-offers'];
   const route = destinations['pharma-rnd'].routes.find((r) => r.id === 'via-intern')!;
   const find = (id: string) => threads.find((t) => t.id === id)!;
+  const posts = useWriting((s) => s.posts);
   let i = 0;
   return (
     <div className="feed">
+      {posts.map((p) => (
+        <MyPostItem key={p.id} post={p} i={i++} />
+      ))}
       <MilestonePost
         i={i++}
         id="elena"
@@ -269,6 +274,9 @@ export function Home() {
       trailing={
         isMobile ? (
           <>
+            <IconButton label="Write" onClick={() => navigate('/write')}>
+              <IconCompose size={22} strokeWidth={1.6} />
+            </IconButton>
             <IconButton label="Messages" badge={unread.messages} onClick={() => navigate('/messages')}>
               <IconMessage size={23} />
             </IconButton>
