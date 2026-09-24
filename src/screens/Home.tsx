@@ -1,12 +1,12 @@
-import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useRef, useState } from 'react';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { Page, useUnread } from '../components/chrome';
 import { PathPulse, type PulseStop } from '../components/PathPulse';
-import { PathHint } from '../components/path/PathHint';
-import { Post } from '../components/Post';
+import { type PostKind } from '../components/Post';
+import { DecisionPost, GuidePost, KindFeed, KindFilter, MilestonePost, QuestionPost, RoutePost, StoryPost, ThreadPost, feedKinds } from '../components/FeedItems';
 import { RailCommunities, RailFooter, RailPeople } from '../components/Rail';
-import { DecisionFork, PersonTile, RequestButton, SegmentArt } from '../components/content';
-import { Avatar, AvatarStack, IconButton, PersonName, SectionHeader, TextTabs, formatCount } from '../components/ui';
+import { PersonTile } from '../components/content';
+import { Avatar, AvatarStack, IconButton, PersonName, SectionHeader, TextTabs } from '../components/ui';
 import { IconBell, IconChevronRight, IconMessage } from '../components/icons';
 import { people, me, ME } from '../data/people';
 import { stories } from '../data/stories';
@@ -14,9 +14,6 @@ import { questions, questionList } from '../data/questions';
 import { decisions } from '../data/decisions';
 import { threads, communities } from '../data/communities';
 import { destinations } from '../data/destinations';
-import { wp } from '../data/waypoints';
-import type { Thread } from '../data/types';
-import { relationTo, type RelationKind } from '../lib/relations';
 import { useIsMobile } from '../lib/motion';
 import { useApp } from '../lib/store';
 import './home.css';
@@ -90,26 +87,7 @@ function UpNext({ variant = 'cards' }: { variant?: 'cards' | 'list' }) {
   );
 }
 
-/* ── For you: every post says why it's here ─────────────────── */
-
-function threadPost(t: Thread, why: { kind: RelationKind; text: string }, i: number) {
-  const c = communities[t.community];
-  return (
-    <Post
-      key={t.id}
-      i={i}
-      author={t.author}
-      where={<Link to={`/c/${c.id}`}>{c.title}</Link>}
-      ago={t.ago}
-      to={`/c/${c.id}#${t.id}`}
-      title={t.title}
-      subtitle={t.body}
-      why={why}
-      stats={<span>{t.replyCount} replies</span>}
-      saveKey={`thread:${t.id}`}
-    />
-  );
-}
+/* ── For you: every post says what it is and why it's here ───── */
 
 function ForYou() {
   const elena = stories['elena-cro'];
@@ -118,140 +96,29 @@ function ForYou() {
   const msc = questions['q-msc-enough'];
   const jonah = decisions['d-jonah-offers'];
   const route = destinations['pharma-rnd'].routes.find((r) => r.id === 'via-intern')!;
-  const amara = people.amara;
   const find = (id: string) => threads.find((t) => t.id === id)!;
   let i = 0;
   return (
     <div className="feed">
-      <Post
+      <MilestonePost
         i={i++}
-        author="elena"
+        id="elena"
+        reached="pharma-rnd"
         ago="3w"
-        to="/p/elena"
-        title={`${people.elena.first} reached ${wp('pharma-rnd').mid}`}
-        subtitle="“Three weeks in. If you’re at the CRO step, set yourself a date and tell someone ahead of you what it is.”"
-        extra={<PathHint id="elena" coach="path-hint" />}
+        words="Three weeks in. If you’re at the CRO step, set yourself a date and tell someone ahead of you what it is."
         why={{ kind: 'guide', text: 'Reached your destination' }}
-        thumb={<img src={people.elena.photo} alt="" loading="lazy" />}
-        thumbKind="photo"
-        saveKey="person:elena"
+        coach
       />
-      {threadPost(find('t-cro-interview'), { kind: 'ahead', text: 'About your next step' }, i++)}
-      <Post
-        i={i++}
-        author={cro.asker}
-        where={<Link to={`/c/${cro.community}`}>{communities[cro.community].title}</Link>}
-        ago={cro.ago}
-        to={`/questions/${cro.id}`}
-        title={cro.title}
-        subtitle={
-          <>
-            <strong>{people[cro.answers[0].author].first}:</strong> {cro.answers[0].body}
-          </>
-        }
-        why={{ kind: 'peer', text: `Your question · ${cro.answers.length} answers from people ahead of you` }}
-        stats={<span>{cro.followers} following</span>}
-        saveKey={`question:${cro.id}`}
-      />
-      <Post
-        i={i++}
-        author="amara"
-        where={<Link to="/guides">Path Guides</Link>}
-        to="/p/amara"
-        title={`${amara.name}, ${amara.headline}`}
-        subtitle={relationTo('amara').why}
-        extra={
-          <div className="feed-guide">
-            <PathHint id="amara" />
-            <p className="feed-guide__hours">
-              {amara.guide!.officeHours.when} · {amara.guide!.officeHours.open} of {amara.guide!.officeHours.total} spots open
-              <RequestButton id="amara" variant="tinted" label="Ask" />
-            </p>
-          </div>
-        }
-        why={{ kind: 'guide', text: 'A Guide for the route you’re leaning towards' }}
-        thumb={<img src={amara.photo} alt="" loading="lazy" />}
-        thumbKind="photo"
-        saveKey="person:amara"
-      />
-      <Post
-        i={i++}
-        author={elena.author}
-        ago={elena.published}
-        to={`/stories/${elena.id}`}
-        title={elena.title}
-        subtitle={elena.dek}
-        why={{ kind: 'ahead', text: 'A story from the route you’re considering' }}
-        stats={
-          <>
-            <span>{elena.minutes} min read</span>
-            <span>{formatCount(elena.reads)} reads</span>
-          </>
-        }
-        thumb={<SegmentArt story={elena} height={120} labels={false} />}
-        saveKey={`story:${elena.id}`}
-        variant="story"
-      />
-      <Post
-        i={i++}
-        author={jonah.owner}
-        ago={jonah.ago}
-        to={`/decisions/${jonah.id}`}
-        title={jonah.title}
-        subtitle={jonah.context}
-        why={{ kind: 'twin', text: `${people[jonah.owner].first} is facing your exact decision` }}
-        stats={<span>{jonah.weighIns.length} weighed in</span>}
-        thumb={<DecisionFork d={jonah} />}
-        saveKey={`decision:${jonah.id}`}
-      />
-      <Post
-        i={i++}
-        author="rafael"
-        where={<Link to="/discover?to=pharma-rnd">Routes to {wp('pharma-rnd').mid}</Link>}
-        to="/discover?to=pharma-rnd&route=via-intern"
-        title={`Another way to ${wp('pharma-rnd').mid}: ${route.label}`}
-        subtitle={route.note}
-        extra={
-          <p className="feed-route">
-            {route.via.map((w) => wp(w).short).join(' → ')} → {wp('pharma-rnd').short}
-          </p>
-        }
-        why={{ kind: 'explorer', text: 'A route to your destination you haven’t added' }}
-        stats={
-          <>
-            <span>{formatCount(route.people)} people</span>
-            <span>~{route.medianYears} years</span>
-          </>
-        }
-        saveKey="route:via-intern"
-      />
-      {threadPost(find('t-three-weeks'), { kind: 'ahead', text: 'From someone who just crossed' }, i++)}
-      <Post
-        i={i++}
-        author={tomas.author}
-        ago={tomas.published}
-        to={`/stories/${tomas.id}`}
-        title={tomas.title}
-        subtitle={tomas.dek}
-        why={{ kind: 'explorer', text: 'On the PhD branch you’re weighing' }}
-        stats={<span>{tomas.minutes} min read</span>}
-        thumb={<SegmentArt story={tomas} height={120} labels={false} />}
-        saveKey={`story:${tomas.id}`}
-        variant="story"
-      />
-      <Post
-        i={i++}
-        author={msc.asker}
-        where={<Link to={`/c/${msc.community}`}>{communities[msc.community].title}</Link>}
-        ago={msc.ago}
-        to={`/questions/${msc.id}`}
-        title={msc.title}
-        subtitle={msc.body}
-        why={{ kind: 'twin', text: 'Asked by your Path Twin' }}
-        stats={<span>{msc.answers.length} answers</span>}
-        saveKey={`question:${msc.id}`}
-      />
-      {threadPost(find('t-internships'), { kind: 'peer', text: 'In a community you’re in' }, i++)}
+      <ThreadPost i={i++} t={find('t-cro-interview')} why={{ kind: 'ahead', text: 'About your next step' }} />
+      <QuestionPost i={i++} q={cro} why={{ kind: 'peer', text: `Your question · ${cro.answers.length} answers from people ahead of you` }} />
+      <GuidePost i={i++} id="amara" move={['cro-analytical', 'pharma-rnd']} why={{ kind: 'guide', text: 'A Guide for the route you’re leaning towards' }} />
+      <StoryPost i={i++} s={elena} why={{ kind: 'ahead', text: 'A story from the route you’re considering' }} />
+      <DecisionPost i={i++} d={jonah} why={{ kind: 'twin', text: `${people[jonah.owner].first} is facing your exact decision` }} />
+      <RoutePost i={i++} dest="pharma-rnd" route={route} why={{ kind: 'explorer', text: 'A route to your destination you haven’t added' }} />
+      <ThreadPost i={i++} t={find('t-three-weeks')} why={{ kind: 'ahead', text: 'From someone who just crossed' }} />
+      <StoryPost i={i++} s={tomas} why={{ kind: 'explorer', text: 'On the PhD branch you’re weighing' }} />
+      <QuestionPost i={i++} q={msc} why={{ kind: 'twin', text: 'Asked by your Path Twin' }} />
+      <ThreadPost i={i++} t={find('t-internships')} why={{ kind: 'peer', text: 'In a community you’re in' }} />
     </div>
   );
 }
@@ -270,21 +137,11 @@ function Following() {
   }
   return (
     <div className="feed">
-      {inJoined.map((t, i) => threadPost(t, { kind: 'peer', text: `New in ${communities[t.community].title}` }, i))}
+      {inJoined.map((t, i) => (
+        <ThreadPost key={t.id} i={i} t={t} why={{ kind: 'peer', text: `New in ${communities[t.community].title}` }} />
+      ))}
       {asked.map((q, i) => (
-        <Post
-          key={q.id}
-          i={inJoined.length + i}
-          author={q.asker}
-          where={<Link to={`/c/${q.community}`}>{communities[q.community].title}</Link>}
-          ago={q.ago}
-          to={`/questions/${q.id}`}
-          title={q.title}
-          subtitle={q.body}
-          why={{ kind: 'peer', text: `Asked in ${communities[q.community].title}` }}
-          stats={<span>{q.answers.length} answers</span>}
-          saveKey={`question:${q.id}`}
-        />
+        <QuestionPost key={q.id} i={inJoined.length + i} q={q} why={{ kind: 'peer', text: `Asked in ${communities[q.community].title}` }} />
       ))}
     </div>
   );
@@ -386,6 +243,20 @@ export function Home() {
   const unread = useUnread();
   const navigate = useNavigate();
   const [tab, setTab] = useState<'for-you' | 'following'>('for-you');
+  // For you can narrow to one kind of post; the choice lives in the URL so Back returns to it.
+  const [params, setParams] = useSearchParams();
+  const show = params.get('show');
+  const kind: PostKind | 'all' = feedKinds.includes(show as PostKind) ? (show as PostKind) : 'all';
+  const feedTop = useRef<HTMLDivElement>(null);
+  const setKind = (k: PostKind | 'all') => {
+    setParams(k === 'all' ? {} : { show: k }, { replace: true });
+    // If you've scrolled into the feed, bring its top back into view for the new list.
+    const el = feedTop.current;
+    if (el) {
+      const y = el.getBoundingClientRect().top + window.scrollY - (isMobile ? 52 : 64);
+      if (window.scrollY > y) window.scrollTo({ top: y });
+    }
+  };
 
   return (
     <Page
@@ -439,6 +310,7 @@ export function Home() {
               </section>
             </>
           )}
+          <div ref={feedTop} />
           <div className="home__tabs">
             <TextTabs
               value={tab}
@@ -448,8 +320,9 @@ export function Home() {
                 { value: 'following', label: 'Following' },
               ]}
             />
+            {tab === 'for-you' && <KindFilter value={kind} onChange={setKind} />}
           </div>
-          {tab === 'for-you' ? <ForYou /> : <Following />}
+          {tab === 'for-you' ? kind === 'all' ? <ForYou /> : <KindFeed key={kind} kind={kind} /> : <Following />}
         </div>
         {!isMobile && <Rail />}
       </div>

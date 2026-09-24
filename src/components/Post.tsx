@@ -5,9 +5,35 @@ import { people } from '../data/people';
 import { springs } from '../lib/motion';
 import type { RelationKind } from '../lib/relations';
 import { useUI } from '../lib/ui';
-import { IconAlign, IconEllipsis, IconSend } from './icons';
+import { IconAlign, IconCommunity, IconDoc, IconEllipsis, IconFlag, IconMilestone, IconPath, IconQuestion, IconSend, IconSignpost } from './icons';
 import { Avatar, PersonName, RelationGlyph, SaveToggle } from './ui';
 import './post.css';
+
+/** What a post is. Each kind carries the same icon as its section in the sidebar. */
+export type PostKind = 'story' | 'question' | 'community' | 'guide' | 'decision' | 'route' | 'milestone';
+
+export const postKinds: Record<PostKind, { label: string; plural: string; icon: (p: { size?: number; strokeWidth?: number }) => ReactNode }> = {
+  story: { label: 'Story', plural: 'Stories', icon: IconDoc },
+  question: { label: 'Question', plural: 'Questions', icon: IconQuestion },
+  community: { label: 'Community', plural: 'Communities', icon: IconCommunity },
+  guide: { label: 'Path Guide', plural: 'Path Guides', icon: IconSignpost },
+  decision: { label: 'Decision Point', plural: 'Decisions', icon: IconFlag },
+  route: { label: 'Route', plural: 'Routes', icon: IconPath },
+  milestone: { label: 'Milestone', plural: 'Milestones', icon: IconMilestone },
+};
+
+/** The small label that opens every feed post: icon, kind, and a note ("4 answers", the community). */
+export function KindLabel({ kind, note }: { kind: PostKind; note?: ReactNode }) {
+  const k = postKinds[kind];
+  const Icon = k.icon;
+  return (
+    <p className={`post__kind post__kind--${kind}`}>
+      <Icon size={15} strokeWidth={1.9} />
+      <span className="post__kind-label">{k.label}</span>
+      {note && <span className="post__kind-note">{note}</span>}
+    </p>
+  );
+}
 
 export interface PostProps {
   /** Who it's from, and optionally where ("in Chemistry → Pharma R&D"). */
@@ -30,22 +56,26 @@ export interface PostProps {
   i?: number;
   /** Stories are content, so their titles are set in Charter. */
   variant?: 'story';
+  /** What kind of post this is, shown as a label above the byline in mixed feeds. */
+  kind?: PostKind;
+  kindNote?: ReactNode;
 }
 
 /**
  * A feed row laid out like a Medium story preview: byline, bold title, grey subtitle,
  * a quiet meta row, and a thumbnail on the right.
  */
-export function Post({ author, where, note, ago, to, title, subtitle, why, stats, thumb, thumbKind = 'art', extra, saveKey, i = 0, variant }: PostProps) {
+export function Post({ author, where, note, ago, to, title, subtitle, why, stats, thumb, thumbKind = 'art', extra, saveKey, i = 0, variant, kind, kindNote }: PostProps) {
   return (
     <motion.article
-      className={`post ${variant ? `post--${variant}` : ''}`}
+      className={`post ${variant ? `post--${variant}` : ''} ${kind ? `post--is-${kind}` : ''}`}
       initial={{ opacity: 0, y: 12 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: '-40px' }}
       transition={{ ...springs.smooth, delay: Math.min(i, 3) * 0.04 }}
     >
       <div className="post__in">
+      {kind && <KindLabel kind={kind} note={kindNote} />}
       <p className="post__by">
         <Avatar id={author} size={20} />
         <PersonName id={author} className="post__author" />
@@ -84,7 +114,7 @@ export function Post({ author, where, note, ago, to, title, subtitle, why, stats
 }
 
 /** Medium's "…" menu, with PathedIn's actions on the author. */
-function PostMore({ person }: { person: string }) {
+export function PostMore({ person }: { person: string }) {
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
   const openCompare = useUI((s) => s.openCompare);

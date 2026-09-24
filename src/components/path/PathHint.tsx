@@ -113,29 +113,37 @@ export function PathHint({ id, segment, plain, coach, className = '' }: Props) {
   };
 
   const showCoach = !!coach && !tipSeen;
+  const hint = (
+    <button
+      ref={trigger}
+      type="button"
+      className={`phint ${mode ? 'is-open' : ''} ${className}`}
+      aria-expanded={!!mode}
+      aria-controls={mode ? cardId : undefined}
+      aria-label={`${parts.join(' to ')}. Show ${id === ME ? 'your' : `${p.first}’s`} whole Path`}
+      onPointerEnter={onPointerEnter}
+      onPointerLeave={onPointerLeave}
+      onClick={onClick}
+    >
+      {line}
+    </button>
+  );
   return (
     <>
-      {showCoach && (
-        <span className="phint-coach" role="note">
-          {window.matchMedia('(hover: hover)').matches ? 'Hover over a Path to see the whole journey.' : 'Tap a Path to see the whole journey.'}
-          <button type="button" onClick={() => dismissTip(coach!)}>
-            Okay, got it.
-          </button>
+      {showCoach ? (
+        // A one-time coachmark hangs just under the line it explains.
+        <span className="phint-anchor">
+          {hint}
+          <span className="phint-coach" role="note">
+            {window.matchMedia('(hover: hover)').matches ? 'Hover over a Path to see the whole journey.' : 'Tap a Path to see the whole journey.'}
+            <button type="button" onClick={() => dismissTip(coach!)}>
+              Okay, got it.
+            </button>
+          </span>
         </span>
+      ) : (
+        hint
       )}
-      <button
-        ref={trigger}
-        type="button"
-        className={`phint ${mode ? 'is-open' : ''} ${className}`}
-        aria-expanded={!!mode}
-        aria-controls={mode ? cardId : undefined}
-        aria-label={`${parts.join(' to ')}. Show ${id === ME ? 'your' : `${p.first}’s`} whole Path`}
-        onPointerEnter={onPointerEnter}
-        onPointerLeave={onPointerLeave}
-        onClick={onClick}
-      >
-        {line}
-      </button>
       {createPortal(
         <AnimatePresence>
           {mode && (

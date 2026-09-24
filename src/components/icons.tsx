@@ -304,3 +304,11 @@ export const IconDoc = ({ filled, ...p }: P & { filled?: boolean }) => (
     <path d="M9 11h6M9 14.5h6M9 18h4" stroke={filled ? 'var(--bg)' : 'currentColor'} />
   </Svg>
 );
+
+/** Arrived: the brand's destination node, filled in. Used for milestones. */
+export const IconMilestone = (p: P) => (
+  <Svg {...p}>
+    <circle cx="12" cy="12" r="8" />
+    <circle cx="12" cy="12" r="3.4" fill="currentColor" stroke="none" />
+  </Svg>
+);

@@ -40,6 +40,7 @@ Requires Node 20+.
 | **Destination ecosystem.** Select the destination to see the routes people took, the Guides who made it, who's heading there, and the communities, questions, stories and decisions around it. | My Path → Pharmaceutical R&D |
 | **Route Confluence.** Every real route into a destination runs as its own line into one terminus. Where routes share a station you'll see an interchange, and if you're standing on it, you'll see yourself there. Tap a route to follow it into people and its community. | Discover → Pharmaceutical R&D |
 | **Path Lens.** Your network placed *on* your Path: Twins beside you, Peers at your station, People Ahead on your next step, Guides at your destination, Explorers arriving from elsewhere. | Network |
+| **Tell posts apart.** Every post in For you says what it is (Story, Question, Community, Path Guide, Decision Point, Route, Milestone) with its sidebar icon, and each kind has its own shape. Use the pills under For you to see one kind at a time. | Home |
 | **Path hints.** Posts and people show a Path in one line ("CRO → Pharma R&D"). Hover it, or tap it on a phone, to see the whole Path drawn top to bottom, with the steps you share marked. | Home, Network, Discover, Questions |
 | **Discover.** Tabs for People, Path Guides, Communities and Destinations, with a For you mix of each. | Discover |
 | **Read like Medium.** Select any passage to Highlight it, Respond with it quoted, *Ask* the author about it as a Path Request, or Share it. The passage readers on this route marked most is washed in navy with a count in the margin. Tap the hand to mark a story Helpful (+1), or the bubble to open Responses, sorted by who's closest to your Path. On iPhone, the reading dock hides while you read down and returns when you scroll up. | Any story |
@@ -66,7 +67,8 @@ src/
   components/
     path/        TransitMap, PathStrip, PathHint (one-line Path + hover card), Align (Compare), Confluence, PathLens
     chrome.tsx   Medium-style top bar and sidebar, iPhone tab bar, navigation bars with large titles, sheets
-    Post.tsx     the feed row (byline, title, subtitle, why it's here, thumbnail)
+    Post.tsx     the feed row (kind label, byline, title, subtitle, why it's here, thumbnail)
+    FeedItems.tsx  one post shape per kind, the per-kind For you feeds and their filter row
     PathSplash.tsx  the Path that draws itself after sign-in
     Reading.tsx  story reading: highlights, the selection toolbar, topic pills, the responses drawer
     Peek.tsx     press-and-hold / hover previews

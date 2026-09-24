@@ -283,6 +283,21 @@ A full Path on every post and person row was too much to read. In feeds, lists a
 ### Align icon
 Align Paths uses its own glyph: two walked Paths (solid nodes) curving together into one shared "now" node, the brand's present node. It reads as *where your Paths meet*.
 
+### Seven kinds of post, each recognisable at a glance
+In a mixed feed, questions, community posts, Guides and stories all looked alike. Every feed post now opens with a **kind label**: the same icon as its section in the sidebar, the kind in small capitals, and a short note. Each kind also has a shape of its own (`components/FeedItems.tsx`):
+
+| Kind | Label note | What makes it look different |
+| --- | --- | --- |
+| Story | the stretch it covers ("CRO → Pharma R&D") | Serif title and the Path art of that stretch. |
+| Question | "4 answers" | The best answer so far, quoted beside a rule, with who it's from and why they're credible ("took the exact route you're asking about"). |
+| Community | the community's name | The latest reply as a speech bubble, beside the faces in the conversation. |
+| Path Guide | "Office Hours this week" | A person, not writing, so it sits on its own quiet panel: portrait, the move they made drawn with brand nodes, what they help with, this week's slot and **Ask**. |
+| Decision Point | "Deciding now at MSc Chem" | The fork art and a **Weigh in** row with the people who already have. On a phone the fork is too small to read, so the row carries it. |
+| Route | "To Pharmaceutical R&D" | The route drawn as a line on a panel, with its numbers and **Add to my Path**. |
+| Milestone | the move ("CRO → Pharma R&D") | Their own words in serif italic, their Path hint and **Congratulate**. |
+
+**For you, one kind at a time.** A row of pills under For you (All · Stories · Questions · Communities · Path Guides · Decisions · Routes) narrows the feed to one kind. Each filtered feed is ranked by how close each post is to your Path, still says why each post is there, and opens with a line explaining the list and a link to the full section. The choice lives in the URL (`/?show=question`), so Back returns to it. When the pills run past the column, arrows fade in at the edges, as on Medium's topic bar.
+
 ### Relevance is always explained
 Every person and every post says *why* it is in front of you. People carry a relation ("Path Twin", "One step ahead", "Reached your destination"), and posts carry a "why it's here" line. The Path match chip puts a number to it.
 

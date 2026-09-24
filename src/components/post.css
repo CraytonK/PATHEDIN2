@@ -38,6 +38,7 @@
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
   grid-template-areas:
+    'kind kind'
     'by thumb'
     'main thumb';
   column-gap: 48px;
@@ -241,6 +242,7 @@
   .post__in {
     column-gap: 20px;
     grid-template-areas:
+      'kind kind'
       'by by'
       'main thumb';
   }
