@@ -5,9 +5,6 @@
 .app--desktop {
   padding-top: var(--topbar-h);
 }
-.app--desktop > main {
-  transition: margin-left 260ms var(--ease-out);
-}
 .app--sidebar > main {
   margin-left: var(--sidebar-w);
 }
@@ -509,15 +506,6 @@
 }
 .page__title-block {
   min-width: 0;
-}
-.page__eyebrow {
-  margin-bottom: 8px;
-  font-size: 11px;
-  line-height: 15px;
-  font-weight: 600;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--tint-text);
 }
 /* Page titles are hero headings: the brand serif, Noe Display Medium. */
 .page__title {

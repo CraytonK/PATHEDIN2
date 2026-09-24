@@ -214,9 +214,11 @@ export function Profile() {
           {!self && <p className="profile__why">{rel.why}</p>}
         </header>
       )}
-      <div className="list-tabs profile__tabs">
-        <TextTabs value={active} onChange={setTab} options={tabs} />
-      </div>
+      {tabs.length > 1 && (
+        <div className="list-tabs profile__tabs">
+          <TextTabs value={active} onChange={setTab} options={tabs} />
+        </div>
+      )}
       {active === 'path' && (
         <section className="profile__path">
           <TransitMap

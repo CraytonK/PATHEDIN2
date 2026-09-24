@@ -89,6 +89,19 @@
 .story__who {
   font-size: 16px;
 }
+/* On a phone the relation gets its own line instead of breaking mid-phrase. */
+@media (max-width: 767px) {
+  .story__byline {
+    align-items: flex-start;
+  }
+  .story__rel {
+    display: block;
+    font-size: 14px;
+  }
+  .story__rel-dot {
+    display: none;
+  }
+}
 .story__when {
   margin-top: 2px;
   font-size: 14px;
@@ -175,17 +188,23 @@
     line-height: 29px;
   }
 }
-/* Pull quotes: Charter Bold Italic. */
+/* Pull quotes: Charter Bold Italic, opened by a short navy rule, as a magazine sets them. */
 .story__pull {
   font-size: 28px;
   line-height: 38px;
   font-style: italic;
   font-weight: 700;
   letter-spacing: -0.014em;
-  margin: 44px 0;
-  padding-left: 22px;
-  border-left: 3px solid var(--tint);
+  margin: 48px 0;
   text-wrap: balance;
+}
+.story__pull::before {
+  content: '';
+  display: block;
+  width: 40px;
+  height: 2px;
+  margin-bottom: 20px;
+  background: var(--tint);
 }
 @media (max-width: 767px) {
   .story__pull {

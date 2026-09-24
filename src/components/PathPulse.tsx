@@ -55,8 +55,10 @@ export function PathPulse({ stops }: { stops: PulseStop[] }) {
             {s.kind === 'present' && <span className="pulse__ring" />}
           </div>
           <div className="pulse__label">
-            {s.kind === 'present' && <span className="pulse__here">You</span>}
-            <span className="pulse__name">{s.label}</span>
+            <span className="pulse__name">
+              {s.label}
+              {s.kind === 'present' && <span className="here-tag">You</span>}
+            </span>
           </div>
         </Link>
       ))}

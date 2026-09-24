@@ -542,9 +542,11 @@ export function TransitMap({
                   style={{ paddingLeft: labelX }}
                 >
                   <div>
-                    {n.kind === 'present' && <div className="tmap__here t-caption1">{personId === ME ? 'You are here' : 'Now'}</div>}
-                    {n.kind === 'destination' && personId === ME && <div className="tmap__here tmap__here--dest t-caption1">Destination</div>}
-                    <div className="tmap__title">{n.title}</div>
+                    <div className="tmap__title">
+                      {n.title}
+                      {n.kind === 'present' && <span className="here-tag tmap__here">{personId === ME ? 'You are here' : 'Now'}</span>}
+                      {n.kind === 'destination' && personId === ME && <span className="here-tag tmap__here">Destination</span>}
+                    </div>
                     {n.sub && <div className="tmap__sub t-subhead">{n.sub}</div>}
                     {showNotes && n.note && <p className="tmap__note t-footnote">{n.note}</p>}
                     {shared?.has(n.wp) && n.kind !== 'destination' && n.kind !== 'explore' && (

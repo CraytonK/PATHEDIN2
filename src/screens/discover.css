@@ -16,8 +16,8 @@
 }
 .discover__search .search-field__box {
   height: 48px;
-  border-radius: 14px;
-  font-size: 18px;
+  padding-left: 20px;
+  font-size: 17px;
 }
 .discover__results {
   max-width: 640px;
@@ -348,10 +348,8 @@
   gap: 16px;
   flex-wrap: wrap;
 }
-.route-panel__kicker {
-  color: var(--tint-text);
-  font-weight: 600;
-  margin-bottom: 2px;
+.route-panel__meta {
+  margin-top: 4px;
 }
 .route-panel__actions {
   display: flex;

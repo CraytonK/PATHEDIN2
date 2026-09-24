@@ -118,11 +118,15 @@
   font-weight: 500;
   color: var(--label-2);
 }
-.align__both {
+.align__name {
   min-width: 0;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
+}
+.align__both {
+  flex: none;
+  white-space: nowrap;
   color: var(--tint-text);
   font-weight: 600;
   background: var(--tint-softer);

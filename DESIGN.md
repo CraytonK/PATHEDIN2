@@ -126,7 +126,7 @@ A surface-by-surface teardown of medium.com (computed styles and observed intera
 | A returning device is greeted "Welcome back." with the remembered account. | After you sign out, Sign in shows your photo, name and masked email, **Continue as Maya**, *Forget this account*, and *More sign-in options*. |
 
 **Left out, on purpose**
-- **Green (here, navy) only for live states.** The brand kit uses Executive Navy for eyebrows, relation tags and each post's "why it's here" line. Relevance is PathedIn's core idea, so the navy stays on it.
+- **Green (here, navy) only for live states.** The brand kit uses Executive Navy for status lines, relation tags and each post's "why it's here" line. Relevance is PathedIn's core idea, so the navy stays on it.
 - **Two text colours.** PathedIn keeps a third, lighter grey for captions and arrows, but hierarchy still comes mainly from size and weight.
 - **Skeletons, never spinners.** Everything here is local, so nothing has to load. Showing fake loading would be worse than showing none.
 - **Paywall, member-only stars, the promo bar and "Get app".** None of these apply to PathedIn.
@@ -162,9 +162,18 @@ The ramp keeps the HIG's roles:
 - Subtitles are 16/24 regular grey.
 - Section heads are 16px demibold; list headings are 20px demibold.
 
-**Eyebrows** follow the kit's *category eyebrow*: 11px demibold, uppercase, 0.1em tracking, in Executive Navy. Examples are "THE LIVING CAREER PATH", "YOU ARE HERE" and "PATH COMMUNITY".
+**No eyebrows.** A heading carries its own weight, so nothing small and uppercase sits above it. Where a heading needs context, it goes in the line underneath, led by a navy status: "MSc Chemistry / **You are here** · University of Toronto", "Your decision · Deciding now at MSc Chemistry".
 
-**Data chips** follow *metrics & data chips*: 11px bold, uppercase ("99% PATH MATCH").
+**"You are here"** is one small navy tag (`.here-tag`), set beside the step's name wherever a Path is drawn: the transit map, the week's line on Home, the right column.
+
+**Data chips** are 12px demibold in sentence case ("99% path match").
+
+**Post kinds** open each feed row in sentence case, like Medium's "Member-only story" line: an icon, the kind in ink ("Milestone", "Question"), then its context in grey.
+
+**Quotes** never use a thick side bar.
+- Pull quotes (stories, decision reflections) open with a short 2px navy rule above the text, as a magazine sets them.
+- Quotes inside what you write, and a question's quoted answer, take a 1px hairline and an indent.
+- A passage quoted in a response is a highlight wash with no bar.
 
 ## Color
 The kit's **Minimal Navy Principle**: about 90% neutrals and about 10% purposeful deep navy. The neutrals sit on a **warm paper ground**, like Medium's: the page is never pure white, and only things that float are white.
@@ -178,8 +187,10 @@ The kit's **Minimal Navy Principle**: about 90% neutrals and about 10% purposefu
 | Warm hairline | `#E4DFD4` | 1px dividers, the sidebar and right-column edges, field borders (`#D3CCBE` stronger) |
 | Deep Slate Navy | `#0F172A` | Text, primary buttons, your message bubbles, the walked Path and past nodes (≈10%) |
 | Mineral Slate | `#64748B` | Secondary text; `#94A3B8` for the quietest labels |
-| Executive Navy | `#1E3A8A` | The one accent: the dashed future, the "you" dot, open destination nodes, links, eyebrows, badges, the secondary button |
+| Executive Navy | `#1E3A8A` | The one accent: the dashed future, the "you" dot, open destination nodes, links, status lines, badges, the secondary button |
 | Navy washes | `#EFF6FF` / `#DBEAFE` / `#BFDBFE` | Chip and selection backgrounds, chip borders, routes you're considering |
+
+**The browser's own parts use the palette too**: text selection is a navy wash, the text cursor and native controls are navy, scrollbars are a warm hairline, and the focus ring is a 2px navy line that follows each control's corners (a pill stays a pill). Links underline 0.2em below the text at 1px.
 
 **Light is the default**, as Medium is on the web.
 - The app doesn't follow the device's dark setting, and it holds its light background even when embedded somewhere dark.
@@ -195,7 +206,8 @@ The kit's **Minimal Navy Principle**: about 90% neutrals and about 10% purposefu
   - **Secondary** (tinted) is porcelain with an Executive Navy line and label, as in the kit's "Compare Waypoint".
   - **Outline** is a 1px ink line.
   - **Gray** is a soft slate fill.
-- **Text tabs** are grey labels; the active tab is ink with a 1px underline.
+- **Text tabs** are grey labels; the active tab is ink with a 1px underline. A page with only one view (a profile with nothing but a Path) shows no tabs.
+- **Search fields** are white pills everywhere, like the one in the top bar.
 - **Cards** are used sparingly: panels a shade deeper than the paper, with 8px corners. Everything else is separated by hairlines.
 - **Data chips**:
   - **Navy** chips carry facts ("2 steps ahead").

@@ -39,6 +39,20 @@
   inset: -3px;
   box-shadow: 0 0 0 2px var(--tint);
 }
+/* ── "You are here": a small navy tag beside a step's name, wherever a Path is drawn ── */
+.here-tag {
+  display: inline-block;
+  margin-left: 8px;
+  padding: 1px 8px;
+  border-radius: var(--r-pill);
+  background: var(--tint-softer);
+  color: var(--tint-text);
+  font: 600 12px/16px var(--font-sans);
+  letter-spacing: 0;
+  vertical-align: 1px;
+  white-space: nowrap;
+}
+
 /* ── Data chips (brand kit: metrics & data) ─────────── */
 .chip {
   display: inline-flex;
@@ -47,11 +61,10 @@
   height: 22px;
   padding: 0 9px;
   border-radius: var(--r-pill);
-  /* Metrics & data chips: bold, uppercase. */
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
+  /* Metrics & data chips: semibold, in sentence case. */
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0;
   white-space: nowrap;
   font-variant-numeric: tabular-nums;
 }

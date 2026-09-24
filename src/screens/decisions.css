@@ -33,10 +33,6 @@
     margin-top: 40px;
   }
 }
-.dd__kicker {
-  color: var(--tint-text);
-  font-weight: 600;
-}
 .dd__title {
   font-family: var(--font-brand);
   font-size: 40px;
@@ -165,11 +161,18 @@
   }
 }
 .dd__reflection {
-  margin: 28px 0 0;
+  margin: 36px 0 0;
   font-size: 22px;
   line-height: 31px;
-  padding-left: 20px;
-  border-left: 3px solid var(--tint);
+  text-wrap: pretty;
+}
+.dd__reflection::before {
+  content: '';
+  display: block;
+  width: 40px;
+  height: 2px;
+  margin-bottom: 16px;
+  background: var(--tint);
 }
 .dd__reflection footer {
   font-family: var(--font-sans);

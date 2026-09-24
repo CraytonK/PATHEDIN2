@@ -58,7 +58,8 @@ export function Network() {
   );
 
   return (
-    <Page title="Network" eyebrow="Who should you know?"
+    <Page
+      title="Network"
       subtitle="Don’t just ask who you know. Ask who you should know to get where you want to go." wide trailing={!isMobile ? actions : undefined}>
       {isMobile && <div className="network__mobile-links">{actions}</div>}
       <section className="network__lens">

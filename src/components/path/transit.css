@@ -213,13 +213,11 @@
   color: var(--label-2);
   margin-top: 1px;
 }
+/* "You are here" rides beside the step's name, like the marker on a line map. */
 .tmap__here {
-  margin-bottom: 4px;
-  font-weight: 600;
-  color: var(--tint-text);
-  letter-spacing: 0.1em;
-  font-size: 11px;
-  text-transform: uppercase;
+  margin-left: 10px;
+  padding-block: 2px;
+  vertical-align: 3px;
 }
 /* A step's note is a reflection in the person's own words: set in italic. */
 .tmap__note {

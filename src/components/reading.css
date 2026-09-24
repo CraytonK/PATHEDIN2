@@ -5,6 +5,21 @@
   gap: 8px;
   margin-bottom: 24px;
 }
+@media (max-width: 767px) {
+  .topics {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    scrollbar-width: none;
+    margin-inline: calc(var(--gutter) * -1);
+    padding-inline: var(--gutter);
+  }
+  .topics::-webkit-scrollbar {
+    display: none;
+  }
+  .topics > * {
+    flex: none;
+  }
+}
 .topic {
   display: inline-flex;
   align-items: stretch;
@@ -246,8 +261,8 @@
 .resp__quote {
   position: relative;
   margin: 10px 0 8px;
-  padding: 8px 28px 8px 12px;
-  border-left: 3px solid var(--tint);
+  padding: 8px 30px 8px 12px;
+  border-radius: var(--r-popover);
   background: var(--highlight);
   font-family: var(--font-serif);
   font-size: 15px;

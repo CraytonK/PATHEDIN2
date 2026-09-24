@@ -109,13 +109,6 @@
   box-shadow: var(--shadow-popover);
   padding: 14px 16px;
 }
-.walk-card__kicker {
-  color: var(--tint-text);
-  font-weight: 600;
-  letter-spacing: 0.1em;
-  font-size: 11px;
-  text-transform: uppercase;
-}
 .walk-card__people {
   display: flex;
   align-items: center;
@@ -127,13 +120,13 @@
 .insp__head {
   padding-bottom: 4px;
 }
-.insp__kicker {
+/* Where you stand on this step, leading the line under its name. */
+.insp__status {
   color: var(--tint-text);
   font-weight: 600;
-  letter-spacing: 0.1em;
-  font-size: 11px;
-  margin-bottom: 4px;
-  text-transform: uppercase;
+}
+.insp__head .t-subhead {
+  margin-top: 4px;
 }
 .insp__head h2 {
   margin-bottom: 4px;

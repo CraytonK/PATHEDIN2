@@ -230,13 +230,6 @@
   font-weight: 500;
   color: var(--label-2);
 }
-.rail-path__you {
-  font-size: 10px;
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--tint-text);
-}
 .rail-path__activity {
   display: flex;
   align-items: center;
@@ -285,6 +278,7 @@
   display: flex;
   align-items: baseline;
   justify-content: space-between;
+  margin-bottom: 12px;
 }
 .home__pulse-scroll {
   overflow-x: auto;

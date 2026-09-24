@@ -165,7 +165,7 @@ function RailPath() {
           <div className="rail-path__text">
             <Link to={s.href} className="rail-path__label">
               {s.label}
-              {s.kind === 'present' && <span className="rail-path__you">You</span>}
+              {s.kind === 'present' && <span className="here-tag">You</span>}
             </Link>
             {s.activity && (
               <p className="rail-path__activity">

@@ -169,9 +169,6 @@ export function DecisionScreen() {
     >
       <div className="dd">
         <div className="dd__main">
-          <p className="dd__kicker t-eyebrow">
-            Decision Point · {d.status === 'open' ? 'Deciding now' : 'Decided'} · at {wp(d.at).label}
-          </p>
           <h1 className="dd__title">{d.title}</h1>
           <div className="dd__owner">
             <Avatar id={d.owner} size={40} />
@@ -184,6 +181,10 @@ export function DecisionScreen() {
                     <RelationTag kind={rel.kind} label={rel.label} />
                   </>
                 )}
+                <span className="c-2">
+                  {' '}
+                  · {d.status === 'open' ? 'Deciding now' : 'Decided'} at {wp(d.at).label}
+                </span>
               </p>
               <PathHint id={d.owner} />
             </div>

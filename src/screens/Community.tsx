@@ -127,9 +127,6 @@ export function CommunityScreen() {
       }
     >
       <header className="cm__head">
-        <p className="cm__kicker t-eyebrow">
-          Path Community · {c.kind === 'transition' ? 'built around a transition' : c.kind === 'decision' ? 'built around a decision' : 'built around a circumstance'}
-        </p>
         <h1 className="cm__title">
           <CommunityTitle c={c} size="lg" />
         </h1>

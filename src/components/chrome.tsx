@@ -382,7 +382,6 @@ export function Page({
   className = '',
   wide,
   hideHeaderOnDesktop,
-  eyebrow,
   rail,
 }: {
   title: string;
@@ -395,7 +394,6 @@ export function Page({
   className?: string;
   wide?: boolean;
   hideHeaderOnDesktop?: boolean;
-  eyebrow?: ReactNode;
   /** Medium's right-hand column. On iPhone it follows the page content. */
   rail?: ReactNode;
 }) {
@@ -455,7 +453,6 @@ export function Page({
         )}
         <div className={`page__title-row ${!large ? 'visually-hidden' : ''}`}>
           <div className="page__title-block">
-            {eyebrow && <div className="page__eyebrow t-eyebrow">{eyebrow}</div>}
             <h1 className="t-large-title page__title">{title}</h1>
           </div>
           {(largeTrailing || (!isMobile && trailing)) && <div className="page__trailing">{largeTrailing ?? trailing}</div>}

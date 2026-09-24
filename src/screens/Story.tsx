@@ -86,7 +86,12 @@ export function StoryScreen() {
             <div>
               <p className="story__who">
                 <PersonName id={s.author} />
-                {rel.kind !== 'self' && rel.kind !== 'other' && <span className="c-2"> · {rel.label}</span>}
+                {rel.kind !== 'self' && rel.kind !== 'other' && (
+                  <span className="story__rel c-2">
+                    <span className="story__rel-dot"> · </span>
+                    {rel.label}
+                  </span>
+                )}
               </p>
               <p className="story__when">
                 {s.minutes} min read · {s.published} · {s.reads.toLocaleString('en-CA')} reads

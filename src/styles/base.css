@@ -8,6 +8,10 @@ html {
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
   background: var(--bg);
+  /* The parts the browser draws take the palette too: scrollbars, native controls, the caret. */
+  scrollbar-color: var(--separator-strong) transparent;
+  accent-color: var(--tint);
+  caret-color: var(--tint);
 }
 
 body {
@@ -48,6 +52,8 @@ button {
 a {
   color: inherit;
   text-decoration: none;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.2em;
 }
 
 input,
@@ -55,6 +61,10 @@ textarea {
   font: inherit;
   color: inherit;
   letter-spacing: inherit;
+}
+::placeholder {
+  color: var(--label-3);
+  opacity: 1;
 }
 
 h1,
@@ -74,10 +84,10 @@ ol {
   list-style: none;
 }
 
+/* The ring follows each control's own corners, so a pill stays a pill when focused. */
 :focus-visible {
-  outline: 3px solid color-mix(in srgb, var(--tint) 45%, transparent);
+  outline: 2px solid var(--tint);
   outline-offset: 2px;
-  border-radius: 6px;
 }
 
 ::selection {
@@ -236,17 +246,6 @@ ol {
   font-family: var(--font-brand);
   font-weight: 500;
   letter-spacing: -0.025em;
-}
-/* Brand eyebrow: semibold, uppercase, widest tracking. */
-/* Category eyebrow: semibold, uppercase, widest tracking, in Executive Navy. */
-.t-eyebrow {
-  font-family: var(--font-sans);
-  font-size: 11px;
-  line-height: 15px;
-  font-weight: 600;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--tint-text);
 }
 /* Reflections in someone's own words: italic. */
 .t-reflection {

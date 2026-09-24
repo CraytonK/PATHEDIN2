@@ -5,9 +5,9 @@
   align-items: center;
   gap: 6px;
   min-width: 0;
-  margin-bottom: 12px;
-  font-size: 11px;
-  line-height: 16px;
+  margin-bottom: 10px;
+  font-size: 13px;
+  line-height: 18px;
   color: var(--label-2);
 }
 .post__kind svg {
@@ -16,9 +16,7 @@
 }
 .post__kind-label {
   flex: none;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
+  font-weight: 600;
   color: var(--label);
 }
 .post__kind-note {
@@ -26,7 +24,6 @@
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
-  font-size: 12px;
 }
 .post__kind-note::before {
   content: '·';
@@ -50,7 +47,7 @@
   flex-direction: column;
   gap: 6px;
   padding: 2px 0 2px 14px;
-  border-left: 2px solid var(--separator-strong);
+  border-left: 1px solid var(--separator-strong);
   color: var(--label);
 }
 .qa__who {

@@ -220,12 +220,9 @@
   max-width: 100%;
   margin: 2px -5px -1px;
 }
-.seg-card__kicker {
-  color: var(--tint-text);
-  font-weight: 600;
-  letter-spacing: 0.1em;
-  font-size: 11px;
-  text-transform: uppercase;
+.seg-card__whose {
+  margin-top: 2px;
+  color: var(--label-2);
 }
 .composer-bar {
   position: relative;

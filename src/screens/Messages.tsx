@@ -63,12 +63,10 @@ function SegmentCard({ seg, mine }: { seg: NonNullable<Message['segment']>; mine
   const p = people[seg.person];
   return (
     <Link to={`/p/${seg.person}`} className={`seg-card ${mine ? 'is-mine' : ''}`}>
-      <p className="seg-card__kicker t-eyebrow">
-        A step from {seg.person === ME ? 'your' : `${p.first}’s`} Path
-      </p>
       <p className="t-subhead w-600">
         {wp(seg.from).label} → {wp(seg.to).label}
       </p>
+      <p className="seg-card__whose t-caption1">A step from {seg.person === ME ? 'your' : `${p.first}’s`} Path</p>
       <PathStrip id={seg.person} highlight={[seg.from, seg.to]} wrap />
     </Link>
   );

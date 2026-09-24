@@ -58,7 +58,7 @@
 .notif__context {
   color: var(--label-2);
   padding-left: 10px;
-  border-left: 2px solid var(--separator-strong);
+  border-left: 1px solid var(--separator-strong);
 }
 .notif__dot {
   width: 9px;

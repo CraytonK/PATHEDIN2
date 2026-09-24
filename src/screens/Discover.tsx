@@ -84,8 +84,10 @@ function RoutePanel({ destId, routeId }: { destId: string; routeId: string }) {
     <motion.div key={r.id} className="route-panel" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} transition={springs.smooth}>
       <div className="route-panel__head">
         <div>
-          <p className="route-panel__kicker t-eyebrow">Route · {formatCount(r.people)} people · ~{r.medianYears} years</p>
           <h2 className="t-title2">{r.label}</h2>
+          <p className="route-panel__meta t-subhead c-2">
+            {formatCount(r.people)} people · about {r.medianYears} years
+          </p>
         </div>
         <div className="route-panel__actions">
           {canAdd && (
@@ -420,7 +422,6 @@ export function Discover() {
     return (
       <Page
         title={w.label}
-        eyebrow="Destination"
         back="Discover"
         subtitle={dest.blurb}
         wide

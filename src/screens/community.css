@@ -7,14 +7,6 @@
     padding: 8px 0 24px;
   }
 }
-.cm__kicker {
-  color: var(--tint-text);
-  font-weight: 600;
-  letter-spacing: 0.1em;
-  font-size: 11px;
-  margin-bottom: 8px;
-  text-transform: uppercase;
-}
 .cm__desc {
   margin-top: 12px;
   max-width: 640px;

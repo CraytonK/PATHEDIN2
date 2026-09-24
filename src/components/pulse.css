@@ -127,12 +127,11 @@
   margin-top: 12px;
   padding-right: 10px;
 }
-.pulse__here {
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.1em;
-  color: var(--tint-text);
-  text-transform: uppercase;
+/* In the narrow columns of the week's line, the tag sits under the name rather than wrapping beside it. */
+.pulse__name .here-tag {
+  display: block;
+  width: fit-content;
+  margin: 4px 0 0;
 }
 .pulse__name {
   font-size: 15px;
