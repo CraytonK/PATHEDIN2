@@ -23,9 +23,14 @@ export interface MyPost {
   at: number;
 }
 
-interface Draft {
+export interface Draft {
   title: string;
+  /** The one-line summary under the headline. */
+  dek?: string;
   html: string;
+  kind?: MyPostKind;
+  /** The stretch of your Path it's about: null when it isn't about one, unset for the default. */
+  segment?: [string, string] | null;
   updated: number;
 }
 
@@ -34,7 +39,7 @@ interface WritingState {
   posts: MyPost[];
   /** False when the browser refused to keep the latest save. */
   stored: boolean;
-  saveDraft: (d: Omit<Draft, 'updated'>) => void;
+  saveDraft: (d: Partial<Omit<Draft, 'updated'>>) => void;
   clearDraft: () => void;
   publish: (p: Omit<MyPost, 'id' | 'at'>) => MyPost;
   remove: (id: string) => void;
@@ -75,7 +80,7 @@ export const useWriting = create<WritingState>()(
       posts: [],
       stored: true,
       saveDraft: (d) => {
-        set({ draft: { ...d, updated: Date.now() } });
+        set({ draft: { ...get().draft, ...d, updated: Date.now() } });
         queueMicrotask(() => set({ stored: lastWriteOk }));
       },
       clearDraft: () => set({ draft: empty }),

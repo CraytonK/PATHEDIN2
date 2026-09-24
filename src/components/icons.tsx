@@ -328,3 +328,39 @@ export const IconLink = (p: P) => (
     <path d="M13.5 10.5a3.5 3.5 0 0 0-5 0l-3 3a3.5 3.5 0 0 0 5 5l1-1" />
   </Svg>
 );
+
+/* ── Text tools for Write ─────────────────────────────────── */
+
+export const IconBold = (p: P) => (
+  <Svg {...p} strokeWidth={p.strokeWidth ?? 2.1}>
+    <path d="M7.5 5h5.25a3.5 3.5 0 0 1 0 7H7.5z" />
+    <path d="M7.5 12h6.25a3.5 3.5 0 0 1 0 7H7.5z" />
+  </Svg>
+);
+
+export const IconItalic = (p: P) => (
+  <Svg {...p}>
+    <path d="M10.5 5h7M6.5 19h7M14.5 5l-5 14" />
+  </Svg>
+);
+
+export const IconHeading = (p: P) => (
+  <Svg {...p}>
+    <path d="M6.5 5v14M17.5 5v14M6.5 12h11" />
+  </Svg>
+);
+
+export const IconQuote = (p: P) => (
+  <Svg {...p}>
+    <path d="M10 7.5c-2.6.8-4 2.9-4 5.8V17h4v-4H7.3" />
+    <path d="M18 7.5c-2.6.8-4 2.9-4 5.8V17h4v-4h-2.7" />
+  </Svg>
+);
+
+/** A section break: a rule between two shorter ones. */
+export const IconBreak = (p: P) => (
+  <Svg {...p}>
+    <path d="M4 12h16" />
+    <path d="M8 7.5h8M8 16.5h8" opacity=".45" />
+  </Svg>
+);

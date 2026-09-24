@@ -1,10 +1,24 @@
 import { AnimatePresence, motion } from 'framer-motion';
-import { useCallback, useEffect, useLayoutEffect, useRef, useState, type ReactNode } from 'react';
-import { createPortal } from 'react-dom';
+import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState, type ReactNode } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Sheet, Wordmark } from '../components/chrome';
+import { Sheet } from '../components/chrome';
+import { MyPostItem } from '../components/FeedItems';
 import { Avatar, Button, Segmented } from '../components/ui';
-import { IconChevronLeft, IconChevronRight, IconClose, IconEllipsis, IconImage, IconLink, IconPath, IconPlus } from '../components/icons';
+import {
+  IconBold,
+  IconBreak,
+  IconCheck,
+  IconChevronDown,
+  IconClose,
+  IconEllipsis,
+  IconHeading,
+  IconImage,
+  IconItalic,
+  IconLink,
+  IconPath,
+  IconPeople,
+  IconQuote,
+} from '../components/icons';
 import { communities } from '../data/communities';
 import { me, ME } from '../data/people';
 import { wp } from '../data/waypoints';
@@ -12,16 +26,17 @@ import { compactSteps, stepsWithFuture } from '../lib/relations';
 import { haptic, springs, useIsMobile } from '../lib/motion';
 import { useApp } from '../lib/store';
 import { useUI } from '../lib/ui';
-import { sanitize, useWriting, type MyPostKind } from '../lib/writing';
+import { sanitize, useWriting, type MyPost, type MyPostKind } from '../lib/writing';
 import './write.css';
 
 /*
-  Write — Medium's editor, for PathedIn.
-  A quiet page with two placeholders. Tools appear only when you need them:
-  - start a new line and ⊕ appears in the margin: add a photo, a stretch of your Path, or a new section;
-  - select text and a dark toolbar appears: bold, italic, link, two heading sizes, quote;
-  - Publish asks what it is (a Story, a Question, a community post) and which stretch of your Path
-    it's about, so the people on that stretch see it first.
+  Write — a page for telling the people one step behind you what a stretch of your Path was like.
+  - The top line frames every post: "Writing a Story about MSc Chem → Pharma R&D". Both are choices,
+    and the page's prompts follow the kind you pick.
+  - A headline, a one-line summary and the body, set as they'll be read.
+  - One bar at the bottom holds every tool: bold, italic, link, heading, quote, then photo, your Path
+    and a section break. It stays put, so nothing pops up over your words.
+  - Review shows the post as it will sit in For you, then shares it with the people on that stretch.
 */
 
 const EMPTY_BLOCK = '<p><br></p>';
@@ -92,23 +107,70 @@ function prepare(root: HTMLElement) {
   root.querySelectorAll('figure.write-image figcaption').forEach((c) => c.setAttribute('contenteditable', 'true'));
 }
 
+/* ── What you can write, and how the page prompts for each ───── */
+
+const kindCopy: Record<MyPostKind, { label: string; title: string; body: string; note: string; action: string }> = {
+  story: {
+    label: 'Story',
+    title: 'Headline',
+    body: 'What was it really like? Write it for someone one step behind you.',
+    note: 'A move you made or are making, in your own words. It sits on your Path and reaches people on this stretch first.',
+    action: 'Share story',
+  },
+  question: {
+    label: 'Question',
+    title: 'Your question',
+    body: 'Give the people ahead of you what they need to answer: where you are, what you’re weighing, what you’ve tried.',
+    note: 'Goes first to people who have already made this move. They answer with their Path.',
+    action: 'Ask question',
+  },
+  community: {
+    label: 'Community post',
+    title: 'Start a conversation',
+    body: 'What would you like to talk through with people on this journey?',
+    note: 'A conversation in one of your communities. Members see it in Following.',
+    action: 'Post to community',
+  },
+};
+const kinds = Object.keys(kindCopy) as MyPostKind[];
+
+/** The stretches you can write about: from now to each place you're heading, then each step you've taken, latest first. */
+function mySegments(): [string, string][] {
+  const steps = compactSteps(me.path);
+  const out: [string, string][] = [];
+  const now = steps.find((s) => s.status === 'present') ?? steps[steps.length - 1];
+  for (const f of me.futures) out.push([now.wp, f.destination]);
+  for (let i = steps.length - 1; i > 0; i--) out.push([steps[i - 1].wp, steps[i].wp]);
+  return out;
+}
+const segKey = (s: [string, string] | null) => (s ? `${s[0]}|${s[1]}` : 'none');
+const segLabel = (s: [string, string]) => `${wp(s[0]).short} → ${wp(s[1]).short}`;
+
 export function WriteScreen() {
   const draft = useWriting((s) => s.draft);
   const saveDraft = useWriting((s) => s.saveDraft);
   const stored = useWriting((s) => s.stored);
+  const segments = useMemo(mySegments, []);
   const [title, setTitle] = useState(draft.title);
+  const [dek, setDek] = useState(draft.dek ?? '');
+  const [kind, setKindState] = useState<MyPostKind>(draft.kind ?? 'story');
+  const [segment, setSegmentState] = useState<[string, string] | null>(draft.segment === undefined ? (segments[0] ?? null) : draft.segment);
   const [status, setStatus] = useState<'idle' | 'saving' | 'saved'>(draft.updated ? 'saved' : 'idle');
   const [hasBody, setHasBody] = useState(false);
-  const [inserter, setInserter] = useState<{ top: number; block: HTMLElement } | null>(null);
-  const [menuOpen, setMenuOpen] = useState(false);
-  const [publishing, setPublishing] = useState(false);
+  const [editing, setEditing] = useState(false);
+  const [reviewing, setReviewing] = useState(false);
+  const [tipsOpen, setTipsOpen] = useState(false);
   const [picked, setPicked] = useState<HTMLElement | null>(null);
   const body = useRef<HTMLDivElement>(null);
   const titleRef = useRef<HTMLTextAreaElement>(null);
+  const dekRef = useRef<HTMLTextAreaElement>(null);
   const fileInput = useRef<HTMLInputElement>(null);
   const saveTimer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
+  const latest = useRef({ title, dek });
+  latest.current = { title, dek };
   const isMobile = useIsMobile();
   const toast = useUI((s) => s.showToast);
+  const copy = kindCopy[kind];
 
   // Load the draft once.
   useLayoutEffect(() => {
@@ -126,28 +188,36 @@ export function WriteScreen() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // Grow the title with its text.
+  // Headline and summary grow with their text.
   useLayoutEffect(() => {
-    const t = titleRef.current;
-    if (!t) return;
-    t.style.height = 'auto';
-    t.style.height = `${t.scrollHeight}px`;
-  }, [title]);
+    for (const t of [titleRef.current, dekRef.current]) {
+      if (!t) continue;
+      t.style.height = 'auto';
+      t.style.height = `${t.scrollHeight}px`;
+    }
+  }, [title, dek, kind, isMobile]);
 
-  const save = useCallback(
-    (nextTitle = title) => {
+  /** Keep the words a moment after the last keystroke. */
+  const save = useCallback(() => {
+    setStatus('saving');
+    clearTimeout(saveTimer.current);
+    saveTimer.current = setTimeout(() => {
       const el = body.current;
       if (!el) return;
-      setStatus('saving');
-      clearTimeout(saveTimer.current);
-      saveTimer.current = setTimeout(() => {
-        saveDraft({ title: nextTitle, html: sanitize(el.innerHTML) });
-        setStatus('saved');
-      }, 500);
-    },
-    [saveDraft, title],
-  );
+      saveDraft({ ...latest.current, html: sanitize(el.innerHTML) });
+      setStatus('saved');
+    }, 500);
+  }, [saveDraft]);
   useEffect(() => () => clearTimeout(saveTimer.current), []);
+
+  const setKind = (k: MyPostKind) => {
+    setKindState(k);
+    saveDraft({ kind: k });
+  };
+  const setSegment = (s: [string, string] | null) => {
+    setSegmentState(s);
+    saveDraft({ segment: s });
+  };
 
   const refresh = useCallback(() => {
     const el = body.current;
@@ -157,22 +227,13 @@ export function WriteScreen() {
       placeCaret(el.querySelector('p')!);
     }
     setHasBody(!!el.textContent?.trim() || !!el.querySelector('figure, hr'));
-    const block = blockAtCaret(el);
-    if (!menuOpen) setInserter(block && isEmptyBlock(block) ? { top: block.offsetTop, block } : null);
-  }, [menuOpen]);
+  }, []);
 
-  useEffect(() => {
-    const on = () => refresh();
-    document.addEventListener('selectionchange', on);
-    return () => document.removeEventListener('selectionchange', on);
-  }, [refresh]);
-
-  /** Where a new block goes: the empty line the ⊕ is on, else the line with the caret, else the end. */
+  /** Where a new block goes: the line with the caret, else the end. */
   const pendingTarget = useRef<HTMLElement | null>(null);
   const currentTarget = () => {
     const el = body.current;
     if (!el) return null;
-    if (inserter?.block && el.contains(inserter.block)) return inserter.block;
     return blockAtCaret(el) ?? (el.lastElementChild as HTMLElement | null);
   };
 
@@ -191,8 +252,9 @@ export function WriteScreen() {
       target.after(...nodes);
     }
     const next = nodes[nodes.length - 1] as HTMLElement;
+    el.focus({ preventScroll: true });
     placeCaret(next);
-    setMenuOpen(false);
+    next.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
     haptic(8);
     refresh();
     save();
@@ -213,16 +275,8 @@ export function WriteScreen() {
     pendingTarget.current = currentTarget();
     fileInput.current?.click();
   };
-
-  // Clicking anywhere else puts the ⊕ menu away.
-  useEffect(() => {
-    if (!menuOpen) return;
-    const on = (e: PointerEvent) => !(e.target as HTMLElement).closest?.('.inserter') && setMenuOpen(false);
-    window.addEventListener('pointerdown', on);
-    return () => window.removeEventListener('pointerdown', on);
-  }, [menuOpen]);
   const addPath = () => insertBlock(pathEmbedHtml());
-  const addDivider = () => insertBlock('<hr>');
+  const addBreak = () => insertBlock('<hr>');
 
   // Show which photo is picked.
   useEffect(() => {
@@ -236,56 +290,76 @@ export function WriteScreen() {
     };
   }, [picked]);
 
-  const canPublish = !!title.trim() && hasBody;
+  const canReview = !!title.trim() && hasBody;
+  const framing = <Framing kind={kind} onKind={setKind} segment={segment} onSegment={setSegment} segments={segments} />;
 
   return (
     <div className="write">
       <header className="write__bar">
-        <div className="write__bar-left">
-          {isMobile ? (
-            <Link to="/" className="write__back" aria-label="Close">
-              <IconChevronLeft size={22} />
-            </Link>
-          ) : (
-            <Link to="/" className="wordmark" aria-label="PathedIn home">
-              <Wordmark size={24} />
-            </Link>
-          )}
-          <span className="write__status">
-            Draft
-            {status === 'saving' && <span className="write__saved"> · Saving…</span>}
-            {status === 'saved' && <span className="write__saved"> · {stored ? 'Saved' : 'Saved for this visit'}</span>}
-          </span>
+        <div className="write__side">
+          <Link to="/" className="write__close" aria-label="Close" data-tip={isMobile ? undefined : 'Your draft is kept'} data-tip-pos="below">
+            <IconClose size={18} strokeWidth={1.9} />
+            {!isMobile && <span>Close</span>}
+          </Link>
         </div>
-        <div className="write__bar-right">
-          <button className={`write__publish ${canPublish ? 'is-ready' : ''}`} disabled={!canPublish} onClick={() => setPublishing(true)}>
-            Publish
-          </button>
+        {!isMobile && framing}
+        <div className="write__side is-end">
+          <span className="write__saved" aria-live="polite">
+            {status === 'saving' && 'Saving…'}
+            {status === 'saved' && (
+              <>
+                <IconCheck size={13} strokeWidth={2.4} /> {stored ? 'Saved' : 'Saved for this visit'}
+              </>
+            )}
+          </span>
           <MoreMenu
+            onTips={() => setTipsOpen(true)}
             onDiscard={() => {
               if (body.current) body.current.innerHTML = EMPTY_BLOCK;
               setTitle('');
+              setDek('');
               useWriting.getState().clearDraft();
               setStatus('idle');
               setHasBody(false);
               titleRef.current?.focus();
             }}
           />
-          {!isMobile && <Avatar id={ME} size={32} peek={false} />}
+          <Button variant="filled" size="small" disabled={!canReview} onClick={() => setReviewing(true)}>
+            Review
+          </Button>
         </div>
       </header>
+      {isMobile && <div className="write__framing-row">{framing}</div>}
 
       <main className="write__page">
         <textarea
           ref={titleRef}
           className="write__title"
           rows={1}
-          placeholder="Title"
+          placeholder={copy.title}
           value={title}
-          aria-label="Title"
+          aria-label={copy.title}
           onChange={(e) => {
             setTitle(e.target.value);
-            save(e.target.value);
+            save();
+          }}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter') {
+              e.preventDefault();
+              dekRef.current?.focus();
+            }
+          }}
+        />
+        <textarea
+          ref={dekRef}
+          className="write__dek"
+          rows={1}
+          placeholder="Add a one-line summary (optional)"
+          value={dek}
+          aria-label="Summary"
+          onChange={(e) => {
+            setDek(e.target.value.replace(/\n/g, ' '));
+            save();
           }}
           onKeyDown={(e) => {
             if (e.key === 'Enter') {
@@ -304,8 +378,12 @@ export function WriteScreen() {
             suppressContentEditableWarning
             role="textbox"
             aria-multiline="true"
-            aria-label="Tell your story"
-            data-placeholder="Tell your story…"
+            aria-label="Your post"
+            data-placeholder={copy.body}
+            onFocus={() => setEditing(true)}
+            onBlur={(e) => {
+              if (!e.currentTarget.contains(e.relatedTarget as Node | null)) setEditing(false);
+            }}
             onInput={() => {
               refresh();
               save();
@@ -319,11 +397,7 @@ export function WriteScreen() {
               const fig = (e.target as HTMLElement).closest('figure.write-image') as HTMLElement | null;
               setPicked(fig && (e.target as HTMLElement).tagName === 'IMG' ? fig : null);
             }}
-            onKeyUp={refresh}
           />
-          {!isMobile && inserter && (
-            <Inserter top={inserter.top} open={menuOpen} onToggle={() => setMenuOpen((o) => !o)} onPhoto={addPhoto} onPath={addPath} onDivider={addDivider} />
-          )}
           {picked && (
             <PhotoTools
               figure={picked}
@@ -349,63 +423,134 @@ export function WriteScreen() {
         />
       </main>
 
-      {isMobile && (
-        <div className="write__dock" role="toolbar" aria-label="Add to your post">
-          <button onMouseDown={(e) => e.preventDefault()} onClick={addPhoto}>
-            <IconImage size={20} /> Photo
-          </button>
-          <button onMouseDown={(e) => e.preventDefault()} onClick={addPath}>
-            <IconPath size={20} /> Your Path
-          </button>
-          <button onMouseDown={(e) => e.preventDefault()} onClick={addDivider}>
-            <span className="write__dots" aria-hidden="true">···</span> Section
-          </button>
-        </div>
-      )}
+      <ComposeBar root={body} editing={editing} onChange={save} onPhoto={addPhoto} onPath={addPath} onBreak={addBreak} />
 
-      <FormatBar root={body} onChange={() => save()} />
-      <TipsDrawer />
-      <PublishSheet
-        open={publishing}
-        onClose={() => setPublishing(false)}
+      <TipsSheet open={tipsOpen} onClose={() => setTipsOpen(false)} />
+      <ReviewSheet
+        open={reviewing}
+        onClose={() => setReviewing(false)}
         title={title}
+        dek={dek}
         getBody={() => (body.current ? sanitize(body.current.innerHTML) : '')}
+        kind={kind}
+        onKind={setKind}
+        segment={segment}
+        onSegment={setSegment}
+        segments={segments}
       />
     </div>
   );
 }
 
-/* ── ⊕ in the margin ─────────────────────────────────────────── */
+/* ── "Writing a Story about MSc Chem → Pharma R&D" ───────────── */
 
-function Inserter({ top, open, onToggle, onPhoto, onPath, onDivider }: { top: number; open: boolean; onToggle: () => void; onPhoto: () => void; onPath: () => void; onDivider: () => void }) {
-  const items: { key: string; label: string; icon: ReactNode; run: () => void }[] = [
-    { key: 'photo', label: 'Add a photo', icon: <IconImage size={18} />, run: onPhoto },
-    { key: 'path', label: 'Add your Path', icon: <IconPath size={18} />, run: onPath },
-    { key: 'divider', label: 'New section', icon: <span className="write__dots">···</span>, run: onDivider },
-  ];
+function Framing({
+  kind,
+  onKind,
+  segment,
+  onSegment,
+  segments,
+}: {
+  kind: MyPostKind;
+  onKind: (k: MyPostKind) => void;
+  segment: [string, string] | null;
+  onSegment: (s: [string, string] | null) => void;
+  segments: [string, string][];
+}) {
+  const now = segments[0]?.[0];
   return (
-    <div className="inserter" style={{ top }} onMouseDown={(e) => e.preventDefault()}>
-      <motion.button type="button" className="inserter__toggle" aria-label={open ? 'Close' : 'Add a photo, your Path or a new section'} aria-expanded={open} animate={{ rotate: open ? 45 : 0 }} transition={{ duration: 0.25, ease: [0.23, 1, 0.32, 1] }} onClick={onToggle}>
-        <IconPlus size={18} strokeWidth={1.6} />
-      </motion.button>
+    <div className="framing">
+      <span className="framing__word">Writing a</span>
+      <Picker
+        ariaLabel="Kind of post"
+        value={kind}
+        label={kindCopy[kind].label}
+        options={kinds.map((k) => ({ value: k, label: kindCopy[k].label }))}
+        onChange={(v) => onKind(v as MyPostKind)}
+      />
+      <span className="framing__word">about</span>
+      <Picker
+        ariaLabel="Stretch of your Path"
+        value={segKey(segment)}
+        icon={<IconPath size={15} />}
+        label={segment ? segLabel(segment) : 'your Path in general'}
+        options={[
+          ...segments.map((s) => ({ value: segKey(s), label: segLabel(s), hint: s[0] === now ? 'Where you’re heading' : 'A step you’ve taken' })),
+          { value: 'none', label: 'Your Path in general', hint: 'Not about one stretch' },
+        ]}
+        onChange={(v) => onSegment(v === 'none' ? null : (segments.find((s) => segKey(s) === v) ?? null))}
+      />
+    </div>
+  );
+}
+
+function Picker({
+  ariaLabel,
+  value,
+  label,
+  icon,
+  options,
+  onChange,
+}: {
+  ariaLabel: string;
+  value: string;
+  label: string;
+  icon?: ReactNode;
+  options: { value: string; label: string; hint?: string }[];
+  onChange: (v: string) => void;
+}) {
+  const [open, setOpen] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    if (!open) return;
+    const off = (e: PointerEvent) => !ref.current?.contains(e.target as Node) && setOpen(false);
+    const esc = (e: KeyboardEvent) => e.key === 'Escape' && setOpen(false);
+    window.addEventListener('pointerdown', off);
+    window.addEventListener('keydown', esc);
+    return () => {
+      window.removeEventListener('pointerdown', off);
+      window.removeEventListener('keydown', esc);
+    };
+  }, [open]);
+  return (
+    <div className="pick" ref={ref}>
+      <button type="button" className="pick__btn" aria-haspopup="listbox" aria-expanded={open} aria-label={`${ariaLabel}: ${label}`} onClick={() => setOpen((o) => !o)}>
+        {icon}
+        <span className="pick__value">{label}</span>
+        <IconChevronDown size={13} strokeWidth={2.2} />
+      </button>
       <AnimatePresence>
-        {open &&
-          items.map((it, i) => (
-            <motion.button
-              key={it.key}
-              type="button"
-              className="inserter__item"
-              aria-label={it.label}
-              data-tip={it.label}
-              initial={{ opacity: 0, x: -8 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -4, transition: { duration: 0.1 } }}
-              transition={{ duration: 0.2, delay: i * 0.03, ease: [0.23, 1, 0.32, 1] }}
-              onClick={it.run}
-            >
-              {it.icon}
-            </motion.button>
-          ))}
+        {open && (
+          <motion.div
+            className="pick__menu"
+            role="listbox"
+            aria-label={ariaLabel}
+            initial={{ opacity: 0, y: -4 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, transition: { duration: 0.1 } }}
+            transition={springs.snappy}
+          >
+            {options.map((o) => (
+              <button
+                key={o.value}
+                type="button"
+                role="option"
+                aria-selected={o.value === value}
+                className={o.value === value ? 'is-on' : ''}
+                onClick={() => {
+                  onChange(o.value);
+                  setOpen(false);
+                }}
+              >
+                <span className="pick__text">
+                  <span>{o.label}</span>
+                  {o.hint && <span className="pick__hint">{o.hint}</span>}
+                </span>
+                {o.value === value && <IconCheck size={15} />}
+              </button>
+            ))}
+          </motion.div>
+        )}
       </AnimatePresence>
     </div>
   );
@@ -421,153 +566,156 @@ function PhotoTools({ figure, onRemove }: { figure: HTMLElement; onRemove: () =>
   );
 }
 
-/* ── The selection toolbar ───────────────────────────────────── */
+/* ── The compose bar: every tool, always in the same place ───── */
 
 type Fmt = { bold: boolean; italic: boolean; link: boolean; block: string };
+const NO_FMT: Fmt = { bold: false, italic: false, link: false, block: 'P' };
 
-function FormatBar({ root, onChange }: { root: React.RefObject<HTMLDivElement | null>; onChange: () => void }) {
-  const [pos, setPos] = useState<{ x: number; y: number; below: boolean } | null>(null);
-  const [fmt, setFmt] = useState<Fmt>({ bold: false, italic: false, link: false, block: 'P' });
+function ComposeBar({
+  root,
+  editing,
+  onChange,
+  onPhoto,
+  onPath,
+  onBreak,
+}: {
+  root: React.RefObject<HTMLDivElement | null>;
+  editing: boolean;
+  onChange: () => void;
+  onPhoto: () => void;
+  onPath: () => void;
+  onBreak: () => void;
+}) {
+  const [fmt, setFmt] = useState<Fmt>(NO_FMT);
+  const [hasSel, setHasSel] = useState(false);
   const [linking, setLinking] = useState(false);
   const [url, setUrl] = useState('');
   const saved = useRef<Range | null>(null);
 
+  // Follow the selection in your text, so the tools show what's applied where you are.
+  const read = useCallback(() => {
+    const el = root.current;
+    const sel = window.getSelection();
+    if (!el || !sel || !sel.rangeCount) return;
+    const range = sel.getRangeAt(0);
+    if (!el.contains(range.commonAncestorContainer)) return;
+    saved.current = range.cloneRange();
+    const node = range.commonAncestorContainer;
+    const at = node instanceof HTMLElement ? node : node.parentElement;
+    setHasSel(!sel.isCollapsed);
+    setFmt({
+      bold: document.queryCommandState('bold'),
+      italic: document.queryCommandState('italic'),
+      link: !!at?.closest('a'),
+      block: blockAtCaret(el)?.tagName ?? 'P',
+    });
+  }, [root]);
   useEffect(() => {
-    let down = false;
-    const read = () => {
-      if (linking) return;
-      const sel = window.getSelection();
-      const el = root.current;
-      if (!sel || !el || sel.isCollapsed || !sel.rangeCount) return setPos(null);
-      const range = sel.getRangeAt(0);
-      if (!el.contains(range.commonAncestorContainer)) return setPos(null);
-      if ((range.commonAncestorContainer as HTMLElement).closest?.('figure') || range.commonAncestorContainer.parentElement?.closest('figure')) return setPos(null);
-      const r = range.getBoundingClientRect();
-      const below = window.matchMedia('(pointer: coarse)').matches;
-      const block = blockAtCaret(el);
-      setFmt({
-        bold: document.queryCommandState('bold'),
-        italic: document.queryCommandState('italic'),
-        link: !!range.commonAncestorContainer.parentElement?.closest('a'),
-        block: block?.tagName ?? 'P',
-      });
-      setPos({ x: r.left + r.width / 2 + window.scrollX, y: (below ? r.bottom + 12 : r.top - 12) + window.scrollY, below });
-    };
-    const onDown = (e: PointerEvent) => {
-      if ((e.target as HTMLElement).closest?.('.fmtbar')) return;
-      down = true;
-      setLinking(false);
-      setPos(null);
-    };
-    const onUp = () => {
-      down = false;
-      setTimeout(read, 10);
-    };
-    const onSel = () => {
-      if (!down) setTimeout(read, 60);
-    };
-    document.addEventListener('pointerdown', onDown);
-    document.addEventListener('pointerup', onUp);
-    document.addEventListener('selectionchange', onSel);
-    return () => {
-      document.removeEventListener('pointerdown', onDown);
-      document.removeEventListener('pointerup', onUp);
-      document.removeEventListener('selectionchange', onSel);
-    };
-  }, [root, linking]);
+    document.addEventListener('selectionchange', read);
+    return () => document.removeEventListener('selectionchange', read);
+  }, [read]);
 
+  /** Put the selection back in your text if a tap moved it (the link field, a touch screen). */
+  const restore = () => {
+    const el = root.current;
+    const sel = window.getSelection();
+    if (!el || !sel || !saved.current) return;
+    if (sel.rangeCount && el.contains(sel.getRangeAt(0).commonAncestorContainer)) return;
+    el.focus({ preventScroll: true });
+    sel.removeAllRanges();
+    sel.addRange(saved.current);
+  };
   const cmd = (name: string, value?: string) => {
+    restore();
     document.execCommand(name, false, value);
     onChange();
-    // Re-read state so the pressed buttons update at once.
-    setFmt((f) => ({ ...f, bold: document.queryCommandState('bold'), italic: document.queryCommandState('italic'), block: root.current ? (blockAtCaret(root.current)?.tagName ?? 'P') : f.block }));
+    read();
   };
   const block = (tag: string) => cmd('formatBlock', fmt.block === tag ? '<p>' : `<${tag.toLowerCase()}>`);
-
   const startLink = () => {
     if (fmt.link) return cmd('unlink');
-    const sel = window.getSelection();
-    saved.current = sel && sel.rangeCount ? sel.getRangeAt(0).cloneRange() : null;
     setUrl('');
     setLinking(true);
   };
   const applyLink = () => {
-    const sel = window.getSelection();
-    if (saved.current && sel) {
-      sel.removeAllRanges();
-      sel.addRange(saved.current);
-    }
     const href = /^(https?:|mailto:)/i.test(url) ? url : `https://${url}`;
     if (url.trim()) cmd('createLink', href);
     setLinking(false);
-    setPos(null);
   };
 
-  return createPortal(
-    <AnimatePresence>
-      {pos && (
-        <motion.div
-          key="fmt"
-          className={`fmtbar ${pos.below ? 'is-below' : ''}`}
-          // Centre above (or below) the selection. Set through Motion so its scale animation doesn't wipe it.
-          style={{ left: pos.x, top: pos.y, x: '-50%', y: pos.below ? 0 : '-100%' }}
-          role="toolbar"
-          aria-label="Format text"
-          initial={{ opacity: 0, scale: 0.94 }}
-          animate={{ opacity: 1, scale: 1 }}
-          exit={{ opacity: 0, transition: { duration: 0.1 } }}
-          transition={springs.snappy}
-          onMouseDown={(e) => {
-            if ((e.target as HTMLElement).tagName !== 'INPUT') e.preventDefault();
+  const off = !editing;
+  return (
+    <div
+      className="compose"
+      role="toolbar"
+      aria-label="Format and add to your post"
+      // Keep the caret in your text while you use the tools.
+      onPointerDown={(e) => {
+        if ((e.target as HTMLElement).tagName !== 'INPUT') e.preventDefault();
+      }}
+    >
+      {linking ? (
+        <form
+          className="compose__link"
+          onSubmit={(e) => {
+            e.preventDefault();
+            applyLink();
           }}
         >
-          {linking ? (
-            <form
-              className="fmtbar__link"
-              onSubmit={(e) => {
-                e.preventDefault();
-                applyLink();
-              }}
-            >
-              <input autoFocus value={url} placeholder="Paste or type a link…" onChange={(e) => setUrl(e.target.value)} onKeyDown={(e) => e.key === 'Escape' && setLinking(false)} />
-              <button type="button" aria-label="Cancel" onClick={() => setLinking(false)}>
-                <IconClose size={14} strokeWidth={2.2} />
-              </button>
-            </form>
-          ) : (
-            <>
-              <FmtBtn on={fmt.bold} label="Bold" onClick={() => cmd('bold')}>
-                <b className="fmtbar__serif">B</b>
-              </FmtBtn>
-              <FmtBtn on={fmt.italic} label="Italic" onClick={() => cmd('italic')}>
-                <i className="fmtbar__serif">i</i>
-              </FmtBtn>
-              <FmtBtn on={fmt.link} label={fmt.link ? 'Remove link' : 'Link'} onClick={startLink}>
-                <IconLink size={18} strokeWidth={2} />
-              </FmtBtn>
-              <span className="fmtbar__sep" />
-              <FmtBtn on={fmt.block === 'H2'} label="Big heading" onClick={() => block('H2')}>
-                <span className="fmtbar__serif fmtbar__t-lg">T</span>
-              </FmtBtn>
-              <FmtBtn on={fmt.block === 'H3'} label="Small heading" onClick={() => block('H3')}>
-                <span className="fmtbar__serif fmtbar__t-sm">T</span>
-              </FmtBtn>
-              <FmtBtn on={fmt.block === 'BLOCKQUOTE'} label="Quote" onClick={() => block('BLOCKQUOTE')}>
-                <span className="fmtbar__serif fmtbar__quote">“</span>
-              </FmtBtn>
-            </>
-          )}
-          <span className="fmtbar__caret" aria-hidden="true" />
-        </motion.div>
+          <IconLink size={18} />
+          <input autoFocus value={url} placeholder="Paste a link" aria-label="Link address" onChange={(e) => setUrl(e.target.value)} onKeyDown={(e) => e.key === 'Escape' && setLinking(false)} />
+          <button type="submit" className="compose__apply" disabled={!url.trim()}>
+            Add link
+          </button>
+          <button type="button" className="compose__tool" aria-label="Cancel" onClick={() => setLinking(false)}>
+            <IconClose size={16} />
+          </button>
+        </form>
+      ) : (
+        <>
+          <Tool label="Bold" on={fmt.bold} off={off} onClick={() => cmd('bold')}>
+            <IconBold size={19} />
+          </Tool>
+          <Tool label="Italic" on={fmt.italic} off={off} onClick={() => cmd('italic')}>
+            <IconItalic size={19} />
+          </Tool>
+          <Tool label={fmt.link ? 'Remove link' : hasSel ? 'Link' : 'Select words to link'} on={fmt.link} off={off || (!hasSel && !fmt.link)} onClick={startLink}>
+            <IconLink size={19} />
+          </Tool>
+          <span className="compose__sep" aria-hidden="true" />
+          <Tool label="Heading" on={fmt.block === 'H2'} off={off} onClick={() => block('H2')}>
+            <IconHeading size={19} />
+          </Tool>
+          <Tool label="Quote" on={fmt.block === 'BLOCKQUOTE'} off={off} onClick={() => block('BLOCKQUOTE')}>
+            <IconQuote size={19} />
+          </Tool>
+          <span className="compose__sep" aria-hidden="true" />
+          <Tool label="Add a photo" onClick={onPhoto}>
+            <IconImage size={19} />
+          </Tool>
+          <Tool label="Add your Path" onClick={onPath}>
+            <IconPath size={19} />
+          </Tool>
+          <Tool label="Section break" onClick={onBreak}>
+            <IconBreak size={19} />
+          </Tool>
+        </>
       )}
-    </AnimatePresence>,
-    document.body,
+    </div>
   );
 }
 
-function FmtBtn({ on, label, onClick, children }: { on: boolean; label: string; onClick: () => void; children: ReactNode }) {
+function Tool({ label, on, off, onClick, children }: { label: string; on?: boolean; off?: boolean; onClick: () => void; children: ReactNode }) {
   return (
-    <button type="button" className={`fmtbar__btn ${on ? 'is-on' : ''}`} aria-label={label} aria-pressed={on} onClick={onClick}>
+    <button
+      type="button"
+      className={`compose__tool ${on ? 'is-on' : ''}`}
+      aria-label={label}
+      aria-pressed={on === undefined ? undefined : on}
+      aria-disabled={off || undefined}
+      data-tip={label}
+      onClick={() => !off && onClick()}
+    >
       {children}
     </button>
   );
@@ -575,11 +723,9 @@ function FmtBtn({ on, label, onClick, children }: { on: boolean; label: string; 
 
 /* ── "…" menu ────────────────────────────────────────────────── */
 
-function MoreMenu({ onDiscard }: { onDiscard: () => void }) {
+function MoreMenu({ onTips, onDiscard }: { onTips: () => void; onDiscard: () => void }) {
   const [open, setOpen] = useState(false);
   const [confirm, setConfirm] = useState(false);
-  const dismissTip = useApp((s) => s.dismissTip);
-  const tips = useApp((s) => s.tips);
   const ref = useRef<HTMLDivElement>(null);
   useEffect(() => {
     if (!open) return;
@@ -595,24 +741,21 @@ function MoreMenu({ onDiscard }: { onDiscard: () => void }) {
       <AnimatePresence>
         {open && (
           <motion.div className="post-more__menu" role="menu" initial={{ opacity: 0, y: -4 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, transition: { duration: 0.1 } }} transition={springs.snappy}>
-            {tips['write-intro'] && (
-              <button
-                role="menuitem"
-                onClick={() => {
-                  useApp.setState((s) => ({ tips: { ...s.tips, 'write-intro': false } }));
-                  setOpen(false);
-                }}
-              >
-                Writing tips
-              </button>
-            )}
+            <button
+              role="menuitem"
+              onClick={() => {
+                onTips();
+                setOpen(false);
+              }}
+            >
+              Tips for writing here
+            </button>
             <button
               role="menuitem"
               className="is-danger"
               onClick={() => {
                 if (!confirm) return setConfirm(true);
                 onDiscard();
-                dismissTip('write-intro');
                 setOpen(false);
                 setConfirm(false);
               }}
@@ -626,140 +769,84 @@ function MoreMenu({ onDiscard }: { onDiscard: () => void }) {
   );
 }
 
-/* ── Tips drawer, as in Medium's first visit ─────────────────── */
+/* ── Tips, when you ask for them ─────────────────────────────── */
 
-const tips: { text: string; demo: ReactNode }[] = [
+const tipList: { icon: ReactNode; title: string; text: string }[] = [
   {
-    text: 'Select text to change formatting, add headings, or create links.',
-    demo: (
-      <div className="tipdemo">
-        <div className="tipdemo__bar" aria-hidden="true">
-          <b className="fmtbar__serif">B</b>
-          <i className="fmtbar__serif">i</i>
-          <IconLink size={16} strokeWidth={2} />
-          <span className="fmtbar__sep" />
-          <span className="fmtbar__serif fmtbar__t-lg">T</span>
-          <span className="fmtbar__serif fmtbar__t-sm">T</span>
-          <span className="fmtbar__serif fmtbar__quote">“</span>
-        </div>
-        <span className="tipdemo__sel">Writing on PathedIn</span>
-      </div>
-    ),
+    icon: <IconPeople size={20} />,
+    title: 'Write for someone one step behind you',
+    text: 'What do you wish you’d known at their step? Specifics beat advice: how long it took, the question that changed things, what you’d skip.',
   },
   {
-    text: 'Start a new line and click ⊕ to add a photo, your Path, or a new section.',
-    demo: (
-      <div className="tipdemo tipdemo--row" aria-hidden="true">
-        <span className="tipdemo__plus">
-          <IconPlus size={16} strokeWidth={1.6} />
-        </span>
-        <span className="tipdemo__circle">
-          <IconImage size={16} />
-        </span>
-        <span className="tipdemo__circle">
-          <IconPath size={16} />
-        </span>
-        <span className="tipdemo__circle">···</span>
-      </div>
-    ),
+    icon: <IconPath size={20} />,
+    title: 'Choose the stretch it’s about',
+    text: 'Pick it at the top of the page. People on that stretch see your post first, and it shows on that part of your Path.',
   },
   {
-    text: 'When you publish, choose a Story, a Question or a community post, and the stretch of your Path it’s about. People on that stretch see it first.',
-    demo: (
-      <div className="tipdemo tipdemo--row" aria-hidden="true">
-        <span className="tipdemo__chip is-on">Story</span>
-        <span className="tipdemo__chip">Question</span>
-        <span className="tipdemo__chip">Community post</span>
-      </div>
-    ),
+    icon: <IconImage size={20} />,
+    title: 'Show where you were',
+    text: 'Add a photo, or drop in your Path so readers can see the route behind the story.',
+  },
+  {
+    icon: <IconHeading size={20} />,
+    title: 'Format as you go',
+    text: 'Click into your text and use the bar at the bottom for bold, italic, links, headings and quotes. ⌘B and ⌘I work too.',
   },
 ];
 
-function TipsDrawer() {
-  const seen = useApp((s) => !!s.tips['write-intro']);
-  const dismiss = useApp((s) => s.dismissTip);
-  const [i, setI] = useState(0);
+function TipsSheet({ open, onClose }: { open: boolean; onClose: () => void }) {
   return (
-    <AnimatePresence>
-      {!seen && (
-        <motion.aside
-          className="tips"
-          aria-label="Writing tips"
-          initial={{ y: '100%' }}
-          animate={{ y: 0 }}
-          exit={{ y: '100%' }}
-          transition={{ type: 'tween', duration: 0.6, ease: [0.23, 1, 0.32, 1], delay: 0.4 }}
-        >
-          <button className="tips__close" aria-label="Close tips" onClick={() => dismiss('write-intro')}>
-            <IconClose size={18} strokeWidth={1.8} />
-          </button>
-          <button className="tips__nav is-prev" aria-label="Previous tip" disabled={i === 0} onClick={() => setI((n) => n - 1)}>
-            <IconChevronLeft size={22} strokeWidth={1.6} />
-          </button>
-          <AnimatePresence mode="wait" initial={false}>
-            <motion.div key={i} className="tips__slide" initial={{ opacity: 0, x: 12 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -12 }} transition={{ duration: 0.2 }}>
-              <p className="tips__text">{tips[i].text}</p>
-              {tips[i].demo}
-            </motion.div>
-          </AnimatePresence>
-          <button
-            className="tips__nav is-next"
-            aria-label={i === tips.length - 1 ? 'Done' : 'Next tip'}
-            onClick={() => (i === tips.length - 1 ? dismiss('write-intro') : setI((n) => n + 1))}
-          >
-            <IconChevronRight size={22} strokeWidth={1.6} />
-          </button>
-          <div className="tips__dots" aria-hidden="true">
-            {tips.map((_, k) => (
-              <span key={k} className={k === i ? 'is-on' : ''} />
-            ))}
-          </div>
-        </motion.aside>
-      )}
-    </AnimatePresence>
+    <Sheet open={open} onClose={onClose} title="Tips for writing here" width={480} detent="medium" label="Tips for writing here">
+      <ul className="wtips">
+        {tipList.map((t) => (
+          <li key={t.title} className="wtips__item">
+            <span className="wtips__icon">{t.icon}</span>
+            <div>
+              <p className="wtips__title">{t.title}</p>
+              <p className="wtips__text">{t.text}</p>
+            </div>
+          </li>
+        ))}
+      </ul>
+    </Sheet>
   );
 }
 
-/* ── Publish ─────────────────────────────────────────────────── */
+/* ── Review, then share ──────────────────────────────────────── */
 
-function mySegments(): [string, string][] {
-  const steps = compactSteps(me.path);
-  const out: [string, string][] = [];
-  const now = steps.find((s) => s.status === 'present') ?? steps[steps.length - 1];
-  for (const f of me.futures) out.push([now.wp, f.destination]);
-  for (let i = steps.length - 1; i > 0; i--) out.push([steps[i - 1].wp, steps[i].wp]);
-  return out;
-}
-
-const kindCopy: Record<MyPostKind, { label: string; note: string }> = {
-  story: { label: 'Story', note: 'A move you made or are making, told in your own words. It appears on your profile and in For you for people on this stretch.' },
-  question: { label: 'Question', note: 'Your question goes first to people who have already made this move, and they answer with their Path.' },
-  community: { label: 'Community post', note: 'A conversation in one of your communities. Members see it in Following.' },
-};
-
-function PublishSheet({ open, onClose, title, getBody }: { open: boolean; onClose: () => void; title: string; getBody: () => string }) {
+function ReviewSheet({
+  open,
+  onClose,
+  title,
+  dek,
+  getBody,
+  kind,
+  onKind,
+  segment,
+  onSegment,
+  segments,
+}: {
+  open: boolean;
+  onClose: () => void;
+  title: string;
+  dek: string;
+  getBody: () => string;
+  kind: MyPostKind;
+  onKind: (k: MyPostKind) => void;
+  segment: [string, string] | null;
+  onSegment: (s: [string, string] | null) => void;
+  segments: [string, string][];
+}) {
   const joined = useApp((s) => s.joined);
   const publish = useWriting((s) => s.publish);
   const toast = useUI((s) => s.showToast);
   const navigate = useNavigate();
-  const segments = mySegments();
   const mine = Object.keys(joined).filter((k) => joined[k] && communities[k]);
-  const [kind, setKind] = useState<MyPostKind>('story');
-  const [seg, setSeg] = useState<number>(0);
   const [community, setCommunity] = useState<string>('');
-  const [previewTitle, setPreviewTitle] = useState(title);
-  const [subtitle, setSubtitle] = useState('');
   const [html, setHtml] = useState('');
 
   useEffect(() => {
-    if (!open) return;
-    const h = getBody();
-    setHtml(h);
-    setPreviewTitle(title);
-    const tmp = document.createElement('div');
-    tmp.innerHTML = h;
-    const firstText = Array.from(tmp.querySelectorAll('p')).map((p) => p.textContent?.trim()).find(Boolean) ?? '';
-    setSubtitle(firstText.length > 140 ? `${firstText.slice(0, 137).trimEnd()}…` : firstText);
+    if (open) setHtml(getBody());
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [open]);
 
@@ -767,68 +854,65 @@ function PublishSheet({ open, onClose, title, getBody }: { open: boolean; onClos
     if (kind === 'community' && !community) setCommunity(mine[0] ?? '');
   }, [kind, community, mine]);
 
-  const image = (() => {
-    const m = /<img[^>]+src="([^"]+)"/.exec(html);
-    return m?.[1];
+  const image = /<img[^>]+src="([^"]+)"/.exec(html)?.[1];
+  const firstText = (() => {
+    const tmp = document.createElement('div');
+    tmp.innerHTML = html;
+    const t = Array.from(tmp.querySelectorAll('p')).map((p) => p.textContent?.trim()).find(Boolean) ?? '';
+    return t.length > 150 ? `${t.slice(0, 147).trimEnd()}…` : t;
   })();
+  const post: Omit<MyPost, 'id' | 'at'> = {
+    kind,
+    title: title.trim(),
+    subtitle: dek.trim() || firstText || undefined,
+    html,
+    image,
+    segment: segment ?? undefined,
+    community: community || undefined,
+  };
+  const copy = kindCopy[kind];
 
   const submit = () => {
-    const s = seg >= 0 ? segments[seg] : undefined;
-    const post = publish({
-      kind,
-      title: previewTitle.trim() || title.trim(),
-      subtitle: subtitle.trim() || undefined,
-      html,
-      image,
-      segment: s,
-      community: community || undefined,
-    });
+    const made = publish(post);
     haptic([10, 40, 12]);
     onClose();
-    toast(kind === 'question' ? 'Question posted' : 'Published');
-    navigate(`/posts/${post.id}`);
+    toast(kind === 'question' ? 'Question sent to people ahead of you' : kind === 'community' && community ? `Posted in ${communities[community].title}` : 'Story shared');
+    navigate(`/posts/${made.id}`);
   };
 
   return (
-    <Sheet open={open} onClose={onClose} title="Publish" width={820} label="Publish">
+    <Sheet open={open} onClose={onClose} title="Review" width={860} label="Review your post">
       <div className="pub">
         <section className="pub__preview">
-          <h3 className="pub__h">Preview</h3>
-          <div className={`pub__image ${image ? '' : 'is-empty'}`}>
-            {image ? <img src={image} alt="" /> : <span>Add a photo to your post to make it more inviting to readers.</span>}
+          <h3 className="pub__h">How it appears in For you</h3>
+          <div className="pub__card" inert>
+            <MyPostItem post={{ ...post, id: 'preview', at: Date.now() }} />
           </div>
-          <input className="pub__title" value={previewTitle} onChange={(e) => setPreviewTitle(e.target.value)} placeholder="Write a preview title" aria-label="Preview title" />
-          <input className="pub__subtitle" value={subtitle} onChange={(e) => setSubtitle(e.target.value)} placeholder="Write a preview subtitle…" aria-label="Preview subtitle" />
-          <p className="pub__note">This changes how your post appears in For you and on your profile, not the post itself.</p>
+          <p className="pub__note">The headline and summary come from your page. {image ? 'Your first photo is the thumbnail.' : 'Add a photo and the first one becomes the thumbnail.'}</p>
         </section>
         <section className="pub__options">
           <p className="pub__as">
-            Publishing as <strong>{me.name}</strong>
+            <Avatar id={ME} size={24} peek={false} /> Sharing as <strong>{me.name}</strong>
           </p>
           <h3 className="pub__h">What is it?</h3>
-          <Segmented
-            value={kind}
-            onChange={setKind}
-            ariaLabel="Kind of post"
-            options={(Object.keys(kindCopy) as MyPostKind[]).map((k) => ({ value: k, label: kindCopy[k].label }))}
-          />
-          <p className="pub__kind-note">{kindCopy[kind].note}</p>
+          <Segmented value={kind} onChange={onKind} ariaLabel="Kind of post" options={kinds.map((k) => ({ value: k, label: kindCopy[k].label }))} />
+          <p className="pub__kind-note">{copy.note}</p>
 
-          <h3 className="pub__h">Which stretch of your Path is it about?</h3>
+          <h3 className="pub__h">Which stretch of your Path?</h3>
           <div className="pub__segs">
-            {segments.map(([a, b], i) => (
-              <button key={`${a}-${b}`} type="button" className={`pub__seg ${seg === i ? 'is-on' : ''}`} aria-pressed={seg === i} onClick={() => setSeg(i)}>
-                {wp(a).short} → {wp(b).short}
+            {segments.map((s) => (
+              <button key={segKey(s)} type="button" className={`pub__seg ${segKey(segment) === segKey(s) ? 'is-on' : ''}`} aria-pressed={segKey(segment) === segKey(s)} onClick={() => onSegment(s)}>
+                {segLabel(s)}
               </button>
             ))}
-            <button type="button" className={`pub__seg ${seg === -1 ? 'is-on' : ''}`} aria-pressed={seg === -1} onClick={() => setSeg(-1)}>
-              None
+            <button type="button" className={`pub__seg ${segment === null ? 'is-on' : ''}`} aria-pressed={segment === null} onClick={() => onSegment(null)}>
+              In general
             </button>
           </div>
 
           <h3 className="pub__h">{kind === 'community' ? 'Post in' : 'Also share in a community'}</h3>
           <select className="pub__select" value={community} onChange={(e) => setCommunity(e.target.value)} aria-label="Community">
-            {kind !== 'community' && <option value="">Just your profile and For you</option>}
+            {kind !== 'community' && <option value="">Only your Path and For you</option>}
             {mine.map((id) => (
               <option key={id} value={id}>
                 {communities[id].title}
@@ -837,11 +921,11 @@ function PublishSheet({ open, onClose, title, getBody }: { open: boolean; onClos
           </select>
 
           <div className="pub__actions">
-            <Button variant="filled" size="medium" disabled={!previewTitle.trim() || (kind === 'community' && !community)} onClick={submit}>
-              {kind === 'question' ? 'Post question' : 'Publish now'}
+            <Button variant="filled" size="medium" disabled={!post.title || (kind === 'community' && !community)} onClick={submit}>
+              {copy.action}
             </Button>
             <button type="button" className="pub__cancel" onClick={onClose}>
-              Keep editing
+              Keep writing
             </button>
           </div>
         </section>

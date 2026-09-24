@@ -1,0 +1,17 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "broken-image",
+        "value": "*",
+        "files": [
+          "src/screens/Write.tsx"
+        ],
+        "createdAt": "2026-09-24T23:19:41.531Z",
+        "reason": "Claude: false positive, the match is a regular expression that reads the first <img> src out of the draft HTML, not a rendered image"
+      }
+    ]
+  }
+}

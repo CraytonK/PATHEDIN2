@@ -323,20 +323,29 @@ In a mixed feed, questions, community posts, Guides and stories all looked alike
 - **Class names are unique per component.** A generic name in one stylesheet can silently restyle another component; `.weigh` and `.guide-card` did, and are now `.fweigh` and `.fguide`.
 - An automated check loads every page at phone, tablet and desktop widths. It flags anything that spills out of its container, and text sitting against the edge of a bordered or shaded box.
 
-### Write, after Medium's editor
-**Write** (top bar, or the pencil on iPhone Home) opens a page of its own, with no sidebar or tab bar (`screens/Write.tsx`).
-- **The page:** a quiet header ("Draft · Saved", a navy **Publish** pill that stays washed out until there's a title and some text, "…", your photo), then a serif **Title** and **Tell your story…**. Drafts save as you type.
-- **⊕ in the margin:** start a new line and it appears. Click it and it turns into ×, and three circles slide out 30ms apart:
-  - **Add a photo.** Photos are resized in the browser and get an optional caption. Click one to remove it.
-  - **Add your Path.** Your Path is embedded with the brand's nodes.
-  - **New section:** a "···" break.
-- **iPhone:** the same three actions sit in a dock at the bottom.
-- **Select text** and a dark toolbar appears: **B**, *i*, link | big heading, small heading, quote. Buttons that are on are highlighted, and a link opens an inline field for the address.
-- **First visit:** a tips drawer walks through the three ideas with ‹ › and ×, as Medium's does.
-- **Publish** opens a sheet:
-  - On the left, a preview with the first photo, an editable title and a subtitle.
-  - On the right, **what it is** (Story, Question or Community post), **which stretch of your Path it's about** (so people on that stretch see it first), and a community to share it in.
-- **After publishing,** the post opens as a story and sits at the top of For you, and in its kind's filter, labelled as yours. Posts and drafts are kept in their own store, so photos never crowd out the rest of the saved state. Pasting always comes in as plain text, and saved HTML is rebuilt from an allow-list.
+### Write: from where you stand, for the people behind you
+**Write** (top bar, or the pencil on iPhone Home) opens a page of its own, with no sidebar or tab bar (`screens/Write.tsx`). It deliberately doesn't borrow Medium's editor: every PathedIn post is written from a place on your Path, so the page is built around that.
+- **The frame.** The header reads as a sentence made of two choices: **Writing a [Story ▾] about [MSc Chem → Pharma R&D ▾]**. The kind menu offers Story, Question or Community post. The stretch menu lists where you're heading from now, each step you've taken, and "Your Path in general", each with a one-line hint. On iPhone the sentence sits in its own row under the bar.
+- **The header.** **Close** on the left (your draft is kept), then a quiet ✓ **Saved**, "…" (tips, discard) and a navy **Review** button. There's no wordmark, no "Draft" label and no avatar.
+- **The page is set as it will be read.**
+  - The headline is in Charter Bold, like a published story.
+  - Under it is a one-line summary in the story's grey dek style.
+  - A hairline separates these from the body.
+- **Prompts follow the kind:**
+  - Story: "Headline" / "What was it really like? Write it for someone one step behind you."
+  - Question: "Your question" / "Give the people ahead of you what they need to answer…"
+  - Community post: "Start a conversation" / "What would you like to talk through…"
+- **The compose bar** holds every tool in one place, so nothing pops up over your words. It floats as a white pill at the bottom on desktop and becomes a dock on iPhone.
+  - **Text tools:** bold, italic, link | heading, quote. Each is drawn as an icon. They light up navy for what's applied where the caret is, and dim when you're not in the text. Link turns the bar into an address field.
+  - **Add to the post:** a photo, your Path, a section break.
+- **Photos** are resized in the browser and take an optional caption ("Add a caption"). Click one to remove it.
+- **Tips appear only when asked for,** from "…" → *Tips for writing here*. There are four short ones: write for someone one step behind you; choose the stretch; show where you were; format as you go. Nothing opens on its own, and nothing is shown pre-highlighted.
+- **Review** opens a sheet.
+  - On the left is the post drawn by the feed's own component, exactly as it will sit in For you.
+  - On the right are the same kind and stretch choices (kept in sync with the header) and an optional community.
+  - The button names the action: **Share story**, **Ask question** or **Post to community**.
+- **After sharing,** the post opens as a story and sits at the top of For you, and in its kind's filter, labelled as yours.
+- **Storage.** Posts and drafts, including the kind, stretch and summary, are kept in their own store, so photos never crowd out the rest of the saved state. Pasting always comes in as plain text, and saved HTML is rebuilt from an allow-list.
 
 ### Relevance is always explained
 Every person and every post says *why* it is in front of you. People carry a relation ("Path Twin", "One step ahead", "Reached your destination"), and posts carry a "why it's here" line. The Path match chip puts a number to it.
