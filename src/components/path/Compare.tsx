@@ -165,7 +165,7 @@ export function AlignMap({ otherId, autoAlign = true }: { otherId: string; autoA
               {wp(r.wp).label}
               {r.kind === 'shared' && aligned && (
                 <motion.span className="align__both t-caption1" initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: 0.3 + i * 0.06 }}>
-                  {r.a?.status === 'future' && r.b?.status !== 'future' ? `Your future · ${other.first}’s ${r.b?.status === 'present' ? 'present' : 'past'}` : 'Both'}
+                  {r.a?.status === 'future' && r.b?.status !== 'future' ? 'Your future' : 'Both'}
                 </motion.span>
               )}
             </div>

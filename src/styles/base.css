@@ -334,3 +334,17 @@ ol {
     inset 0 0 0 1px var(--tint),
     0 0 0 3px var(--tint-softer);
 }
+
+/* Horizontal scrollers fade out at an edge that has more to show, instead of cutting text off. */
+.edge-fade.has-right {
+  -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 48px), transparent);
+  mask-image: linear-gradient(to right, #000 calc(100% - 48px), transparent);
+}
+.edge-fade.has-left {
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 48px);
+  mask-image: linear-gradient(to right, transparent, #000 48px);
+}
+.edge-fade.has-left.has-right {
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 48px, #000 calc(100% - 48px), transparent);
+  mask-image: linear-gradient(to right, transparent, #000 48px, #000 calc(100% - 48px), transparent);
+}

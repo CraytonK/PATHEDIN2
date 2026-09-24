@@ -1,9 +1,10 @@
 import { motion } from 'framer-motion';
+import { useRef } from 'react';
 import { people, ME } from '../data/people';
 import { wp } from '../data/waypoints';
 import type { Community } from '../data/types';
 import { current, walked } from '../lib/relations';
-import { springs } from '../lib/motion';
+import { edgeClass, springs, useScrollEdges } from '../lib/motion';
 import { Avatar, formatCount } from './ui';
 import './community-route.css';
 
@@ -17,8 +18,10 @@ export function CommunityRoute({ c, active, onPick }: { c: Community; active?: s
   const myStage = c.stages.find((s) => s.wp === current(people[ME]).wp)?.wp;
   const myWalked = new Set(walked(people[ME]));
   const max = Math.max(...c.stages.map((s) => s.count));
+  const scroller = useRef<HTMLOListElement>(null);
+  const edges = useScrollEdges(scroller);
   return (
-    <ol className="croute" aria-label={`Where members of ${c.title} are`}>
+    <ol ref={scroller} className={`croute ${edgeClass(edges)}`} aria-label={`Where members of ${c.title} are`}>
       {c.stages.map((s, i) => {
         const here = membersAt(c, s.wp).filter((id) => id !== ME);
         const isMine = s.wp === myStage;

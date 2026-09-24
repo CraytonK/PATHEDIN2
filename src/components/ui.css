@@ -306,8 +306,8 @@
 }
 .segmented__item {
   position: relative;
-  flex: 1 1 0;
-  min-width: 0;
+  /* Grow to share the space, but never shrink below the label. */
+  flex: 1 0 auto;
   height: 30px;
   padding: 0 16px;
   border-radius: var(--r-pill);

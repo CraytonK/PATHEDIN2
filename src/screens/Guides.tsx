@@ -52,7 +52,13 @@ function GuideCard({ id, from, to }: { id: string; from: string; to: string }) {
           <>
             <p className="gcard__helps t-subhead">{g.guide.helpsWith.slice(0, 2).join(' · ')}</p>
             <p className="gcard__hours t-footnote c-2">
-              <IconCalendar size={14} /> {g.guide.officeHours.when} · <span className="gcard__open">{g.guide.officeHours.open} of {g.guide.officeHours.total} open</span> · helped {g.guide.helped}
+              <span className="gcard__slot">
+                <IconCalendar size={14} /> {g.guide.officeHours.when}
+              </span>
+              <span className="gcard__open">
+                {g.guide.officeHours.open} of {g.guide.officeHours.total} open
+              </span>
+              <span>Helped {g.guide.helped}</span>
             </p>
           </>
         )}

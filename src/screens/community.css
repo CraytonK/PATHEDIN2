@@ -67,6 +67,11 @@
   margin-bottom: 14px;
 }
 @media (max-width: 767px) {
+  .cm__route-head {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2px;
+  }
   .cm__route {
     margin: 0 calc(var(--gutter) * -1) 24px;
     border-radius: 0;

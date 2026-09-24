@@ -179,18 +179,18 @@ export function GuidePost({ id, move, why, i = 0 }: { id: string; move?: [string
       viewport={{ once: true, margin: '-40px' }}
       transition={{ ...springs.smooth, delay: Math.min(i, 3) * 0.04 }}
     >
-      <div className="guide-card">
+      <div className="fguide">
         <KindLabel kind="guide" note={hours.open > 0 ? 'Office Hours this week' : undefined} />
-        <div className="guide-card__top">
-          <Link to={`/p/${id}`} className="guide-card__photo" tabIndex={-1} aria-hidden="true">
+        <div className="fguide__top">
+          <Link to={`/p/${id}`} className="fguide__photo" tabIndex={-1} aria-hidden="true">
             <img src={g.photo} alt="" loading="lazy" />
           </Link>
-          <div className="guide-card__who">
-            <Link to={`/p/${id}`} className="guide-card__name">
+          <div className="fguide__who">
+            <Link to={`/p/${id}`} className="fguide__name">
               {g.name}
             </Link>
-            <p className="guide-card__headline">{g.headline}</p>
-            <p className="guide-card__move">
+            <p className="fguide__headline">{g.headline}</p>
+            <p className="fguide__move">
               <MoveGlyph />
               <span>
                 Made the move <strong>{short(from)} → {short(to)}</strong>
@@ -199,9 +199,9 @@ export function GuidePost({ id, move, why, i = 0 }: { id: string; move?: [string
             </p>
           </div>
         </div>
-        <p className="guide-card__helps">Helps with {lower(guide.helpsWith[0])}, and {lower(guide.helpsWith[1] ?? guide.helpsWith[0])}.</p>
-        <div className="guide-card__hours">
-          <span className="guide-card__slot">
+        <p className="fguide__helps">Helps with {lower(guide.helpsWith[0])}, and {lower(guide.helpsWith[1] ?? guide.helpsWith[0])}.</p>
+        <div className="fguide__hours">
+          <span className="fguide__slot">
             <IconCalendar size={15} />
             <span>
               {hours.when} · <strong>{hours.open} of {hours.total} spots open</strong>
@@ -244,15 +244,15 @@ export function DecisionPost({ d, why, i }: { d: Decision; why: Why; i?: number 
       title={d.title}
       subtitle={d.context}
       extra={
-        <Link to={to} className="weigh">
+        <Link to={to} className="fweigh">
           {d.weighIns.length > 0 && <AvatarStack ids={d.weighIns.map((w) => w.person)} size={22} max={3} />}
-          <span className="weigh__text">
+          <span className="fweigh__text">
             {d.options.map((o) => o.label).join(' or ')}
-            <span className="weigh__sub">
+            <span className="fweigh__sub">
               {d.weighIns.length} weighed in with their Path
             </span>
           </span>
-          {d.status === 'open' && d.owner !== ME && <span className="weigh__cta">{mine ? 'You weighed in' : 'Weigh in'}</span>}
+          {d.status === 'open' && d.owner !== ME && <span className="fweigh__cta">{mine ? 'You weighed in' : 'Weigh in'}</span>}
         </Link>
       }
       why={why}

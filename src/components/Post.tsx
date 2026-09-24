@@ -68,7 +68,7 @@ export interface PostProps {
 export function Post({ author, where, note, ago, to, title, subtitle, why, stats, thumb, thumbKind = 'art', extra, saveKey, i = 0, variant, kind, kindNote }: PostProps) {
   return (
     <motion.article
-      className={`post ${variant ? `post--${variant}` : ''} ${kind ? `post--is-${kind}` : ''}`}
+      className={`post ${variant ? `post--${variant}` : ''} ${kind ? `post--is-${kind}` : ''} ${thumb ? 'has-thumb' : ''}`}
       initial={{ opacity: 0, y: 12 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: '-40px' }}

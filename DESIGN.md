@@ -298,6 +298,17 @@ In a mixed feed, questions, community posts, Guides and stories all looked alike
 
 **For you, one kind at a time.** A row of pills under For you (All · Stories · Questions · Communities · Path Guides · Decisions · Routes) narrows the feed to one kind. Each filtered feed is ranked by how close each post is to your Path, still says why each post is there, and opens with a line explaining the list and a link to the full section. The choice lives in the URL (`/?show=question`), so Back returns to it. When the pills run past the column, arrows fade in at the edges, as on Medium's topic bar.
 
+### Spacing rules
+- **Inside a post** the rhythm is: kind label, 12px, byline, 12px, title, 8px, subtitle, 16px, the post's own block, 16px, the meta row.
+- **Thumbnails** sit to the right of the title and are top-aligned with it, however tall the text column grows. A post without a thumbnail uses the whole row, so every row ends on the same edge.
+- **Boxes** (Guide panels, the weigh-in row, route panels, answer quotes) always pad their contents; nothing inside touches a drawn edge.
+- **Buttons in a narrow column** use an even grid rather than wrapping. On a profile, **Send a Path Request** takes the full width, with Message, Follow, Align Paths and Save in a two-by-two grid below.
+- **Sideways-scrolling rows** (the community's *Who's here*, *Your Path this week*, the Path Lens, the For you filters) fade out at an edge that has more to show, instead of cutting text off.
+- **A page's subtitle** runs the full width under the title, so a button beside the title never squeezes it.
+- **In a narrow column** a Decision's fork is too small to read, so it's hidden and the text carries the decision.
+- **Class names are unique per component.** A generic name in one stylesheet can silently restyle another component; `.weigh` and `.guide-card` did, and are now `.fweigh` and `.fguide`.
+- An automated check loads every page at phone, tablet and desktop widths. It flags anything that spills out of its container, and text sitting against the edge of a bordered or shaded box.
+
 ### Relevance is always explained
 Every person and every post says *why* it is in front of you. People carry a relation ("Path Twin", "One step ahead", "Reached your destination"), and posts carry a "why it's here" line. The Path match chip puts a number to it.
 

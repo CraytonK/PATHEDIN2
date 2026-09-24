@@ -11,7 +11,8 @@
 .croute__stop {
   position: relative;
   flex: 1 1 0;
-  min-width: 92px;
+  /* Wide enough for the longest stop name ("Process Chem") with room before the next. */
+  min-width: 108px;
   transition: opacity var(--dur-2);
 }
 .croute__stop.is-dim {

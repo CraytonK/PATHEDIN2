@@ -14,7 +14,7 @@ import { questions, questionList } from '../data/questions';
 import { decisions } from '../data/decisions';
 import { threads, communities } from '../data/communities';
 import { destinations } from '../data/destinations';
-import { useIsMobile } from '../lib/motion';
+import { edgeClass, useIsMobile, useScrollEdges } from '../lib/motion';
 import { useApp } from '../lib/store';
 import './home.css';
 
@@ -248,6 +248,8 @@ export function Home() {
   const show = params.get('show');
   const kind: PostKind | 'all' = feedKinds.includes(show as PostKind) ? (show as PostKind) : 'all';
   const feedTop = useRef<HTMLDivElement>(null);
+  const pulseRef = useRef<HTMLDivElement>(null);
+  const pulseEdges = useScrollEdges(pulseRef);
   const setKind = (k: PostKind | 'all') => {
     setParams(k === 'all' ? {} : { show: k }, { replace: true });
     // If you've scrolled into the feed, bring its top back into view for the new list.
@@ -296,7 +298,7 @@ export function Home() {
                     Explore
                   </Link>
                 </div>
-                <div className="home__pulse-scroll">
+                <div className={`home__pulse-scroll ${edgeClass(pulseEdges)}`} ref={pulseRef}>
                   <PathPulse stops={pulseStops} />
                 </div>
               </section>

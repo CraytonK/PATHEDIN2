@@ -107,8 +107,13 @@
 .gcard__hours {
   display: flex;
   align-items: center;
-  gap: 5px;
+  gap: 4px 14px;
   flex-wrap: wrap;
+}
+.gcard__slot {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
 }
 .gcard__open {
   color: var(--green);

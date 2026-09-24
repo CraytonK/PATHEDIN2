@@ -5,7 +5,7 @@
   align-items: center;
   gap: 6px;
   min-width: 0;
-  margin-bottom: 10px;
+  margin-bottom: 12px;
   font-size: 11px;
   line-height: 16px;
   color: var(--label-2);
@@ -130,21 +130,21 @@
   padding: 20px 0 8px;
   border-bottom: 0;
 }
-.guide-card {
+.fguide {
   padding: 18px 20px 6px;
   border-radius: var(--r-xl);
   background: var(--bg-grouped);
   box-shadow: inset 0 0 0 1px var(--separator);
 }
-.guide-card .post__kind {
-  margin-bottom: 14px;
+.fguide .post__kind {
+  margin-bottom: 16px;
 }
-.guide-card__top {
+.fguide__top {
   display: flex;
   gap: 16px;
   align-items: flex-start;
 }
-.guide-card__photo {
+.fguide__photo {
   flex: none;
   width: 72px;
   height: 72px;
@@ -152,15 +152,15 @@
   overflow: hidden;
   background: var(--fill);
 }
-.guide-card__photo img {
+.fguide__photo img {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
-.guide-card__who {
+.fguide__who {
   min-width: 0;
 }
-.guide-card__name {
+.fguide__name {
   font-size: 20px;
   line-height: 26px;
   font-weight: 600;
@@ -168,20 +168,20 @@
   color: var(--label);
 }
 @media (hover: hover) {
-  .guide-card__name:hover {
+  .fguide__name:hover {
     text-decoration: underline;
     text-decoration-thickness: 1px;
     text-underline-offset: 4px;
   }
 }
-.guide-card__headline {
+.fguide__headline {
   margin-top: 2px;
   font-size: 14px;
   line-height: 20px;
   font-weight: 300;
   color: var(--label-2);
 }
-.guide-card__move {
+.fguide__move {
   display: flex;
   align-items: flex-start;
   gap: 8px;
@@ -190,7 +190,7 @@
   line-height: 18px;
   color: var(--label-2);
 }
-.guide-card__move strong {
+.fguide__move strong {
   font-weight: 600;
   color: var(--label);
 }
@@ -198,13 +198,13 @@
   flex: none;
   margin-top: 4px;
 }
-.guide-card__helps {
+.fguide__helps {
   margin-top: 14px;
   font-size: 15px;
   line-height: 22px;
   color: var(--label);
 }
-.guide-card__hours {
+.fguide__hours {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -214,27 +214,27 @@
   padding-top: 14px;
   border-top: 1px solid var(--separator);
 }
-.guide-card__slot {
+.fguide__slot {
   display: inline-flex;
   align-items: center;
   gap: 8px;
   font-size: 14px;
   color: var(--label-2);
 }
-.guide-card__slot svg {
+.fguide__slot svg {
   flex: none;
   color: var(--label);
 }
-.guide-card__slot strong {
+.fguide__slot strong {
   font-weight: 600;
   color: var(--tint-text);
 }
-.guide-card .post__meta {
+.fguide .post__meta {
   margin-top: 8px;
 }
 
 /* ── Decision Point: the fork, and an invitation to weigh in ── */
-.weigh {
+.fweigh {
   display: flex;
   align-items: center;
   gap: 10px;
@@ -243,10 +243,10 @@
   box-shadow: inset 0 0 0 1px var(--separator);
   color: var(--label);
 }
-.weigh .avatar-stack {
+.fweigh .avatar-stack {
   flex: none;
 }
-.weigh__text {
+.fweigh__text {
   display: flex;
   flex-direction: column;
   min-width: 0;
@@ -254,12 +254,12 @@
   line-height: 19px;
   font-weight: 500;
 }
-.weigh__sub {
+.fweigh__sub {
   font-size: 12px;
   font-weight: 400;
   color: var(--label-2);
 }
-.weigh__cta {
+.fweigh__cta {
   flex: none;
   margin-left: auto;
   padding: 6px 14px;
@@ -270,7 +270,7 @@
   font-weight: 600;
 }
 @media (hover: hover) {
-  .weigh:hover {
+  .fweigh:hover {
     background: var(--bg-hover);
   }
 }
@@ -434,15 +434,16 @@
   white-space: nowrap;
 }
 
-/* In a narrow column the fork is too small to read, so the weigh-in row carries the decision. */
+/* In a narrow column a fork is too small to read, so the post's text carries the decision. */
 @container (max-width: 560px) {
-  .post--is-decision .post__thumb {
+  .post:has(.post__thumb > .fork) .post__thumb {
     display: none;
   }
-  .post--is-decision .post__in {
+  .post:has(.post__thumb > .fork) .post__in {
+    grid-template-columns: minmax(0, 1fr);
     grid-template-areas:
-      'kind kind'
-      'by by'
-      'main main';
+      'kind'
+      'by'
+      'main';
   }
 }

@@ -457,10 +457,11 @@ export function Page({
           <div className="page__title-block">
             {eyebrow && <div className="page__eyebrow t-eyebrow">{eyebrow}</div>}
             <h1 className="t-large-title page__title">{title}</h1>
-            {subtitle && <p className="page__subtitle t-callout c-2">{subtitle}</p>}
           </div>
           {(largeTrailing || (!isMobile && trailing)) && <div className="page__trailing">{largeTrailing ?? trailing}</div>}
         </div>
+        {/* The subtitle runs the full width, so a button beside the title never squeezes it. */}
+        {subtitle && <p className={`page__subtitle t-callout c-2 ${!large ? 'visually-hidden' : ''}`}>{subtitle}</p>}
       </div>
       <div ref={sentinel} className="page__sentinel" />
       <div className="page__body">{children}</div>

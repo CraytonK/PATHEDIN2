@@ -7,7 +7,7 @@ import { PersonRow } from '../components/content';
 import { Button, RelationGlyph, TextTabs } from '../components/ui';
 import { IconPeople, IconSend } from '../components/icons';
 import { peopleByRelation, relationCopy, type RelationKind } from '../lib/relations';
-import { springs, useIsMobile } from '../lib/motion';
+import { edgeClass, springs, useIsMobile, useScrollEdges } from '../lib/motion';
 import './network.css';
 
 type Kind = Exclude<RelationKind, 'self' | 'other'>;
@@ -32,6 +32,7 @@ export function Network() {
   const isMobile = useIsMobile();
   const unread = useUnread();
   const [ref, width] = useWidth();
+  const lensEdges = useScrollEdges(ref);
 
   const groups = order.map((k) => ({ kind: k, people: peopleByRelation(k) })).filter((g) => g.people.length);
   const shown = lens === 'all' ? groups : groups.filter((g) => g.kind === lens);
@@ -65,7 +66,7 @@ export function Network() {
           <h2 className="t-headline">Your network, on your Path</h2>
           <p className="t-footnote c-2">Press and hold anyone to preview their Path.</p>
         </div>
-        <div className="network__lens-scroll" ref={ref}>
+        <div className={`network__lens-scroll ${edgeClass(lensEdges)}`} ref={ref}>
           {width > 0 && <PathLens filter={lens} width={width} />}
         </div>
       </section>

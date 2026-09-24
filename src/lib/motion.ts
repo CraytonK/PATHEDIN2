@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useLayoutEffect, useState, type RefObject } from 'react';
 
 /*
   Springs expressed the way SwiftUI describes them (response / damping fraction),
@@ -78,3 +78,32 @@ export function useScrollDirection(threshold = 6): 'up' | 'down' {
   }, [threshold]);
   return dir;
 }
+
+/**
+ * Whether a horizontal scroller has more to show on either side. Pair it with the
+ * `edge-fade` class so clipped content fades out instead of being cut off at the edge.
+ */
+export function useScrollEdges(ref: RefObject<HTMLElement | null>) {
+  const [edges, setEdges] = useState({ left: false, right: false });
+  useLayoutEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const update = () => {
+      const left = el.scrollLeft > 4;
+      const right = el.scrollLeft + el.clientWidth < el.scrollWidth - 4;
+      setEdges((e) => (e.left === left && e.right === right ? e : { left, right }));
+    };
+    update();
+    el.addEventListener('scroll', update, { passive: true });
+    const ro = new ResizeObserver(update);
+    ro.observe(el);
+    for (const child of Array.from(el.children)) ro.observe(child);
+    return () => {
+      el.removeEventListener('scroll', update);
+      ro.disconnect();
+    };
+  }, [ref]);
+  return edges;
+}
+
+export const edgeClass = (e: { left: boolean; right: boolean }) => `edge-fade ${e.left ? 'has-left' : ''} ${e.right ? 'has-right' : ''}`;

@@ -39,10 +39,18 @@
   grid-template-columns: minmax(0, 1fr) auto;
   grid-template-areas:
     'kind kind'
-    'by thumb'
+    'by by'
     'main thumb';
   column-gap: 48px;
   align-items: start;
+}
+/* Without a thumbnail the text takes the whole row, so every row ends on the same edge. */
+.post:not(.has-thumb) .post__in {
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-areas:
+    'kind'
+    'by'
+    'main';
 }
 .post__by {
   grid-area: by;
@@ -106,7 +114,7 @@
   overflow: hidden;
 }
 .post__extra {
-  margin-top: 14px;
+  margin-top: 16px;
 }
 .post__meta {
   display: flex;
@@ -158,7 +166,9 @@
 }
 .post__thumb {
   grid-area: thumb;
-  align-self: center;
+  /* Top-aligned with the title, however tall the post's extra block makes the text column. */
+  align-self: start;
+  margin-top: 2px;
   width: 160px;
   height: 107px;
   overflow: hidden;
@@ -241,10 +251,6 @@
 @container (max-width: 560px) {
   .post__in {
     column-gap: 20px;
-    grid-template-areas:
-      'kind kind'
-      'by by'
-      'main thumb';
   }
   .post__title {
     font-size: 18px;

@@ -6,7 +6,7 @@ import { TransitMap } from '../components/path/TransitMap';
 import { AlignMap, compareSummary } from '../components/path/Compare';
 import { ConnectButton, CredibilityLabel, DecisionItem, RequestButton, StoryItem } from '../components/content';
 import { RailFooter, RailPills, RailSection } from '../components/Rail';
-import { Button, GroupedList, PathChips, RelationTag, SaveToggle, TextTabs } from '../components/ui';
+import { Button, GroupedList, PathChips, RelationTag, TextTabs } from '../components/ui';
 import { IconAlign, IconBell, IconBookmark, IconCalendar, IconClock, IconMoon, IconPeople, IconPin, IconSend, IconSun, IconUser } from '../components/icons';
 import { people, ME } from '../data/people';
 import { wp } from '../data/waypoints';
@@ -59,6 +59,8 @@ export function Profile() {
   const openCompare = useUI((s) => s.openCompare);
   const openRequest = useUI((s) => s.openRequest);
   const following = useApp((s) => !!s.following[id]);
+  const saved = useApp((s) => !!s.saved[`person:${id}`]);
+  const toggleSave = useApp((s) => s.toggleSave);
   const toggleFollow = useApp((s) => s.toggleFollow);
   const [tab, setTab] = useState<'path' | 'stories' | 'answers' | 'decisions'>('path');
   if (!p) return <NotFound />;
@@ -82,16 +84,23 @@ export function Profile() {
       </Button>
     </div>
   ) : (
-    <div className="profile__actions">
-      <RequestButton id={id} size="medium" label="Send a Path Request" />
-      <ConnectButton id={id} size="medium" />
-      <Button variant={following ? 'gray' : 'outline'} size="medium" onClick={() => toggleFollow(id)}>
-        {following ? 'Following' : 'Follow'}
-      </Button>
-      <button className="profile__icon-btn" aria-label={`Align Paths with ${p.first}`} data-tip="Align Paths" onClick={() => openCompare(id)}>
-        <IconAlign size={20} />
-      </button>
-      <SaveToggle saveKey={`person:${id}`} compact />
+    <div className="profile__actions profile__actions--other">
+      {/* The main action gets its own row; the rest share one, with the icon buttons at its end. */}
+      <div className="profile__primary">
+        <RequestButton id={id} size="medium" label="Send a Path Request" />
+      </div>
+      <div className="profile__secondary">
+        <ConnectButton id={id} size="medium" />
+        <Button variant={following ? 'gray' : 'outline'} size="medium" onClick={() => toggleFollow(id)}>
+          {following ? 'Following' : 'Follow'}
+        </Button>
+        <Button variant="outline" size="medium" icon={<IconAlign size={17} />} onClick={() => openCompare(id)}>
+          Align Paths
+        </Button>
+        <Button variant={saved ? 'gray' : 'outline'} size="medium" icon={<IconBookmark size={16} filled={saved} />} aria-pressed={saved} onClick={() => toggleSave(`person:${id}`)}>
+          {saved ? 'Saved' : 'Save'}
+        </Button>
+      </div>
     </div>
   );
 

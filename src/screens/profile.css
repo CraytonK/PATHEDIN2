@@ -78,18 +78,26 @@
   gap: 8px;
   margin-top: 20px;
 }
-.profile__icon-btn {
-  width: 38px;
-  height: 38px;
-  border-radius: 50%;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--label);
-  box-shadow: inset 0 0 0 1px var(--label);
+.profile__actions--other {
+  flex-direction: column;
+  align-items: stretch;
+  align-self: stretch;
+  min-width: 0;
 }
-.profile__icon-btn:hover {
-  background: var(--bg-hover);
+.profile__primary .btn {
+  width: 100%;
+}
+.profile__secondary {
+  /* The other four actions sit in an even two-by-two grid under the main one. */
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+.profile__secondary .btn {
+  width: 100%;
+  min-width: 0;
+  padding-left: 12px;
+  padding-right: 12px;
 }
 
 /* Facts */

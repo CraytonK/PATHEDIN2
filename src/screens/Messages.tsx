@@ -69,7 +69,7 @@ function SegmentCard({ seg, mine }: { seg: NonNullable<Message['segment']>; mine
       <p className="t-subhead w-600">
         {wp(seg.from).label} → {wp(seg.to).label}
       </p>
-      <PathStrip id={seg.person} highlight={[seg.from, seg.to]} />
+      <PathStrip id={seg.person} highlight={[seg.from, seg.to]} wrap />
     </Link>
   );
 }
