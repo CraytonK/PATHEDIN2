@@ -7,6 +7,7 @@ import { wp } from '../../data/waypoints';
 import type { Step } from '../../data/types';
 import { compactSteps, primaryDestination, stepTitle, walked, yearsLabel } from '../../lib/relations';
 import { springs } from '../../lib/motion';
+import { useApp } from '../../lib/store';
 import { useUI } from '../../lib/ui';
 import { IconAlign, IconChevronRight, IconPath } from '../icons';
 import './pathhint.css';
@@ -43,12 +44,16 @@ interface Props {
   segment?: Segment;
   /** Render the line only, with no card, for use inside links. */
   plain?: boolean;
+  /** Show a one-time coachmark under this hint, keyed by this id. */
+  coach?: string;
   className?: string;
 }
 
-export function PathHint({ id, segment, plain, className = '' }: Props) {
+export function PathHint({ id, segment, plain, coach, className = '' }: Props) {
   const p = people[id];
   const [mode, setMode] = useState<null | 'hover' | 'pinned'>(null);
+  const tipSeen = useApp((s) => (coach ? !!s.tips[coach] : true));
+  const dismissTip = useApp((s) => s.dismissTip);
   const trigger = useRef<HTMLButtonElement>(null);
   const openTimer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
   const closeTimer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
@@ -82,6 +87,7 @@ export function PathHint({ id, segment, plain, className = '' }: Props) {
   };
   const open = (m: 'hover' | 'pinned') => {
     clearTimers();
+    if (coach && !tipSeen) dismissTip(coach);
     if (closeOpenCard && closeOpenCard !== close) closeOpenCard();
     closeOpenCard = close;
     setMode(m);
@@ -106,8 +112,17 @@ export function PathHint({ id, segment, plain, className = '' }: Props) {
     open('pinned');
   };
 
+  const showCoach = !!coach && !tipSeen;
   return (
     <>
+      {showCoach && (
+        <span className="phint-coach" role="note">
+          {window.matchMedia('(hover: hover)').matches ? 'Hover over a Path to see the whole journey.' : 'Tap a Path to see the whole journey.'}
+          <button type="button" onClick={() => dismissTip(coach!)}>
+            Okay, got it.
+          </button>
+        </span>
+      )}
       <button
         ref={trigger}
         type="button"
@@ -186,12 +201,13 @@ function PathCard({ domId, id, segment, anchor, pinned, focus, onClose, onEnter,
     const onScroll = () => onClose();
     window.addEventListener('keydown', onKey);
     window.addEventListener('pointerdown', onDown);
-    window.addEventListener('scroll', onScroll, { passive: true });
+    // Capture, so scrolling inside a drawer or sheet closes it too.
+    window.addEventListener('scroll', onScroll, { passive: true, capture: true });
     window.addEventListener('resize', onScroll);
     return () => {
       window.removeEventListener('keydown', onKey);
       window.removeEventListener('pointerdown', onDown);
-      window.removeEventListener('scroll', onScroll);
+      window.removeEventListener('scroll', onScroll, { capture: true });
       window.removeEventListener('resize', onScroll);
     };
   }, [anchor, focus, onClose]);

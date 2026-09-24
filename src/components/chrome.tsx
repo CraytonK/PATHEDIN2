@@ -5,7 +5,7 @@ import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { me } from '../data/people';
 import { communities } from '../data/communities';
 import { notificationList, conversationList } from '../data/social';
-import { springs, useIsMobile, useMediaQuery, haptic } from '../lib/motion';
+import { easings, springs, useIsMobile, useMediaQuery, haptic } from '../lib/motion';
 import { useApp } from '../lib/store';
 import { useUI } from '../lib/ui';
 import {
@@ -120,10 +120,10 @@ export function TopBar() {
           <IconCompose size={22} strokeWidth={1.5} />
           <span>Ask</span>
         </Link>
-        <IconButton label="Messages" badge={unread.messages} onClick={() => navigate('/messages')} active={pathname.startsWith('/messages')}>
+        <IconButton label="Messages" tipPos="below" badge={unread.messages} onClick={() => navigate('/messages')} active={pathname.startsWith('/messages')}>
           <IconMessage size={23} strokeWidth={1.5} filled={pathname.startsWith('/messages')} />
         </IconButton>
-        <IconButton label="Notifications" badge={unread.notifications} onClick={() => navigate('/notifications')} active={pathname.startsWith('/notifications')}>
+        <IconButton label="Notifications" tipPos="below" badge={unread.notifications} onClick={() => navigate('/notifications')} active={pathname.startsWith('/notifications')}>
           <IconBell size={23} strokeWidth={1.5} filled={pathname.startsWith('/notifications')} />
         </IconButton>
         <AccountMenu />
@@ -582,8 +582,8 @@ export function Sheet({
               style={{ width }}
               initial={{ x: width + 40 }}
               animate={{ x: 0 }}
-              exit={{ x: width + 40 }}
-              transition={springs.sheet}
+              exit={{ x: width + 40, transition: { duration: 0.3, ease: [0.4, 0, 1, 1] } }}
+              transition={easings.drawer}
             >
               {title && (
                 <div className="sheet__titlebar sheet__titlebar--desktop">

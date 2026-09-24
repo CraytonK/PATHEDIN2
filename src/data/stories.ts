@@ -10,6 +10,39 @@ export const storyList: Story[] = [
     minutes: 7,
     published: 'Sep 14',
     reads: 3410,
+    topHighlight: { text: 'your R&D network at a CRO is the client scientists you work with', count: 64 },
+    responses: [
+      {
+        id: 'er-yusuf',
+        author: 'yusuf',
+        body: 'The client-scientist point is the one nobody says out loud. Two of my best contacts are people I’ve only met on method-transfer calls. I’m going to start treating those calls differently.',
+        ago: '3w',
+        quote: 'your R&D network at a CRO is the client scientists you work with',
+        helpful: 41,
+      },
+      {
+        id: 'er-daniel',
+        author: 'daniel',
+        body: 'Reading this in the break room at Brightwater. I’m in year two. My date is next September, and I’m telling you so it counts.',
+        ago: '2w',
+        quote: 'set yourself a date, and tell someone ahead of you what it is',
+        helpful: 58,
+      },
+      {
+        id: 'er-chloe',
+        author: 'chloe',
+        body: 'Same lesson from the QC side. The people on the other end of the transfer were the ones who said my name when the R&D role opened.',
+        ago: '3w',
+        helpful: 22,
+      },
+      {
+        id: 'er-wei',
+        author: 'wei',
+        body: 'Did the CRO years count as industry experience when you applied, or did Northfield want R&D experience specifically?',
+        ago: '6d',
+        helpful: 9,
+      },
+    ],
     communities: ['cro-rnd', 'chem-pharma'],
     body: [
       'When I finished my MSc in 2021, a CRO felt like the sensible compromise. Industry experience, a real salary, and — everyone told me — a clean bridge into pharma after two years. I told myself the same thing on my first day at Brightwater.',
@@ -30,6 +63,32 @@ export const storyList: Story[] = [
     minutes: 9,
     published: 'Aug 30',
     reads: 6120,
+    topHighlight: { text: 'do the PhD if you want to lead discovery programmes and you’ve found a supervisor who will actually train you', count: 112 },
+    responses: [
+      {
+        id: 'tr-nikhil',
+        author: 'nikhil',
+        body: 'Year six here. The ownership part is true. The part about finding a supervisor who will actually train you is the one I’d underline twice.',
+        ago: '3w',
+        quote: 'you’ve found a supervisor who will actually train you',
+        helpful: 74,
+      },
+      {
+        id: 'tr-jonah',
+        author: 'jonah',
+        body: 'This is the post I needed this week. I have both offers in front of me, and “don’t do it because you’re afraid industry won’t take you” landed.',
+        ago: '5d',
+        quote: 'Don’t do it because you’re afraid industry won’t take you.',
+        helpful: 31,
+      },
+      {
+        id: 'tr-sarah',
+        author: 'sarah',
+        body: 'Saving this for the week I have to decide. Thank you for putting real numbers on it.',
+        ago: '2w',
+        helpful: 12,
+      },
+    ],
     communities: ['phd-question', 'chem-pharma'],
     body: [
       'Every month someone on PathedIn asks me whether they should do a PhD before going into pharma. I’ve stopped giving a yes or no. Instead I show them my Path, with the years and the money attached, and let them do the maths.',
@@ -49,6 +108,7 @@ export const storyList: Story[] = [
     minutes: 6,
     published: 'Sep 3',
     reads: 2890,
+    topHighlight: { text: 'the single best thing you can do is get inside a process team, even briefly, before you apply', count: 47 },
     communities: ['msc-industry', 'phd-question'],
     body: [
       'I had a PhD offer. A good one, in a lab I admired. I turned it down because of a co-op term at Aldren during my undergrad, when I watched a process team take a twelve-step route and turn it into something you could run safely at fifty kilograms.',
@@ -67,6 +127,7 @@ export const storyList: Story[] = [
     minutes: 8,
     published: 'Jul 22',
     reads: 5230,
+    topHighlight: { text: 'It turned my experience into credentials that Canadian employers could read.', count: 83 },
     communities: ['newcomers-science', 'chem-pharma'],
     body: [
       'My degree from the University of Lagos was rigorous. I had run more titrations by the end of second year than most of my Canadian classmates would run in their MSc. None of that showed up on paper.',
@@ -85,6 +146,24 @@ export const storyList: Story[] = [
     minutes: 5,
     published: 'Sep 9',
     reads: 4010,
+    topHighlight: { text: 'I volunteered for every method transfer between the two teams.', count: 71 },
+    responses: [
+      {
+        id: 'gr-olivia',
+        author: 'olivia',
+        body: 'This is exactly my plan at Maritime. I put my name down for the next method transfer this morning.',
+        ago: '1w',
+        quote: 'I volunteered for every method transfer between the two teams.',
+        helpful: 18,
+      },
+      {
+        id: 'gr-analucia',
+        author: 'analucia',
+        body: 'Thank you for writing “I couldn’t afford one.” Not enough people say it, and it’s the reason most of us are on this route.',
+        ago: '2w',
+        helpful: 36,
+      },
+    ],
     communities: ['chem-pharma', 'newcomers-science'],
     body: [
       'Everyone told me I’d need a master’s to get into R&D. I couldn’t afford one. So I went into QC at Northfield and decided to make it count.',
@@ -102,6 +181,7 @@ export const storyList: Story[] = [
     minutes: 6,
     published: 'Aug 12',
     reads: 2210,
+    topHighlight: { text: 'I asked to shadow the RA team for a month, wrote one section well, and was offered a specialist role six months later.', count: 29 },
     communities: ['bench-regulatory'],
     body: [
       'For three years in QC I thought regulatory affairs was the department that sent us forms. Then I was asked to help write the analytical section of a submission, and I realised RA is where the science gets argued for.',

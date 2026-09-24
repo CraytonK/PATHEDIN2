@@ -88,7 +88,7 @@ export function Profile() {
       <Button variant={following ? 'gray' : 'outline'} size="medium" onClick={() => toggleFollow(id)}>
         {following ? 'Following' : 'Follow'}
       </Button>
-      <button className="profile__icon-btn" aria-label={`Align Paths with ${p.first}`} title="Align Paths" onClick={() => openCompare(id)}>
+      <button className="profile__icon-btn" aria-label={`Align Paths with ${p.first}`} data-tip="Align Paths" onClick={() => openCompare(id)}>
         <IconAlign size={20} />
       </button>
       <SaveToggle saveKey={`person:${id}`} compact />

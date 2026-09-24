@@ -104,6 +104,19 @@ export interface Story {
   body: string[]; // paragraphs; lines starting with "> " are pull quotes
   communities: string[];
   reads: number;
+  /** The passage readers on this route highlighted most. */
+  topHighlight?: { text: string; count: number };
+  responses?: StoryResponse[];
+}
+
+export interface StoryResponse {
+  id: string;
+  author: string;
+  body: string;
+  ago: string;
+  /** A passage from the story the response is about. */
+  quote?: string;
+  helpful: number;
 }
 
 export type Credibility =

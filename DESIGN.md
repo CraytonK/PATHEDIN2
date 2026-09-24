@@ -96,6 +96,41 @@ All pages share Medium's page shape.
 | Discover | Text tabs for **For you, People, Path Guides, Communities and Destinations**. For you mixes a row of each (people worth knowing, Guides for your next move, communities along your route, futures near your Path), each with a "See all" link to its tab. People, Guides and communities are a quiet three-column grid with a hairline above each card and no boxes; on a phone the For you rows scroll sideways. Destinations keep the topic grid: a quiet image area with the route art, then title, summary and counts. |
 | Network, Guides, Connections, Requests, Notifications, Saved, Search | Hairline lists with text tabs. Notifications drop the blue unread panels for a small dot. Each page has a right column (people worth knowing, your communities, or office hours). |
 
+### Touch and feel, from a live teardown of Medium (September 2026)
+A surface-by-surface teardown of medium.com (computed styles and observed interactions) listed fifteen details that make Medium feel quiet and expensive. Here is what PathedIn took, how it translates, and what it left.
+
+**Already true of PathedIn**
+- Serif for reading and sans for everything else. Stories are set at 20/32 in the reading serif, in a 680px column.
+- Negative tracking that grows with size: body text barely tightened, large titles tightened more.
+- Hairlines instead of cards for feed rows and action bars; boxes only for things that float.
+- Pills for everything pressable.
+- Save fills instantly, with no spinner and no toast.
+- A name underlines as soon as you hover it, and its hover card follows after a short pause.
+
+**Adopted**
+
+| Medium | In PathedIn |
+| --- | --- |
+| One soft shadow for every popover: a 4px ambient glow plus a short drop, with no border. Popovers have 4px corners. | `--shadow-popover` and `--r-popover`, used by the account menu, "…" menus, hover cards, the Path card and the sort menu. Menus now use full-width rows that darken on hover instead of rounded highlights. The iPhone press-and-hold preview keeps its larger iOS corners. |
+| Dark tooltips with a centred caret on icon-only buttons (Save, "…", member-only). | `data-tip` tooltips on every icon-only button (Save, More, Align, Share, Responses, Helpful, messages, notifications) after a 350ms hover, on pointer devices only. They replace the browser's `title` tooltips. |
+| The responses drawer slides in over 0.6s on `cubic-bezier(.23,1,.32,1)` while the page fades to 60% white. | `easings.drawer` and `--ease-drawer`. Side drawers use this curve and the soft white scrim (warm charcoal in dark). The sidebar drawer uses the same curve. |
+| The most-highlighted passage gets a mint wash and a count in the margin. | The passage readers *on this route* marked most gets a navy wash, with a highlighter count in the right margin, level with the line ("Top highlight · 64 on this route marked it"). Narrower screens put the count after the passage. |
+| Selecting text raises a dark pill: Highlight · Respond · Share. | The same pill, with PathedIn's own action added: **Highlight · Respond · Ask {author} · Share**. *Ask* opens a Path Request about the story's stretch with the passage quoted. Your highlights are saved and drawn in a stronger wash. On touch screens the pill sits below the selection, clear of the system menu. |
+| The clap: tap for one, hold for up to 50, with a floating +N. | **Helpful**, with the same physical feel but one per reader: the hand fills and a small +1 floats up and fades. PathedIn is built on trust, so counts shouldn't be inflatable. It's used on stories, answers and responses. |
+| Responses drawer: composer on top, "MOST RELEVANT ▾" sort in green caps, responses quoting highlighted passages. | A 414px responses drawer (a sheet on iPhone). The composer reads "What are your thoughts?", notes that your response is *shown with your Path*, and keeps Respond disabled until you type. The sort, in navy caps, is **Closest to your Path** or **Most recent**. Each response shows the person's relation to you and their Path hint, and quoted passages sit in a highlight box. Respond from a selection and the quote comes with you. |
+| Topic pills above the article title, each with a + to follow (Medium says this increased reads). | Community pills above a story's title, each with a + to join, which turns into ✓. |
+| The action bar is repeated after the story. | The Helpful, Responses, Align, Save and Share bar appears under the byline and again where the reading stops. |
+| On phones the header and action strip hide while you read down and return on the first flick up. | On iPhone a story swaps the tab bar for a four-action **reading dock**. The dock and the navigation bar slide away as you read down and return on the first scroll up, and near the top and the end. The progress line rides the top edge. |
+| The current left-rail item gets a short black bar at the rail's edge. | Same, in ink. |
+| Coachmarks with "Okay, got it." | A one-time coachmark over the first Path hint on Home: "Hover over a Path to see the whole journey. **Okay, got it.**" |
+| A returning device is greeted "Welcome back." with the remembered account. | After you sign out, Sign in shows your photo, name and masked email, **Continue as Maya**, *Forget this account*, and *More sign-in options*. |
+
+**Left out, on purpose**
+- **Green (here, navy) only for live states.** The brand kit uses Executive Navy for eyebrows, relation tags and each post's "why it's here" line. Relevance is PathedIn's core idea, so the navy stays on it.
+- **Two text colours.** PathedIn keeps a third, lighter grey for captions and arrows, but hierarchy still comes mainly from size and weight.
+- **Skeletons, never spinners.** Everything here is local, so nothing has to load. Showing fake loading would be worse than showing none.
+- **Paywall, member-only stars, the promo bar and "Get app".** None of these apply to PathedIn.
+
 ## Typography
 Type follows the brand identity kit (v2): three faces, three tiers.
 

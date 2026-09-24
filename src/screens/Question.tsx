@@ -4,41 +4,17 @@ import { Link, useParams } from 'react-router-dom';
 import { Page } from '../components/chrome';
 import { PathHint } from '../components/path/PathHint';
 import { CredibilityLabel, RequestButton } from '../components/content';
-import { Avatar, AvatarStack, Button, PersonName, RelationTag } from '../components/ui';
-import { IconHandRaise } from '../components/icons';
+import { Avatar, AvatarStack, Button, Helpful, PersonName, RelationTag } from '../components/ui';
 import { questions } from '../data/questions';
 import { communities } from '../data/communities';
 import { people, ME } from '../data/people';
 import { wp } from '../data/waypoints';
 import { peopleThrough, relationTo } from '../lib/relations';
-import { springs, haptic } from '../lib/motion';
-import { useApp } from '../lib/store';
+import { springs } from '../lib/motion';
 import { useUI } from '../lib/ui';
 import { RailFooter, RailPeople, RailSection } from '../components/Rail';
 import { NotFound } from './NotFound';
 import './questions.css';
-
-function Helpful({ id, count }: { id: string; count: number }) {
-  const on = useApp((s) => !!s.helpful[id]);
-  const toggle = useApp((s) => s.toggleHelpful);
-  return (
-    <motion.button
-      className={`helpful ${on ? 'is-on' : ''}`}
-      whileTap={{ scale: 0.9 }}
-      transition={springs.press}
-      aria-pressed={on}
-      onClick={() => {
-        haptic(8);
-        toggle(id);
-      }}
-    >
-      <motion.span key={String(on)} initial={{ rotate: on ? -18 : 0, scale: on ? 0.7 : 1 }} animate={{ rotate: 0, scale: 1 }} transition={springs.settle}>
-        <IconHandRaise size={18} filled={on} />
-      </motion.span>
-      <span className="t-footnote t-num">{count + (on ? 1 : 0)} found this helpful</span>
-    </motion.button>
-  );
-}
 
 export function QuestionScreen() {
   const { id = '' } = useParams();
@@ -117,7 +93,7 @@ export function QuestionScreen() {
                   <PathHint id={a.author} segment={q.about} />
                 </div>
                 <div className="answer__actions">
-                  <Helpful id={a.id} count={a.helpful} />
+                  <Helpful helpKey={a.id} count={a.helpful} />
                   <span className="t-footnote c-3">{a.ago}</span>
                   <RequestButton id={a.author} segment={q.about} variant="tinted" label="Follow up" />
                 </div>

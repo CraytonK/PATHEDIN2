@@ -4,6 +4,8 @@ import { createPortal } from 'react-dom';
 import { Wordmark } from '../components/chrome';
 import { IconClose, IconChevronLeft } from '../components/icons';
 import { springs } from '../lib/motion';
+import { useApp } from '../lib/store';
+import { me } from '../data/people';
 import './landing.css';
 
 type AuthMode = 'join' | 'signin';
@@ -156,11 +158,17 @@ function MailMark() {
 function AuthModal({ mode, onMode, onClose, onAuthed }: { mode: AuthMode | null; onMode: (m: AuthMode) => void; onClose: () => void; onAuthed: () => void }) {
   const [email, setEmail] = useState(false);
   const [value, setValue] = useState('');
+  const [others, setOthers] = useState(false);
+  const returning = useApp((s) => s.returning);
+  const forget = useApp((s) => s.forgetAccount);
   const input = useRef<HTMLInputElement>(null);
   const join = mode === 'join';
+  // A device that has signed in before is greeted with its account, as on Medium.
+  const remembered = !join && returning && !others;
   useEffect(() => {
     if (!mode) return;
     setEmail(false);
+    setOthers(false);
     setValue('');
     const onKey = (e: KeyboardEvent) => e.key === 'Escape' && onClose();
     window.addEventListener('keydown', onKey);
@@ -182,7 +190,29 @@ function AuthModal({ mode, onMode, onClose, onAuthed }: { mode: AuthMode | null;
               <IconClose size={22} strokeWidth={1.5} />
             </button>
             <AnimatePresence mode="wait" initial={false}>
-              {!email ? (
+              {remembered && !email ? (
+                <motion.div key="remembered" className="auth__body" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.15 }}>
+                  <h2 id="auth-title" className="auth__title">
+                    Welcome back.
+                  </h2>
+                  <div className="auth__account">
+                    <img src={me.photo} alt="" width={64} height={64} />
+                    <strong>{me.name}</strong>
+                    <span>ma•••••@mail.utoronto.ca</span>
+                  </div>
+                  <div className="auth__options">
+                    <button className="auth__option auth__option--primary" onClick={onAuthed}>
+                      Continue as {me.first}
+                    </button>
+                  </div>
+                  <button className="auth__forget" onClick={forget}>
+                    Forget this account
+                  </button>
+                  <p className="auth__switch">
+                    Not your account? <button onClick={() => setOthers(true)}>More sign-in options</button>
+                  </p>
+                </motion.div>
+              ) : !email ? (
                 <motion.div key={`${mode}-options`} className="auth__body" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.15 }}>
                   <h2 id="auth-title" className="auth__title">
                     {join ? 'Join PathedIn.' : 'Welcome back.'}

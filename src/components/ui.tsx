@@ -1,10 +1,10 @@
-import { motion, type HTMLMotionProps } from 'framer-motion';
+import { AnimatePresence, motion, type HTMLMotionProps } from 'framer-motion';
 import { forwardRef, useLayoutEffect, useRef, useState, type ReactNode } from 'react';
 import { Link } from 'react-router-dom';
 import { springs, haptic } from '../lib/motion';
 import { people } from '../data/people';
 import { pathMatch, relationTo, type RelationKind } from '../lib/relations';
-import { IconBookmark, IconChevronRight } from './icons';
+import { IconBookmark, IconChevronRight, IconHandRaise } from './icons';
 import { usePeek } from './Peek';
 import { useApp } from '../lib/store';
 import './ui.css';
@@ -125,6 +125,7 @@ export function IconButton({
   className = '',
   badge,
   active,
+  tipPos,
 }: {
   label: string;
   children: ReactNode;
@@ -132,12 +133,15 @@ export function IconButton({
   className?: string;
   badge?: number;
   active?: boolean;
+  /** Where the tooltip sits; 'below' for buttons along the top edge. */
+  tipPos?: 'below';
 }) {
   return (
     <motion.button
       className={`icon-btn ${active ? 'is-active' : ''} ${className}`}
       aria-label={label}
-      title={label}
+      data-tip={label}
+      data-tip-pos={tipPos}
       whileTap={{ scale: 0.9 }}
       transition={springs.press}
       onClick={() => {
@@ -161,7 +165,7 @@ export function SaveToggle({ saveKey, label = 'Save', compact }: { saveKey: stri
       className={`save-toggle ${saved ? 'is-on' : ''} ${compact ? 'save-toggle--compact' : ''}`}
       aria-pressed={saved}
       aria-label={saved ? 'Saved' : label}
-      title={saved ? 'Saved' : label}
+      data-tip={compact ? (saved ? 'Saved' : label) : undefined}
       whileTap={{ scale: 0.86 }}
       transition={springs.press}
       onClick={(e) => {
@@ -175,6 +179,57 @@ export function SaveToggle({ saveKey, label = 'Save', compact }: { saveKey: stri
         <IconBookmark size={20} filled={saved} />
       </motion.span>
       {!compact && <span className="t-footnote">{saved ? 'Saved' : label}</span>}
+    </motion.button>
+  );
+}
+
+/* ── Helpful ────────────────────────────────────────────────────
+   PathedIn's clap, made honest: one per reader. Adding yours fills the hand at once
+   and floats a small +1 above it, so the gesture feels physical without inflating counts. */
+
+export function Helpful({ helpKey, count, compact }: { helpKey: string; count: number; compact?: boolean }) {
+  const on = useApp((s) => !!s.helpful[helpKey]);
+  const toggle = useApp((s) => s.toggleHelpful);
+  const [burst, setBurst] = useState(0);
+  const total = count + (on ? 1 : 0);
+  return (
+    <motion.button
+      type="button"
+      className={`helpful ${on ? 'is-on' : ''} ${compact ? 'helpful--compact' : ''}`}
+      whileTap={{ scale: 0.9 }}
+      transition={springs.press}
+      aria-pressed={on}
+      aria-label={compact ? `Helpful, ${total}` : undefined}
+      data-tip={compact ? (on ? 'You found this helpful' : 'Helpful') : undefined}
+      onClick={(e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        haptic(8);
+        if (!on) setBurst((b) => b + 1);
+        toggle(helpKey);
+      }}
+    >
+      <span className="helpful__icon">
+        <motion.span key={String(on)} initial={{ rotate: on ? -18 : 0, scale: on ? 0.7 : 1 }} animate={{ rotate: 0, scale: 1 }} transition={springs.settle}>
+          <IconHandRaise size={compact ? 22 : 18} filled={on} strokeWidth={compact ? 1.5 : 1.75} />
+        </motion.span>
+        <AnimatePresence>
+          {on && burst > 0 && (
+            <motion.span
+              key={burst}
+              className="helpful__plus"
+              aria-hidden="true"
+              initial={{ opacity: 0, y: 2, scale: 0.8 }}
+              animate={{ opacity: [0, 1, 1, 0], y: -24, scale: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.9, times: [0, 0.15, 0.7, 1], ease: 'easeOut' }}
+            >
+              +1
+            </motion.span>
+          )}
+        </AnimatePresence>
+      </span>
+      <span className="t-footnote t-num">{compact ? total.toLocaleString('en-CA') : `${total.toLocaleString('en-CA')} found this helpful`}</span>
     </motion.button>
   );
 }

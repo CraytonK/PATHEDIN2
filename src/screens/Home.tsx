@@ -130,7 +130,7 @@ function ForYou() {
         to="/p/elena"
         title={`${people.elena.first} reached ${wp('pharma-rnd').mid}`}
         subtitle="“Three weeks in. If you’re at the CRO step, set yourself a date and tell someone ahead of you what it is.”"
-        extra={<PathHint id="elena" />}
+        extra={<PathHint id="elena" coach="path-hint" />}
         why={{ kind: 'guide', text: 'Reached your destination' }}
         thumb={<img src={people.elena.photo} alt="" loading="lazy" />}
         thumbKind="photo"

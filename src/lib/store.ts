@@ -5,6 +5,12 @@ import type { Message, PathRequest } from '../data/types';
 import { ME } from '../data/people';
 
 export type ConnectionState = 'pending' | 'connected';
+export interface MyResponse {
+  body: string;
+  /** The passage it responds to, when it started from a selection. */
+  quote?: string;
+  at: number;
+}
 export type Theme = 'system' | 'light' | 'dark';
 
 interface AppState {
@@ -24,6 +30,14 @@ interface AppState {
   signedIn: boolean;
   /** Desktop sidebar, remembered like Medium's. */
   sidebar: boolean;
+  /** Passages you highlighted, by story. */
+  highlights: Record<string, string[]>;
+  /** Your responses, by story. */
+  myResponses: Record<string, MyResponse[]>;
+  /** One-time coachmarks you've dismissed. */
+  tips: Record<string, boolean>;
+  /** This device has signed in before, so sign-in says "Welcome back." with the account. */
+  returning: boolean;
 
   connect: (id: string) => void;
   toggleFollow: (id: string) => void;
@@ -41,6 +55,10 @@ interface AppState {
   signIn: () => void;
   signOut: () => void;
   toggleSidebar: () => void;
+  toggleHighlight: (story: string, text: string) => void;
+  addResponse: (story: string, r: Omit<MyResponse, 'at'>) => void;
+  dismissTip: (id: string) => void;
+  forgetAccount: () => void;
 }
 
 /** localStorage can throw (private mode, blocked storage). Never let that break the app. */
@@ -105,6 +123,10 @@ export const useApp = create<AppState>()(
       theme: 'light',
       signedIn: false,
       sidebar: true,
+      highlights: {},
+      myResponses: {},
+      tips: {},
+      returning: false,
 
       connect: (id) =>
         set((s) => {
@@ -134,9 +156,19 @@ export const useApp = create<AppState>()(
       weighIn: (decision, option, body) => set((s) => ({ weighIns: { ...s.weighIns, [decision]: { option, body } } })),
       setTheme: (theme) => set({ theme }),
       toggleRoute: (id) => set((s) => ({ addedRoutes: { ...s.addedRoutes, [id]: !s.addedRoutes[id] } })),
-      signIn: () => set({ signedIn: true }),
-      signOut: () => set({ signedIn: false }),
+      signIn: () => set({ signedIn: true, returning: true }),
+      signOut: () => set({ signedIn: false, returning: true }),
       toggleSidebar: () => set((s) => ({ sidebar: !s.sidebar })),
+      toggleHighlight: (story, text) =>
+        set((s) => {
+          const list = s.highlights[story] ?? [];
+          const next = list.includes(text) ? list.filter((t) => t !== text) : [...list, text];
+          return { highlights: { ...s.highlights, [story]: next } };
+        }),
+      addResponse: (story, r) =>
+        set((s) => ({ myResponses: { ...s.myResponses, [story]: [{ ...r, at: Date.now() }, ...(s.myResponses[story] ?? [])] } })),
+      dismissTip: (id) => set((s) => ({ tips: { ...s.tips, [id]: true } })),
+      forgetAccount: () => set({ returning: false }),
     }),
     {
       name: 'pathedin:v1',
@@ -163,6 +195,10 @@ export const useApp = create<AppState>()(
         theme: s.theme,
         signedIn: s.signedIn,
         sidebar: s.sidebar,
+        highlights: s.highlights,
+        myResponses: s.myResponses,
+        tips: s.tips,
+        returning: s.returning,
       }),
     },
   ),

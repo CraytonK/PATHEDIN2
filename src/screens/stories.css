@@ -26,6 +26,20 @@
 @media (max-width: 767px) {
   .story__progress {
     top: calc(var(--navbar-h) + var(--safe-top));
+    transition: top 280ms var(--ease-drawer);
+  }
+  /* While reading down, the navigation bar slides away and the progress line rides the top edge. */
+  .page--article .navbar {
+    transition:
+      transform 280ms var(--ease-drawer),
+      background-color var(--dur-2) var(--ease-out),
+      border-color var(--dur-2) var(--ease-out);
+  }
+  .page--article.is-reading .navbar {
+    transform: translateY(-100%);
+  }
+  .page--article.is-reading .story__progress {
+    top: var(--safe-top);
   }
 }
 /* A Medium article: one centred reading column. */
@@ -83,19 +97,23 @@
 .story__bar {
   display: flex;
   align-items: center;
-  gap: 20px;
+  gap: 24px;
   margin-top: 32px;
-  padding: 4px 0;
+  padding: 2px 0;
   border-top: 1px solid var(--separator);
   border-bottom: 1px solid var(--separator);
   font-size: 14px;
   color: var(--label-2);
 }
-.story__stat {
-  white-space: nowrap;
+.story__bar-end {
+  margin: 8px 0 12px;
+}
+.story__bar-end .story__bar {
+  margin-top: 0;
 }
 @media (max-width: 767px) {
-  .story__stat + .story__stat {
+  /* On iPhone the dock carries these actions. */
+  .story__bar-end {
     display: none;
   }
 }

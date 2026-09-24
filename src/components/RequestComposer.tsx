@@ -44,6 +44,11 @@ function suggestion(to: string, seg: [string, string] | undefined, ask: Ask) {
   return `Hi ${p.first} — I’m at ${wp(now).label}, defending in December, and weighing a move to ${b}. Would you have 20 minutes to talk about how you went from ${a} to ${b}?`;
 }
 
+function draft(to: string, seg: [string, string] | undefined, ask: Ask, quote?: string) {
+  const text = suggestion(to, seg, ask);
+  return quote ? `You wrote: “${quote}”\n\n${text}` : text;
+}
+
 export function RequestLayer() {
   const req = useUI((s) => s.request);
   const close = useUI((s) => s.closeRequest);
@@ -61,14 +66,15 @@ export function RequestLayer() {
     setShown(req);
     const s = req.segment ?? bestSegment(req.to);
     setSeg(s);
-    setAsk('chat');
+    const first: Ask = req.quote ? 'question' : 'chat';
+    setAsk(first);
     setEdited(false);
     setSent(false);
-    setMessage(suggestion(req.to, s, 'chat'));
+    setMessage(draft(req.to, s, first, req.quote));
   }, [req]);
 
   useEffect(() => {
-    if (shown && !edited) setMessage(suggestion(shown.to, seg, ask));
+    if (shown && !edited) setMessage(draft(shown.to, seg, ask, shown.quote));
   }, [seg, ask, shown, edited]);
 
   const segs = useMemo(() => (shown ? segmentsOf(shown.to) : []), [shown]);

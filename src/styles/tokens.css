@@ -73,9 +73,17 @@
   --bar-blur: saturate(160%) blur(20px);
 
   --panel-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
-  --shadow-popover: 0 10px 30px rgba(15, 23, 42, 0.1), 0 0 0 1px rgba(15, 23, 42, 0.06);
+  /* One soft shadow for everything that floats: a 4px ambient glow and a short drop, no border. */
+  --shadow-popover: 0 0 4px rgba(15, 23, 42, 0.05), 0 2px 8px rgba(15, 23, 42, 0.15);
   --shadow-lift: 0 1px 4px rgba(15, 23, 42, 0.08);
   --scrim: rgba(15, 23, 42, 0.28);
+  /* Side drawers fade the page to 60% white instead of darkening it. */
+  --scrim-soft: rgba(255, 255, 255, 0.6);
+  --tip-bg: #0f172a;
+  --tip-fg: #ffffff;
+  /* Highlights on a story: the passage most readers marked, and your own. */
+  --highlight: #e6eefc;
+  --highlight-mine: #d3e2fb;
 
   /* ── Geometry ─────────────────────────────────────────────── */
   --gutter: 16px;
@@ -85,6 +93,7 @@
   --r-lg: 12px;
   --r-xl: 8px;
   --r-pill: 999px;
+  --r-popover: 4px;
   --hairline: 1px;
   --hit: 44px;
 
@@ -98,6 +107,9 @@
   /* ── Motion ───────────────────────────────────────────────── */
   --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
   --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  /* Drawers: a fast start and a long, soft landing. */
+  --ease-drawer: cubic-bezier(0.23, 1, 0.32, 1);
+  --dur-drawer: 600ms;
   --dur-1: 120ms;
   --dur-2: 220ms;
   --dur-3: 360ms;
@@ -153,9 +165,14 @@
 
     --bar-bg: rgba(31, 30, 28, 0.92);
     --panel-shadow: none;
-    --shadow-popover: 0 8px 30px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.08);
+    --shadow-popover: 0 0 0 1px rgba(255, 255, 255, 0.08), 0 2px 12px rgba(0, 0, 0, 0.55);
     --shadow-lift: 0 0 0 1px rgba(255, 255, 255, 0.08);
     --scrim: rgba(0, 0, 0, 0.6);
+    --scrim-soft: rgba(31, 30, 28, 0.6);
+    --tip-bg: #ede9e2;
+    --tip-fg: #1f1e1c;
+    --highlight: rgba(143, 167, 238, 0.16);
+    --highlight-mine: rgba(143, 167, 238, 0.3);
   }
 }
 
@@ -203,9 +220,14 @@
 
   --bar-bg: rgba(31, 30, 28, 0.92);
   --panel-shadow: none;
-  --shadow-popover: 0 8px 30px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.08);
+  --shadow-popover: 0 0 0 1px rgba(255, 255, 255, 0.08), 0 2px 12px rgba(0, 0, 0, 0.55);
   --shadow-lift: 0 0 0 1px rgba(255, 255, 255, 0.08);
   --scrim: rgba(0, 0, 0, 0.6);
+  --scrim-soft: rgba(31, 30, 28, 0.6);
+  --tip-bg: #ede9e2;
+  --tip-fg: #1f1e1c;
+  --highlight: rgba(143, 167, 238, 0.16);
+  --highlight-mine: rgba(143, 167, 238, 0.3);
 }
 
 :root[data-theme='light'] {

@@ -42,6 +42,7 @@ Requires Node 20+.
 | **Path Lens.** Your network placed *on* your Path: Twins beside you, Peers at your station, People Ahead on your next step, Guides at your destination, Explorers arriving from elsewhere. | Network |
 | **Path hints.** Posts and people show a Path in one line ("CRO → Pharma R&D"). Hover it, or tap it on a phone, to see the whole Path drawn top to bottom, with the steps you share marked. | Home, Network, Discover, Questions |
 | **Discover.** Tabs for People, Path Guides, Communities and Destinations, with a For you mix of each. | Discover |
+| **Read like Medium.** Select any passage to Highlight it, Respond with it quoted, *Ask* the author about it as a Path Request, or Share it. The passage readers on this route marked most is washed in navy with a count in the margin. Tap the hand to mark a story Helpful (+1), or the bubble to open Responses, sorted by who's closest to your Path. On iPhone, the reading dock hides while you read down and returns when you scroll up. | Any story |
 | **Peek.** Press and hold anyone (or hover on desktop, or right-click) to preview their Path and relationship to you without leaving the page. | Anywhere |
 | **Align Paths.** Two Paths start apart, then slide together so shared stations merge into one lit track. | Any profile, Peek, or conversation |
 | **Path Requests.** Ask about a specific stretch of someone's Path; every request arrives with its context. | Profile → *Send a Path Request* |
@@ -67,6 +68,7 @@ src/
     chrome.tsx   Medium-style top bar and sidebar, iPhone tab bar, navigation bars with large titles, sheets
     Post.tsx     the feed row (byline, title, subtitle, why it's here, thumbnail)
     PathSplash.tsx  the Path that draws itself after sign-in
+    Reading.tsx  story reading: highlights, the selection toolbar, topic pills, the responses drawer
     Peek.tsx     press-and-hold / hover previews
     …            content building blocks (people, stories, questions, decisions, communities)
   screens/       one file per area of the product (Landing.tsx is the signed-out intro page and sign-in card)

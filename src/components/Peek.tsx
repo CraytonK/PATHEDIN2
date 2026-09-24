@@ -172,7 +172,7 @@ function Actions({ id, onDone, layout }: { id: string; onDone: () => void; layou
     return (
       <div className="peek__row">
         {items.map((it) => (
-          <button key={it.key} className={`peek__chip ${it.key === 'save' && saved ? 'is-on' : ''}`} onClick={it.run} title={it.label}>
+          <button key={it.key} className={`peek__chip ${it.key === 'save' && saved ? 'is-on' : ''}`} onClick={it.run}>
             {it.icon}
             <span className="t-caption1">{it.key === 'request' ? 'Request' : it.key === 'align' ? 'Align' : it.label.split(' ')[0]}</span>
           </button>

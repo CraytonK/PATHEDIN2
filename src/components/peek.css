@@ -26,6 +26,7 @@
   position: fixed;
   z-index: 80;
   width: 340px;
+  border-radius: var(--r-popover);
   padding: 16px 16px 12px;
 }
 .peek__head {

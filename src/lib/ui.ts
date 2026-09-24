@@ -9,7 +9,7 @@ export interface PeekState {
 interface UIState {
   peek: PeekState | null;
   compare: string | null;
-  request: { to: string; segment?: [string, string] } | null;
+  request: { to: string; segment?: [string, string]; quote?: string } | null;
   search: boolean;
   /** The sidebar drawer on desktop widths too narrow to dock it. */
   drawer: boolean;
@@ -18,7 +18,8 @@ interface UIState {
   closePeek: () => void;
   openCompare: (id: string) => void;
   closeCompare: () => void;
-  openRequest: (to: string, segment?: [string, string]) => void;
+  /** A quote pre-fills the message with the passage you're asking about. */
+  openRequest: (to: string, segment?: [string, string], quote?: string) => void;
   closeRequest: () => void;
   setSearch: (open: boolean) => void;
   setDrawer: (open: boolean) => void;
@@ -38,7 +39,7 @@ export const useUI = create<UIState>()((set) => ({
   closePeek: () => set({ peek: null }),
   openCompare: (compare) => set({ compare, peek: null }),
   closeCompare: () => set({ compare: null }),
-  openRequest: (to, segment) => set({ request: { to, segment }, peek: null }),
+  openRequest: (to, segment, quote) => set({ request: { to, segment, quote }, peek: null }),
   closeRequest: () => set({ request: null }),
   setSearch: (search) => set({ search }),
   setDrawer: (drawer) => set({ drawer }),

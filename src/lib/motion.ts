@@ -10,6 +10,11 @@ function spring(response: number, dampingFraction: number, mass = 1) {
   return { type: 'spring' as const, stiffness, damping, mass };
 }
 
+/** Medium's drawer curve: a fast start and a long, soft landing (cubic-bezier(.23, 1, .32, 1), 0.6s). */
+export const easings = {
+  drawer: { type: 'tween' as const, duration: 0.6, ease: [0.23, 1, 0.32, 1] as [number, number, number, number] },
+};
+
 export const springs = {
   /** iOS default: response 0.55, damping 0.825 */
   smooth: spring(0.55, 0.9),
@@ -51,4 +56,25 @@ export function haptic(pattern: number | number[] = 8) {
   } catch {
     /* ignore */
   }
+}
+
+/**
+ * Which way the reader is scrolling. Reading chrome hides on the way down and returns
+ * on the first flick up, and always shows near the top and the end of the page.
+ */
+export function useScrollDirection(threshold = 6): 'up' | 'down' {
+  const [dir, setDir] = useState<'up' | 'down'>('up');
+  useEffect(() => {
+    let last = window.scrollY;
+    const on = () => {
+      const y = window.scrollY;
+      if (Math.abs(y - last) < threshold) return;
+      const edge = y < 80 || y + window.innerHeight > document.documentElement.scrollHeight - 120;
+      setDir(edge || y < last ? 'up' : 'down');
+      last = y;
+    };
+    window.addEventListener('scroll', on, { passive: true });
+    return () => window.removeEventListener('scroll', on);
+  }, [threshold]);
+  return dir;
 }

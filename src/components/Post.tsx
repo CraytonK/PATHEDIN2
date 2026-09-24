@@ -108,7 +108,7 @@ function PostMore({ person }: { person: string }) {
   };
   return (
     <div className="post-more" ref={ref}>
-      <button className="post-more__btn" aria-label="More" aria-haspopup="menu" aria-expanded={open} onClick={() => setOpen((o) => !o)}>
+      <button className="post-more__btn" aria-label="More" data-tip="More" aria-haspopup="menu" aria-expanded={open} onClick={() => setOpen((o) => !o)}>
         <IconEllipsis size={22} strokeWidth={1.6} />
       </button>
       <AnimatePresence>

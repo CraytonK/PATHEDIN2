@@ -343,6 +343,44 @@
 .auth__option:hover {
   background: var(--bg-hover);
 }
+.auth__option--primary {
+  background: var(--primary);
+  color: var(--on-primary);
+  box-shadow: none;
+}
+.auth__option--primary:hover {
+  background: var(--primary-hover);
+}
+/* The remembered account on a returning device. */
+.auth__account {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  margin: 28px 0 0;
+  font-size: 16px;
+}
+.auth__account img {
+  width: 64px;
+  height: 64px;
+  margin-bottom: 8px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+.auth__account strong {
+  font-weight: 600;
+}
+.auth__account span {
+  font-size: 14px;
+  color: var(--label-2);
+}
+.auth__forget {
+  margin-top: 16px;
+  font-size: 14px;
+  color: var(--label-2);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
 .auth__mark,
 .auth__icon {
   position: absolute;

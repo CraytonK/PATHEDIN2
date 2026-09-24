@@ -84,6 +84,81 @@ ol {
   background: color-mix(in srgb, var(--tint) 24%, transparent);
 }
 
+/* ── Tooltips for icon-only buttons ──
+   Medium's pattern: a small dark label with a centred caret, after a short hover.
+   Pointer devices only; touch users get the aria-label and the action itself. */
+@media (hover: hover) {
+  [data-tip] {
+    position: relative;
+  }
+  [data-tip]::after,
+  [data-tip]::before {
+    position: absolute;
+    left: 50%;
+    z-index: 70;
+    pointer-events: none;
+    opacity: 0;
+    transition:
+      opacity 120ms var(--ease-out),
+      transform 120ms var(--ease-out);
+  }
+  [data-tip]::after {
+    content: attr(data-tip);
+    bottom: calc(100% + 9px);
+    transform: translate(-50%, 3px);
+    padding: 7px 10px;
+    border-radius: var(--r-popover);
+    background: var(--tip-bg);
+    color: var(--tip-fg);
+    font: 500 12px/16px var(--font-sans);
+    letter-spacing: 0;
+    white-space: nowrap;
+  }
+  [data-tip]::before {
+    content: '';
+    bottom: calc(100% + 4px);
+    transform: translate(-50%, 3px);
+    border: 5px solid transparent;
+    border-bottom: 0;
+    border-top-color: var(--tip-bg);
+  }
+  [data-tip-pos='below']::after {
+    bottom: auto;
+    top: calc(100% + 9px);
+    transform: translate(-50%, -3px);
+  }
+  [data-tip-pos='below']::before {
+    bottom: auto;
+    top: calc(100% + 4px);
+    transform: translate(-50%, -3px);
+    border: 5px solid transparent;
+    border-top: 0;
+    border-bottom-color: var(--tip-bg);
+  }
+  /* Near the right edge the label hangs left from the button instead of centring. */
+  [data-tip-align='end']::after {
+    left: auto;
+    right: -4px;
+    transform: translate(0, -3px);
+  }
+  [data-tip]:hover::after,
+  [data-tip]:hover::before,
+  [data-tip]:focus-visible::after,
+  [data-tip]:focus-visible::before {
+    opacity: 1;
+    transform: translate(-50%, 0);
+    transition-delay: 350ms;
+  }
+  [data-tip-align='end']:hover::after,
+  [data-tip-align='end']:focus-visible::after {
+    transform: none;
+  }
+  [data-tip][aria-expanded='true']::after,
+  [data-tip][aria-expanded='true']::before {
+    display: none;
+  }
+}
+
 /* ── Type ramp: HIG roles, in the brand kit's three faces ──
    Brand — Noe Display Medium: wordmark, hero headings, milestone moments.
    UI — Marat Sans: Light for captions and subtitles, Regular for UI, Demibold for headers

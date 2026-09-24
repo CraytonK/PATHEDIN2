@@ -109,6 +109,8 @@ function Shell() {
   const back = type === 'POP';
   // Like iOS Messages, a conversation takes the whole screen and hides the tab bar.
   const inThread = isMobile && (/^\/messages\/.+/.test(location.pathname) || (location.pathname === '/messages' && location.search.includes('to=')));
+  // A story replaces the tab bar with its own reading dock.
+  const inStory = isMobile && /^\/stories\/[^/]+/.test(location.pathname);
   // Messages keeps its own split view on desktop, so thread changes shouldn't animate the whole page.
   const routeKey = location.pathname.startsWith('/messages') && !isMobile ? '/messages' : location.pathname;
 
@@ -163,7 +165,7 @@ function Shell() {
             </Routes>
           </motion.main>
         </AnimatePresence>
-        {isMobile && !inThread && <TabBar />}
+        {isMobile && !inThread && !inStory && <TabBar />}
         <PeekLayer />
         <CompareLayer />
         <RequestLayer />
