@@ -17,7 +17,7 @@ Kept by the user: the Path as a transit line, Executive Navy, the logo and wordm
 
 THESIS: PathedIn as a precise instrument for a big decision. The Path is the one bright, living line on a quiet, layered, graphite surface. Refuses the editorial cream-and-serif reading app it was, and the near-black neon-glow template.
 
-OWN-WORLD: graphite dark by default (#0B0C0F canvas; surfaces #121418, #17191E, #1D2026; 1px borders at white 7–10% with a 4% top highlight) and a porcelain light (#F6F7F9 canvas, white surfaces, slate borders). Executive Navy fills primary actions and marks the future; lifted to #8EA2F2 for text on graphite. Mona Sans for all interface and headings (semibold, slightly wide, tight tracking); Charter only for long-form reading; the Playfair wordmark stays. Radii 6/8/12/16, pills only for tags and counts. Soft layered elevation, no glow.
+OWN-WORLD: graphite dark by default (#0B0C0F canvas; surfaces #111317, #181A1F, fills #1C1F25; 1px borders at white 7–10% with a 4% top highlight) and a porcelain light (#F5F6F8 canvas, white surfaces, slate borders). Executive Navy fills primary actions and marks the future; lifted to #8EA2F2 for text on graphite. Schibsted Grotesk for all interface and headings (semibold, tight tracking), chosen over Mona Sans once the detector showed Mona among the faces AI-built interfaces converge on; Charter only for long-form reading; the Playfair wordmark stays. Radii 6/8/12/16, pills only for tags and counts. Soft layered elevation, no glow.
 
 STORY: open the app and it feels fast and exact. Everything answers to the Path, and one keystroke reaches anyone or anything.
 

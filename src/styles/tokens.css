@@ -9,8 +9,8 @@
     Executive Navy      #1E3A8A the one accent: primary actions, the future, "you", focus.
                         On graphite it fills at #2C49B6 and reads as #93A6F3.
 
-  Type — Mona Sans for the interface and every heading, Charter for long-form reading, and the Playfair
-  wordmark. See styles/fonts.css.
+  Type — Schibsted Grotesk for the interface and every heading, Charter for long-form reading, and the
+  Playfair wordmark. See styles/fonts.css.
 
   Depth — surfaces step up in value and carry a 1px edge; things that float add a soft, offset shadow.
   No glows.
@@ -21,9 +21,9 @@
 
   /* ── Type families ─────────────────────────────────────────── */
   /* Interface and headings, on the Neo-Grotesque stack. */
-  --font-sans: 'Mona Sans', 'PathedIn Symbols', 'Mona Fallback', Roboto, 'Helvetica Neue', 'Arial Nova', 'Nimbus Sans', Arial, sans-serif;
+  --font-sans: 'Schibsted Grotesk', 'PathedIn Symbols', 'Schibsted Fallback', Roboto, 'Helvetica Neue', 'Arial Nova', 'Nimbus Sans', Arial, sans-serif;
   --font-display: var(--font-sans);
-  /* Headings that used to be set in the brand serif are now Mona Sans, a little wide and semibold. */
+  /* Headings share the interface face, semibold and tight. */
   --font-brand: var(--font-sans);
   /* The wordmark alone keeps its high-contrast serif. On the Didone stack. */
   --font-wordmark: 'Noe Display', 'Playfair Display', 'Playfair Fallback', Didot, 'Bodoni MT', 'Noto Serif Display', 'URW Palladio L', P052, Sylfaen, serif;
@@ -31,8 +31,8 @@
   --font-serif: Charter, 'Bitstream Charter', 'Charis SIL', 'Charis Fallback', 'Sitka Text', Cambria, serif;
   --font-rounded: var(--font-sans);
   --font-mono: ui-monospace, 'SF Mono', 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, monospace;
-  /* Display headings: a touch wide, semibold, tight. */
-  --display-stretch: 108%;
+  /* Display headings: semibold, tight. The face has no width axis, so stretch stays normal. */
+  --display-stretch: 100%;
   --display-weight: 600;
 
   /* ── Graphite (the default appearance) ─────────────────────── */

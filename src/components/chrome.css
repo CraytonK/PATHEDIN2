@@ -542,7 +542,7 @@
 .page__title-block {
   min-width: 0;
 }
-/* Page titles: Mona Sans, semibold and a touch wide, sized like an app, not a magazine. */
+/* Page titles: the interface face, semibold, sized like an app, not a magazine. */
 .page__title {
   font-size: 32px;
   line-height: 38px;
