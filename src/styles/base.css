@@ -362,6 +362,10 @@ ol {
 .resp__sort-menu {
   --bg: var(--bg-elevated);
 }
+/* Cards on the canvas: knockouts match the card, not the page. */
+.rail-card {
+  --bg: var(--bg-grouped);
+}
 
 /* ── Keycaps, for shortcuts shown beside the things they trigger ── */
 .kbd {

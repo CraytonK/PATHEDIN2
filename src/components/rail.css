@@ -1,7 +1,7 @@
-/* ── Medium's right-hand column ─────────────────────────── */
+/* ── The right-hand column: the live parts stack as layered cards ── */
 .rail-card {
   padding: 20px 20px 12px;
-  border-radius: var(--r-md);
+  border-radius: var(--r-lg);
   background: var(--bg-grouped);
 }
 .rail-head {

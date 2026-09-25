@@ -237,7 +237,7 @@ function Rail() {
         <h2 className="rail-h">Coming up</h2>
         <UpNext variant="list" />
       </section>
-      <section>
+      <section className="rail-card rail-card--path">
         <div className="rail-head">
           <h2 className="rail-h">Your Path this week</h2>
           <Link to="/path" className="rail-more">

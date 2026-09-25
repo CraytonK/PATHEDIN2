@@ -143,7 +143,7 @@ function Shell() {
             initial={isMobile ? { opacity: 0, x: back ? -28 : 36 } : { opacity: 0, y: 8, filter: 'blur(3px)' }}
             animate={isMobile ? { opacity: 1, x: 0, y: 0 } : { opacity: 1, y: 0, filter: 'blur(0px)' }}
             exit={{ opacity: 0, transition: { duration: 0.08 } }}
-            transition={isMobile ? { type: 'spring', stiffness: 420, damping: 40, mass: 0.8 } : { duration: 0.26, ease: [0.16, 1, 0.3, 1] }}
+            transition={isMobile ? { type: 'spring', stiffness: 420, damping: 40, mass: 0.8 } : { duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
           >
             <Routes location={location}>
               <Route path="/" element={<Home />} />

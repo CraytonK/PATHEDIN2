@@ -315,7 +315,7 @@
   justify-content: center;
   aspect-ratio: 16 / 7;
   margin-bottom: 12px;
-  border-radius: 4px;
+  border-radius: var(--r-lg);
   background: var(--bg-grouped);
   color: var(--label);
 }
@@ -334,11 +334,16 @@
   text-underline-offset: 4px;
 }
 .door__mine {
+  display: inline-flex;
+  align-items: center;
+  height: 22px;
+  padding: 0 8px;
+  border-radius: var(--r-pill);
+  background: var(--tint-soft);
   color: var(--tint-text);
-  font-weight: 600;
-  letter-spacing: 0.1em;
-  font-size: 11px;
-  text-transform: uppercase;
+  font-weight: 550;
+  font-size: 12px;
+  line-height: 16px;
 }
 .door__title {
   font-family: var(--font-display);
