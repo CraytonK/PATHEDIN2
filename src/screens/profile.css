@@ -166,6 +166,8 @@
   color: var(--tint-strong);
 }
 .profile__guide-cta {
+  display: flex;
+  gap: 8px;
   margin-top: 14px;
 }
 

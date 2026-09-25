@@ -11,6 +11,8 @@ interface UIState {
   compare: string | null;
   request: { to: string; segment?: [string, string]; quote?: string } | null;
   search: boolean;
+  /** Booking a Guide's office hours; `booking` reopens one you already hold. */
+  book: { guide: string; booking?: string; topic?: string } | null;
   /** The sidebar drawer on desktop widths too narrow to dock it. */
   drawer: boolean;
   toast: { text: string; id: number } | null;
@@ -22,6 +24,8 @@ interface UIState {
   openRequest: (to: string, segment?: [string, string], quote?: string) => void;
   closeRequest: () => void;
   setSearch: (open: boolean) => void;
+  openBooking: (guide: string, opts?: { booking?: string; topic?: string }) => void;
+  closeBooking: () => void;
   setDrawer: (open: boolean) => void;
   showToast: (text: string) => void;
 }
@@ -33,6 +37,7 @@ export const useUI = create<UIState>()((set) => ({
   compare: null,
   request: null,
   search: false,
+  book: null,
   drawer: false,
   toast: null,
   openPeek: (peek) => set({ peek }),
@@ -42,6 +47,8 @@ export const useUI = create<UIState>()((set) => ({
   openRequest: (to, segment, quote) => set({ request: { to, segment, quote }, peek: null }),
   closeRequest: () => set({ request: null }),
   setSearch: (search) => set({ search }),
+  openBooking: (guide, opts) => set({ book: { guide, ...opts }, peek: null, search: false, request: null }),
+  closeBooking: () => set({ book: null }),
   setDrawer: (drawer) => set({ drawer }),
   showToast: (text) => {
     clearTimeout(toastTimer);

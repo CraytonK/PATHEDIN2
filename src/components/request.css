@@ -139,3 +139,14 @@
   text-align: center;
   margin-top: 12px;
 }
+.req__book {
+  margin-left: 4px;
+  padding: 2px 4px;
+  border-radius: var(--r-xs);
+  font-weight: 550;
+  color: var(--tint-text);
+}
+.req__book:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}

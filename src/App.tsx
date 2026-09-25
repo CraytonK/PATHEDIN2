@@ -7,6 +7,7 @@ import { PathSplash } from './components/PathSplash';
 import { CompareLayer } from './components/path/Compare';
 import { RequestLayer } from './components/RequestComposer';
 import { CommandPalette } from './components/CommandPalette';
+import { BookingLayer } from './components/Booking';
 import { useIsMobile } from './lib/motion';
 import { useApp } from './lib/store';
 import { useUI } from './lib/ui';
@@ -176,6 +177,7 @@ function Shell() {
         <PeekLayer />
         <CompareLayer />
         <RequestLayer />
+        <BookingLayer />
         <CommandPalette />
         <ToastLayer />
       </div>

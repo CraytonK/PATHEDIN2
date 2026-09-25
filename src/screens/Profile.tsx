@@ -20,6 +20,8 @@ import { springs, useIsMobile } from '../lib/motion';
 import { useApp } from '../lib/store';
 import { useUI } from '../lib/ui';
 import { NotFound } from './NotFound';
+import { BookButton } from '../components/Booking';
+import { useOpenSpots } from '../lib/booking';
 import './profile.css';
 
 function YourSpace() {
@@ -64,6 +66,7 @@ export function Profile() {
   const toggleSave = useApp((s) => s.toggleSave);
   const toggleFollow = useApp((s) => s.toggleFollow);
   const [tab, setTab] = useState<'path' | 'stories' | 'answers' | 'decisions'>('path');
+  const spots = useOpenSpots(id);
   if (!p) return <NotFound />;
   const self = id === ME;
   const rel = relationTo(id);
@@ -162,14 +165,15 @@ export function Profile() {
             ))}
           </ul>
           <p className="profile__guide-line">
-            <IconCalendar size={15} /> {p.guide.officeHours.when} · {p.guide.officeHours.open} of {p.guide.officeHours.total} spots open
+            <IconCalendar size={15} /> {spots.when} · {spots.open ? `${spots.open} of ${spots.total} spots open` : 'full this time'}
           </p>
           <p className="profile__guide-line">
             <IconClock size={15} /> {p.guide.replies} · has helped {p.guide.helped} people
           </p>
           {!self && (
             <div className="profile__guide-cta">
-              <RequestButton id={id} size="small" variant="ink" label="Book a spot" />
+              <BookButton id={id} label="Book a spot" />
+              <RequestButton id={id} size="small" variant="gray" label="Ask" />
             </div>
           )}
         </RailSection>

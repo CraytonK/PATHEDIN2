@@ -52,6 +52,7 @@ function draft(to: string, seg: [string, string] | undefined, ask: Ask, quote?: 
 export function RequestLayer() {
   const req = useUI((s) => s.request);
   const close = useUI((s) => s.closeRequest);
+  const openBooking = useUI((s) => s.openBooking);
   const toast = useUI((s) => s.showToast);
   const send = useApp((s) => s.sendRequest);
   const [shown, setShown] = useState(req);
@@ -168,7 +169,10 @@ export function RequestLayer() {
         {p.guide && (
           <div className="req__meta t-footnote c-2">
             <span>
-              <IconCalendar size={15} /> Path Office Hours · {p.guide.officeHours.when} · {p.guide.officeHours.open} of {p.guide.officeHours.total} open
+              <IconCalendar size={15} /> Office hours · {p.guide.officeHours.when}
+              <button type="button" className="req__book" onClick={() => openBooking(p.id, { topic: undefined })}>
+                Book a spot instead
+              </button>
             </span>
             <span>
               <IconClock size={15} /> {p.guide.replies}

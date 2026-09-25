@@ -5,6 +5,9 @@ import { Page } from '../components/chrome';
 import { RailFooter, RailPosts, RailSection } from '../components/Rail';
 import { PathHint } from '../components/path/PathHint';
 import { RequestButton } from '../components/content';
+import { BookButton } from '../components/Booking';
+import { openSpots, useOpenSpots } from '../lib/booking';
+import { useApp } from '../lib/store';
 import { PersonName, Segmented } from '../components/ui';
 import { IconCalendar } from '../components/icons';
 import { peopleList, people, ME } from '../data/people';
@@ -30,6 +33,7 @@ function GuideCard({ id, from, to }: { id: string; from: string; to: string }) {
   const rel = relationTo(id);
   const handlers = usePeek(id);
   const step = compactSteps(g.path).find((s) => s.wp === to);
+  const spots = useOpenSpots(id);
   return (
     <motion.article className="gcard" initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={springs.smooth}>
       <Link to={`/p/${id}`} className="gcard__photo" {...handlers}>
@@ -41,7 +45,7 @@ function GuideCard({ id, from, to }: { id: string; from: string; to: string }) {
             <PersonName id={id} className="t-headline" />
             <p className="t-subhead c-2">{g.headline}</p>
           </div>
-          <RequestButton id={id} segment={[from, to]} label="Ask" />
+          <RequestButton id={id} segment={[from, to]} label="Ask" variant="gray" />
         </div>
         <p className="gcard__made t-footnote">
           Made this move {step?.start ? `in ${step.start}` : ''}
@@ -51,15 +55,16 @@ function GuideCard({ id, from, to }: { id: string; from: string; to: string }) {
         {g.guide && (
           <>
             <p className="gcard__helps t-subhead">{g.guide.helpsWith.slice(0, 2).join(' · ')}</p>
-            <p className="gcard__hours t-footnote c-2">
-              <span className="gcard__slot">
-                <IconCalendar size={14} /> {g.guide.officeHours.when}
+            <div className="gcard__hours">
+              <IconCalendar size={16} className="gcard__cal" />
+              <span className="gcard__when">
+                <span className="gcard__slot">{spots.when}</span>
+                <span className="gcard__open">
+                  {spots.open ? `${spots.open} of ${spots.total} spots open` : 'Full this time'} · Helped {g.guide.helped}
+                </span>
               </span>
-              <span className="gcard__open">
-                {g.guide.officeHours.open} of {g.guide.officeHours.total} open
-              </span>
-              <span>Helped {g.guide.helped}</span>
-            </p>
+              <BookButton id={id} label="Book a spot" />
+            </div>
           </>
         )}
       </div>
@@ -69,6 +74,7 @@ function GuideCard({ id, from, to }: { id: string; from: string; to: string }) {
 
 export function Guides() {
   const [dest, setDest] = useState<'pharma-rnd' | 'reg-affairs'>('pharma-rnd');
+  const bookings = useApp((s) => s.bookings);
   const isMobile = useIsMobile();
   const sections = transitions
     .filter((t) => t.dest === dest || t.dest === 'all')
@@ -91,7 +97,7 @@ export function Guides() {
                 author: g,
                 title: people[g].guide!.officeHours.when,
                 to: `/p/${g}`,
-                meta: `${people[g].guide!.officeHours.open} of ${people[g].guide!.officeHours.total} spots open · ${people[g].guide!.replies}`,
+                meta: `${openSpots(g, bookings).open} of ${people[g].guide!.officeHours.total} spots open · ${people[g].guide!.replies}`,
               }))}
             />
           </RailSection>

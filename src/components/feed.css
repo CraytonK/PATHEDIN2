@@ -226,6 +226,10 @@
   font-weight: 600;
   color: var(--tint-text);
 }
+.fguide__cta {
+  display: inline-flex;
+  gap: 8px;
+}
 .fguide .post__meta {
   margin-top: 8px;
 }

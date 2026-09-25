@@ -5,6 +5,7 @@ import { PathPulse, type PulseStop } from '../components/PathPulse';
 import { type PostKind } from '../components/Post';
 import { DecisionPost, GuidePost, KindFeed, KindFilter, MilestonePost, MyPostItem, QuestionPost, RoutePost, StoryPost, ThreadPost, feedKinds } from '../components/FeedItems';
 import { useWriting } from '../lib/writing';
+import { dayLabel, fmtTime, useOpenSpots } from '../lib/booking';
 import { RailCommunities, RailFooter, RailPeople } from '../components/Rail';
 import { PersonTile } from '../components/content';
 import { Avatar, AvatarStack, IconButton, PersonName, SectionHeader, TextTabs } from '../components/ui';
@@ -17,6 +18,7 @@ import { threads, communities } from '../data/communities';
 import { destinations } from '../data/destinations';
 import { edgeClass, useIsMobile, useScrollEdges } from '../lib/motion';
 import { useApp } from '../lib/store';
+import { useUI } from '../lib/ui';
 import './home.css';
 
 const pulseStops: PulseStop[] = [
@@ -45,25 +47,44 @@ function joinNames(ids: string[]) {
 /** What's actually on your plate: the next call you've booked, and requests waiting on you. */
 function UpNext({ variant = 'cards' }: { variant?: 'cards' | 'list' }) {
   const requests = useApp((s) => s.requests);
+  const bookings = useApp((s) => s.bookings);
+  const openBooking = useUI((s) => s.openBooking);
   const call = requests.find((r) => r.from === ME && r.status === 'accepted' && r.proposed);
   const incoming = requests.filter((r) => r.to === ME && r.status === 'pending');
-  if (!call && !incoming.length) return null;
+  const ahead = bookings.filter((b) => new Date(b.at).getTime() + b.minutes * 60_000 > Date.now()).sort((a, b) => +new Date(a.at) - +new Date(b.at));
+  if (!call && !incoming.length && !ahead.length) return null;
   const day = nextWeekday(4);
-  const inDays = Math.round((day.getTime() - new Date().setHours(0, 0, 0, 0)) / 86_400_000);
-  const dayLabel = inDays === 0 ? 'Today' : inDays === 1 ? 'Tomorrow' : day.toLocaleDateString('en-CA', { weekday: 'long' });
   const time = call?.proposed?.split(', ')[1];
+  const tile = (d: Date) => (
+    <span className="upnext__date" aria-hidden="true">
+      <span className="upnext__dow">{d.toLocaleDateString('en-CA', { weekday: 'short' }).replace('.', '')}</span>
+      <span className="upnext__day">{d.getDate()}</span>
+    </span>
+  );
   return (
     <div className={`upnext upnext--${variant}`}>
+      {ahead.map((b) => {
+        const at = new Date(b.at);
+        return (
+          <button key={b.id} type="button" className="upnext__item" onClick={() => openBooking(b.guide, { booking: b.id })}>
+            {tile(at)}
+            <span className="upnext__text">
+              <span className="upnext__title truncate">Office hours with {people[b.guide].first}</span>
+              <span className="upnext__sub truncate">
+                {dayLabel(at)} · {fmtTime(at)} · {b.minutes} min
+              </span>
+            </span>
+            <IconChevronRight size={16} className="c-3" />
+          </button>
+        );
+      })}
       {call && (
         <Link to={call.thread ? `/messages/${call.thread}` : '/requests'} className="upnext__item">
-          <span className="upnext__date" aria-hidden="true">
-            <span className="upnext__dow">{day.toLocaleDateString('en-CA', { weekday: 'short' }).replace('.', '')}</span>
-            <span className="upnext__day">{day.getDate()}</span>
-          </span>
+          {tile(day)}
           <span className="upnext__text">
             <span className="upnext__title truncate">Call with {people[call.to].name}</span>
             <span className="upnext__sub truncate">
-              {dayLabel}
+              {dayLabel(day)}
               {time && ` · ${time}`}
             </span>
           </span>
@@ -180,23 +201,31 @@ function RailPath() {
   );
 }
 
+function RailHoursRow({ id }: { id: string }) {
+  const spots = useOpenSpots(id);
+  const openBooking = useUI((s) => s.openBooking);
+  return (
+    <li>
+      <Avatar id={id} size={24} />
+      <span className="rail-hours__text">
+        <PersonName id={id} className="rail-hours__name" />
+        <span>
+          {spots.when} · {spots.open ? `${spots.open} of ${spots.total} open` : 'full'}
+        </span>
+      </span>
+      <button type="button" className="rail-hours__book" onClick={() => openBooking(id)} aria-label={`Book office hours with ${people[id].name}`}>
+        Book
+      </button>
+    </li>
+  );
+}
+
 function RailHours() {
   return (
     <ul className="rail-hours">
-      {['amara', 'tomas', 'priya'].map((id) => {
-        const h = people[id].guide!.officeHours;
-        return (
-          <li key={id}>
-            <Avatar id={id} size={24} />
-            <span className="rail-hours__text">
-              <PersonName id={id} className="rail-hours__name" />
-              <span>
-                {h.when} · {h.open} of {h.total} open
-              </span>
-            </span>
-          </li>
-        );
-      })}
+      {['amara', 'tomas', 'priya'].map((id) => (
+        <RailHoursRow key={id} id={id} />
+      ))}
     </ul>
   );
 }

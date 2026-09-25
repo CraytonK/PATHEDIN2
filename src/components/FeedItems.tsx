@@ -18,6 +18,8 @@ import { DecisionFork, RequestButton, SegmentArt } from './content';
 import { RouteLine } from './Ecosystem';
 import { IconCalendar, IconCheck, IconChevronLeft, IconChevronRight, IconPlus } from './icons';
 import { PathHint } from './path/PathHint';
+import { BookButton } from './Booking';
+import { useOpenSpots } from '../lib/booking';
 import { KindLabel, Post, PostMore, postKinds, type PostKind } from './Post';
 import { Avatar, AvatarStack, Button, RelationGlyph, SaveToggle, formatCount } from './ui';
 import './feed.css';
@@ -168,10 +170,11 @@ function MoveGlyph() {
 export function GuidePost({ id, move, why, i = 0 }: { id: string; move?: [string, string]; why: Why; i?: number }) {
   const g = people[id];
   const guide = g.guide;
+  const spots = useOpenSpots(id);
   if (!guide) return null;
   const [from, to] = move ?? guide.transitions[0];
   const step = compactSteps(g.path).find((s) => s.wp === to);
-  const hours = guide.officeHours;
+  const hours = spots;
   return (
     <motion.article
       className="post post--guide post--is-guide"
@@ -205,10 +208,13 @@ export function GuidePost({ id, move, why, i = 0 }: { id: string; move?: [string
           <span className="fguide__slot">
             <IconCalendar size={15} />
             <span>
-              {hours.when} · <strong>{hours.open} of {hours.total} spots open</strong>
+              {hours.when} · <strong>{hours.open ? `${hours.open} of ${hours.total} spots open` : 'Full this time'}</strong>
             </span>
           </span>
-          <RequestButton id={id} segment={[from, to]} label={`Ask ${g.first}`} variant="filled" />
+          <span className="fguide__cta">
+            <RequestButton id={id} segment={[from, to]} label="Ask" variant="gray" />
+            <BookButton id={id} label="Book a spot" />
+          </span>
         </div>
         <div className="post__meta">
           <span className="post__why">

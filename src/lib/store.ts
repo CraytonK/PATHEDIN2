@@ -12,6 +12,16 @@ export interface MyResponse {
   at: number;
 }
 export type Theme = 'system' | 'light' | 'dark';
+/** A spot in a Path Guide's office hours. */
+export interface Booking {
+  id: string;
+  guide: string;
+  /** ISO start time. */
+  at: string;
+  minutes: number;
+  topic: string;
+  note: string;
+}
 
 interface AppState {
   connections: Record<string, ConnectionState>;
@@ -38,6 +48,7 @@ interface AppState {
   tips: Record<string, boolean>;
   /** This device has signed in before, so sign-in says "Welcome back." with the account. */
   returning: boolean;
+  bookings: Booking[];
 
   connect: (id: string) => void;
   toggleFollow: (id: string) => void;
@@ -59,6 +70,8 @@ interface AppState {
   addResponse: (story: string, r: Omit<MyResponse, 'at'>) => void;
   dismissTip: (id: string) => void;
   forgetAccount: () => void;
+  book: (b: Omit<Booking, 'id'>) => string;
+  cancelBooking: (id: string) => void;
 }
 
 /** localStorage can throw (private mode, blocked storage). Never let that break the app. */
@@ -91,6 +104,7 @@ const now = () => new Date().toLocaleTimeString([], { hour: 'numeric', minute: '
 export const useApp = create<AppState>()(
   persist(
     (set) => ({
+      bookings: [],
       connections: {
         sarah: 'connected',
         daniel: 'connected',
@@ -169,6 +183,12 @@ export const useApp = create<AppState>()(
         set((s) => ({ myResponses: { ...s.myResponses, [story]: [{ ...r, at: Date.now() }, ...(s.myResponses[story] ?? [])] } })),
       dismissTip: (id) => set((s) => ({ tips: { ...s.tips, [id]: true } })),
       forgetAccount: () => set({ returning: false }),
+      book: (b) => {
+        const id = `b-${Date.now()}`;
+        set((s) => ({ bookings: [...s.bookings, { ...b, id }] }));
+        return id;
+      },
+      cancelBooking: (id) => set((s) => ({ bookings: s.bookings.filter((b) => b.id !== id) })),
     }),
     {
       name: 'pathedin:v1',
@@ -199,6 +219,7 @@ export const useApp = create<AppState>()(
         myResponses: s.myResponses,
         tips: s.tips,
         returning: s.returning,
+        bookings: s.bookings,
       }),
     },
   ),

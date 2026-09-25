@@ -9,7 +9,7 @@ import { relationTo } from '../lib/relations';
 import { search, type Result } from '../lib/search';
 import { useApp } from '../lib/store';
 import { useUI } from '../lib/ui';
-import { IconAlign, IconArrowUpRight, IconBook, IconCompass, IconCompose, IconFlag, IconMoon, IconPath, IconPeople, IconQuestion, IconSearch, IconSend, IconSun } from './icons';
+import { IconAlign, IconArrowUpRight, IconBook, IconCalendar, IconCompass, IconCompose, IconFlag, IconMoon, IconPath, IconPeople, IconQuestion, IconSearch, IconSend, IconSun } from './icons';
 import { AvatarStack } from './ui';
 import './palette.css';
 
@@ -42,6 +42,7 @@ export function CommandPalette() {
   const open = useUI((s) => s.search);
   const setOpen = useUI((s) => s.setSearch);
   const openCompare = useUI((s) => s.openCompare);
+  const openBooking = useUI((s) => s.openBooking);
   const theme = useApp((s) => s.theme);
   const setTheme = useApp((s) => s.setTheme);
   const navigate = useNavigate();
@@ -60,7 +61,17 @@ export function CommandPalette() {
     return [
       { key: 'write', group: 'Actions', title: 'Write a story', sub: 'About a stretch of your Path', lead: <IconCompose size={17} />, run: go('/write') },
       { key: 'path', group: 'Actions', title: 'Open My Path', sub: 'Where you’ve been and where you’re heading', lead: <IconPath size={17} />, run: go('/path') },
-      { key: 'guides', group: 'Actions', title: 'Book a Path Guide', sub: 'Office hours with people who made your move', lead: <IconSend size={17} />, run: go('/guides') },
+      {
+        key: 'book',
+        group: 'Actions',
+        title: `Book office hours with ${people.amara.name}`,
+        sub: `Made your next move · ${people.amara.guide!.officeHours.when}`,
+        lead: <IconCalendar size={17} />,
+        run: () => {
+          setOpen(false);
+          openBooking('amara');
+        },
+      },
       {
         key: 'align',
         group: 'Actions',
@@ -73,6 +84,7 @@ export function CommandPalette() {
         },
       },
       { key: 'discover', group: 'Actions', title: 'Discover people on your route', lead: <IconCompass size={17} />, run: go('/discover?tab=people') },
+      { key: 'guides', group: 'Actions', title: 'Browse Path Guides', sub: 'Office hours with people who made your moves', lead: <IconSend size={17} />, run: go('/guides') },
       {
         key: 'theme',
         group: 'Actions',

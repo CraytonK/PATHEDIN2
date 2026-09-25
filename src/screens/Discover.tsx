@@ -3,12 +3,15 @@ import { useState, type ReactNode } from 'react';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { Page } from '../components/chrome';
 import { Confluence } from '../components/path/Confluence';
-import { PathHint } from '../components/path/PathHint';
+import { RouteBand } from '../components/path/RouteBand';
+import { BookButton } from '../components/Booking';
+import { useOpenSpots } from '../lib/booking';
+import { useUI } from '../lib/ui';
 import { Ecosystem, RouteLine } from '../components/Ecosystem';
 import { CommunityRow, CommunityTitle, ConnectButton, JoinButton, PersonRow, RequestButton } from '../components/content';
 import { SearchField, SearchResults } from '../components/SearchLayer';
-import { Avatar, AvatarStack, Button, RelationGlyph, RelationTag, SaveToggle, TextTabs, formatCount } from '../components/ui';
-import { IconCalendar, IconCheck, IconPlus } from '../components/icons';
+import { Avatar, AvatarStack, Button, RelationTag, SaveToggle, TextTabs, formatCount } from '../components/ui';
+import { IconAlign, IconCalendar, IconCheck, IconPath, IconPlus } from '../components/icons';
 import { storyList } from '../data/stories';
 import { questionList } from '../data/questions';
 import { decisionList } from '../data/decisions';
@@ -163,54 +166,86 @@ function Section({ title, sub, more, onMore, children }: { title: string; sub?: 
   );
 }
 
-/** Someone worth knowing: who they are, why they're here, and their Path in one line. */
+/** Someone worth knowing: their Path across the top, who they are, why they're here, and what to do next. */
 function PersonCard({ id, why }: { id: string; why?: string }) {
   const p = people[id];
   const rel = relationTo(id);
+  const navigate = useNavigate();
+  const openCompare = useUI((s) => s.openCompare);
+  const shared = rel.shared?.length ?? 0;
   return (
-    <article className="dcard">
-      <Link to={`/p/${id}`} className="dcard__who">
-        <Avatar id={id} size={56} />
-        <span className="dcard__name">{p.name}</span>
-      </Link>
-      {rel.kind !== 'other' && rel.kind !== 'self' && <RelationTag kind={rel.kind} label={rel.label} className="dcard__rel" />}
-      <p className="dcard__headline">{p.headline}</p>
-      <p className="dcard__why clamp-3">{why ?? rel.why}</p>
-      <div className="dcard__foot">
-        <PathHint id={id} />
-        <ConnectButton id={id} />
+    <article className="dcard dcard--person" onClick={() => navigate(`/p/${id}`)}>
+      <RouteBand id={id} />
+      <div className="dcard__inner">
+        <div className="dcard__top">
+          <Avatar id={id} size={56} className="dcard__avatar" />
+          {rel.kind !== 'other' && rel.kind !== 'self' && <RelationTag kind={rel.kind} label={rel.label} className="dcard__rel" />}
+        </div>
+        <Link to={`/p/${id}`} className="dcard__name" onClick={(e) => e.stopPropagation()}>
+          {p.name}
+        </Link>
+        <p className="dcard__headline">{p.headline}</p>
+        <p className="dcard__why clamp-3">{why ?? rel.why}</p>
+        <p className="dcard__shared">
+          <IconPath size={14} />
+          {shared ? `${shared} ${shared === 1 ? 'step' : 'steps'} in common` : 'No steps in common yet'}
+          {p.mutuals ? ` · ${p.mutuals} mutual` : ''}
+        </p>
+        <div className="dcard__foot">
+          <ConnectButton id={id} />
+          <Button
+            variant="gray"
+            size="small"
+            icon={<IconAlign size={16} />}
+            onClick={(e) => {
+              e.stopPropagation();
+              openCompare(id);
+            }}
+          >
+            Align
+          </Button>
+        </div>
       </div>
     </article>
   );
 }
 
-/** A Path Guide: the move they made, what they help with, and when they're free. */
+/** A Path Guide: the move they made, what they help with, and when you can book them. */
 function GuideCard({ id }: { id: string }) {
   const g = people[id];
   const guide = g.guide!;
   const move = guide.transitions[0];
+  const navigate = useNavigate();
+  const spots = useOpenSpots(id);
   return (
-    <article className="dcard dcard--guide">
-      <Link to={`/p/${id}`} className="dcard__who">
-        <Avatar id={id} size={56} />
-        <span className="dcard__name">{g.name}</span>
-      </Link>
-      {move && (
-        <p className="dcard__move">
-          <RelationGlyph kind="guide" size={15} />
-          <span>
+    <article className="dcard dcard--person dcard--guide" onClick={() => navigate(`/p/${id}`)}>
+      <RouteBand id={id} segment={move} />
+      <div className="dcard__inner">
+        <div className="dcard__top">
+          <Avatar id={id} size={56} className="dcard__avatar" />
+          <RelationTag kind="guide" label="Path Guide" className="dcard__rel" />
+        </div>
+        <Link to={`/p/${id}`} className="dcard__name" onClick={(e) => e.stopPropagation()}>
+          {g.name}
+        </Link>
+        {move && (
+          <p className="dcard__move">
             Made the move {wp(move[0]).short} → {wp(move[1]).short}
+          </p>
+        )}
+        <p className="dcard__headline">{g.headline}</p>
+        <p className="dcard__why clamp-2">Helps with {guide.helpsWith[0][0].toLowerCase() + guide.helpsWith[0].slice(1)}</p>
+        <div className="dcard__hours">
+          <IconCalendar size={15} />
+          <span>
+            <span className="dcard__when">{spots.when}</span>
+            <span className="dcard__open">{spots.open ? `${spots.open} of ${spots.total} open` : 'Full this time'}</span>
           </span>
-        </p>
-      )}
-      <p className="dcard__headline">{g.headline}</p>
-      <p className="dcard__why clamp-2">Helps with {guide.helpsWith[0][0].toLowerCase() + guide.helpsWith[0].slice(1)}</p>
-      <p className="dcard__hours">
-        <IconCalendar size={14} /> {guide.officeHours.when} · <strong>{guide.officeHours.open} of {guide.officeHours.total} open</strong>
-      </p>
-      <div className="dcard__foot">
-        <PathHint id={id} segment={move} />
-        <RequestButton id={id} segment={move} variant="tinted" label="Ask" />
+        </div>
+        <div className="dcard__foot">
+          <BookButton id={id} label="Book a spot" />
+          <RequestButton id={id} segment={move} variant="gray" label="Ask" />
+        </div>
       </div>
     </article>
   );
