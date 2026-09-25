@@ -1,377 +1,279 @@
-# PathedIn design notes
+---
+name: PathedIn
+description: A professional network organised around career Paths, drawn as a transit line on a layered graphite surface.
+colors:
+  graphite-canvas: "#0b0c0f"
+  graphite-panel: "#111317"
+  graphite-floating: "#181a1f"
+  graphite-sunken: "#08090b"
+  graphite-fill: "#1c1f25"
+  graphite-fill-quiet: "#15171b"
+  graphite-label: "#eceef2"
+  graphite-label-secondary: "#9ba0ac"
+  graphite-label-tertiary: "#6c717d"
+  graphite-label-quaternary: "#3a3e47"
+  graphite-ink: "#e4e7ec"
+  navy-fill-on-graphite: "#2c49b6"
+  navy-fill-on-graphite-hover: "#3654c6"
+  navy-lifted: "#8ea2f2"
+  navy-lifted-text: "#a3b3f5"
+  porcelain-canvas: "#f5f6f8"
+  porcelain-panel: "#ffffff"
+  porcelain-sunken: "#eef0f3"
+  porcelain-fill: "#eceef2"
+  porcelain-fill-quiet: "#f3f4f7"
+  porcelain-label: "#0f1523"
+  porcelain-label-secondary: "#5d6576"
+  porcelain-label-tertiary: "#8e95a3"
+  porcelain-label-quaternary: "#cdd2da"
+  executive-navy: "#1e3a8a"
+  executive-navy-hover: "#25449e"
+  navy-wash: "#dfe6fb"
+  navy-wash-faint: "#eef2fd"
+  navy-wash-border: "#bccaf3"
+  on-navy: "#ffffff"
+typography:
+  display:
+    fontFamily: "'Schibsted Grotesk', 'Schibsted Fallback', Roboto, 'Helvetica Neue', Arial, sans-serif"
+    fontSize: "clamp(64px, 9vw, 112px)"
+    fontWeight: 600
+    lineHeight: 0.94
+    letterSpacing: "-0.035em"
+  headline:
+    fontFamily: "'Schibsted Grotesk', 'Schibsted Fallback', Roboto, 'Helvetica Neue', Arial, sans-serif"
+    fontSize: "32px"
+    fontWeight: 600
+    lineHeight: "38px"
+    letterSpacing: "-0.024em"
+  title:
+    fontFamily: "'Schibsted Grotesk', 'Schibsted Fallback', Roboto, 'Helvetica Neue', Arial, sans-serif"
+    fontSize: "22px"
+    fontWeight: 600
+    lineHeight: "28px"
+    letterSpacing: "-0.02em"
+  body:
+    fontFamily: "'Schibsted Grotesk', 'Schibsted Fallback', Roboto, 'Helvetica Neue', Arial, sans-serif"
+    fontSize: "16px"
+    fontWeight: 400
+    lineHeight: "24px"
+    letterSpacing: "-0.006em"
+  label:
+    fontFamily: "'Schibsted Grotesk', 'Schibsted Fallback', Roboto, 'Helvetica Neue', Arial, sans-serif"
+    fontSize: "13px"
+    fontWeight: 550
+    lineHeight: "18px"
+  reading:
+    fontFamily: "Charter, 'Bitstream Charter', 'Charis SIL', 'Charis Fallback', Cambria, serif"
+    fontSize: "20px"
+    fontWeight: 400
+    lineHeight: "32px"
+  wordmark:
+    fontFamily: "'Noe Display', 'Playfair Display', 'Playfair Fallback', Didot, serif"
+    fontSize: "24px"
+    fontWeight: 600
+rounded:
+  xs: "4px"
+  sm: "6px"
+  md: "8px"
+  popover: "10px"
+  lg: "12px"
+  xl: "16px"
+  pill: "999px"
+spacing:
+  gutter-phone: "16px"
+  gutter-tablet: "24px"
+  gutter-desktop: "40px"
+  sidebar: "236px"
+  topbar: "52px"
+  tabbar: "50px"
+components:
+  button-primary:
+    backgroundColor: "{colors.navy-fill-on-graphite}"
+    textColor: "{colors.on-navy}"
+    rounded: "{rounded.md}"
+    height: "36px"
+    padding: "0 14px"
+  button-primary-hover:
+    backgroundColor: "{colors.navy-fill-on-graphite-hover}"
+  button-gray:
+    backgroundColor: "{colors.graphite-fill}"
+    textColor: "{colors.graphite-label}"
+    rounded: "{rounded.md}"
+    height: "36px"
+    padding: "0 14px"
+  button-small:
+    rounded: "{rounded.md}"
+    height: "30px"
+    padding: "0 12px"
+  button-large:
+    rounded: "{rounded.md}"
+    height: "44px"
+    padding: "0 20px"
+  input:
+    backgroundColor: "{colors.graphite-fill-quiet}"
+    textColor: "{colors.graphite-label}"
+    rounded: "{rounded.md}"
+    padding: "10px 12px"
+  card:
+    backgroundColor: "{colors.graphite-panel}"
+    rounded: "{rounded.lg}"
+    padding: "18px"
+  sheet:
+    backgroundColor: "{colors.graphite-floating}"
+    rounded: "{rounded.xl}"
+  sidebar-item:
+    textColor: "{colors.graphite-label-secondary}"
+    rounded: "{rounded.sm}"
+    height: "32px"
+    padding: "0 10px"
+  tag:
+    backgroundColor: "{colors.graphite-fill-quiet}"
+    textColor: "{colors.graphite-label-secondary}"
+    rounded: "{rounded.pill}"
+    height: "30px"
+    padding: "0 12px"
+---
 
-PathedIn is built in four layers:
-- **Behaviour** comes from Apple's [Human Interface Guidelines](https://developer.apple.com/design/human-interface-guidelines): navigation, controls, presentation, motion and accessibility.
-- **Look and layout** follow Medium's reading experience: its intro page, its sign-in card, its top bar and sidebar, and its feed with a right-hand column.
-- **Brand** comes from the PathedIn **brand identity kit (v2)**: the three-node Path mark, Executive Navy as the one accent, Noe Display for brand moments and Charter for stories. Two things follow Medium instead: the **warm paper ground** and the **interface face** (Inter, a plain grotesk in the spirit of Medium's sohne).
-- **PathedIn's own language** sits on top: **the Path drawn as a transit line**.
+# Design System: PathedIn
 
-## Medium as the reference
+## Overview
 
-### What Medium does
-This analysis is based on the signed-in screenshot supplied with the brief and on Medium's publicly known design. Our cloud environment's network policy blocks medium.com, so the live site couldn't be inspected.
+**Creative North Star: "The Night Transit Map"**
 
-- **The intro page (signed out)**
-  - The page sits on a warm cream ground (`#F7F4ED`).
-  - A masthead holds the wordmark on the left, with small text links, "Sign in" and a black **Get started** pill on the right. A single 1px black rule sits beneath it.
-  - The hero is one enormous line in a high-contrast display serif, then one sentence in the sans, then one black pill button. A flat, colourful illustration bleeds off the right edge.
-  - Small grey footer links sit above another black rule.
-  - The whole page explains the product in about ten words.
-- **Sign-in:** a centred white card over a translucent white veil.
-  - The serif title reads "Join Medium." and becomes "Welcome back." for returning members.
-  - Below it are stacked outline pill buttons, one per sign-in method.
-  - A single "Already have an account? Sign in" line switches between the two modes.
-  - Grey fine print sits at the bottom.
-- **The signed-in app:**
-  - **Top bar:** slim, white, with a whisper-light hairline. It holds a menu button, the wordmark and a grey pill search on the left, and "Write", the bell and your photo on the right.
-  - **Left sidebar:** outline icons with grey labels. The active item turns near-black with a filled icon. Hairline dividers separate groups, and a **Following** section ends with "Find writers and publications to follow. See suggestions".
-  - **Reading column:** about 680px wide, with underlined text tabs ("For you", "Featured").
-  - **Each story preview:**
-    - a 20px avatar byline ("In publication by author · date")
-    - a bold, tightly tracked title
-    - a two-line grey subtitle
-    - a quiet row of stats, with save and "…" on the right
-    - a small, square-cornered 160×107 thumbnail
-  - **Right column:** separated by a full-height hairline. It holds a soft card, *Staff Picks*, grey topic pills, *Who to follow* and footer links.
-- **Type:**
-  - one tight neo-grotesk (Söhne) does all the interface work, through size and weight alone
-  - a display serif (GT Super) is used only for marketing moments
-  - a book serif is used for reading
-- **Colour:**
-  - near-black text `#242424`
-  - grey secondary text `#6B6B6B`
-  - `#F2F2F2` hairlines and `#F9F9F9` fills
-  - black pills
-  - one brand accent
-- **Why it feels premium:** restraint.
-  - lots of white space
-  - hairlines instead of boxes
-  - no shadows or gradients in the reading surface
-  - black pills as the only solid shapes
-  - nearly every word in one typeface
+PathedIn is a precise instrument for a big decision. The screen is a quiet map at night: layered graphite surfaces, thin lit edges, and one bright line, the Path, running through it in Executive Navy. Everything else steps back so that line, and the people standing on it, carry the page. The references are Linear, Arc and Raycast, chosen by the user: crisp, fast, layered, excellent in the dark, and moving with purpose.
 
-### How PathedIn maps it
-| Medium | PathedIn |
-| --- | --- |
-| Intro page, "Human stories & ideas" | **"Your path & who’s walked it."** It uses the same ruled masthead, pills and footer, on Medium's cream ground (`#F7F4ED`). The illustration is the Path mark drawn big and flat: been → now → going, with routes branching off. Below the fold, a three-node row explains the idea: where you’ve been, where you are, where you want to go. |
-| "Join Medium." card | **"Join PathedIn." / "Welcome back."** Outline pills offer Google or email, with the same switch line and fine print. It's a prototype, so no passwords are asked for and nothing is sent anywhere. |
-| The typing moment on sign-in | **The Path draws itself.** Your first step pops in and its name types out with a caret, then the line draws to "You are here". The dashed future runs on to your destination, and the serif writes "Welcome, Maya." It takes about three seconds and can be skipped with a tap. With Reduce Motion it shows the finished Path briefly instead. |
-| Top bar | A menu button (docks or undocks the sidebar), the wordmark, a pill **Search** (⌘K), then **Ask** (opens the question composer), Messages, Notifications and your photo. |
-| Left sidebar | **Primary:** Home, My Path, Discover, Network, Communities. **Yours:** Saved, Profile, Path Requests (with a count). **Explore:** Path Guides, Stories, Questions, Decision Points. **Following:** your communities, then "Find people and communities on your Path. See suggestions". |
-| For you / Featured | **For you / Following.** Following shows new conversations and questions in communities you've joined. |
-| Story preview | **Post rows**, one component for every kind of content (`components/Post.tsx`). The thumbnail is PathedIn's own art: the story's Path segment, a decision's fork, or a Guide's portrait. The meta row always starts with **why it's here** ("About your next step", "Jonah is facing your exact decision"), then its stats, save and a "…" menu (Align Paths, Send a Path Request, Show fewer like this). |
-| Right column | **Coming up** (your booked call, with a calendar tile, and the Path Requests waiting on you), **Your Path this week** (your Path drawn down the column, with who's at each step), **People worth knowing** (Medium's *Who to follow*), **Path Office Hours**, and **Your communities** as topic pills, then footer links. |
+Density is an app's density, not a magazine's. Rows are 32px, controls are 30 to 44px, and titles are sized to orient rather than to perform. Surfaces step up in value as they come forward, each carrying a 1px edge and a faint light along its top, and the things that float add a soft offset shadow. Motion is short and physical. A selected surface slides between rows, screens arrive with a 200 ms rise, and overlays grow in from 0.98. One keystroke, ⌘K, reaches anyone or anything.
 
-On iPhone, PathedIn keeps the HIG tab bar and large titles, as Medium's own apps do. Home opens with the **Up next** cards, the horizontal *Your Path this week*, a *People worth knowing* carousel, then the same For you / Following tabs and post rows.
+Graphite is the default and Porcelain is its daylight twin: the same system, a cool near-white canvas with white panels and Executive Navy at full depth. The cream paper ground and the serif-led reading-app look of the earlier PathedIn are gone, and so is the near-black neon-glow template this world could slide into.
 
-### Every page, the same way
-All pages share Medium's page shape.
+**Key Characteristics:**
+- One bright thing per screen: the Path, in navy. Everything else is graphite and grey.
+- Surfaces are layered by value and edge light, never by glow.
+- Schibsted Grotesk for every interface word and heading. Charter only for long-form reading, and the Playfair wordmark only for the name.
+- Pills are for tags and counts. Everything you press is a gently rounded rectangle.
+- Keyboard first: ⌘K, arrow keys, and keycaps shown beside what they trigger.
 
-**The page itself**
-- A bold page title, and underlined text tabs where a page has views.
-- Hairline-separated rows in a reading column about 728px wide.
-- A right-hand column behind a full-height hairline.
-- Any page can pass `rail` to `Page`. On iPhone that column follows the page content.
-- The column is built from the shared pieces in `components/Rail.tsx`:
-  - section heads
-  - *Who to follow*-style people rows
-  - *Staff Picks*-style post lists
-  - topic pills
-  - footer links
+## Colors
 
-**Lists**
-- Stories, questions, decisions and community conversations all render as the same **post row** (`Post`), wherever they appear.
-- Each row carries a byline, bold title, grey summary, "why it's here" line, stats, save, "…" menu and Path-art thumbnail.
-- Rows adapt to their width with a container query, so they also fit side columns.
+A graphite (or porcelain) neutral scale carries the page, and Executive Navy is the single accent.
 
-| Page | Medium pattern |
-| --- | --- |
-| Stories | A topic page: text tabs, a featured story, then post rows. Right column: *Most read on your route* and *Writers ahead of you*. |
-| A story | An article: one centred column, byline, an action bar between hairlines (reads, Align, save, share), the Path art as the lead image with a caption, and the body in the reading serif. *The Path behind this story*, the author box and *More from this stretch* follow. |
-| Questions | Post rows under tabs. The *Ask the people ahead of you* composer sits at the top of the right column, like Medium's "start writing" card. |
-| Question / Decision | The reading column holds the question or fork. The right column holds the people who made the move, the ones to ask, and similar forks. |
-| Decision Points | Your fork, then the ones near your Path, as post rows with fork thumbnails. |
-| Communities / a community | A publication: title, description, members and Join, then tabs and post rows. The right column holds the community's Guides and journeys that cross this one. |
-| Profile | Medium's profile, opened by a **Path cover** (below). The reading column holds the name as a large title, then Path / Stories / Answers / Decisions tabs. The right column holds the person (photo, bio, buttons), what they're doing now, the Path Guide card, *Where your Paths meet* and communities. On iPhone the person card leads. |
-| Discover | Text tabs for **For you, People, Path Guides, Communities and Destinations**. For you mixes a row of each (people worth knowing, Guides for your next move, communities along your route, futures near your Path), each with a "See all" link to its tab. People, Guides and communities are a quiet three-column grid with a hairline above each card and no boxes; on a phone the For you rows scroll sideways. Destinations keep the topic grid: a quiet image area with the route art, then title, summary and counts. |
-| Network, Guides, Connections, Requests, Notifications, Saved, Search | Hairline lists with text tabs. Notifications drop the blue unread panels for a small dot. Each page has a right column (people worth knowing, your communities, or office hours). |
+### Primary
+- **Executive Navy** (the brand's one accent): fills primary actions and marks everything about the future: the dashed road ahead, destinations, "you", focus rings and selection. On graphite it fills at a lifted depth so the white label keeps its contrast, and reads as a pale periwinkle when it is text or a line.
+- **Navy Wash** (a translucent navy on graphite, a pale tint on porcelain): selected chips, the chosen session tile, tinted buttons and the "On your Path" tag.
 
-### Touch and feel, from a live teardown of Medium (September 2026)
-A surface-by-surface teardown of medium.com (computed styles and observed interactions) listed fifteen details that make Medium feel quiet and expensive. Here is what PathedIn took, how it translates, and what it left.
+### Neutral
+- **Graphite Canvas**: the page itself, almost black with a trace of blue.
+- **Graphite Panel**: cards, the right-rail stack and the Guide panel inside booking, one step up from the canvas.
+- **Graphite Floating**: sheets, menus and the command palette, the brightest surface.
+- **Graphite Sunken**: recessed wells, like the route band across a person's card.
+- **Graphite Fill / Quiet Fill**: buttons, fields, time slots and filter tags inside a surface.
+- **Labels, four steps**: primary text, secondary grey for metadata, tertiary for hints and placeholders, and a quaternary for walked-but-unlit track and disabled marks.
+- **Porcelain** mirrors each role in daylight: canvas `#f5f6f8`, white panels and floating surfaces, slate labels.
 
-**Already true of PathedIn**
-- Serif for reading and sans for everything else. Stories are set at 20/32 in the reading serif, in a 680px column.
-- Negative tracking that grows with size: body text barely tightened, large titles tightened more.
-- Hairlines instead of cards for feed rows and action bars; boxes only for things that float.
-- Pills for everything pressable.
-- Save fills instantly, with no spinner and no toast.
-- A name underlines as soon as you hover it, and its hover card follows after a short pause.
+### Named Rules
+**The One Bright Line Rule.** Navy belongs to the Path, to "you", and to the one primary action in view. If a second thing on the screen is navy for decoration, it isn't navy.
 
-**Adopted**
-
-| Medium | In PathedIn |
-| --- | --- |
-| One soft shadow for every popover: a 4px ambient glow plus a short drop, with no border. Popovers have 4px corners. | `--shadow-popover` and `--r-popover`, used by the account menu, "…" menus, hover cards, the Path card and the sort menu. Menus now use full-width rows that darken on hover instead of rounded highlights. The iPhone press-and-hold preview keeps its larger iOS corners. |
-| Dark tooltips with a centred caret on icon-only buttons (Save, "…", member-only). | `data-tip` tooltips on every icon-only button (Save, More, Align, Share, Responses, Helpful, messages, notifications) after a 350ms hover, on pointer devices only. They replace the browser's `title` tooltips. |
-| The responses drawer slides in over 0.6s on `cubic-bezier(.23,1,.32,1)` while the page fades to 60% white. | `easings.drawer` and `--ease-drawer`. Side drawers use this curve and the soft white scrim (warm charcoal in dark). The sidebar drawer uses the same curve. |
-| The most-highlighted passage gets a mint wash and a count in the margin. | The passage readers *on this route* marked most gets a navy wash, with a highlighter count in the right margin, level with the line ("Top highlight · 64 on this route marked it"). Narrower screens put the count after the passage. |
-| Selecting text raises a dark pill: Highlight · Respond · Share. | The same pill, with PathedIn's own action added: **Highlight · Respond · Ask {author} · Share**. *Ask* opens a Path Request about the story's stretch with the passage quoted. Your highlights are saved and drawn in a stronger wash. On touch screens the pill sits below the selection, clear of the system menu. |
-| The clap: tap for one, hold for up to 50, with a floating +N. | **Helpful**, with the same physical feel but one per reader: the hand fills and a small +1 floats up and fades. PathedIn is built on trust, so counts shouldn't be inflatable. It's used on stories, answers and responses. |
-| Responses drawer: composer on top, "MOST RELEVANT ▾" sort in green caps, responses quoting highlighted passages. | A 414px responses drawer (a sheet on iPhone). The composer reads "What are your thoughts?", notes that your response is *shown with your Path*, and keeps Respond disabled until you type. The sort, in navy caps, is **Closest to your Path** or **Most recent**. Each response shows the person's relation to you and their Path hint, and quoted passages sit in a highlight box. Respond from a selection and the quote comes with you. |
-| Topic pills above the article title, each with a + to follow (Medium says this increased reads). | Community pills above a story's title, each with a + to join, which turns into ✓. |
-| The action bar is repeated after the story. | The Helpful, Responses, Align, Save and Share bar appears under the byline and again where the reading stops. |
-| On phones the header and action strip hide while you read down and return on the first flick up. | On iPhone a story swaps the tab bar for a four-action **reading dock**. The dock and the navigation bar slide away as you read down and return on the first scroll up, and near the top and the end. The progress line rides the top edge. |
-| The current left-rail item gets a short black bar at the rail's edge. | Same, in ink. |
-| Coachmarks with "Okay, got it." | A one-time coachmark over the first Path hint on Home: "Hover over a Path to see the whole journey. **Okay, got it.**" |
-| A returning device is greeted "Welcome back." with the remembered account. | After you sign out, Sign in shows your photo, name and masked email, **Continue as Maya**, *Forget this account*, and *More sign-in options*. |
-
-**Left out, on purpose**
-- **Green (here, navy) only for live states.** The brand kit uses Executive Navy for status lines, relation tags and each post's "why it's here" line. Relevance is PathedIn's core idea, so the navy stays on it.
-- **Two text colours.** PathedIn keeps a third, lighter grey for captions and arrows, but hierarchy still comes mainly from size and weight.
-- **Skeletons, never spinners.** Everything here is local, so nothing has to load. Showing fake loading would be worse than showing none.
-- **Paywall, member-only stars, the promo bar and "Get app".** None of these apply to PathedIn.
+**The No Glow Rule.** Depth comes from value steps, a 1px edge and offset shadows. Coloured halos, gradient blooms and neon edges are not part of this world.
 
 ## Typography
-Three faces, three tiers.
 
-| Tier | Face | What ships | Modern Font Stacks tail | Used for |
-| --- | --- | --- | --- | --- |
-| Brand | **Noe Display Medium** | Playfair Display 500 | Didone: Didot, Bodoni MT, Noto Serif Display, URW Palladio L, P052, Sylfaen | The wordmark, page titles and other hero headings (profile names, question, decision and community titles, the intro page, sign-in, the welcome in the Path splash), and milestone moments ("you are here" and destination stations) |
-| UI | **Inter**: Regular, Semibold, Bold | Inter (variable, with optical sizes), plus Inter's arrows and ⌘ in a small file of their own | Neo-Grotesque: Roboto, Helvetica Neue, Arial Nova, Nimbus Sans, Arial | Everything in the interface. It was chosen to match the plain, professional feel of Medium's sidebar (sohne). Regular for UI, inputs, captions and grey subtitles. Semibold for buttons, card headers and feed titles. Bold for metrics and data chips. Italic for reflections in someone's own words. The sidebar is 16px regular in grey, ink when current, as on Medium. |
-| Content | **Charter**: Regular, Italic, Bold, Bold Italic | Charter where installed (Apple devices), else Charis SIL, SIL's open edition of Charter | Transitional: Sitka Text, Cambria | Story text; story titles in Bold; quotes in Italic; pull quotes in Bold Italic; bios; the Write editor |
+**Interface and headings:** Schibsted Grotesk (with Schibsted Fallback, a metric-matched Arial)
+**Reading:** Charter, or Charis SIL where Charter isn't installed (with Charis Fallback)
+**Wordmark:** Playfair Display standing in for Noe Display, for the name only
 
-Noe Display is a commercial typeface. The font stack names it first, so adding licensed files is enough to switch. Inter's optical sizes tighten large text the way a display cut does.
+**Character:** a newsroom grotesk. It is precise and quiet at 13px, and its headlines have a voice, so the product never reads as a template. Charter gives long stories the calm of a printed page.
 
-**Font stacks.** Each tier sits on a [Modern Font Stacks](https://github.com/system-fonts/modern-font-stacks) classification: Neo-Grotesque for the interface, Transitional for reading, Didone for the brand.
-- **The face we ship leads each stack,** so every device sees the same type. Reading is now Charter's design everywhere: Apple devices use their own Charter and download nothing, and every other device gets Charis SIL (about 93 KB for all four styles, down from 252 KB for Source Serif 4).
-- **The rest of each stack** is that classification's best system face on each OS.
-- **No jump while fonts load.** Each web font has a stand-in face: the local Arial or Times New Roman, resized with `size-adjust` and ascent/descent overrides measured from the font files. Checked against real text, each stand-in is within half a percent of the real face's width at interface sizes (13–16px), and matches it for reading (20px) and brand headings (44px). Plain system fonts are 5–9% off.
-- **Arrows.** The standard Latin cut of Inter leaves out →, which every stretch of a Path uses ("MSc Chem → Pharma R&D"). Inter's own arrows and ⌘ ship in a separate 8 KB file that loads only when a page shows one.
+### Hierarchy
+- **Display** (600, clamp 64–112px, line-height 0.94, -0.035em): the intro page's one headline.
+- **Headline** (600, 32/38px, -0.024em): page titles. Profiles take 36/42px.
+- **Title** (600, 22/28px, -0.02em): section headings and card titles. Rail headings drop to 16/20px.
+- **Body** (400, 16/24px): interface prose, post summaries and subtitles in secondary grey.
+- **Label** (550, 13/18px): buttons, metadata rows and tags. Small buttons run 13px and medium 14px.
+- **Reading** (Charter 400, 20/32px, 45–75 characters to the line): story bodies. Story titles are Charter at 42/50px.
 
-The ramp keeps the HIG's roles:
+### Named Rules
+**The Three Faces Rule.** Schibsted Grotesk does every job except long-form reading (Charter) and the name (Playfair). A fourth face needs a role none of these can do.
 
-| Role | Size / line height |
-| --- | --- |
-| Page title | 44/50 Noe Display on desktop, 34/40 on iPhone |
-| Title 1 | 28/34 |
-| Title 2 | 22/28 |
-| Title 3 | 19/25 |
-| Headline | 16/22 demibold |
-| Body | 16/24 |
-| Callout | 15/22 |
-| Subhead | 14/20 |
-| Footnote | 13/18 |
-| Caption | 12/16 and 11/13 |
+**The Arrow Rule.** Paths are written "MSc Chem → Pharma R&D". The arrows come from the face's own glyphs, subset from the full family, never from a fallback font.
 
-**Feed and section headings**
-- Feed titles are 21/27 demibold; stories use Charter Bold.
-- Subtitles are 16/24 regular grey.
-- Section heads are 16px demibold; list headings are 20px demibold.
+## Layout
 
-**No eyebrows.** A heading carries its own weight, so nothing small and uppercase sits above it. Where a heading needs context, it goes in the line underneath, led by a navy status: "MSc Chemistry / **You are here** · University of Toronto", "Your decision · Deciding now at MSc Chemistry".
+The layouts are kept from the previous PathedIn. The look was redesigned; the structure wasn't.
+- **Desktop:** a 52px translucent top bar (menu, wordmark, a 280px ⌘K launcher, Write, messages, notifications, you). Below it, a 236px left sidebar, a main column up to 728px, and a right rail of stacked layered cards over flat lists.
+- **Gutters:** 16px on phones, 24px from 768px and 40px from 1100px.
+- **Phones:** a large title, layered cards, and a 50px tab bar. Sheets rise from the bottom with a grabber and two detents.
+- **Rhythm:** 4px steps inside components (6, 8, 10, 12, 14, 16) and 28–40px between sections.
+- **Grids:** card grids run three columns, two under 760px of container width and one under 480px. On phones the For you card rows scroll sideways with snap.
 
-**"You are here"** is one small navy tag (`.here-tag`), set beside the step's name wherever a Path is drawn: the transit map, the week's line on Home, the right column.
+## Elevation & Depth
 
-**Data chips** are 12px demibold in sentence case ("99% path match").
+A hybrid system. Surfaces step up in value (canvas, then panel, then floating), and every raised surface carries a 1px edge and a faint light along its top edge, as if lit from above. Things that float over the page add an offset shadow: a short contact shadow and a long soft one. Porcelain uses the same structure, with slate edges and much lighter shadows.
 
-**Post kinds** open each feed row in sentence case, like Medium's "Member-only story" line: an icon, the kind in ink ("Milestone", "Question"), then its context in grey.
+### Shadow Vocabulary
+- **Surface edge** (`box-shadow: 0 0 0 1px rgba(255,255,255,0.065), inset 0 1px 0 rgba(255,255,255,0.035)`): every panel and card at rest.
+- **Lift** (`box-shadow: 0 0 0 1px rgba(255,255,255,0.1), 0 8px 24px -10px rgba(0,0,0,0.6)`): a card under the pointer, which also rises 2px.
+- **Popover** (`box-shadow: 0 0 0 1px rgba(255,255,255,0.09), 0 2px 6px rgba(0,0,0,0.35), 0 16px 40px -12px rgba(0,0,0,0.7)`): menus, tooltips and hover cards.
+- **Modal** (`box-shadow: 0 0 0 1px rgba(255,255,255,0.09), 0 32px 80px -20px rgba(0,0,0,0.8)`): sheets and the command palette.
+- **Button highlight** (`box-shadow: inset 0 1px 0 rgba(255,255,255,0.14)`): the top light on navy buttons.
 
-**Quotes** never use a thick side bar.
-- Pull quotes (stories, decision reflections) open with a short 2px navy rule above the text, as a magazine sets them.
-- Quotes inside what you write, and a question's quoted answer, take a 1px hairline and an indent.
-- A passage quoted in a response is a highlight wash with no bar.
+### Named Rules
+**The Lit Edge Rule.** A raised surface earns its place with a 1px edge and a top highlight, not with a heavier shadow. Shadows are for things that genuinely float.
 
-## Color
-The kit's **Minimal Navy Principle**: about 90% neutrals and about 10% purposeful deep navy. The neutrals sit on a **warm paper ground**, like Medium's: the page is never pure white, and only things that float are white.
+## Shapes
 
-| Token | Light | Role |
-| --- | --- | --- |
-| Paper | `#F8F6F1` | The app canvas, bars and sidebar (≈60%) |
-| Cream | `#F7F4ED` | Medium's cream: the intro page and the Path splash |
-| Panel | `#F1EEE7` | Panels a shade deeper than the page: the right column's card, Guide cards, route panels, *Who's here* |
-| White | `#FFFFFF` | Only what floats or takes input: menus, sheets, hover cards, the search field, text boxes |
-| Warm hairline | `#E4DFD4` | 1px dividers, the sidebar and right-column edges, field borders (`#D3CCBE` stronger) |
-| Deep Slate Navy | `#0F172A` | Text, primary buttons, your message bubbles, the walked Path and past nodes (≈10%) |
-| Mineral Slate | `#64748B` | Secondary text; `#94A3B8` for the quietest labels |
-| Executive Navy | `#1E3A8A` | The one accent: the dashed future, the "you" dot, open destination nodes, links, status lines, badges, the secondary button |
-| Navy washes | `#EFF6FF` / `#DBEAFE` / `#BFDBFE` | Chip and selection backgrounds, chip borders, routes you're considering |
-
-**The browser's own parts use the palette too**: text selection is a navy wash, the text cursor and native controls are navy, scrollbars are a warm hairline, and the focus ring is a 2px navy line that follows each control's corners (a pill stays a pill). Links underline 0.2em below the text at 1px.
-
-**Light is the default**, as Medium is on the web.
-- The app doesn't follow the device's dark setting, and it holds its light background even when embedded somewhere dark.
-- The saved appearance is applied before first paint, so there's no dark flash.
-
-**Dark is opt-in**, set from the account menu or Appearance on your profile.
-- It's a warm charcoal, never pure black or navy: canvas `#1F1E1C`, surfaces `#262522` / `#292825`, paper-white text `#EDE9E2`.
-- Executive Navy is too deep to read on charcoal, so the accent lifts to a soft periwinkle from the same family (`#8FA7EE`).
+Gently rounded rectangles throughout. The radii are 6px for rows inside lists and menus, 8px for buttons, fields, slots and icon buttons, 10px for popovers and tooltips, 12px for cards and panels, and 16px for sheets, the palette and the sign-in card. Pills are kept for tags, counts and badges. Portraits are circles with a 1px edge, and where they sit on a coloured surface they are knocked out with a ring in that surface's colour. The Path's own geometry is fixed: solid track for walked steps, a ringed present node, a dashed navy future and an open destination ring.
 
 ## Components
-- **Buttons** keep Medium's pill shape in the kit's colours, with Demibold labels.
-  - **Filled** is Deep Slate Navy.
-  - **Secondary** (tinted) is porcelain with an Executive Navy line and label, as in the kit's "Compare Waypoint".
-  - **Outline** is a 1px ink line.
-  - **Gray** is a soft slate fill.
-- **Text tabs** are grey labels; the active tab is ink with a 1px underline. A page with only one view (a profile with nothing but a Path) shows no tabs.
-- **Search fields** are white pills everywhere, like the one in the top bar.
-- **Cards** are used sparingly: panels a shade deeper than the paper, with 8px corners. Everything else is separated by hairlines.
-- **Data chips**:
-  - **Navy** chips carry facts ("2 steps ahead").
-  - **Wash** chips carry the match ("99% path match") on `#EFF6FF` with a `#BFDBFE` border.
-- **Segmented controls** are pills: a slate fill with a white sliding thumb.
-- **Text fields and the search pill** are white with a hairline. On focus they gain a navy line and a soft wash ring.
 
-## Brand identity kit
+### Buttons
+- **Shape:** gently rounded (8px), 30, 36 or 44px tall, with the label at weight 550.
+- **Primary:** Executive Navy fill with a white label and a top highlight. The hover fill steps up one shade, and a press scales it to 0.965.
+- **Gray:** quiet fill with a hairline edge, for secondary actions (Ask, Align, Message).
+- **Tinted:** Navy Wash with navy text, for Connect and for held states like "Booked · Thu".
+- **Outline:** a panel-coloured raised button with an edge (Add to calendar).
+- **Focus:** a 2px navy ring offset by 2px, following the control's corners.
 
-### The mark
-The logo is the Path itself, on a 45° axis:
-- **Node 1, where you've been:** a solid dot.
-- **Node 2, where you are now:** a Deep Slate Navy ring with an Executive Navy dot at its centre.
-- **Node 3, where you want to go:** an open Executive Navy circle.
+### Tags (filter chips)
+- **Style:** 30px pills on the quiet fill with a hairline, in secondary grey.
+- **State:** selected tags take Navy Wash, a navy border and primary text. Hover strengthens the border.
 
-The past is a solid Deep Slate Navy line. The future is a dashed Executive Navy line. The wordmark is set in Noe Display Medium. The mark is also the favicon and the My Path icon.
+### Cards / Containers
+- **Corner Style:** 12px.
+- **Background:** Graphite Panel on the canvas, with the Surface edge. Inside a card, wells use the quiet fill or the sunken value.
+- **Hover:** the Lift shadow and a 2px rise over 300 ms, for cards that open something.
+- **Internal Padding:** 18px (14px on phones).
 
-### Voice
-The brand tenet runs through the product: *"Don't just ask who you know. Ask who you should know to get where you want to go."* It is the Network page's subtitle. My Path carries the kit's name for it, **The Living Career Path**.
-
-## Following the Human Interface Guidelines
+### Inputs / Fields
+- **Style:** quiet fill, a 1px edge and 8px corners, at 14–16px.
+- **Focus:** the edge turns navy, with a 3px faint-navy halo outside it.
 
 ### Navigation
-- **iPhone:** a bottom **tab bar** with five sections (Home, Discover, My Path, Network, Communities).
-  - Tapping the current tab scrolls to the top.
-  - Messages and notifications live in Home's navigation bar.
-- **Navigation bars** on iPhone use **large titles** that collapse into a centred inline title as you scroll.
-  - Back buttons carry the previous title.
-  - Pushes slide in from the trailing edge.
-- **iPad and Mac widths:** the Medium-style top bar and sidebar.
-  - The sidebar docks beside the content when the window is wide enough (1320px and up). The menu button hides or shows it, and the choice is remembered.
-  - On narrower windows the sidebar slides over the content and closes when you choose a destination or press Escape.
-  - Wide screens use split views and side panels (My Path's side panel, Messages' list and thread) rather than stretched phone layouts.
+- **Sidebar:** 32px rows at 14px, secondary grey, with 18px outline icons. The active row is primary text on a selected surface with an edge, and that surface slides between rows on a spring.
+- **Top bar:** translucent canvas with a backdrop blur and a hairline beneath. The ⌘K launcher is a 280 × 32 field showing its keycap.
+- **Phone:** a 50px tab bar with badges. Screens push and pop with a spring.
 
-### Controls and presentation
-- **Sheets** on iPhone have a grabber and **medium/large detents**. On larger screens they appear centred.
-- **Context menu previews:** press and hold a person to preview their Path.
-  - On desktop this is a hover card, and secondary-click opens the same preview.
-- **Inset grouped lists** are used for settings-like rows.
-  - Your own profile's list includes Appearance and Sign out.
-- **Minimum hit area:** every control can be tapped across at least 44pt.
+### Command Palette (signature)
+"Go anywhere on your Path." A 640px floating sheet (16px corners, the Modal shadow) with a search field, grouped results (people, destinations, communities, stories, questions) and actions (write, open My Path, book office hours, align Paths, switch appearance). The highlighted row is a surface that slides between results. It is keyboard-first: ↑ ↓ to move, ↵ to open, esc to close, with keycaps in the footer.
 
-### Motion, haptics and accessibility
-- Springs are defined as SwiftUI defines them, by **response and damping fraction**.
-- **Reduce Motion** is respected everywhere, including the intro illustration and the Path splash.
-- **Haptics** fire on selection changes, long-press and send, where the platform supports it.
-- **Accessibility:**
-  - Controls are real buttons and links with labels, and focus is visible.
-  - Decorative graphics are hidden from assistive tech, and each Path has a text equivalent.
-  - The splash announces the Path it draws.
-- **Contrast:** Executive Navy reads clearly on white for text, icons and lines alike.
+### Route Band (signature)
+Across the top of a person's card, their Path is drawn on a sunken 64px band: walked steps in grey, steps you share lit in navy, the present ringed and the future dashed toward an open ring. On hover, the dashes flow toward the destination. The portrait sits on the band's lower edge, knocked out in the card's colour.
 
-## PathedIn's own language
+### Office Hours Booking (signature)
+A two-pane sheet. The Guide sits on a recessed panel on the left. On the right: three session tiles (a calendar leaf each, with a sliding navy selection), a grid of time slots (the chosen one fills navy, and taken ones recede with a strike), topic tags, a note field, and a sticky blurred footer with the summary and the primary action. It confirms on a ticket: a navy-washed date stub behind a dashed perforation, with the details in a definition list and a check that draws itself.
 
-### The transit metaphor
-A career is drawn like a transit line. Stations are steps, and 45° bends and rounded joins give the lines their shape. The brand's three nodes are the station vocabulary everywhere:
-- **Walked track and past stations:** solid ink line, solid ink nodes.
-- **Present:** the ink ring with a navy dot, with a slow navy pulse. On My Path your photo sits on it, and you can drag it along your future.
-- **Future:** dashed Executive Navy line. **Other possibilities:** fainter dashed navy wash.
-- **Undecided:** a dashed navy interchange with a "?" that opens into parallel routes.
-- **Destination:** an open navy circle, or an open capsule when routes converge.
-- **Shared steps:** where two Paths share a station, they run together on a navy wash. In Align, your Path is ink and theirs is grey.
-- **Decisions:** the road taken is solid, and roads still open are dashed navy.
+## Do's and Don'ts
 
-The same vocabulary appears at every scale:
-- the Path hint and its Path card
-- the Path strip (My Path, Peek and shared step cards in messages)
-- the Transit Map
-- the Confluence of routes
-- Align
-- the Path Lens
-- community routes
-- decision forks
-- request segments
-- story art
-- the right column's *Your Path this week*
-- the intro illustration
-- the sign-in splash
+### Do:
+- **Do** keep navy for the Path, "you", the future and the single primary action in view.
+- **Do** raise surfaces with value and the 1px lit edge before reaching for a shadow.
+- **Do** use 8px corners for anything pressed and 12px for panels, and keep pills for tags and counts.
+- **Do** show the keyboard: keycaps beside shortcuts, arrow-key navigation in lists and the palette.
+- **Do** move with purpose: 120–180 ms for feedback, springs for shared indicators, a 200 ms rise between screens, and overlays growing from 0.98. Respect Reduce Motion.
+- **Do** draw every Path with the transit vocabulary: solid walked track, ringed present, dashed navy future, open destination.
 
-### The Path cover, and Guides as a route
-These two took their cue from the patterns in common UI kits (social profiles, mentoring and booking apps), translated into PathedIn's line language rather than copied.
-- **Every profile opens on its Path, as a social profile opens on a cover photo** (`components/path/PathCover.tsx`).
-  - The route runs across a panel: walked steps in solid ink with their years, the person's portrait in a navy ring at "Now", then dashed navy to an open ring at where they're heading.
-  - On someone else's profile it also shows where the two Paths touch. Your own small face sits on every step you both took, and steps on your way ahead are tagged **On your route**.
-  - The caption says how many steps you share and opens **Align Paths**; on your own profile it opens My Path.
-  - It draws itself once, stop by stop, and holds still with Reduce Motion. When it's wider than the screen, it scrolls sideways and opens centred on "Now".
-- **Path Guides hang off one route.** The moves toward your destination used to be numbered 01, 02 in black squares. Now they're stations on a vertical line, dashed in navy because all of it is still ahead of you. The first starts at the brand's "now" node, and each move after it is an open navy ring.
-
-### Paths on posts: one line, the rest on hover
-A full Path on every post and person row was too much to read. In feeds, lists and cards a Path is now a **Path hint**: the brand mark and one quiet line, where someone is now and where they're heading ("CRO → Pharma R&D"), with a dotted underline to show there's more (`components/path/PathHint.tsx`).
-- **Hover** it on a desktop, or **tap** it or press **Enter**, and the **Path card** opens beside it. The card draws the whole Path top to bottom with the brand nodes, each step with its organisation and years, and marks the steps you share ("You too").
-- When a post is about one stretch (a question, a request, a Guide's move), that stretch is lit in navy and the rest steps back.
-- The card ends with **Align Paths** and **View profile**. It closes when you move away, click outside, scroll or press Escape.
-- The full horizontal strip stays where the Path *is* the content: My Path, Peek, and a step shared in a message.
-
-### Align icon
-Align Paths uses its own glyph: two walked Paths (solid nodes) curving together into one shared "now" node, the brand's present node. It reads as *where your Paths meet*.
-
-### Seven kinds of post, each recognisable at a glance
-In a mixed feed, questions, community posts, Guides and stories all looked alike. Every feed post now opens with a **kind label**: the same icon as its section in the sidebar, the kind in small capitals, and a short note. Each kind also has a shape of its own (`components/FeedItems.tsx`):
-
-| Kind | Label note | What makes it look different |
-| --- | --- | --- |
-| Story | the stretch it covers ("CRO → Pharma R&D") | Serif title and the Path art of that stretch. |
-| Question | "4 answers" | The best answer so far, quoted beside a rule, with who it's from and why they're credible ("took the exact route you're asking about"). |
-| Community | the community's name | The latest reply as a speech bubble, beside the faces in the conversation. |
-| Path Guide | "Office Hours this week" | A person, not writing, so it sits on its own quiet panel: portrait, the move they made drawn with brand nodes, what they help with, this week's slot and **Ask**. |
-| Decision Point | "Deciding now at MSc Chem" | The fork art and a **Weigh in** row with the people who already have. On a phone the fork is too small to read, so the row carries it. |
-| Route | "To Pharmaceutical R&D" | The route drawn as a line on a panel, with its numbers and **Add to my Path**. |
-| Milestone | the move ("CRO → Pharma R&D") | Their own words in serif italic, their Path hint and **Congratulate**. |
-
-**For you, one kind at a time.** A row of pills under For you (All · Stories · Questions · Communities · Path Guides · Decisions · Routes) narrows the feed to one kind. Each filtered feed is ranked by how close each post is to your Path, still says why each post is there, and opens with a line explaining the list and a link to the full section. The choice lives in the URL (`/?show=question`), so Back returns to it. When the pills run past the column, arrows fade in at the edges, as on Medium's topic bar.
-
-### Spacing rules
-- **Inside a post** the rhythm is: kind label, 12px, byline, 12px, title, 8px, subtitle, 16px, the post's own block, 16px, the meta row.
-- **Thumbnails** sit to the right of the title and are top-aligned with it, however tall the text column grows. A post without a thumbnail uses the whole row, so every row ends on the same edge.
-- **Boxes** (Guide panels, the weigh-in row, route panels, answer quotes) always pad their contents; nothing inside touches a drawn edge.
-- **Buttons in a narrow column** use an even grid rather than wrapping. On a profile, **Send a Path Request** takes the full width, with Message, Follow, Align Paths and Save in a two-by-two grid below.
-- **Sideways-scrolling rows** (the community's *Who's here*, *Your Path this week*, the Path Lens, the For you filters) fade out at an edge that has more to show, instead of cutting text off.
-- **A page's subtitle** runs the full width under the title, so a button beside the title never squeezes it.
-- **In a narrow column** a Decision's fork is too small to read, so it's hidden and the text carries the decision.
-- **Class names are unique per component.** A generic name in one stylesheet can silently restyle another component; `.weigh` and `.guide-card` did, and are now `.fweigh` and `.fguide`.
-- An automated check loads every page at phone, tablet and desktop widths. It flags anything that spills out of its container, and text sitting against the edge of a bordered or shaded box.
-
-### Write: from where you stand, for the people behind you
-**Write** (top bar, or the pencil on iPhone Home) opens a page of its own, with no sidebar or tab bar (`screens/Write.tsx`). It deliberately doesn't borrow Medium's editor: every PathedIn post is written from a place on your Path, so the page is built around that.
-- **The frame.** The header reads as a sentence made of two choices: **Writing a [Story ▾] about [MSc Chem → Pharma R&D ▾]**. The kind menu offers Story, Question or Community post. The stretch menu lists where you're heading from now, each step you've taken, and "Your Path in general", each with a one-line hint. On iPhone the sentence sits in its own row under the bar.
-- **The header.** **Close** on the left (your draft is kept), then a quiet ✓ **Saved**, "…" (tips, discard) and a navy **Review** button. There's no wordmark, no "Draft" label and no avatar.
-- **The page is set as it will be read.**
-  - The headline is in Charter Bold, like a published story.
-  - Under it is a one-line summary in the story's grey dek style.
-  - A hairline separates these from the body.
-- **Prompts follow the kind:**
-  - Story: "Headline" / "What was it really like? Write it for someone one step behind you."
-  - Question: "Your question" / "Give the people ahead of you what they need to answer…"
-  - Community post: "Start a conversation" / "What would you like to talk through…"
-- **The compose bar** holds every tool in one place, so nothing pops up over your words. It floats as a white pill at the bottom on desktop and becomes a dock on iPhone.
-  - **Text tools:** bold, italic, link | heading, quote. Each is drawn as an icon. They light up navy for what's applied where the caret is, and dim when you're not in the text. Link turns the bar into an address field.
-  - **Add to the post:** a photo, your Path, a section break.
-- **Photos** are resized in the browser and take an optional caption ("Add a caption"). Click one to remove it.
-- **Tips appear only when asked for,** from "…" → *Tips for writing here*. There are four short ones: write for someone one step behind you; choose the stretch; show where you were; format as you go. Nothing opens on its own, and nothing is shown pre-highlighted.
-- **Review** opens a sheet.
-  - On the left is the post drawn by the feed's own component, exactly as it will sit in For you.
-  - On the right are the same kind and stretch choices (kept in sync with the header) and an optional community.
-  - The button names the action: **Share story**, **Ask question** or **Post to community**.
-- **After sharing,** the post opens as a story and sits at the top of For you, and in its kind's filter, labelled as yours.
-- **Storage.** Posts and drafts, including the kind, stretch and summary, are kept in their own store, so photos never crowd out the rest of the saved state. Pasting always comes in as plain text, and saved HTML is rebuilt from an allow-list.
-
-### Relevance is always explained
-Every person and every post says *why* it is in front of you. People carry a relation ("Path Twin", "One step ahead", "Reached your destination"), and posts carry a "why it's here" line. The Path match chip puts a number to it.
-
-Relevance shows up in the content too:
-- Answers lead with credibility.
-- Community posts are stamped with where the author is on the route.
-- Requests arrive attached to the segment of the Path they're about.
-
-### What we deliberately avoided
-- No KPI cards, charts, "profile strength" meters or endorsements.
-- No cards nested in cards.
-- No gradients, glows or glassmorphism in the reading surface.
-- Guides are never paid, ranked or rated.
+### Don't:
+- **Don't** bring back the cream paper ground, the serif-led reading-app look, or Medium's black pills.
+- **Don't** use glows, gradient text, neon edges or coloured side stripes.
+- **Don't** set a label above a heading as a kicker or eyebrow. Metadata rows name the post's kind and its stretch of the Path, and headings carry their own weight.
+- **Don't** set interface text in Charter or Playfair, or reach for Inter, Geist or Mona Sans as the interface face.
+- **Don't** use Unicode glyphs or emoji as icons. Icons are drawn SVG in one stroke weight.

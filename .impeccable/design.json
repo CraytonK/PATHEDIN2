@@ -1,0 +1,686 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-09-25T16:43:43Z",
+  "title": "Design System: PathedIn",
+  "extensions": {
+    "colorMeta": {
+      "graphite-canvas": {
+        "role": "neutral",
+        "displayName": "Graphite Canvas",
+        "canonical": "#0b0c0f",
+        "tonalRamp": [
+          "oklch(15% 0.007 271)",
+          "oklch(25% 0.007 271)",
+          "oklch(35% 0.007 271)",
+          "oklch(45% 0.007 271)",
+          "oklch(55% 0.007 271)",
+          "oklch(68% 0.007 271)",
+          "oklch(82% 0.007 271)",
+          "oklch(95% 0.007 271)"
+        ]
+      },
+      "graphite-panel": {
+        "role": "neutral",
+        "displayName": "Graphite Panel",
+        "canonical": "#111317",
+        "tonalRamp": [
+          "oklch(15% 0.009 264)",
+          "oklch(25% 0.009 264)",
+          "oklch(35% 0.009 264)",
+          "oklch(45% 0.009 264)",
+          "oklch(55% 0.009 264)",
+          "oklch(68% 0.009 264)",
+          "oklch(82% 0.009 264)",
+          "oklch(95% 0.009 264)"
+        ]
+      },
+      "graphite-floating": {
+        "role": "neutral",
+        "displayName": "Graphite Floating",
+        "canonical": "#181a1f",
+        "tonalRamp": [
+          "oklch(15% 0.010 268)",
+          "oklch(25% 0.010 268)",
+          "oklch(35% 0.010 268)",
+          "oklch(45% 0.010 268)",
+          "oklch(55% 0.010 268)",
+          "oklch(68% 0.010 268)",
+          "oklch(82% 0.010 268)",
+          "oklch(95% 0.010 268)"
+        ]
+      },
+      "graphite-sunken": {
+        "role": "neutral",
+        "displayName": "Graphite Sunken",
+        "canonical": "#08090b",
+        "tonalRamp": [
+          "oklch(15% 0.005 263)",
+          "oklch(25% 0.005 263)",
+          "oklch(35% 0.005 263)",
+          "oklch(45% 0.005 263)",
+          "oklch(55% 0.005 263)",
+          "oklch(68% 0.005 263)",
+          "oklch(82% 0.005 263)",
+          "oklch(95% 0.005 263)"
+        ]
+      },
+      "graphite-fill": {
+        "role": "neutral",
+        "displayName": "Graphite Fill",
+        "canonical": "#1c1f25",
+        "tonalRamp": [
+          "oklch(15% 0.012 264)",
+          "oklch(25% 0.012 264)",
+          "oklch(35% 0.012 264)",
+          "oklch(45% 0.012 264)",
+          "oklch(55% 0.012 264)",
+          "oklch(68% 0.012 264)",
+          "oklch(82% 0.012 264)",
+          "oklch(95% 0.012 264)"
+        ]
+      },
+      "graphite-fill-quiet": {
+        "role": "neutral",
+        "displayName": "Graphite Quiet Fill",
+        "canonical": "#15171b",
+        "tonalRamp": [
+          "oklch(15% 0.009 264)",
+          "oklch(25% 0.009 264)",
+          "oklch(35% 0.009 264)",
+          "oklch(45% 0.009 264)",
+          "oklch(55% 0.009 264)",
+          "oklch(68% 0.009 264)",
+          "oklch(82% 0.009 264)",
+          "oklch(95% 0.009 264)"
+        ]
+      },
+      "graphite-label": {
+        "role": "neutral",
+        "displayName": "Graphite Label",
+        "canonical": "#eceef2",
+        "tonalRamp": [
+          "oklch(15% 0.006 265)",
+          "oklch(25% 0.006 265)",
+          "oklch(35% 0.006 265)",
+          "oklch(45% 0.006 265)",
+          "oklch(55% 0.006 265)",
+          "oklch(68% 0.006 265)",
+          "oklch(82% 0.006 265)",
+          "oklch(95% 0.006 265)"
+        ]
+      },
+      "graphite-label-secondary": {
+        "role": "neutral",
+        "displayName": "Graphite Secondary Label",
+        "canonical": "#9ba0ac",
+        "tonalRamp": [
+          "oklch(15% 0.018 268)",
+          "oklch(25% 0.018 268)",
+          "oklch(35% 0.018 268)",
+          "oklch(45% 0.018 268)",
+          "oklch(55% 0.018 268)",
+          "oklch(68% 0.018 268)",
+          "oklch(82% 0.018 268)",
+          "oklch(95% 0.018 268)"
+        ]
+      },
+      "graphite-label-tertiary": {
+        "role": "neutral",
+        "displayName": "Graphite Tertiary Label",
+        "canonical": "#6c717d",
+        "tonalRamp": [
+          "oklch(15% 0.020 268)",
+          "oklch(25% 0.020 268)",
+          "oklch(35% 0.020 268)",
+          "oklch(45% 0.020 268)",
+          "oklch(55% 0.020 268)",
+          "oklch(68% 0.020 268)",
+          "oklch(82% 0.020 268)",
+          "oklch(95% 0.020 268)"
+        ]
+      },
+      "graphite-label-quaternary": {
+        "role": "neutral",
+        "displayName": "Graphite Quaternary Label",
+        "canonical": "#3a3e47",
+        "tonalRamp": [
+          "oklch(15% 0.016 266)",
+          "oklch(25% 0.016 266)",
+          "oklch(35% 0.016 266)",
+          "oklch(45% 0.016 266)",
+          "oklch(55% 0.016 266)",
+          "oklch(68% 0.016 266)",
+          "oklch(82% 0.016 266)",
+          "oklch(95% 0.016 266)"
+        ]
+      },
+      "graphite-ink": {
+        "role": "neutral",
+        "displayName": "Walked Track Ink",
+        "canonical": "#e4e7ec",
+        "tonalRamp": [
+          "oklch(15% 0.007 261)",
+          "oklch(25% 0.007 261)",
+          "oklch(35% 0.007 261)",
+          "oklch(45% 0.007 261)",
+          "oklch(55% 0.007 261)",
+          "oklch(68% 0.007 261)",
+          "oklch(82% 0.007 261)",
+          "oklch(95% 0.007 261)"
+        ]
+      },
+      "navy-fill-on-graphite": {
+        "role": "primary",
+        "displayName": "Executive Navy, lifted fill",
+        "canonical": "#2c49b6",
+        "tonalRamp": [
+          "oklch(15% 0.176 267)",
+          "oklch(25% 0.176 267)",
+          "oklch(35% 0.176 267)",
+          "oklch(45% 0.176 267)",
+          "oklch(55% 0.176 267)",
+          "oklch(68% 0.176 267)",
+          "oklch(82% 0.176 267)",
+          "oklch(95% 0.176 267)"
+        ]
+      },
+      "navy-fill-on-graphite-hover": {
+        "role": "primary",
+        "displayName": "Executive Navy, lifted fill hover",
+        "canonical": "#3654c6",
+        "tonalRamp": [
+          "oklch(15% 0.181 268)",
+          "oklch(25% 0.181 268)",
+          "oklch(35% 0.181 268)",
+          "oklch(45% 0.181 268)",
+          "oklch(55% 0.181 268)",
+          "oklch(68% 0.181 268)",
+          "oklch(82% 0.181 268)",
+          "oklch(95% 0.181 268)"
+        ]
+      },
+      "navy-lifted": {
+        "role": "primary",
+        "displayName": "Periwinkle Navy (lines on graphite)",
+        "canonical": "#8ea2f2",
+        "tonalRamp": [
+          "oklch(15% 0.119 272)",
+          "oklch(25% 0.119 272)",
+          "oklch(35% 0.119 272)",
+          "oklch(45% 0.119 272)",
+          "oklch(55% 0.119 272)",
+          "oklch(68% 0.119 272)",
+          "oklch(82% 0.119 272)",
+          "oklch(95% 0.119 272)"
+        ]
+      },
+      "navy-lifted-text": {
+        "role": "primary",
+        "displayName": "Periwinkle Navy (text on graphite)",
+        "canonical": "#a3b3f5",
+        "tonalRamp": [
+          "oklch(15% 0.096 273)",
+          "oklch(25% 0.096 273)",
+          "oklch(35% 0.096 273)",
+          "oklch(45% 0.096 273)",
+          "oklch(55% 0.096 273)",
+          "oklch(68% 0.096 273)",
+          "oklch(82% 0.096 273)",
+          "oklch(95% 0.096 273)"
+        ]
+      },
+      "porcelain-canvas": {
+        "role": "neutral",
+        "displayName": "Porcelain Canvas",
+        "canonical": "#f5f6f8",
+        "tonalRamp": [
+          "oklch(15% 0.003 265)",
+          "oklch(25% 0.003 265)",
+          "oklch(35% 0.003 265)",
+          "oklch(45% 0.003 265)",
+          "oklch(55% 0.003 265)",
+          "oklch(68% 0.003 265)",
+          "oklch(82% 0.003 265)",
+          "oklch(95% 0.003 265)"
+        ]
+      },
+      "porcelain-panel": {
+        "role": "neutral",
+        "displayName": "Porcelain Panel",
+        "canonical": "#ffffff",
+        "tonalRamp": [
+          "oklch(15% 0.000 90)",
+          "oklch(25% 0.000 90)",
+          "oklch(35% 0.000 90)",
+          "oklch(45% 0.000 90)",
+          "oklch(55% 0.000 90)",
+          "oklch(68% 0.000 90)",
+          "oklch(82% 0.000 90)",
+          "oklch(95% 0.000 90)"
+        ]
+      },
+      "porcelain-sunken": {
+        "role": "neutral",
+        "displayName": "Porcelain Sunken",
+        "canonical": "#eef0f3",
+        "tonalRamp": [
+          "oklch(15% 0.005 258)",
+          "oklch(25% 0.005 258)",
+          "oklch(35% 0.005 258)",
+          "oklch(45% 0.005 258)",
+          "oklch(55% 0.005 258)",
+          "oklch(68% 0.005 258)",
+          "oklch(82% 0.005 258)",
+          "oklch(95% 0.005 258)"
+        ]
+      },
+      "porcelain-fill": {
+        "role": "neutral",
+        "displayName": "Porcelain Fill",
+        "canonical": "#eceef2",
+        "tonalRamp": [
+          "oklch(15% 0.006 265)",
+          "oklch(25% 0.006 265)",
+          "oklch(35% 0.006 265)",
+          "oklch(45% 0.006 265)",
+          "oklch(55% 0.006 265)",
+          "oklch(68% 0.006 265)",
+          "oklch(82% 0.006 265)",
+          "oklch(95% 0.006 265)"
+        ]
+      },
+      "porcelain-fill-quiet": {
+        "role": "neutral",
+        "displayName": "Porcelain Quiet Fill",
+        "canonical": "#f3f4f7",
+        "tonalRamp": [
+          "oklch(15% 0.004 271)",
+          "oklch(25% 0.004 271)",
+          "oklch(35% 0.004 271)",
+          "oklch(45% 0.004 271)",
+          "oklch(55% 0.004 271)",
+          "oklch(68% 0.004 271)",
+          "oklch(82% 0.004 271)",
+          "oklch(95% 0.004 271)"
+        ]
+      },
+      "porcelain-label": {
+        "role": "neutral",
+        "displayName": "Porcelain Label",
+        "canonical": "#0f1523",
+        "tonalRamp": [
+          "oklch(15% 0.030 266)",
+          "oklch(25% 0.030 266)",
+          "oklch(35% 0.030 266)",
+          "oklch(45% 0.030 266)",
+          "oklch(55% 0.030 266)",
+          "oklch(68% 0.030 266)",
+          "oklch(82% 0.030 266)",
+          "oklch(95% 0.030 266)"
+        ]
+      },
+      "porcelain-label-secondary": {
+        "role": "neutral",
+        "displayName": "Porcelain Secondary Label",
+        "canonical": "#5d6576",
+        "tonalRamp": [
+          "oklch(15% 0.029 265)",
+          "oklch(25% 0.029 265)",
+          "oklch(35% 0.029 265)",
+          "oklch(45% 0.029 265)",
+          "oklch(55% 0.029 265)",
+          "oklch(68% 0.029 265)",
+          "oklch(82% 0.029 265)",
+          "oklch(95% 0.029 265)"
+        ]
+      },
+      "porcelain-label-tertiary": {
+        "role": "neutral",
+        "displayName": "Porcelain Tertiary Label",
+        "canonical": "#8e95a3",
+        "tonalRamp": [
+          "oklch(15% 0.022 264)",
+          "oklch(25% 0.022 264)",
+          "oklch(35% 0.022 264)",
+          "oklch(45% 0.022 264)",
+          "oklch(55% 0.022 264)",
+          "oklch(68% 0.022 264)",
+          "oklch(82% 0.022 264)",
+          "oklch(95% 0.022 264)"
+        ]
+      },
+      "porcelain-label-quaternary": {
+        "role": "neutral",
+        "displayName": "Porcelain Quaternary Label",
+        "canonical": "#cdd2da",
+        "tonalRamp": [
+          "oklch(15% 0.012 260)",
+          "oklch(25% 0.012 260)",
+          "oklch(35% 0.012 260)",
+          "oklch(45% 0.012 260)",
+          "oklch(55% 0.012 260)",
+          "oklch(68% 0.012 260)",
+          "oklch(82% 0.012 260)",
+          "oklch(95% 0.012 260)"
+        ]
+      },
+      "executive-navy": {
+        "role": "primary",
+        "displayName": "Executive Navy",
+        "canonical": "#1e3a8a",
+        "tonalRamp": [
+          "oklch(15% 0.138 266)",
+          "oklch(25% 0.138 266)",
+          "oklch(35% 0.138 266)",
+          "oklch(45% 0.138 266)",
+          "oklch(55% 0.138 266)",
+          "oklch(68% 0.138 266)",
+          "oklch(82% 0.138 266)",
+          "oklch(95% 0.138 266)"
+        ]
+      },
+      "executive-navy-hover": {
+        "role": "primary",
+        "displayName": "Executive Navy hover",
+        "canonical": "#25449e",
+        "tonalRamp": [
+          "oklch(15% 0.151 266)",
+          "oklch(25% 0.151 266)",
+          "oklch(35% 0.151 266)",
+          "oklch(45% 0.151 266)",
+          "oklch(55% 0.151 266)",
+          "oklch(68% 0.151 266)",
+          "oklch(82% 0.151 266)",
+          "oklch(95% 0.151 266)"
+        ]
+      },
+      "navy-wash": {
+        "role": "primary",
+        "displayName": "Navy Wash",
+        "canonical": "#dfe6fb",
+        "tonalRamp": [
+          "oklch(15% 0.029 271)",
+          "oklch(25% 0.029 271)",
+          "oklch(35% 0.029 271)",
+          "oklch(45% 0.029 271)",
+          "oklch(55% 0.029 271)",
+          "oklch(68% 0.029 271)",
+          "oklch(82% 0.029 271)",
+          "oklch(95% 0.029 271)"
+        ]
+      },
+      "navy-wash-faint": {
+        "role": "primary",
+        "displayName": "Faint Navy Wash",
+        "canonical": "#eef2fd",
+        "tonalRamp": [
+          "oklch(15% 0.015 270)",
+          "oklch(25% 0.015 270)",
+          "oklch(35% 0.015 270)",
+          "oklch(45% 0.015 270)",
+          "oklch(55% 0.015 270)",
+          "oklch(68% 0.015 270)",
+          "oklch(82% 0.015 270)",
+          "oklch(95% 0.015 270)"
+        ]
+      },
+      "navy-wash-border": {
+        "role": "primary",
+        "displayName": "Navy Wash Border",
+        "canonical": "#bccaf3",
+        "tonalRamp": [
+          "oklch(15% 0.059 270)",
+          "oklch(25% 0.059 270)",
+          "oklch(35% 0.059 270)",
+          "oklch(45% 0.059 270)",
+          "oklch(55% 0.059 270)",
+          "oklch(68% 0.059 270)",
+          "oklch(82% 0.059 270)",
+          "oklch(95% 0.059 270)"
+        ]
+      },
+      "on-navy": {
+        "role": "neutral",
+        "displayName": "On Navy",
+        "canonical": "#ffffff",
+        "tonalRamp": [
+          "oklch(15% 0.000 90)",
+          "oklch(25% 0.000 90)",
+          "oklch(35% 0.000 90)",
+          "oklch(45% 0.000 90)",
+          "oklch(55% 0.000 90)",
+          "oklch(68% 0.000 90)",
+          "oklch(82% 0.000 90)",
+          "oklch(95% 0.000 90)"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "The intro page's one headline."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Page titles; profiles at 36/42px."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Section headings and card titles."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Interface prose, summaries and subtitles."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Buttons, metadata rows and tags."
+      },
+      "reading": {
+        "displayName": "Reading",
+        "purpose": "Story bodies, 45–75 characters to the line; story titles at 42/50px."
+      },
+      "wordmark": {
+        "displayName": "Wordmark",
+        "purpose": "The name PathedIn only."
+      }
+    },
+    "shadows": [
+      {
+        "name": "surface-edge",
+        "value": "0 0 0 1px rgba(255,255,255,0.065), inset 0 1px 0 rgba(255,255,255,0.035)",
+        "purpose": "Every panel and card at rest (graphite)."
+      },
+      {
+        "name": "lift",
+        "value": "0 0 0 1px rgba(255,255,255,0.1), 0 8px 24px -10px rgba(0,0,0,0.6)",
+        "purpose": "A card under the pointer, with a 2px rise."
+      },
+      {
+        "name": "popover",
+        "value": "0 0 0 1px rgba(255,255,255,0.09), 0 2px 6px rgba(0,0,0,0.35), 0 16px 40px -12px rgba(0,0,0,0.7)",
+        "purpose": "Menus, tooltips and hover cards."
+      },
+      {
+        "name": "modal",
+        "value": "0 0 0 1px rgba(255,255,255,0.09), 0 32px 80px -20px rgba(0,0,0,0.8)",
+        "purpose": "Sheets and the command palette."
+      },
+      {
+        "name": "button-highlight",
+        "value": "inset 0 1px 0 rgba(255,255,255,0.14)",
+        "purpose": "The top light on navy buttons."
+      },
+      {
+        "name": "surface-edge-porcelain",
+        "value": "0 0 0 1px rgba(15,23,42,0.07), 0 1px 2px rgba(15,23,42,0.04)",
+        "purpose": "Panels at rest in the light appearance."
+      }
+    ],
+    "motion": [
+      {
+        "name": "ease-out",
+        "value": "cubic-bezier(0.16, 1, 0.3, 1)",
+        "purpose": "Confident arrivals: screens, overlays, hovers."
+      },
+      {
+        "name": "duration-feedback",
+        "value": "120ms",
+        "purpose": "Press, hover and colour feedback."
+      },
+      {
+        "name": "duration-state",
+        "value": "180ms",
+        "purpose": "Borders, focus and small state changes."
+      },
+      {
+        "name": "screen-change",
+        "value": "200ms ease-out, 8px rise with a 3px blur",
+        "purpose": "Moving between screens on desktop."
+      },
+      {
+        "name": "spring-snappy",
+        "value": "spring, response 0.32, damping 0.86",
+        "purpose": "Shared indicators: sidebar, palette row, session tile, time slot."
+      },
+      {
+        "name": "overlay-enter",
+        "value": "scale 0.98 to 1 with fade",
+        "purpose": "Sheets and the command palette."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "phone",
+        "value": "<768px"
+      },
+      {
+        "name": "tablet",
+        "value": "768px"
+      },
+      {
+        "name": "desktop",
+        "value": "1100px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "The one primary action in view: navy with a top light.",
+      "html": "<button class=\"ds-btn-primary\">Book a spot</button>",
+      "css": ".ds-btn-primary{height:36px;padding:0 14px;border:0;border-radius:var(--r-md,8px);background:var(--primary,#2c49b6);color:var(--on-primary,#fff);font:550 14px/1 'Schibsted Grotesk',Arial,sans-serif;letter-spacing:-0.006em;box-shadow:inset 0 1px 0 rgba(255,255,255,.14),0 1px 2px rgba(0,0,0,.25);cursor:pointer;transition:background-color 120ms cubic-bezier(.16,1,.3,1),transform 120ms}.ds-btn-primary:hover{background:var(--primary-hover,#3654c6)}.ds-btn-primary:active{transform:scale(.965)}.ds-btn-primary:focus-visible{outline:2px solid var(--tint,#8ea2f2);outline-offset:2px}"
+    },
+    {
+      "name": "Gray Button",
+      "kind": "button",
+      "refersTo": "button-gray",
+      "description": "Secondary actions such as Ask, Align and Message.",
+      "html": "<button class=\"ds-btn-gray\">Ask</button>",
+      "css": ".ds-btn-gray{height:30px;padding:0 12px;border:0;border-radius:var(--r-md,8px);background:var(--fill,#1c1f25);color:var(--label,#eceef2);font:550 13px/1 'Schibsted Grotesk',Arial,sans-serif;box-shadow:inset 0 0 0 1px var(--separator,rgba(255,255,255,.075));cursor:pointer;transition:background-color 120ms}.ds-btn-gray:hover{background:var(--bg-press,rgba(255,255,255,.08))}.ds-btn-gray:focus-visible{outline:2px solid var(--tint,#8ea2f2);outline-offset:2px}"
+    },
+    {
+      "name": "Tinted Button",
+      "kind": "button",
+      "refersTo": "button-gray",
+      "description": "Connect, and held states such as Booked.",
+      "html": "<button class=\"ds-btn-tinted\">Connect</button>",
+      "css": ".ds-btn-tinted{height:30px;padding:0 12px;border:0;border-radius:var(--r-md,8px);background:var(--tint-soft,rgba(142,162,242,.16));color:var(--tint-text,#a3b3f5);font:550 13px/1 'Schibsted Grotesk',Arial,sans-serif;cursor:pointer}.ds-btn-tinted:hover{background:rgba(142,162,242,.22)}.ds-btn-tinted:focus-visible{outline:2px solid var(--tint,#8ea2f2);outline-offset:2px}"
+    },
+    {
+      "name": "Text Field",
+      "kind": "input",
+      "refersTo": "input",
+      "description": "Fields on the quiet fill; focus turns the edge navy.",
+      "html": "<input class=\"ds-input\" placeholder=\"Anything Amara should read first?\">",
+      "css": ".ds-input{width:260px;height:40px;padding:0 12px;border:0;border-radius:var(--r-md,8px);background:var(--fill-3,#15171b);color:var(--label,#eceef2);font:400 14px 'Schibsted Grotesk',Arial,sans-serif;box-shadow:inset 0 0 0 1px var(--border,rgba(255,255,255,.09));outline:none;transition:box-shadow 180ms}.ds-input::placeholder{color:var(--label-3,#6c717d)}.ds-input:focus{box-shadow:inset 0 0 0 1px var(--tint,#8ea2f2),0 0 0 3px var(--tint-softer,rgba(142,162,242,.09))}"
+    },
+    {
+      "name": "Filter Tag",
+      "kind": "chip",
+      "refersTo": "tag",
+      "description": "Pills are for tags: the For you kind filter.",
+      "html": "<span class=\"ds-tag is-on\">All</span> <span class=\"ds-tag\">Stories</span>",
+      "css": ".ds-tag{display:inline-flex;align-items:center;height:30px;padding:0 12px;border-radius:999px;background:var(--fill-3,#15171b);box-shadow:inset 0 0 0 1px var(--separator,rgba(255,255,255,.075));color:var(--label-2,#9ba0ac);font:500 13px 'Schibsted Grotesk',Arial,sans-serif;cursor:pointer}.ds-tag:hover{box-shadow:inset 0 0 0 1px var(--border-strong,rgba(255,255,255,.16))}.ds-tag.is-on{background:var(--tint-soft,rgba(142,162,242,.16));box-shadow:inset 0 0 0 1px var(--tint-border,rgba(142,162,242,.34));color:var(--label,#eceef2)}"
+    },
+    {
+      "name": "Panel Card",
+      "kind": "card",
+      "refersTo": "card",
+      "description": "A panel one step up from the canvas, lifting under the pointer.",
+      "html": "<article class=\"ds-card\"><strong>Aisha Bello</strong><p>Associate Scientist, R&amp;D at Alden Therapeutics</p></article>",
+      "css": ".ds-card{width:260px;padding:18px;border-radius:var(--r-lg,12px);background:var(--bg-grouped,#111317);color:var(--label,#eceef2);font:400 13px/18px 'Schibsted Grotesk',Arial,sans-serif;box-shadow:0 0 0 1px rgba(255,255,255,.065),inset 0 1px 0 rgba(255,255,255,.035);transition:transform 300ms cubic-bezier(.16,1,.3,1),box-shadow 300ms}.ds-card strong{font-size:17px;line-height:22px;font-weight:600}.ds-card p{margin:4px 0 0;color:var(--label-2,#9ba0ac)}.ds-card:hover{transform:translateY(-2px);box-shadow:0 0 0 1px rgba(255,255,255,.1),0 8px 24px -10px rgba(0,0,0,.6)}"
+    },
+    {
+      "name": "Sidebar Row",
+      "kind": "nav",
+      "refersTo": "sidebar-item",
+      "description": "32px rows; the active row sits on a sliding selected surface.",
+      "html": "<nav class=\"ds-nav\"><a class=\"is-active\">Home</a><a>My Path</a><a>Discover</a></nav>",
+      "css": ".ds-nav{display:flex;flex-direction:column;width:220px;font:450 14px 'Schibsted Grotesk',Arial,sans-serif}.ds-nav a{height:32px;display:flex;align-items:center;padding:0 10px;border-radius:var(--r-sm,6px);color:var(--label-2,#9ba0ac);cursor:pointer;transition:color 120ms,background-color 120ms}.ds-nav a:hover{background:var(--bg-hover,rgba(255,255,255,.045));color:var(--label,#eceef2)}.ds-nav a.is-active{background:var(--bg-selected,rgba(255,255,255,.065));box-shadow:inset 0 0 0 1px var(--separator,rgba(255,255,255,.075));color:var(--label,#eceef2);font-weight:550}"
+    },
+    {
+      "name": "Route Band",
+      "kind": "custom",
+      "refersTo": "card",
+      "description": "A person's Path across the top of their card; shared steps lit navy.",
+      "html": "<div class=\"ds-band\"><i style=\"left:8%;width:28%\" class=\"lit\"></i><i style=\"left:36%;width:28%\"></i><i style=\"left:64%;width:28%\" class=\"fut\"></i><b style=\"left:8%\" class=\"lit\"></b><b style=\"left:36%\" class=\"lit\"></b><b style=\"left:64%\" class=\"now\"></b><b style=\"left:92%\" class=\"dest\"></b></div>",
+      "css": ".ds-band{position:relative;width:280px;height:64px;border-radius:12px 12px 0 0;background:var(--bg-sunken,#08090b)}.ds-band i{position:absolute;top:22px;height:3px;margin-top:-1.5px;background:var(--label-4,#3a3e47)}.ds-band i.lit{background:var(--tint,#8ea2f2)}.ds-band i.fut{background:repeating-linear-gradient(90deg,var(--tint,#8ea2f2) 0 5px,transparent 5px 10px)}.ds-band b{position:absolute;top:22px;width:11px;height:11px;margin:-5.5px 0 0 -5.5px;border-radius:50%;background:var(--label-3,#6c717d);box-shadow:0 0 0 3px var(--bg-sunken,#08090b)}.ds-band b.lit{background:var(--tint,#8ea2f2)}.ds-band b.now{width:15px;height:15px;margin:-7.5px 0 0 -7.5px;background:radial-gradient(circle,var(--tint,#8ea2f2) 0 3px,var(--bg-sunken,#08090b) 3.6px);box-shadow:inset 0 0 0 2.5px var(--ink,#e4e7ec),0 0 0 3px var(--bg-sunken,#08090b)}.ds-band b.dest{width:14px;height:14px;margin:-7px 0 0 -7px;background:var(--bg-sunken,#08090b);box-shadow:inset 0 0 0 2px var(--tint,#8ea2f2),0 0 0 3px var(--bg-sunken,#08090b)}"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Night Transit Map",
+    "overview": "PathedIn is a precise instrument for a big decision. The screen is a quiet map at night: layered graphite surfaces, thin lit edges, and one bright line, the Path, running through it in Executive Navy. Everything else steps back so that line, and the people standing on it, carry the page. The references are Linear, Arc and Raycast, chosen by the user: crisp, fast, layered, excellent in the dark, and moving with purpose.\n\nDensity is an app's density, not a magazine's. Rows are 32px, controls are 30 to 44px, and titles are sized to orient rather than to perform. Surfaces step up in value as they come forward, each carrying a 1px edge and a faint light along its top, and the things that float add a soft offset shadow. Motion is short and physical. A selected surface slides between rows, screens arrive with a 200 ms rise, and overlays grow in from 0.98. One keystroke, ⌘K, reaches anyone or anything.\n\nGraphite is the default and Porcelain is its daylight twin: the same system, a cool near-white canvas with white panels and Executive Navy at full depth. The cream paper ground and the serif-led reading-app look of the earlier PathedIn are gone, and so is the near-black neon-glow template this world could slide into.",
+    "keyCharacteristics": [
+      "One bright thing per screen: the Path, in navy. Everything else is graphite and grey.",
+      "Surfaces are layered by value and edge light, never by glow.",
+      "Schibsted Grotesk for every interface word and heading. Charter only for long-form reading, and the Playfair wordmark only for the name.",
+      "Pills are for tags and counts. Everything you press is a gently rounded rectangle.",
+      "Keyboard first: ⌘K, arrow keys, and keycaps shown beside what they trigger."
+    ],
+    "rules": [
+      {
+        "name": "The One Bright Line Rule",
+        "body": "Navy belongs to the Path, to \"you\", and to the one primary action in view. If a second thing on the screen is navy for decoration, it isn't navy.",
+        "section": "colors"
+      },
+      {
+        "name": "The No Glow Rule",
+        "body": "Depth comes from value steps, a 1px edge and offset shadows. Coloured halos, gradient blooms and neon edges are not part of this world.",
+        "section": "colors"
+      },
+      {
+        "name": "The Three Faces Rule",
+        "body": "Schibsted Grotesk does every job except long-form reading (Charter) and the name (Playfair). A fourth face needs a role none of these can do.",
+        "section": "typography"
+      },
+      {
+        "name": "The Arrow Rule",
+        "body": "Paths are written \"MSc Chem → Pharma R&D\". The arrows come from the face's own glyphs, subset from the full family, never from a fallback font.",
+        "section": "typography"
+      },
+      {
+        "name": "The Lit Edge Rule",
+        "body": "A raised surface earns its place with a 1px edge and a top highlight, not with a heavier shadow. Shadows are for things that genuinely float.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "**Do** keep navy for the Path, \"you\", the future and the single primary action in view.",
+      "**Do** raise surfaces with value and the 1px lit edge before reaching for a shadow.",
+      "**Do** use 8px corners for anything pressed and 12px for panels, and keep pills for tags and counts.",
+      "**Do** show the keyboard: keycaps beside shortcuts, arrow-key navigation in lists and the palette.",
+      "**Do** move with purpose: 120–180 ms for feedback, springs for shared indicators, a 200 ms rise between screens, and overlays growing from 0.98. Respect Reduce Motion.",
+      "**Do** draw every Path with the transit vocabulary: solid walked track, ringed present, dashed navy future, open destination."
+    ],
+    "donts": [
+      "**Don't** bring back the cream paper ground, the serif-led reading-app look, or Medium's black pills.",
+      "**Don't** use glows, gradient text, neon edges or coloured side stripes.",
+      "**Don't** set a label above a heading as a kicker or eyebrow. Metadata rows name the post's kind and its stretch of the Path, and headings carry their own weight.",
+      "**Don't** set interface text in Charter or Playfair, or reach for Inter, Geist or Mona Sans as the interface face.",
+      "**Don't** use Unicode glyphs or emoji as icons. Icons are drawn SVG in one stroke weight."
+    ]
+  }
+}
