@@ -19,6 +19,7 @@ import { compactSteps, current, primaryDestination, relationTo, stepTitle } from
 import { springs, useIsMobile } from '../lib/motion';
 import { useApp } from '../lib/store';
 import { useUI } from '../lib/ui';
+import { switchTheme } from '../lib/theme';
 import { NotFound } from './NotFound';
 import { BookButton } from '../components/Booking';
 import { useOpenSpots } from '../lib/booking';
@@ -29,7 +30,6 @@ function YourSpace() {
   const connections = useApp((s) => s.connections);
   const saved = useApp((s) => s.saved);
   const theme = useApp((s) => s.theme);
-  const setTheme = useApp((s) => s.setTheme);
   const signOut = useApp((s) => s.signOut);
   const incoming = requests.filter((r) => r.to === ME && r.status === 'pending').length;
   const next = { system: 'light', light: 'dark', dark: 'system' } as const;
@@ -45,7 +45,7 @@ function YourSpace() {
             icon: theme === 'dark' ? <IconMoon /> : <IconSun />,
             title: 'Appearance',
             value: theme === 'system' ? 'Automatic' : theme === 'dark' ? 'Dark' : 'Light',
-            onClick: () => setTheme(next[theme]),
+            onClick: (e) => switchTheme(next[theme], e),
           },
           { icon: <IconUser />, title: 'Sign out', onClick: signOut },
         ]}

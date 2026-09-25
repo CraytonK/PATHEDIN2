@@ -45,10 +45,20 @@
   justify-content: space-between;
   gap: 16px;
   padding: 0 16px 0 12px;
+  /* At the top the bar is part of the page; once content slides beneath it, it frosts and takes its edge. */
+  background: var(--bg);
+  border-bottom: 1px solid transparent;
+  transition:
+    background-color 240ms var(--ease-out),
+    border-color 240ms var(--ease-out),
+    -webkit-backdrop-filter 240ms var(--ease-out),
+    backdrop-filter 240ms var(--ease-out);
+}
+.mbar.is-scrolled {
   background: var(--bar-bg);
   -webkit-backdrop-filter: var(--bar-blur);
   backdrop-filter: var(--bar-blur);
-  border-bottom: 1px solid var(--separator);
+  border-bottom-color: var(--separator);
 }
 .mbar__left,
 .mbar__right {
@@ -439,6 +449,9 @@
   display: inline-flex;
   height: 29px;
   align-items: center;
+}
+.tabbar__glyph {
+  display: inline-flex;
 }
 .tabbar__icon .badge {
   top: -3px;

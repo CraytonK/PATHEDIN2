@@ -8,6 +8,7 @@ import { springs } from '../lib/motion';
 import { relationTo } from '../lib/relations';
 import { search, type Result } from '../lib/search';
 import { useApp } from '../lib/store';
+import { switchTheme } from '../lib/theme';
 import { useUI } from '../lib/ui';
 import { IconAlign, IconArrowUpRight, IconBook, IconCalendar, IconCompass, IconCompose, IconFlag, IconMoon, IconPath, IconPeople, IconQuestion, IconSearch, IconSend, IconSun } from './icons';
 import { AvatarStack } from './ui';
@@ -44,7 +45,6 @@ export function CommandPalette() {
   const openCompare = useUI((s) => s.openCompare);
   const openBooking = useUI((s) => s.openBooking);
   const theme = useApp((s) => s.theme);
-  const setTheme = useApp((s) => s.setTheme);
   const navigate = useNavigate();
   const [q, setQ] = useState('');
   const [active, setActive] = useState(0);
@@ -91,8 +91,9 @@ export function CommandPalette() {
         title: dark ? 'Switch to light appearance' : 'Switch to dark appearance',
         lead: dark ? <IconSun size={17} /> : <IconMoon size={17} />,
         run: () => {
-          setTheme(dark ? 'light' : 'dark');
+          const from = document.querySelector('.cmdk__item.is-active');
           setOpen(false);
+          switchTheme(dark ? 'light' : 'dark', from);
         },
       },
     ];

@@ -5,9 +5,10 @@ import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { me } from '../data/people';
 import { communities } from '../data/communities';
 import { notificationList, conversationList } from '../data/social';
-import { easings, springs, useIsMobile, useMediaQuery, haptic } from '../lib/motion';
+import { easings, springs, useIsMobile, useMediaQuery, useScrolled, haptic } from '../lib/motion';
 import { useApp } from '../lib/store';
 import { useUI } from '../lib/ui';
+import { switchTheme } from '../lib/theme';
 import {
   IconBell,
   IconChevronLeft,
@@ -32,7 +33,7 @@ import {
   IconFlag,
   IconPlus,
 } from './icons';
-import { IconButton } from './ui';
+import { IconButton, Rolling } from './ui';
 import './chrome.css';
 
 /* ── Primary sections ───────────────────────────────────────── */
@@ -94,8 +95,9 @@ export function TopBar() {
   const drawer = useUI((s) => s.drawer);
   const setDrawer = useUI((s) => s.setDrawer);
   const open = docked ? sidebar : drawer;
+  const scrolled = useScrolled();
   return (
-    <header className="mbar">
+    <header className={`mbar ${scrolled ? 'is-scrolled' : ''}`}>
       <div className="mbar__left">
         <button
           className="mbar__menu"
@@ -199,7 +201,7 @@ export function Sidebar() {
                       <Icon size={18} filled={active} strokeWidth={1.7} />
                     </span>
                     <span className="sidebar__label">{item.label}</span>
-                    {!!item.badge && <span className="sidebar__badge">{item.badge}</span>}
+                    {!!item.badge && <span className="sidebar__badge"><Rolling value={item.badge} /></span>}
                   </NavLink>
                 </li>
               );
@@ -240,7 +242,6 @@ function AccountMenu() {
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
   const theme = useApp((s) => s.theme);
-  const setTheme = useApp((s) => s.setTheme);
   const signOut = useApp((s) => s.signOut);
   const unread = useUnread();
   const ref = useRef<HTMLDivElement>(null);
@@ -289,7 +290,7 @@ function AccountMenu() {
               </button>
             </div>
             <div className="menu__group">
-              <button className="menu__item" onClick={() => setTheme(isDark ? 'light' : 'dark')}>
+              <button className="menu__item" onClick={(e) => switchTheme(isDark ? 'light' : 'dark', e)}>
                 {isDark ? <IconSun size={19} /> : <IconMoon size={19} />} {isDark ? 'Light appearance' : 'Dark appearance'}
               </button>
             </div>
@@ -341,6 +342,11 @@ export function TabBar() {
   const { pathname } = useLocation();
   const unread = useUnread();
   const current = useActiveSection(pathname);
+  // No pop on first paint; only when you change tabs.
+  const settled = useRef(false);
+  useEffect(() => {
+    settled.current = true;
+  }, []);
   return (
     <nav className="tabbar" aria-label="Primary">
       {sections.map((s) => {
@@ -359,8 +365,17 @@ export function TabBar() {
             }}
           >
             <motion.span className="tabbar__icon" whileTap={{ scale: 0.86 }} transition={springs.press}>
-              <Icon size={27} filled={active} strokeWidth={active ? 1.9 : 1.6} />
-              {badge > 0 && <span className="badge t-caption2">{badge}</span>}
+              {/* The chosen tab's icon fills and settles into place, like a tab bar on iPhone. */}
+              <motion.span
+                key={active ? 'on' : 'off'}
+                className="tabbar__glyph"
+                initial={active && settled.current ? { scale: 0.78 } : false}
+                animate={{ scale: 1 }}
+                transition={springs.settle}
+              >
+                <Icon size={27} filled={active} strokeWidth={active ? 1.9 : 1.6} />
+              </motion.span>
+              {badge > 0 && <span className="badge t-caption2"><Rolling value={badge} /></span>}
             </motion.span>
             <span className="tabbar__label">{s.label}</span>
           </NavLink>

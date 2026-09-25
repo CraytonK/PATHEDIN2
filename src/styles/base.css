@@ -167,6 +167,11 @@ ol {
   [data-tip][aria-expanded='true']::before {
     display: none;
   }
+  /* Once one tooltip is showing, its neighbours answer without the wait. */
+  :root[data-tips-warm] [data-tip]:hover::after,
+  :root[data-tips-warm] [data-tip]:hover::before {
+    transition-delay: 0ms;
+  }
 }
 
 /* ── Type ramp: HIG roles, in three faces ──
@@ -412,4 +417,117 @@ ol {
 .thread-peek__bubble,
 .req__segs {
   box-shadow: var(--surface-edge);
+}
+
+/* ── Interaction language ───────────────────────────────────────
+   Pointer: cards that open something catch light on their edge where the cursor is (lib/pointer.ts writes
+   --mx and --my), and arrows lean toward where they lead. Touch: cards give a little under a finger and
+   spring back when released. Everything is transform, opacity or a masked gradient. */
+@media (hover: hover) and (pointer: fine) {
+  .dcard::after,
+  .gcard::after,
+  .fguide::after,
+  .door__top::after,
+  .route-post::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    padding: 1px;
+    border-radius: inherit;
+    background: radial-gradient(260px circle at var(--mx, 50%) var(--my, 0%), var(--edge-light), transparent 70%);
+    -webkit-mask:
+      linear-gradient(#000 0 0) content-box,
+      linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask:
+      linear-gradient(#000 0 0) content-box exclude,
+      linear-gradient(#000 0 0);
+    opacity: 0;
+    transition: opacity 320ms var(--ease-out);
+    pointer-events: none;
+  }
+  .dcard:hover::after,
+  .gcard:hover::after,
+  .fguide:hover::after,
+  .door:hover .door__top::after,
+  .route-post:hover::after {
+    opacity: 1;
+  }
+
+  svg[data-dir='forward'],
+  svg[data-dir='out'] {
+    transition: transform 240ms var(--ease-out);
+  }
+  a:hover svg[data-dir='forward'],
+  button:hover svg[data-dir='forward'],
+  [role='option']:hover svg[data-dir='forward'] {
+    transform: translateX(2px);
+  }
+  a:hover svg[data-dir='out'],
+  button:hover svg[data-dir='out'],
+  [role='option']:hover svg[data-dir='out'] {
+    transform: translate(1.5px, -1.5px);
+  }
+}
+.gcard,
+.fguide,
+.route-post {
+  position: relative;
+}
+
+@media (hover: none) {
+  .dcard,
+  .gcard,
+  .person-tile,
+  .door,
+  .upnext--cards .upnext__item,
+  .story-item {
+    transition: transform 380ms var(--ease-out);
+  }
+  .dcard:active,
+  .gcard:active,
+  .person-tile:active,
+  .door:active,
+  .upnext--cards .upnext__item:active,
+  .story-item:active {
+    transform: scale(0.975);
+    transition-duration: 90ms;
+  }
+  /* A control inside a card takes the press for itself. */
+  .dcard:has(button:active),
+  .gcard:has(button:active),
+  .person-tile:has(button:active) {
+    transform: none;
+  }
+}
+
+/* ── Appearance switch: the new theme opens in a circle from where you switched (lib/theme.ts) ── */
+:root[data-vt='theme']::view-transition-old(root),
+:root[data-vt='theme']::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+:root[data-vt='theme']::view-transition-new(root) {
+  animation: theme-reveal 620ms var(--ease-out);
+}
+@keyframes theme-reveal {
+  from {
+    clip-path: circle(0 at var(--vt-x) var(--vt-y));
+  }
+  to {
+    clip-path: circle(var(--vt-r) at var(--vt-x) var(--vt-y));
+  }
+}
+
+/* ── Rolling numbers: a count that changes rolls to its new value (ui.tsx Rolling) ── */
+.roll {
+  position: relative;
+  display: inline-flex;
+  overflow: hidden;
+  vertical-align: bottom;
+  font-variant-numeric: tabular-nums;
+}
+.roll > span {
+  display: inline-block;
 }

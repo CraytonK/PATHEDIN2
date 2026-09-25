@@ -186,7 +186,7 @@ export function GuidePost({ id, move, why, i = 0 }: { id: string; move?: [string
       <div className="fguide">
         <KindLabel kind="guide" note={hours.open > 0 ? 'Office Hours this week' : undefined} />
         <div className="fguide__top">
-          <Link to={`/p/${id}`} className="fguide__photo" tabIndex={-1} aria-hidden="true">
+          <Link to={`/p/${id}`} className="fguide__photo" data-portrait={id} tabIndex={-1} aria-hidden="true">
             <img src={g.photo} alt="" loading="lazy" />
           </Link>
           <div className="fguide__who">

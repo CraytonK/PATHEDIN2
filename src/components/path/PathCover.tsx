@@ -6,6 +6,7 @@ import { wp } from '../../data/waypoints';
 import { edgeClass, springs, useScrollEdges } from '../../lib/motion';
 import { futureWaypoints, relationTo, stepsWithFuture, yearsLabel } from '../../lib/relations';
 import { useUI } from '../../lib/ui';
+import { useFlight } from '../../lib/flight';
 import './pcover.css';
 
 /*
@@ -29,6 +30,10 @@ export function PathCover({ id }: { id: string }) {
   const scroller = useRef<HTMLOListElement>(null);
   const edges = useScrollEdges(scroller);
   const common = steps.filter((s) => shared.has(s.wp)).length;
+  // When their portrait is flying in from the card you tapped, the station waits for it.
+  const incoming = useFlight((f) => f.flight?.id === id);
+  const landed = useFlight((f) => f.landed);
+  const waiting = incoming && !landed;
 
   // When the line is wider than the screen, open on where they are now rather than where they started.
   useLayoutEffect(() => {
@@ -58,12 +63,14 @@ export function PathCover({ id }: { id: string }) {
                 )}
                 {kind === 'present' ? (
                   <motion.img
-                    className="pcover__face"
+                    className={`pcover__face ${incoming && landed ? 'is-landed' : ''}`}
                     src={p.photo}
                     alt=""
-                    initial={{ scale: 0.6, opacity: 0 }}
-                    animate={{ scale: 1, opacity: 1 }}
-                    transition={{ ...springs.settle, delay: 0.15 + i * 0.1 }}
+                    data-flight-target={id}
+                    initial={incoming ? { scale: 1, opacity: 0 } : { scale: 0.6, opacity: 0 }}
+                    animate={{ scale: 1, opacity: waiting ? 0 : 1 }}
+                    // Taking over from a landed portrait is a cut, not a fade: the two are the same image in the same place.
+                    transition={incoming ? { duration: 0 } : { ...springs.settle, delay: 0.15 + i * 0.1 }}
                   />
                 ) : (
                   <motion.span className="pcover__node" initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ ...springs.settle, delay: 0.15 + i * 0.1 }} />

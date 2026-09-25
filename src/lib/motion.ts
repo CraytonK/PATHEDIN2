@@ -58,6 +58,18 @@ export function haptic(pattern: number | number[] = 8) {
   }
 }
 
+/** Whether the page has scrolled under the top edge, for chrome that only needs its edge once content passes beneath it. */
+export function useScrolled(offset = 2) {
+  const [scrolled, setScrolled] = useState(() => typeof window !== 'undefined' && window.scrollY > offset);
+  useEffect(() => {
+    const on = () => setScrolled(window.scrollY > offset);
+    on();
+    window.addEventListener('scroll', on, { passive: true });
+    return () => window.removeEventListener('scroll', on);
+  }, [offset]);
+  return scrolled;
+}
+
 /**
  * Which way the reader is scrolling. Reading chrome hides on the way down and returns
  * on the first flick up, and always shows near the top and the end of the page.

@@ -86,6 +86,24 @@
     0 0 0 3px var(--tint),
     0 0 0 7px var(--bg-grouped);
 }
+/* The portrait has landed on its station: the ring answers once, outward. */
+.pcover__face.is-landed {
+  animation: pcover-land 560ms var(--ease-out);
+}
+@keyframes pcover-land {
+  0% {
+    box-shadow:
+      0 0 0 3px var(--tint),
+      0 0 0 7px var(--bg-grouped),
+      0 0 0 7px var(--tint-border);
+  }
+  100% {
+    box-shadow:
+      0 0 0 3px var(--tint),
+      0 0 0 7px var(--bg-grouped),
+      0 0 0 20px transparent;
+  }
+}
 /* Your own face, on a step you both took. */
 .pcover__you {
   position: absolute;

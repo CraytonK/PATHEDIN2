@@ -7,6 +7,7 @@ import { RouteBand } from '../components/path/RouteBand';
 import { BookButton } from '../components/Booking';
 import { useOpenSpots } from '../lib/booking';
 import { useUI } from '../lib/ui';
+import { flyFrom } from '../lib/flight';
 import { Ecosystem, RouteLine } from '../components/Ecosystem';
 import { CommunityRow, CommunityTitle, ConnectButton, JoinButton, PersonRow, RequestButton } from '../components/content';
 import { SearchField, SearchResults } from '../components/SearchLayer';
@@ -174,7 +175,10 @@ function PersonCard({ id, why }: { id: string; why?: string }) {
   const openCompare = useUI((s) => s.openCompare);
   const shared = rel.shared?.length ?? 0;
   return (
-    <article className="dcard dcard--person" onClick={() => navigate(`/p/${id}`)}>
+    <article className="dcard dcard--person" onClick={(e) => {
+        flyFrom(id, e.currentTarget);
+        navigate(`/p/${id}`);
+      }}>
       <RouteBand id={id} />
       <div className="dcard__inner">
         <div className="dcard__top">
@@ -218,7 +222,10 @@ function GuideCard({ id }: { id: string }) {
   const navigate = useNavigate();
   const spots = useOpenSpots(id);
   return (
-    <article className="dcard dcard--person dcard--guide" onClick={() => navigate(`/p/${id}`)}>
+    <article className="dcard dcard--person dcard--guide" onClick={(e) => {
+        flyFrom(id, e.currentTarget);
+        navigate(`/p/${id}`);
+      }}>
       <RouteBand id={id} segment={move} />
       <div className="dcard__inner">
         <div className="dcard__top">

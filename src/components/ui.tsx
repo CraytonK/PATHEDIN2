@@ -1,5 +1,5 @@
 import { AnimatePresence, motion, type HTMLMotionProps } from 'framer-motion';
-import { forwardRef, useLayoutEffect, useRef, useState, type ReactNode } from 'react';
+import { forwardRef, useLayoutEffect, useRef, useState, type MouseEvent as ReactMouseEvent, type ReactNode } from 'react';
 import { Link } from 'react-router-dom';
 import { springs, haptic } from '../lib/motion';
 import { people } from '../data/people';
@@ -29,7 +29,7 @@ export function Avatar({
   const [loaded, setLoaded] = useState(false);
   if (!p) return null;
   return (
-    <span className={`avatar ${ring ? 'avatar--ring' : ''} ${className}`} style={{ width: size, height: size }} {...handlers}>
+    <span className={`avatar ${ring ? 'avatar--ring' : ''} ${className}`} style={{ width: size, height: size }} data-portrait={id} {...handlers}>
       <img
         src={p.photo}
         alt=""
@@ -150,7 +150,7 @@ export function IconButton({
       }}
     >
       {children}
-      {!!badge && <span className="badge t-caption2">{badge}</span>}
+      {!!badge && <span className="badge t-caption2"><Rolling value={badge} /></span>}
     </motion.button>
   );
 }
@@ -180,6 +180,34 @@ export function SaveToggle({ saveKey, label = 'Save', compact }: { saveKey: stri
       </motion.span>
       {!compact && <span className="t-footnote">{saved ? 'Saved' : label}</span>}
     </motion.button>
+  );
+}
+
+/* ── Rolling number ─────────────────────────────────────────────
+   A count that changes rolls to its new value: up when it grows, down when it shrinks, so the change is
+   seen rather than just noticed later. */
+
+export function Rolling({ value, format = (n: number) => n.toLocaleString('en-CA'), className = '' }: { value: number; format?: (n: number) => string; className?: string }) {
+  const prev = useRef(value);
+  const dir = value >= prev.current ? 1 : -1;
+  useLayoutEffect(() => {
+    prev.current = value;
+  }, [value]);
+  const text = format(value);
+  return (
+    <span className={`roll ${className}`}>
+      <AnimatePresence initial={false} mode="popLayout">
+        <motion.span
+          key={text}
+          initial={{ y: `${dir * 80}%`, opacity: 0 }}
+          animate={{ y: '0%', opacity: 1 }}
+          exit={{ y: `${-dir * 80}%`, opacity: 0 }}
+          transition={springs.snappy}
+        >
+          {text}
+        </motion.span>
+      </AnimatePresence>
+    </span>
   );
 }
 
@@ -229,7 +257,10 @@ export function Helpful({ helpKey, count, compact }: { helpKey: string; count: n
           )}
         </AnimatePresence>
       </span>
-      <span className="t-footnote t-num">{compact ? total.toLocaleString('en-CA') : `${total.toLocaleString('en-CA')} found this helpful`}</span>
+      <span className="t-footnote t-num">
+        <Rolling value={total} />
+        {compact ? '' : ' found this helpful'}
+      </span>
     </motion.button>
   );
 }
@@ -309,9 +340,28 @@ export function TextTabs<T extends string>({
   onChange: (v: T) => void;
 }) {
   const [ref, box] = useActiveBox(value);
+  // A quiet surface follows the pointer across the tabs, so you can see which one you're about to choose.
+  // It appears where you first point, then slides; it never moves on touch.
+  const [hover, setHover] = useState<{ left: number; width: number; slide: boolean } | null>(null);
+  const shown = useRef(false);
   return (
-    <div ref={ref} className="text-tabs" role="tablist">
+    <div
+      ref={ref}
+      className="text-tabs"
+      role="tablist"
+      onPointerLeave={() => {
+        shown.current = false;
+        setHover(null);
+      }}
+    >
       {box && <motion.span className="text-tabs__bar" initial={false} animate={{ x: box.left, width: box.width }} transition={springs.snappy} />}
+      <motion.span
+        className="text-tabs__hover"
+        aria-hidden="true"
+        initial={false}
+        animate={hover ? { x: hover.left - 10, width: hover.width + 20, opacity: 1 } : { opacity: 0 }}
+        transition={hover?.slide ? springs.snappy : { x: { duration: 0 }, width: { duration: 0 }, opacity: { duration: 0.15 } }}
+      />
       {options.map((o) => {
         const active = o.value === value;
         return (
@@ -321,6 +371,12 @@ export function TextTabs<T extends string>({
             aria-selected={active}
             data-value={o.value}
             className={`text-tabs__item ${active ? 'is-active' : ''}`}
+            onPointerEnter={(e) => {
+              if (e.pointerType !== 'mouse') return;
+              const el = e.currentTarget;
+              setHover({ left: el.offsetLeft, width: el.offsetWidth, slide: shown.current });
+              shown.current = true;
+            }}
             onClick={() => {
               if (!active) haptic(4);
               onChange(o.value);
@@ -446,7 +502,7 @@ export interface ListRow {
   detail?: string;
   value?: ReactNode;
   to?: string;
-  onClick?: () => void;
+  onClick?: (e: ReactMouseEvent<HTMLButtonElement>) => void;
 }
 
 export function GroupedList({ rows, header }: { rows: ListRow[]; header?: string }) {

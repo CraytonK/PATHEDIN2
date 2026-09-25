@@ -1,4 +1,4 @@
-import { motion, useScroll, useSpring } from 'framer-motion';
+import { motion, useScroll, useSpring, useTransform } from 'framer-motion';
 import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { Page } from '../components/chrome';
@@ -33,6 +33,8 @@ export function StoryScreen() {
   const [quote, setQuote] = useState<string | undefined>();
   const { scrollYProgress } = useScroll();
   const progress = useSpring(scrollYProgress, { stiffness: 200, damping: 30 });
+  const walker = useTransform(progress, (v) => `${v * 100}%`);
+  const walkerShown = useTransform(progress, [0, 0.015], [0, 1]);
   if (!s) return <NotFound />;
   const a = people[s.author];
   const rel = relationTo(s.author);
@@ -75,7 +77,10 @@ export function StoryScreen() {
 
   return (
     <Page title={s.title} large={false} back="Stories" className={`page--article ${reading ? 'is-reading' : ''}`}>
-      <motion.div className="story__progress" style={{ scaleX: progress }} />
+      <div className="story__progress" aria-hidden="true">
+        <motion.span className="story__progress-walked" style={{ scaleX: progress }} />
+        <motion.span className="story__progress-walker" style={{ x: walker, opacity: walkerShown }} />
+      </div>
       <article className="story">
         <header className="story__head">
           <TopicPills ids={s.communities} />

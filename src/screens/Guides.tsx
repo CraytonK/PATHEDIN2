@@ -36,7 +36,7 @@ function GuideCard({ id, from, to }: { id: string; from: string; to: string }) {
   const spots = useOpenSpots(id);
   return (
     <motion.article className="gcard" initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={springs.smooth}>
-      <Link to={`/p/${id}`} className="gcard__photo" {...handlers}>
+      <Link to={`/p/${id}`} className="gcard__photo" data-portrait={id} {...handlers}>
         <img src={g.photo} alt="" loading="lazy" />
       </Link>
       <div className="gcard__body">

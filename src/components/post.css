@@ -48,6 +48,27 @@
   .post:hover::before {
     opacity: 1;
   }
+  /* The photo leans in a little while the row is under the pointer. */
+  .post:hover .post__thumb--photo img {
+    transform: scale(1.04);
+  }
+}
+/* Under a finger the row lights at once, and fades as it lets go. */
+@media (hover: none) {
+  .post::before {
+    content: '';
+    position: absolute;
+    inset: 6px calc(var(--gutter) * -0.5);
+    z-index: -1;
+    border-radius: var(--r-lg);
+    background: var(--bg-press);
+    opacity: 0;
+    transition: opacity 260ms var(--ease-out);
+  }
+  .post:active::before {
+    opacity: 1;
+    transition-duration: 40ms;
+  }
 }
 .post:last-child {
   border-bottom: 0;
@@ -190,7 +211,7 @@
   width: 160px;
   height: 107px;
   overflow: hidden;
-  border-radius: 2px;
+  border-radius: var(--r-md);
   background: var(--bg-grouped);
   display: flex;
   align-items: center;
@@ -208,6 +229,7 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
+  transition: transform 700ms var(--ease-out);
 }
 @media (hover: hover) {
   .post__link:hover .post__title {

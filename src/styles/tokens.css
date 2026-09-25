@@ -95,6 +95,8 @@
   --shadow-lift: 0 0 0 1px rgba(255, 255, 255, 0.1), 0 8px 24px -10px rgba(0, 0, 0, 0.6);
   --btn-highlight: inset 0 1px 0 rgba(255, 255, 255, 0.14);
   --scrim: rgba(3, 4, 6, 0.62);
+  /* The light a card's edge catches where the pointer is. */
+  --edge-light: rgba(255, 255, 255, 0.34);
   --scrim-soft: rgba(11, 12, 15, 0.6);
   --tip-bg: #262930;
   --tip-fg: #eceef2;
@@ -189,6 +191,7 @@
   --shadow-lift: 0 0 0 1px rgba(15, 23, 42, 0.09), 0 8px 24px -10px rgba(15, 23, 42, 0.25);
   --btn-highlight: inset 0 1px 0 rgba(255, 255, 255, 0.16);
   --scrim: rgba(15, 21, 35, 0.32);
+  --edge-light: rgba(30, 58, 138, 0.42);
   --scrim-soft: rgba(245, 246, 248, 0.6);
   --tip-bg: #0f1523;
   --tip-fg: #ffffff;
@@ -244,6 +247,7 @@
     --shadow-lift: 0 0 0 1px rgba(15, 23, 42, 0.09), 0 8px 24px -10px rgba(15, 23, 42, 0.25);
     --btn-highlight: inset 0 1px 0 rgba(255, 255, 255, 0.16);
     --scrim: rgba(15, 21, 35, 0.32);
+    --edge-light: rgba(30, 58, 138, 0.42);
     --scrim-soft: rgba(245, 246, 248, 0.6);
     --tip-bg: #0f1523;
     --tip-fg: #ffffff;

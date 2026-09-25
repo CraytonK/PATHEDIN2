@@ -5,6 +5,7 @@ import { people, peopleList, ME } from '../../data/people';
 import { relationTo, type RelationKind } from '../../lib/relations';
 import { springs, useIsMobile } from '../../lib/motion';
 import { usePeek } from '../Peek';
+import { flyFrom } from '../../lib/flight';
 import './lens.css';
 
 /*
@@ -40,7 +41,11 @@ function Face({ id, x, y, size, dim, delay }: { id: string; x: number; y: number
       animate={{ opacity: dim ? 0.18 : 1, scale: dim ? 0.86 : 1 }}
       whileHover={{ scale: 1.12, zIndex: 5 }}
       transition={{ ...springs.settle, delay: first.current ? delay : 0 }}
-      onClick={() => navigate(`/p/${id}`)}
+      data-portrait={id}
+      onClick={(e) => {
+        flyFrom(id, e.currentTarget);
+        navigate(`/p/${id}`);
+      }}
       aria-label={`${people[id].name}, ${relationTo(id).label}`}
       {...handlers}
     >

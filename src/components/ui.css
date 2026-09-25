@@ -401,6 +401,20 @@
   color: var(--label-3);
   font-weight: 500;
 }
+.text-tabs__hover {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  height: 30px;
+  margin-top: -15px;
+  border-radius: var(--r-sm);
+  background: var(--bg-hover);
+  pointer-events: none;
+  opacity: 0;
+}
+.text-tabs__item {
+  z-index: 1;
+}
 .text-tabs__bar {
   position: absolute;
   left: 0;

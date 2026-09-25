@@ -143,8 +143,10 @@
     box-shadow: var(--shadow-lift);
   }
 }
-.dcard:active {
-  transform: translateY(0) scale(0.995);
+@media (hover: hover) {
+  .dcard:active {
+    transform: translateY(0) scale(0.995);
+  }
 }
 .dcard--person {
   padding: 0;

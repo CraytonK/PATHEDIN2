@@ -101,7 +101,7 @@ export const IconChevronLeft = (p: P) => (
   </Svg>
 );
 export const IconChevronRight = (p: P) => (
-  <Svg {...p} strokeWidth={p.strokeWidth ?? 2}>
+  <Svg data-dir="forward" {...p} strokeWidth={p.strokeWidth ?? 2}>
     <path d="m9 5 7 7-7 7" />
   </Svg>
 );
@@ -138,13 +138,13 @@ export const IconEllipsis = (p: P) => (
 );
 
 export const IconArrowUpRight = (p: P) => (
-  <Svg {...p}>
+  <Svg data-dir="out" {...p}>
     <path d="M7 17 17 7M9 7h8v8" />
   </Svg>
 );
 
 export const IconArrowRight = (p: P) => (
-  <Svg {...p}>
+  <Svg data-dir="forward" {...p}>
     <path d="M4.5 12h15M13.5 6l6 6-6 6" />
   </Svg>
 );

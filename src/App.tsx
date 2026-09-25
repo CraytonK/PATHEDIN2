@@ -8,6 +8,9 @@ import { CompareLayer } from './components/path/Compare';
 import { RequestLayer } from './components/RequestComposer';
 import { CommandPalette } from './components/CommandPalette';
 import { BookingLayer } from './components/Booking';
+import { FlightLayer } from './components/FlightLayer';
+import { installProfileFlights } from './lib/flight';
+import { installPointerDetails } from './lib/pointer';
 import { useIsMobile } from './lib/motion';
 import { useApp } from './lib/store';
 import { useUI } from './lib/ui';
@@ -98,6 +101,8 @@ function Shell() {
   const endSplash = useCallback(() => setSplash(false), []);
   useTheme();
 
+  useEffect(() => installProfileFlights(), []);
+  useEffect(() => installPointerDetails(), []);
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
@@ -141,7 +146,8 @@ function Shell() {
             key={routeKey}
             // Desktop screens arrive with a short rise out of a 3px blur; iPhone keeps the push from the side.
             initial={isMobile ? { opacity: 0, x: back ? -28 : 36 } : { opacity: 0, y: 8, filter: 'blur(3px)' }}
-            animate={isMobile ? { opacity: 1, x: 0, y: 0 } : { opacity: 1, y: 0, filter: 'blur(0px)' }}
+            // The blur is cleared once it lands: a filter left on the page would pin every fixed child to it.
+            animate={isMobile ? { opacity: 1, x: 0, y: 0 } : { opacity: 1, y: 0, filter: 'blur(0px)', transitionEnd: { filter: 'none' } }}
             exit={{ opacity: 0, transition: { duration: 0.08 } }}
             transition={isMobile ? { type: 'spring', stiffness: 420, damping: 40, mass: 0.8 } : { duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
           >
@@ -180,6 +186,7 @@ function Shell() {
         <BookingLayer />
         <CommandPalette />
         <ToastLayer />
+        <FlightLayer />
       </div>
       {splashLayer}
     </>

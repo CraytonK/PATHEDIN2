@@ -13,19 +13,54 @@
 }
 
 /* ── Story ─────────────────────────────── */
+/* Reading is walking a Path: solid behind you, dashed ahead, and a small "you" node moving along it. */
 .story__progress {
   position: fixed;
-  top: var(--topbar-h);
+  top: calc(var(--topbar-h) - 4px);
   left: 0;
   right: 0;
+  height: 10px;
+  z-index: 41;
+  overflow-x: clip;
+  pointer-events: none;
+}
+.story__progress::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 4px;
+  height: 2px;
+  background: repeating-linear-gradient(90deg, var(--future-soft) 0 4px, transparent 4px 10px);
+  opacity: 0.6;
+}
+.story__progress-walked {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 4px;
   height: 2px;
   background: var(--tint);
   transform-origin: left;
-  z-index: 41;
+}
+.story__progress-walker {
+  position: absolute;
+  inset: 0;
+}
+.story__progress-walker::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -5px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--tint) 0 2px, var(--bg) 2.6px);
+  box-shadow: inset 0 0 0 2px var(--ink);
 }
 @media (max-width: 767px) {
   .story__progress {
-    top: calc(var(--navbar-h) + var(--safe-top));
+    top: calc(var(--navbar-h) + var(--safe-top) - 4px);
     transition: top 280ms var(--ease-drawer);
   }
   /* While reading down, the navigation bar slides away and the progress line rides the top edge. */
@@ -39,7 +74,7 @@
     transform: translateY(-100%);
   }
   .page--article.is-reading .story__progress {
-    top: var(--safe-top);
+    top: calc(var(--safe-top) - 4px);
   }
 }
 /* A Medium article: one centred reading column. */

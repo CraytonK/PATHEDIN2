@@ -8,6 +8,7 @@ import type { Community, Credibility, Decision, Question, Story, Thread } from '
 import { compactSteps, current, relationTo, stepTitle } from '../lib/relations';
 import { useApp } from '../lib/store';
 import { useUI } from '../lib/ui';
+import { flyFrom } from '../lib/flight';
 import { springs, haptic } from '../lib/motion';
 import { PathHint } from './path/PathHint';
 import { Avatar, AvatarStack, Button, PathChips, PersonName, RelationGlyph, RelationTag, SaveToggle, formatCount } from './ui';
@@ -75,7 +76,13 @@ export function PersonRow({ id, why, action = 'connect', compact }: { id: string
   const rel = relationTo(id);
   const navigate = useNavigate();
   return (
-    <article className={`person-row ${compact ? 'person-row--compact' : ''}`} onClick={() => navigate(`/p/${id}`)}>
+    <article
+      className={`person-row ${compact ? 'person-row--compact' : ''}`}
+      onClick={(e) => {
+        flyFrom(id, e.currentTarget);
+        navigate(`/p/${id}`);
+      }}
+    >
       <Avatar id={id} size={compact ? 44 : 52} />
       <div className="person-row__body">
         <div className="person-row__top">
@@ -101,7 +108,7 @@ export function PersonTile({ id, why }: { id: string; why?: string }) {
   const handlers = usePeek(id);
   return (
     <Link to={`/p/${id}`} className="person-tile" {...handlers}>
-      <motion.div className="person-tile__photo" whileHover={{ scale: 1.015 }} transition={springs.smooth}>
+      <motion.div className="person-tile__photo" data-portrait={id} whileHover={{ scale: 1.015 }} transition={springs.smooth}>
         <img src={p.photo} alt="" loading="lazy" draggable={false} />
       </motion.div>
       <RelationTag kind={rel.kind} label={rel.label} className="person-tile__rel" />

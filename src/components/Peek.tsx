@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { people } from '../data/people';
 import { current, relationTo, stepTitle } from '../lib/relations';
 import { springs, haptic } from '../lib/motion';
+import { flyFrom } from '../lib/flight';
 import { useUI, scheduleClosePeek, cancelClosePeek } from '../lib/ui';
 import { useApp } from '../lib/store';
 import { PathStrip } from './path/PathStrip';
@@ -113,7 +114,8 @@ function PeekBody({ id, onDone }: { id: string; onDone: () => void }) {
     <>
       <button
         className="peek__head"
-        onClick={() => {
+        onClick={(e) => {
+          flyFrom(id, e.currentTarget);
           onDone();
           navigate(`/p/${id}`);
         }}
