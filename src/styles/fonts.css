@@ -1,18 +1,32 @@
 /*
-  PathedIn type:
-    Interface    — Inter, a plain, professional grotesk in the spirit of Medium's sohne
-                   (variable, with optical sizes, so large text tightens the way display cuts do)
-    Noe Display  — wordmark, hero headings, milestone moments   → fallback Playfair Display
-    Charter      — editorial content: stories, reflections       → fallback Source Serif 4
-  Noe Display is a licensed face and is used when installed. Charter ships with macOS and iOS.
-  Everything else is self-hosted here (SIL Open Font License) so it renders the same everywhere.
+  PathedIn type: three roles, each built on a Modern Font Stacks classification
+  (github.com/system-fonts/modern-font-stacks). The stacks themselves live in tokens.css.
+
+    Interface  — Neo-Grotesque   Inter → Roboto, Helvetica Neue, Arial Nova, Nimbus Sans, Arial
+    Reading    — Transitional    Charter, Bitstream Charter → Charis SIL → Sitka Text, Cambria
+    Brand      — Didone          Noe Display → Playfair Display → Didot, Bodoni MT, Noto Serif Display…
+
+  Each stack is led by a face we ship (SIL Open Font License), so every device sees the same type:
+  - Inter, a plain, professional grotesk in the spirit of Medium's sohne (variable, with optical sizes).
+  - Charis SIL, SIL's open edition of Charter. Apple devices already have Charter, so they use it
+    and skip the download; everyone else gets the same design from these files.
+  - Playfair Display, standing in for Noe Display, a licensed face used when it's installed.
+  The rest of each stack is that classification's best system face on each OS.
+
+  While a web font loads, a "… Fallback" face stands in for it: the local Arial or Times New Roman (or their
+  metric twins Helvetica, Liberation Sans and Liberation Serif), resized with size-adjust and ascent/descent
+  overrides measured from the font files and checked against real text at the sizes each role uses
+  (interface 13–18px, reading 20px, brand 44px), so text doesn't reflow when the real face arrives.
 */
+
+/* ── Interface: Inter ─────────────────────────────────────── */
 @font-face {
   font-family: 'Inter';
   font-style: normal;
   font-weight: 100 900;
   font-display: swap;
   src: url('../assets/fonts/inter-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 @font-face {
   font-family: 'Inter';
@@ -20,7 +34,74 @@
   font-weight: 100 900;
   font-display: swap;
   src: url('../assets/fonts/inter-italic-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
+/* The Latin files leave out arrows, and the Path's "MSc Chem → Pharma R&D" lives on them. These carry
+   Inter's own arrows and ⌘, cut from the full font with both axes, and load only on pages that use them. */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url('../assets/fonts/inter-arrows.woff2') format('woff2');
+  unicode-range: U+2190-2199, U+21A9-21AA, U+21E7, U+2318, U+2325;
+}
+@font-face {
+  font-family: 'Inter';
+  font-style: italic;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url('../assets/fonts/inter-arrows-italic.woff2') format('woff2');
+  unicode-range: U+2190-2199, U+21A9-21AA, U+21E7, U+2318, U+2325;
+}
+@font-face {
+  font-family: 'Inter Fallback';
+  src: local('Arial'), local('Helvetica'), local('Liberation Sans'), local('Arimo');
+  size-adjust: 105.47%;
+  ascent-override: 91.85%;
+  descent-override: 22.87%;
+  line-gap-override: 0%;
+}
+
+/* ── Reading: Charter, as Charis SIL ──────────────────────── */
+@font-face {
+  font-family: 'Charis SIL';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('../assets/fonts/charis-sil-latin-400.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Charis SIL';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url('../assets/fonts/charis-sil-latin-400-italic.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Charis SIL';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('../assets/fonts/charis-sil-latin-700.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Charis SIL';
+  font-style: italic;
+  font-weight: 700;
+  font-display: swap;
+  src: url('../assets/fonts/charis-sil-latin-700-italic.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Charis Fallback';
+  src: local('Times New Roman'), local('Times'), local('Liberation Serif'), local('Tinos');
+  size-adjust: 109.95%;
+  ascent-override: 108.8%;
+  descent-override: 39.97%;
+  line-gap-override: 0%;
+}
+
+/* ── Brand: Playfair Display, for Noe Display ─────────────── */
 @font-face {
   font-family: 'Playfair Display';
   font-style: normal;
@@ -29,16 +110,10 @@
   src: url('../assets/fonts/playfair-display-latin.woff2') format('woff2');
 }
 @font-face {
-  font-family: 'Source Serif 4';
-  font-style: normal;
-  font-weight: 200 900;
-  font-display: swap;
-  src: url('../assets/fonts/source-serif-4-latin.woff2') format('woff2');
-}
-@font-face {
-  font-family: 'Source Serif 4';
-  font-style: italic;
-  font-weight: 200 900;
-  font-display: swap;
-  src: url('../assets/fonts/source-serif-4-italic-latin.woff2') format('woff2');
+  font-family: 'Playfair Fallback';
+  src: local('Times New Roman'), local('Times'), local('Liberation Serif'), local('Tinos');
+  size-adjust: 109.85%;
+  ascent-override: 98.5%;
+  descent-override: 22.85%;
+  line-gap-override: 0%;
 }

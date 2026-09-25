@@ -78,7 +78,7 @@ src/
   screens/       one file per area of the product (Landing.tsx is the signed-out intro page and sign-in card;
                  Write.tsx is the editor and MyPost.tsx a published post)
   styles/        tokens (type ramp, palette, dark mode), self-hosted fonts and base styles
-  assets/fonts/  WOFF2 fonts: Inter, Playfair Display, Source Serif 4
+  assets/fonts/  WOFF2 fonts: Inter (with its arrows), Playfair Display, Charis SIL
 ```
 
 ## Notes
@@ -88,7 +88,8 @@ src/
 - **Fonts** (all SIL Open Font License):
   - **Inter** for the interface
   - **Playfair Display** standing in for the brand's Noe Display, a commercial face (the font stack names it first, so adding licensed files is enough to switch)
-  - **Source Serif 4** for Charter, which Apple devices already include
+  - **Charis SIL**, SIL's open edition of Charter, for reading; Apple devices use their own Charter
+  - each leads a [Modern Font Stacks](https://github.com/system-fonts/modern-font-stacks) stack (Neo-Grotesque, Didone, Transitional), with measured stand-in faces so nothing jumps while fonts load
 - **Sign-in** is a prototype: no passwords are requested and nothing leaves the browser.
 - See [DESIGN.md](./DESIGN.md) for:
   - the analysis of Medium's layout and how PathedIn maps it

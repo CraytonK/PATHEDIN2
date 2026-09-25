@@ -11,6 +11,15 @@
         ],
         "createdAt": "2026-09-24T23:19:41.531Z",
         "reason": "Claude: false positive, the match is a regular expression that reads the first <img> src out of the draft HTML, not a rendered image"
+      },
+      {
+        "rule": "overused-font",
+        "value": "inter",
+        "files": [
+          "src/styles/fonts.css"
+        ],
+        "createdAt": "2026-09-25T14:50:49.940Z",
+        "reason": "Claude: Inter stands in for Medium's sidebar sans the user asked for, and leads the Modern Font Stacks Neo-Grotesque stack the user supplied"
       }
     ]
   }

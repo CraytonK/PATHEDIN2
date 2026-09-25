@@ -8,21 +8,23 @@
     Deep Slate Navy #0F172A  text, primary actions, the walked Path (10%)
     Mineral Slate   #64748B  secondary text
     Hairline        #E2E8F0  1px dividers
-    Executive Navy  #1E3A8A  the accent: the future, "you", links, eyebrows, focus
+    Executive Navy  #1E3A8A  the accent: the future, "you", links, status lines, focus
 
-  Type — Noe Display (brand), Inter (interface, in the spirit of Medium's sohne), Charter (content).
+  Type — Noe Display (brand), Inter (interface, in the spirit of Medium's sohne), Charter (content),
+  each on a Modern Font Stacks classification. See styles/fonts.css.
 */
 
 :root {
   color-scheme: light dark;
 
   /* ── Type families ─────────────────────────────────────────── */
-  --font-sans: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  /* Interface, on the Neo-Grotesque stack. */
+  --font-sans: Inter, 'Inter Fallback', Roboto, 'Helvetica Neue', 'Arial Nova', 'Nimbus Sans', Arial, sans-serif;
   --font-display: var(--font-sans);
-  /* Noe Display Medium: wordmark, hero headings, milestone moments. */
-  --font-brand: 'Noe Display', 'Playfair Display', Georgia, serif;
-  /* Charter: editorial content — stories, quotes, bios. */
-  --font-serif: Charter, 'Source Serif 4', 'Bitstream Charter', Georgia, serif;
+  /* Noe Display Medium: wordmark, hero headings, milestone moments. On the Didone stack. */
+  --font-brand: 'Noe Display', 'Playfair Display', 'Playfair Fallback', Didot, 'Bodoni MT', 'Noto Serif Display', 'URW Palladio L', P052, Sylfaen, serif;
+  /* Charter: editorial content — stories, quotes, bios. On the Transitional stack. */
+  --font-serif: Charter, 'Bitstream Charter', 'Charis SIL', 'Charis Fallback', 'Sitka Text', Cambria, serif;
   --font-rounded: var(--font-sans);
 
   /* ── Semantic colors (light) ───────────────────────────────── */

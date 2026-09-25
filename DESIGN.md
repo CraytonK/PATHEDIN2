@@ -134,13 +134,19 @@ A surface-by-surface teardown of medium.com (computed styles and observed intera
 ## Typography
 Three faces, three tiers.
 
-| Tier | Face | What ships | Used for |
-| --- | --- | --- | --- |
-| Brand | **Noe Display Medium** | Playfair Display 500 | The wordmark, page titles and other hero headings (profile names, question, decision and community titles, the intro page, sign-in, the welcome in the Path splash), and milestone moments ("you are here" and destination stations) |
-| UI | **Inter**: Regular, Semibold, Bold | Inter (variable, with optical sizes) | Everything in the interface. It was chosen to match the plain, professional feel of Medium's sidebar (sohne). Regular for UI, inputs, captions and grey subtitles. Semibold for buttons, card headers and feed titles. Bold for metrics and data chips. Italic for reflections in someone's own words. The sidebar is 16px regular in grey, ink when current, as on Medium. |
-| Content | **Charter**: Regular, Italic, Bold, Bold Italic | Charter where installed (Apple devices), else Source Serif 4 | Story text; story titles in Bold; quotes in Italic; pull quotes in Bold Italic; bios; the Write editor |
+| Tier | Face | What ships | Modern Font Stacks tail | Used for |
+| --- | --- | --- | --- | --- |
+| Brand | **Noe Display Medium** | Playfair Display 500 | Didone: Didot, Bodoni MT, Noto Serif Display, URW Palladio L, P052, Sylfaen | The wordmark, page titles and other hero headings (profile names, question, decision and community titles, the intro page, sign-in, the welcome in the Path splash), and milestone moments ("you are here" and destination stations) |
+| UI | **Inter**: Regular, Semibold, Bold | Inter (variable, with optical sizes), plus Inter's arrows and ⌘ in a small file of their own | Neo-Grotesque: Roboto, Helvetica Neue, Arial Nova, Nimbus Sans, Arial | Everything in the interface. It was chosen to match the plain, professional feel of Medium's sidebar (sohne). Regular for UI, inputs, captions and grey subtitles. Semibold for buttons, card headers and feed titles. Bold for metrics and data chips. Italic for reflections in someone's own words. The sidebar is 16px regular in grey, ink when current, as on Medium. |
+| Content | **Charter**: Regular, Italic, Bold, Bold Italic | Charter where installed (Apple devices), else Charis SIL, SIL's open edition of Charter | Transitional: Sitka Text, Cambria | Story text; story titles in Bold; quotes in Italic; pull quotes in Bold Italic; bios; the Write editor |
 
 Noe Display is a commercial typeface. The font stack names it first, so adding licensed files is enough to switch. Inter's optical sizes tighten large text the way a display cut does.
+
+**Font stacks.** Each tier sits on a [Modern Font Stacks](https://github.com/system-fonts/modern-font-stacks) classification: Neo-Grotesque for the interface, Transitional for reading, Didone for the brand.
+- **The face we ship leads each stack,** so every device sees the same type. Reading is now Charter's design everywhere: Apple devices use their own Charter and download nothing, and every other device gets Charis SIL (about 93 KB for all four styles, down from 252 KB for Source Serif 4).
+- **The rest of each stack** is that classification's best system face on each OS.
+- **No jump while fonts load.** Each web font has a stand-in face: the local Arial or Times New Roman, resized with `size-adjust` and ascent/descent overrides measured from the font files. Checked against real text, each stand-in is within half a percent of the real face's width at interface sizes (13–16px), and matches it for reading (20px) and brand headings (44px). Plain system fonts are 5–9% off.
+- **Arrows.** The standard Latin cut of Inter leaves out →, which every stretch of a Path uses ("MSc Chem → Pharma R&D"). Inter's own arrows and ⌘ ship in a separate 8 KB file that loads only when a page shows one.
 
 The ramp keeps the HIG's roles:
 
