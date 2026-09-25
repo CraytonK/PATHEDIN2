@@ -1,42 +1,23 @@
-/* ── Signed-out intro page, after Medium's ─────────────────────── */
-/* The illustration keeps to the kit's Minimal Navy Principle: soft blue washes, one deep navy. */
+/* ── Signed-out intro page ───────────────────────────────────── */
 .landing {
   --landing-bg: var(--bg-intro);
-  --landing-sky: #eff6ff;
-  --landing-sky-2: #dbeafe;
-  --landing-celestial: #bfdbfe;
-  --landing-future: #1e3a8a;
-  --landing-route: #9fb2dd;
   min-height: 100dvh;
   display: flex;
   flex-direction: column;
   background: var(--landing-bg);
   color: var(--label);
-}
-:root[data-theme='dark'] .landing {
-  --landing-sky: rgba(143, 167, 238, 0.1);
-  --landing-sky-2: rgba(143, 167, 238, 0.16);
-  --landing-celestial: rgba(143, 167, 238, 0.28);
-  --landing-future: #8fa7ee;
-  --landing-route: rgba(169, 188, 244, 0.55);
-}
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme='light']) .landing {
-    --landing-sky: rgba(143, 167, 238, 0.1);
-    --landing-sky-2: rgba(143, 167, 238, 0.16);
-    --landing-celestial: rgba(143, 167, 238, 0.28);
-    --landing-future: #8fa7ee;
-    --landing-route: rgba(169, 188, 244, 0.55);
-  }
+  overflow-x: clip;
 }
 
-/* Masthead: a single black rule under the bar, as on Medium. */
+/* Masthead: translucent over the page, with a hairline. */
 .landing__bar {
   position: sticky;
   top: 0;
   z-index: 10;
-  background: var(--landing-bg);
-  border-bottom: 1px solid var(--label);
+  background: var(--bar-bg);
+  -webkit-backdrop-filter: var(--bar-blur);
+  backdrop-filter: var(--bar-blur);
+  border-bottom: 1px solid var(--separator);
 }
 .landing__bar-inner {
   display: flex;
@@ -57,20 +38,22 @@
 }
 .landing__link {
   font-size: 14px;
-  color: var(--label);
+  color: var(--label-2);
   line-height: 20px;
+  transition: color var(--dur-2);
 }
 .landing__link:hover {
-  text-decoration: underline;
-  text-underline-offset: 3px;
+  color: var(--label);
 }
 .landing__pill {
-  height: 38px;
-  padding: 0 16px;
-  border-radius: var(--r-pill);
+  height: 34px;
+  padding: 0 14px;
+  border-radius: var(--r-md);
   background: var(--primary);
   color: var(--on-primary);
+  box-shadow: var(--btn-highlight);
   font-size: 14px;
+  font-weight: 550;
   transition: background-color var(--dur-2);
 }
 .landing__pill:hover,
@@ -108,22 +91,24 @@
   font-style: italic;
 }
 .landing__sub {
-  margin-top: 36px;
-  max-width: 470px;
-  font-size: 22px;
+  margin-top: 32px;
+  max-width: 460px;
+  font-size: 21px;
   line-height: 30px;
   letter-spacing: -0.014em;
+  color: var(--label-2);
 }
 .landing__cta {
-  margin-top: 44px;
+  margin-top: 40px;
   height: 46px;
   padding: 0 22px;
-  min-width: 200px;
-  border-radius: var(--r-pill);
+  border-radius: var(--r-md);
   background: var(--primary);
   color: var(--on-primary);
-  font-size: 20px;
-  letter-spacing: -0.014em;
+  box-shadow: var(--btn-highlight);
+  font-size: 17px;
+  font-weight: 550;
+  letter-spacing: -0.01em;
   transition: background-color var(--dur-2);
 }
 .landing__art {
@@ -140,10 +125,82 @@
   height: 100%;
   display: block;
 }
+/* The composition's type is the interface's type. */
+.hero-t {
+  font-family: var(--font-sans);
+  font-size: 14px;
+  fill: var(--label);
+}
+.hero-t--title {
+  font-size: 16px;
+  font-weight: 600;
+}
+.hero-t--label {
+  fill: var(--label-2);
+}
+.hero-t--strong {
+  font-weight: 600;
+  font-size: 15px;
+}
+.hero-t--tint {
+  fill: var(--tint-text);
+  font-weight: 600;
+}
+.hero-t--muted {
+  fill: var(--label-3);
+  font-size: 13px;
+}
+.hero-t--chip {
+  fill: var(--on-primary);
+  font-size: 12px;
+  font-weight: 600;
+}
+.hero-t--q {
+  fill: var(--tint);
+  font-size: 14px;
+  font-weight: 700;
+}
+.hero-t--dow {
+  fill: var(--tint-text);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+}
+.hero-t--day {
+  font-size: 32px;
+  font-weight: 600;
+  font-stretch: var(--display-stretch);
+}
+.hero-t--btn {
+  fill: var(--on-primary);
+  font-size: 13px;
+  font-weight: 600;
+}
+/* Layers float on offset shadows, as they do in the app. */
+.hero-float {
+  filter: drop-shadow(0 24px 48px rgba(0, 0, 0, 0.45));
+}
+.hero-float--lift {
+  filter: drop-shadow(0 18px 36px rgba(0, 0, 0, 0.55)) drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+}
+:root[data-theme='light'] .hero-float {
+  filter: drop-shadow(0 24px 48px rgba(15, 23, 42, 0.12));
+}
+:root[data-theme='light'] .hero-float--lift {
+  filter: drop-shadow(0 18px 36px rgba(15, 23, 42, 0.16)) drop-shadow(0 2px 4px rgba(15, 23, 42, 0.06));
+}
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme]) .hero-float {
+    filter: drop-shadow(0 24px 48px rgba(15, 23, 42, 0.12));
+  }
+  :root:not([data-theme]) .hero-float--lift {
+    filter: drop-shadow(0 18px 36px rgba(15, 23, 42, 0.16)) drop-shadow(0 2px 4px rgba(15, 23, 42, 0.06));
+  }
+}
 
 /* Three nodes, three sentences: the whole idea in one row. */
 .landing__how {
-  border-top: 1px solid var(--label);
+  border-top: 1px solid var(--separator);
 }
 .landing__how-inner {
   display: grid;
@@ -155,36 +212,37 @@
 }
 .landing__how h2 {
   margin: 18px 0 8px;
-  font-size: 22px;
-  line-height: 28px;
-  font-weight: 700;
-  letter-spacing: -0.025em;
+  font-size: 20px;
+  line-height: 26px;
+  font-weight: 600;
+  font-stretch: var(--display-stretch);
+  letter-spacing: -0.02em;
 }
 .landing__how p {
-  font-size: 17px;
-  line-height: 26px;
+  font-size: 16px;
+  line-height: 25px;
   color: var(--label-2);
   max-width: 330px;
 }
 .landing__node {
   display: block;
-  width: 26px;
-  height: 26px;
+  width: 22px;
+  height: 22px;
   border-radius: 50%;
 }
 .landing__node--been {
   background: var(--ink);
 }
 .landing__node--now {
-  background: radial-gradient(circle, var(--tint) 0 4.5px, var(--landing-bg) 5.2px);
-  box-shadow: inset 0 0 0 5px var(--ink);
+  background: radial-gradient(circle, var(--tint) 0 3.8px, var(--landing-bg) 4.4px);
+  box-shadow: inset 0 0 0 4px var(--ink);
 }
 .landing__node--going {
-  box-shadow: inset 0 0 0 5px var(--tint);
+  box-shadow: inset 0 0 0 4px var(--tint);
 }
 
 .landing__foot {
-  border-top: 1px solid var(--label);
+  border-top: 1px solid var(--separator);
   background: var(--landing-bg);
 }
 .landing__foot nav {
@@ -266,7 +324,7 @@
   }
 }
 
-/* ── Sign-in card, after Medium's ─────────────────────────────── */
+/* ── Sign-in card ─────────────────────────────────────────────── */
 .auth-root {
   position: fixed;
   inset: 0;
@@ -279,7 +337,9 @@
 .auth-scrim {
   position: absolute;
   inset: 0;
-  background: color-mix(in srgb, var(--bg) 88%, transparent);
+  background: var(--scrim);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
 }
 .auth {
   position: relative;
@@ -289,24 +349,28 @@
   align-items: center;
   justify-content: center;
   padding: 56px 32px;
-  border-radius: 4px;
+  border-radius: var(--r-xl);
   background: var(--bg-elevated);
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+  box-shadow: var(--shadow-modal);
 }
 .auth__close {
   position: absolute;
   top: 14px;
   right: 14px;
-  width: 40px;
-  height: 40px;
+  width: 36px;
+  height: 36px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   color: var(--label-2);
-  border-radius: 50%;
+  border-radius: var(--r-md);
+  transition:
+    background-color var(--dur-2),
+    color var(--dur-2);
 }
 .auth__close:hover {
   color: var(--label);
+  background: var(--bg-hover);
 }
 .auth__body {
   display: flex;
@@ -336,19 +400,23 @@
   position: relative;
   height: 44px;
   padding: 0 44px;
-  border-radius: var(--r-pill);
-  box-shadow: inset 0 0 0 1px var(--label);
+  border-radius: var(--r-md);
+  background: var(--fill-3);
+  box-shadow: inset 0 0 0 1px var(--border);
   color: var(--label);
-  font-size: 16px;
-  transition: background-color var(--dur-2);
+  font-size: 15px;
+  font-weight: 550;
+  transition:
+    background-color var(--dur-2),
+    box-shadow var(--dur-2);
 }
 .auth__option:hover {
-  background: var(--bg-hover);
+  box-shadow: inset 0 0 0 1px var(--border-strong);
 }
 .auth__option--primary {
   background: var(--primary);
   color: var(--on-primary);
-  box-shadow: none;
+  box-shadow: var(--btn-highlight);
 }
 .auth__option--primary:hover {
   background: var(--primary-hover);
@@ -400,7 +468,7 @@
 }
 .auth__switch button {
   color: var(--tint-text);
-  font-weight: 700;
+  font-weight: 600;
 }
 .auth__legal {
   margin-top: 56px;
@@ -426,25 +494,33 @@
   color: var(--label-2);
 }
 .auth__field input {
-  height: 36px;
+  height: 44px;
+  padding: 0 12px;
   border: 0;
-  border-bottom: 1px solid var(--label);
-  background: transparent;
+  border-radius: var(--r-md);
+  background: var(--fill-3);
+  box-shadow: inset 0 0 0 1px var(--border);
   text-align: center;
   font-size: 16px;
   outline: none;
+  transition: box-shadow var(--dur-2);
 }
 .auth__field input:focus {
-  border-bottom-color: var(--tint-strong);
+  box-shadow:
+    inset 0 0 0 1px var(--tint),
+    0 0 0 3px var(--tint-softer);
 }
 .auth__submit {
-  margin-top: 36px;
-  width: 226px;
+  margin-top: 28px;
+  width: 300px;
+  max-width: 100%;
   height: 44px;
-  border-radius: var(--r-pill);
+  border-radius: var(--r-md);
   background: var(--primary);
   color: var(--on-primary);
-  font-size: 16px;
+  box-shadow: var(--btn-highlight);
+  font-size: 15px;
+  font-weight: 550;
 }
 .auth__submit:disabled {
   opacity: 0.35;

@@ -693,8 +693,8 @@
   position: relative;
   pointer-events: auto;
   max-height: min(86vh, 900px);
-  border-radius: 16px;
-  box-shadow: var(--shadow-popover);
+  border-radius: var(--r-xl);
+  box-shadow: var(--shadow-modal);
 }
 .sheet__grab {
   flex: none;
@@ -727,17 +727,23 @@
 .sheet__close {
   width: 30px;
   height: 30px;
-  border-radius: 50%;
-  background: var(--fill);
+  border-radius: var(--r-md);
   color: var(--label-2);
   display: inline-flex;
   align-items: center;
   justify-content: center;
   flex: none;
+  transition:
+    background-color var(--dur-2),
+    color var(--dur-2);
 }
 .sheet__close:hover {
-  background: var(--fill-2);
+  background: var(--bg-hover);
   color: var(--label);
+}
+.sheet--mobile .sheet__close {
+  background: var(--fill);
+  border-radius: 50%;
 }
 .sheet__content {
   flex: 1;

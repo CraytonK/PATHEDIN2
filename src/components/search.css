@@ -53,38 +53,6 @@
   font-size: 17px;
 }
 
-.search-layer {
-  position: fixed;
-  inset: 0;
-  z-index: 85;
-  background: rgba(0, 0, 0, 0.18);
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  padding-top: 12vh;
-}
-.search-panel {
-  width: min(620px, calc(100vw - 48px));
-  background: var(--bg-elevated);
-  border-radius: 16px;
-  box-shadow: var(--shadow-popover);
-  padding: 12px;
-  max-height: 70vh;
-  display: flex;
-  flex-direction: column;
-}
-.search-panel .search-field__box {
-  height: 44px;
-  background: transparent;
-  font-size: 18px;
-}
-.search-panel__body {
-  overflow-y: auto;
-  border-top: var(--hairline) solid var(--separator);
-  margin-top: 8px;
-  padding-top: 4px;
-}
-
 .search-empty__h,
 .search-results__h {
   font-weight: 600;

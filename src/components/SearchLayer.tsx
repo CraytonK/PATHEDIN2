@@ -1,12 +1,7 @@
-import { AnimatePresence, motion } from 'framer-motion';
-import { useEffect, useMemo, useRef, useState } from 'react';
-import { createPortal } from 'react-dom';
-import { useNavigate } from 'react-router-dom';
+import { useEffect, useMemo, useRef } from 'react';
 import { people } from '../data/people';
 import { communities } from '../data/communities';
 import { search, suggestions, type Result } from '../lib/search';
-import { springs } from '../lib/motion';
-import { useUI } from '../lib/ui';
 import { IconArrowUpRight, IconBook, IconClose, IconFlag, IconQuestion, IconSearch } from './icons';
 import { AvatarStack } from './ui';
 import './search.css';
@@ -131,48 +126,5 @@ export function SearchResults({ q, onPick, onSuggest }: { q: string; onPick: (hr
         </section>
       ))}
     </div>
-  );
-}
-
-export function SearchLayer() {
-  const open = useUI((s) => s.search);
-  const setOpen = useUI((s) => s.setSearch);
-  const [q, setQ] = useState('');
-  const navigate = useNavigate();
-  useEffect(() => {
-    if (!open) return;
-    setQ('');
-    const on = (e: KeyboardEvent) => e.key === 'Escape' && setOpen(false);
-    window.addEventListener('keydown', on);
-    return () => window.removeEventListener('keydown', on);
-  }, [open, setOpen]);
-  const pick = (href: string) => {
-    setOpen(false);
-    navigate(href);
-  };
-  return createPortal(
-    <AnimatePresence>
-      {open && (
-        <motion.div className="search-layer" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.18 }} onClick={() => setOpen(false)}>
-          <motion.div
-            className="search-panel"
-            role="dialog"
-            aria-modal="true"
-            aria-label="Search"
-            onClick={(e) => e.stopPropagation()}
-            initial={{ opacity: 0, y: -12, scale: 0.98 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: -6, scale: 0.99, transition: { duration: 0.12 } }}
-            transition={springs.snappy}
-          >
-            <SearchField value={q} onChange={setQ} autoFocus placeholder="Search destinations, people, communities…" />
-            <div className="search-panel__body">
-              <SearchResults q={q} onPick={pick} onSuggest={(s) => pick(`/discover?to=${search(s)[0]?.id ?? 'pharma-rnd'}`)} />
-            </div>
-          </motion.div>
-        </motion.div>
-      )}
-    </AnimatePresence>,
-    document.body,
   );
 }

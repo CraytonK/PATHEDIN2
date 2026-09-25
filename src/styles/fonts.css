@@ -66,9 +66,10 @@
 @font-face {
   font-family: 'Mona Fallback';
   src: local('Arial'), local('Helvetica'), local('Liberation Sans'), local('Arimo');
-  size-adjust: 104.81%;
-  ascent-override: 104%;
-  descent-override: 30.53%;
+  /* Measured against Mona Sans at wght 400, wdth 100, over running English text. */
+  size-adjust: 103.06%;
+  ascent-override: 105.76%;
+  descent-override: 31.05%;
   line-gap-override: 0%;
 }
 

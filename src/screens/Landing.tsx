@@ -5,14 +5,15 @@ import { Wordmark } from '../components/chrome';
 import { IconClose, IconChevronLeft } from '../components/icons';
 import { springs } from '../lib/motion';
 import { useApp } from '../lib/store';
-import { me } from '../data/people';
+import { me, people } from '../data/people';
+import { sessionsFor } from '../lib/booking';
 import './landing.css';
 
 type AuthMode = 'join' | 'signin';
 
 /**
- * The signed-out intro page, laid out like Medium's: a ruled masthead, one enormous serif line,
- * a single sentence of explanation, one black pill — and an illustration bleeding off the edge.
+ * The signed-out intro page: a quiet masthead, one enormous line, a sentence of explanation, one action,
+ * and the product itself layered off the right edge.
  */
 export function Landing({ onAuthed }: { onAuthed: () => void }) {
   const [auth, setAuth] = useState<AuthMode | null>(null);
@@ -94,44 +95,173 @@ export function Landing({ onAuthed }: { onAuthed: () => void }) {
   );
 }
 
-/* A bold, flat composition of the brand's Path: been → now → going, with routes branching off. */
+/*
+  The product itself, layered: your Path as a transit line in a window, a Path Twin who shares your steps,
+  and a Guide's office hours you could book tonight. Real people from the prototype, drawn from the same
+  vocabulary as the app. It assembles once, in order: the window, the line, you, then the people.
+*/
 function HeroArt() {
   const reduce = useReducedMotion();
-  const d = (delay: number, dur = 0.9) => ({ initial: reduce ? false : { pathLength: 0 }, animate: { pathLength: 1 }, transition: { delay, duration: dur, ease: [0.45, 0, 0.2, 1] as const } });
-  const pop = (delay: number) => ({ initial: reduce ? false : { scale: 0 }, animate: { scale: 1 }, transition: { type: 'spring' as const, stiffness: 420, damping: 22, delay } });
+  const rise = (delay: number) => ({ initial: reduce ? false : { opacity: 0, y: 18 }, animate: { opacity: 1, y: 0 }, transition: { ...springs.smooth, delay } });
+  const draw = (delay: number, duration = 0.8) => ({ initial: reduce ? false : { pathLength: 0 }, animate: { pathLength: 1 }, transition: { delay, duration, ease: [0.16, 1, 0.3, 1] as const } });
+  const pop = (delay: number) => ({ initial: reduce ? false : { scale: 0.4, opacity: 0 }, animate: { scale: 1, opacity: 1 }, transition: { type: 'spring' as const, stiffness: 420, damping: 24, delay } });
+  const next = sessionsFor('amara', [], 1)[0];
+  const open = next?.slots.filter((x) => !x.taken) ?? [];
+  const at = open[0]?.start ?? new Date();
+  const stops = [
+    { x: 96, label: 'BSc Chemistry', sub: '2017' },
+    { x: 214, label: 'Research', sub: '2021' },
+    { x: 340, label: 'MSc Chemistry', sub: 'Now' },
+    { x: 470, label: 'Next step', sub: '3 routes' },
+    { x: 604, label: 'Pharma R&D', sub: 'Destination' },
+  ];
+  const Y = 214;
+  const branch = `M${stops[3].x} ${Y} C ${stops[3].x + 36} ${Y}, ${stops[3].x + 50} ${Y - 52}, ${stops[4].x - 42} ${Y - 52}`;
   return (
     <div className="landing__art" aria-hidden="true">
-      <svg viewBox="0 0 640 720" preserveAspectRatio="xMidYMid slice">
+      <svg viewBox="0 0 680 620" preserveAspectRatio="xMidYMid meet">
         <defs>
-          <mask id="hero-future" maskUnits="userSpaceOnUse">
-            <motion.path d="M330 400 L520 210" stroke="#fff" strokeWidth="40" strokeLinecap="round" fill="none" {...d(1.1, 0.7)} />
+          <pattern id="hero-dots" width="22" height="22" patternUnits="userSpaceOnUse">
+            <circle cx="1.5" cy="1.5" r="1.2" fill="var(--separator-strong)" />
+          </pattern>
+          <radialGradient id="hero-fade" cx="55%" cy="45%" r="60%">
+            <stop offset="0" stopColor="#fff" stopOpacity="1" />
+            <stop offset="1" stopColor="#fff" stopOpacity="0" />
+          </radialGradient>
+          <mask id="hero-dots-mask">
+            <rect width="680" height="620" fill="url(#hero-fade)" />
           </mask>
+          <clipPath id="hero-me">
+            <circle cx={stops[2].x} cy={Y} r="24" />
+          </clipPath>
+          <clipPath id="hero-twin">
+            <circle cx="48" cy="394" r="22" />
+          </clipPath>
+          <clipPath id="hero-guide">
+            <circle cx="604" cy="561" r="16" />
+          </clipPath>
+          {/* The future draws on through a mask, so it keeps its dashes. */}
+          <mask id="hero-future" maskUnits="userSpaceOnUse">
+            <motion.path d={`M${stops[2].x} ${Y} H${stops[4].x}`} stroke="#fff" strokeWidth="14" strokeLinecap="round" fill="none" {...draw(0.95, 0.8)} />
+          </mask>
+          <mask id="hero-branch" maskUnits="userSpaceOnUse">
+            <motion.path d={branch} stroke="#fff" strokeWidth="12" strokeLinecap="round" fill="none" {...draw(1.3, 0.6)} />
+          </mask>
+          {['daniel', 'wei', 'jonah'].map((id, i) => (
+            <clipPath key={id} id={`hero-p-${id}`}>
+              <circle cx={452 + i * 17} cy={Y + 92} r="10" />
+            </clipPath>
+          ))}
         </defs>
-        {/* Ground shapes */}
-        <circle cx="420" cy="360" r="300" fill="var(--landing-sky)" />
-        <rect x="470" y="470" width="240" height="240" fill="var(--landing-celestial)" transform="rotate(45 590 590)" />
-        <circle cx="560" cy="90" r="120" fill="var(--landing-sky-2)" />
-        {/* Routes not taken */}
-        <path d="M330 400 C 430 440, 470 520, 560 560" fill="none" stroke="var(--landing-route)" strokeWidth="10" strokeLinecap="round" strokeDasharray="2 20" />
-        <path d="M330 400 C 300 300, 260 250, 200 170" fill="none" stroke="var(--landing-route)" strokeWidth="10" strokeLinecap="round" strokeDasharray="2 20" />
-        <circle cx="560" cy="560" r="16" fill="var(--landing-bg)" stroke="var(--landing-route)" strokeWidth="8" />
-        <circle cx="200" cy="170" r="16" fill="var(--landing-bg)" stroke="var(--landing-route)" strokeWidth="8" />
-        {/* The Path */}
-        <motion.path d="M140 590 L330 400" stroke="var(--ink)" strokeWidth="26" strokeLinecap="round" fill="none" {...d(0.3, 0.7)} />
-        <path d="M330 400 L520 210" stroke="var(--landing-future)" strokeWidth="26" strokeLinecap="round" strokeDasharray="1 44" fill="none" mask="url(#hero-future)" />
-        <motion.circle cx="140" cy="590" r="44" fill="var(--ink)" style={{ transformOrigin: '140px 590px' }} {...pop(0.15)} />
-        <motion.g style={{ transformOrigin: '330px 400px' }} {...pop(0.95)}>
-          <circle cx="330" cy="400" r="50" fill="var(--landing-bg)" stroke="var(--ink)" strokeWidth="18" />
-          <circle cx="330" cy="400" r="17" fill="var(--landing-future)" />
+        <rect width="680" height="620" fill="url(#hero-dots)" mask="url(#hero-dots-mask)" />
+
+        {/* The window: My Path */}
+        <motion.g className="hero-float" {...rise(0.05)}>
+          <rect x="40" y="56" width="700" height="330" rx="16" fill="var(--bg-grouped)" stroke="var(--border)" />
+          <text x="72" y="96" className="hero-t hero-t--title">
+            My Path
+          </text>
+          <text x="148" y="96" className="hero-t hero-t--muted">
+            Where you’ve been, and where you’re heading
+          </text>
+          <line x1="40" x2="740" y1="122" y2="122" stroke="var(--separator)" />
+
+          {/* The Path: walked in ink, the future dashed in navy. */}
+          <motion.path d={`M${stops[0].x} ${Y} H${stops[2].x}`} stroke="var(--ink)" strokeWidth="4" strokeLinecap="round" fill="none" {...draw(0.35, 0.7)} />
+          <path d={`M${stops[2].x} ${Y} H${stops[4].x}`} stroke="var(--tint)" strokeWidth="4" strokeLinecap="round" strokeDasharray="0.5 10" fill="none" mask="url(#hero-future)" />
+          {/* Another route branches at the next step */}
+          <path d={branch} stroke="var(--future-soft)" strokeWidth="3" strokeLinecap="round" strokeDasharray="0.5 8" fill="none" mask="url(#hero-branch)" />
+          <motion.circle cx={stops[4].x - 34} cy={Y - 52} r="7" fill="var(--bg-grouped)" stroke="var(--future-soft)" strokeWidth="3" {...pop(1.8)} />
+
+          {stops.map((s, i) => (
+            <g key={s.label}>
+              {i < 2 && <motion.circle cx={s.x} cy={Y} r="8" fill="var(--ink)" stroke="var(--bg-grouped)" strokeWidth="4" {...pop(0.3 + i * 0.12)} />}
+              {i === 3 && (
+                <motion.g {...pop(1.15)}>
+                  <circle cx={s.x} cy={Y} r="13" fill="var(--bg-grouped)" stroke="var(--tint)" strokeWidth="2.5" strokeDasharray="3 3" />
+                  <text x={s.x} y={Y + 5} textAnchor="middle" className="hero-t hero-t--q">
+                    ?
+                  </text>
+                </motion.g>
+              )}
+              {i === 4 && <motion.circle cx={s.x} cy={Y} r="12" fill="var(--bg-grouped)" stroke="var(--tint)" strokeWidth="4" {...pop(1.5)} />}
+              <text x={s.x} y={Y + 52} textAnchor="middle" className={`hero-t ${i === 2 ? 'hero-t--strong' : i === 4 ? 'hero-t--tint' : 'hero-t--label'}`}>
+                {s.label}
+              </text>
+              <text x={s.x} y={Y + 70} textAnchor="middle" className="hero-t hero-t--muted">
+                {s.sub}
+              </text>
+            </g>
+          ))}
+
+          {/* You are here */}
+          <motion.g {...pop(0.8)}>
+            <circle cx={stops[2].x} cy={Y} r="30" fill="var(--bg-grouped)" />
+            <circle cx={stops[2].x} cy={Y} r="27" fill="none" stroke="var(--ink)" strokeWidth="3" />
+            <image href={me.photo} x={stops[2].x - 24} y={Y - 24} width="48" height="48" clipPath="url(#hero-me)" preserveAspectRatio="xMidYMid slice" />
+            <rect x={stops[2].x - 44} y={Y - 64} width="88" height="24" rx="6" fill="var(--primary)" />
+            <text x={stops[2].x} y={Y - 48} textAnchor="middle" className="hero-t hero-t--chip">
+              You are here
+            </text>
+          </motion.g>
+
+          {/* People one step ahead */}
+          <motion.g {...rise(1.4)}>
+            {['daniel', 'wei', 'jonah'].map((id, i) => (
+              <g key={id}>
+                <circle cx={452 + i * 17} cy={Y + 92} r="12" fill="var(--bg-grouped)" />
+                <image href={people[id].photo} x={442 + i * 17} y={Y + 82} width="20" height="20" clipPath={`url(#hero-p-${id})`} preserveAspectRatio="xMidYMid slice" />
+              </g>
+            ))}
+            <text x="510" y={Y + 97} className="hero-t hero-t--muted">
+              are one step ahead
+            </text>
+          </motion.g>
         </motion.g>
-        <motion.circle cx="520" cy="210" r="50" fill="var(--landing-bg)" stroke="var(--landing-future)" strokeWidth="18" style={{ transformOrigin: '520px 210px' }} {...pop(1.7)} />
-        {/* People along the way */}
-        <g fill="var(--ink)">
-          <circle cx="206" cy="470" r="9" />
-          <circle cx="232" cy="494" r="9" />
-          <circle cx="598" cy="236" r="9" />
-          <circle cx="612" cy="262" r="9" />
-        </g>
+
+        {/* A Path Twin */}
+        <motion.g className="hero-float hero-float--lift" {...rise(1.1)}>
+          <rect x="0" y="346" width="316" height="96" rx="14" fill="var(--bg-elevated)" stroke="var(--border)" />
+          <circle cx="48" cy="394" r="25" fill="var(--bg-elevated)" stroke="var(--border)" />
+          <image href={people.sarah.photo} x="26" y="372" width="44" height="44" clipPath="url(#hero-twin)" preserveAspectRatio="xMidYMid slice" />
+          <text x="86" y="384" className="hero-t hero-t--strong">
+            {people.sarah.name}
+          </text>
+          <text x="86" y="404" className="hero-t hero-t--tint">
+            Path Twin
+          </text>
+          <text x="86" y="424" className="hero-t hero-t--muted">
+            Same 3 steps, same destination
+          </text>
+        </motion.g>
+
+        {/* A Guide's office hours, bookable */}
+        <motion.g className="hero-float hero-float--lift" {...rise(1.35)}>
+          <rect x="262" y="468" width="384" height="124" rx="14" fill="var(--bg-elevated)" stroke="var(--border)" />
+          <path d="M276 468.5 H340 V591.5 H276 A13.5 13.5 0 0 1 262.5 578 V482 A13.5 13.5 0 0 1 276 468.5 Z" fill="var(--tint-softer)" />
+          <line x1="340" x2="340" y1="476" y2="584" stroke="var(--tint-border)" strokeWidth="1.5" strokeDasharray="4 4" />
+          <text x="301" y="512" textAnchor="middle" className="hero-t hero-t--dow">
+            {at.toLocaleDateString('en-US', { weekday: 'short' }).toUpperCase()}
+          </text>
+          <text x="301" y="546" textAnchor="middle" className="hero-t hero-t--day">
+            {at.getDate()}
+          </text>
+          <text x="301" y="566" textAnchor="middle" className="hero-t hero-t--dow">
+            {at.toLocaleDateString('en-US', { month: 'short' }).toUpperCase()}
+          </text>
+          <text x="360" y="506" className="hero-t hero-t--strong">
+            Office hours with Amara
+          </text>
+          <text x="360" y="526" className="hero-t hero-t--muted">
+            {at.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' })} · 15 minutes · {open.length} spots open
+          </text>
+          <rect x="360" y="546" width="108" height="30" rx="8" fill="var(--primary)" />
+          <text x="414" y="566" textAnchor="middle" className="hero-t hero-t--btn">
+            Book a spot
+          </text>
+          <circle cx="604" cy="561" r="18" fill="var(--bg-elevated)" stroke="var(--border)" />
+          <image href={people.amara.photo} x="588" y="545" width="32" height="32" clipPath="url(#hero-guide)" preserveAspectRatio="xMidYMid slice" />
+        </motion.g>
       </svg>
     </div>
   );
