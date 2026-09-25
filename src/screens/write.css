@@ -56,7 +56,7 @@
   color: var(--tint-text);
 }
 .write .post-more__menu .is-danger {
-  color: #b42318;
+  color: var(--danger);
 }
 
 /* "Writing a Story about MSc Chem → Pharma R&D": a sentence made of two choices. */
@@ -704,5 +704,5 @@
   color: var(--label-2);
 }
 .my-post__delete:hover {
-  color: #b42318;
+  color: var(--danger);
 }

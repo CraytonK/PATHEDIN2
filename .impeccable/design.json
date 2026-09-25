@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-09-25T16:43:43Z",
+  "generatedAt": "2026-09-25T16:48:12Z",
   "title": "Design System: PathedIn",
   "extensions": {
     "colorMeta": {
@@ -453,6 +453,36 @@
           "oklch(82% 0.000 90)",
           "oklch(95% 0.000 90)"
         ]
+      },
+      "danger-on-graphite": {
+        "role": "status",
+        "displayName": "Soft Coral (danger on graphite)",
+        "canonical": "#f2877d",
+        "tonalRamp": [
+          "oklch(15% 0.132 26)",
+          "oklch(25% 0.132 26)",
+          "oklch(35% 0.132 26)",
+          "oklch(45% 0.132 26)",
+          "oklch(55% 0.132 26)",
+          "oklch(68% 0.132 26)",
+          "oklch(82% 0.132 26)",
+          "oklch(95% 0.132 26)"
+        ]
+      },
+      "danger": {
+        "role": "status",
+        "displayName": "Deep Red (danger on porcelain)",
+        "canonical": "#b42318",
+        "tonalRamp": [
+          "oklch(15% 0.182 30)",
+          "oklch(25% 0.182 30)",
+          "oklch(35% 0.182 30)",
+          "oklch(45% 0.182 30)",
+          "oklch(55% 0.182 30)",
+          "oklch(68% 0.182 30)",
+          "oklch(82% 0.182 30)",
+          "oklch(95% 0.182 30)"
+        ]
       }
     },
     "typographyMeta": {
@@ -460,25 +490,73 @@
         "displayName": "Display",
         "purpose": "The intro page's one headline."
       },
+      "profile-name": {
+        "displayName": "Profile name",
+        "purpose": "A person's name atop their profile."
+      },
+      "large-title": {
+        "displayName": "Large title",
+        "purpose": "Large titles on iPhone and wide page headers."
+      },
+      "page-title": {
+        "displayName": "Page title",
+        "purpose": "Desktop page titles."
+      },
+      "title1": {
+        "displayName": "Title 1",
+        "purpose": "Major section headings."
+      },
+      "title2": {
+        "displayName": "Title 2",
+        "purpose": "Section headings and card titles."
+      },
+      "title3": {
+        "displayName": "Title 3",
+        "purpose": "Minor headings."
+      },
+      "subtitle": {
+        "displayName": "Subtitle",
+        "purpose": "The grey line under a page title."
+      },
       "headline": {
         "displayName": "Headline",
-        "purpose": "Page titles; profiles at 36/42px."
-      },
-      "title": {
-        "displayName": "Title",
-        "purpose": "Section headings and card titles."
+        "purpose": "Row titles and emphasised list items."
       },
       "body": {
         "displayName": "Body",
-        "purpose": "Interface prose, summaries and subtitles."
+        "purpose": "Interface prose and post summaries."
+      },
+      "callout": {
+        "displayName": "Callout",
+        "purpose": "Supporting copy and card bodies."
+      },
+      "subhead": {
+        "displayName": "Subhead",
+        "purpose": "List rows and secondary text."
+      },
+      "footnote": {
+        "displayName": "Footnote",
+        "purpose": "Metadata rows."
       },
       "label": {
         "displayName": "Label",
-        "purpose": "Buttons, metadata rows and tags."
+        "purpose": "Buttons and tags."
+      },
+      "caption1": {
+        "displayName": "Caption 1",
+        "purpose": "Counts, timestamps and hints."
+      },
+      "caption2": {
+        "displayName": "Caption 2",
+        "purpose": "The smallest annotations."
       },
       "reading": {
         "displayName": "Reading",
-        "purpose": "Story bodies, 45–75 characters to the line; story titles at 42/50px."
+        "purpose": "Story bodies, 45–75 characters to the line."
+      },
+      "reading-title": {
+        "displayName": "Reading title",
+        "purpose": "Story titles."
       },
       "wordmark": {
         "displayName": "Wordmark",

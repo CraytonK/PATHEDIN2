@@ -32,51 +32,125 @@ colors:
   navy-wash-faint: "#eef2fd"
   navy-wash-border: "#bccaf3"
   on-navy: "#ffffff"
+  danger-on-graphite: "#f2877d"
+  danger: "#b42318"
 typography:
   display:
-    fontFamily: "'Schibsted Grotesk', 'Schibsted Fallback', Roboto, 'Helvetica Neue', Arial, sans-serif"
+    fontFamily: "'Schibsted Grotesk', 'PathedIn Symbols', 'Schibsted Fallback', Roboto, 'Helvetica Neue', Arial, sans-serif"
     fontSize: "clamp(64px, 9vw, 112px)"
     fontWeight: 600
     lineHeight: 0.94
     letterSpacing: "-0.035em"
-  headline:
-    fontFamily: "'Schibsted Grotesk', 'Schibsted Fallback', Roboto, 'Helvetica Neue', Arial, sans-serif"
+  profile-name:
+    fontFamily: "'Schibsted Grotesk', 'PathedIn Symbols', 'Schibsted Fallback', Roboto, 'Helvetica Neue', Arial, sans-serif"
+    fontSize: "36px"
+    fontWeight: 600
+    lineHeight: "42px"
+    letterSpacing: "-0.022em"
+  large-title:
+    fontFamily: "'Schibsted Grotesk', 'PathedIn Symbols', 'Schibsted Fallback', Roboto, 'Helvetica Neue', Arial, sans-serif"
+    fontSize: "34px"
+    fontWeight: 600
+    lineHeight: "40px"
+    letterSpacing: "-0.022em"
+  page-title:
+    fontFamily: "'Schibsted Grotesk', 'PathedIn Symbols', 'Schibsted Fallback', Roboto, 'Helvetica Neue', Arial, sans-serif"
     fontSize: "32px"
     fontWeight: 600
     lineHeight: "38px"
     letterSpacing: "-0.024em"
-  title:
-    fontFamily: "'Schibsted Grotesk', 'Schibsted Fallback', Roboto, 'Helvetica Neue', Arial, sans-serif"
+  title1:
+    fontFamily: "'Schibsted Grotesk', 'PathedIn Symbols', 'Schibsted Fallback', Roboto, 'Helvetica Neue', Arial, sans-serif"
+    fontSize: "28px"
+    fontWeight: 600
+    lineHeight: "34px"
+    letterSpacing: "-0.024em"
+  title2:
+    fontFamily: "'Schibsted Grotesk', 'PathedIn Symbols', 'Schibsted Fallback', Roboto, 'Helvetica Neue', Arial, sans-serif"
     fontSize: "22px"
     fontWeight: 600
     lineHeight: "28px"
     letterSpacing: "-0.02em"
+  title3:
+    fontFamily: "'Schibsted Grotesk', 'PathedIn Symbols', 'Schibsted Fallback', Roboto, 'Helvetica Neue', Arial, sans-serif"
+    fontSize: "19px"
+    fontWeight: 600
+    lineHeight: "25px"
+    letterSpacing: "-0.016em"
+  subtitle:
+    fontFamily: "'Schibsted Grotesk', 'PathedIn Symbols', 'Schibsted Fallback', Roboto, 'Helvetica Neue', Arial, sans-serif"
+    fontSize: "17px"
+    fontWeight: 400
+    lineHeight: "26px"
+  headline:
+    fontFamily: "'Schibsted Grotesk', 'PathedIn Symbols', 'Schibsted Fallback', Roboto, 'Helvetica Neue', Arial, sans-serif"
+    fontSize: "16px"
+    fontWeight: 600
+    lineHeight: "22px"
+    letterSpacing: "-0.012em"
   body:
-    fontFamily: "'Schibsted Grotesk', 'Schibsted Fallback', Roboto, 'Helvetica Neue', Arial, sans-serif"
+    fontFamily: "'Schibsted Grotesk', 'PathedIn Symbols', 'Schibsted Fallback', Roboto, 'Helvetica Neue', Arial, sans-serif"
     fontSize: "16px"
     fontWeight: 400
     lineHeight: "24px"
     letterSpacing: "-0.006em"
+  callout:
+    fontFamily: "'Schibsted Grotesk', 'PathedIn Symbols', 'Schibsted Fallback', Roboto, 'Helvetica Neue', Arial, sans-serif"
+    fontSize: "15px"
+    fontWeight: 400
+    lineHeight: "22px"
+    letterSpacing: "-0.004em"
+  subhead:
+    fontFamily: "'Schibsted Grotesk', 'PathedIn Symbols', 'Schibsted Fallback', Roboto, 'Helvetica Neue', Arial, sans-serif"
+    fontSize: "14px"
+    fontWeight: 400
+    lineHeight: "20px"
+    letterSpacing: "-0.002em"
+  footnote:
+    fontFamily: "'Schibsted Grotesk', 'PathedIn Symbols', 'Schibsted Fallback', Roboto, 'Helvetica Neue', Arial, sans-serif"
+    fontSize: "13px"
+    fontWeight: 400
+    lineHeight: "18px"
   label:
-    fontFamily: "'Schibsted Grotesk', 'Schibsted Fallback', Roboto, 'Helvetica Neue', Arial, sans-serif"
+    fontFamily: "'Schibsted Grotesk', 'PathedIn Symbols', 'Schibsted Fallback', Roboto, 'Helvetica Neue', Arial, sans-serif"
     fontSize: "13px"
     fontWeight: 550
     lineHeight: "18px"
+  caption1:
+    fontFamily: "'Schibsted Grotesk', 'PathedIn Symbols', 'Schibsted Fallback', Roboto, 'Helvetica Neue', Arial, sans-serif"
+    fontSize: "12px"
+    fontWeight: 400
+    lineHeight: "16px"
+    letterSpacing: "0.005em"
+  caption2:
+    fontFamily: "'Schibsted Grotesk', 'PathedIn Symbols', 'Schibsted Fallback', Roboto, 'Helvetica Neue', Arial, sans-serif"
+    fontSize: "11px"
+    fontWeight: 400
+    lineHeight: "13px"
+    letterSpacing: "0.01em"
   reading:
     fontFamily: "Charter, 'Bitstream Charter', 'Charis SIL', 'Charis Fallback', Cambria, serif"
     fontSize: "20px"
     fontWeight: 400
     lineHeight: "32px"
+    letterSpacing: "-0.003em"
+  reading-title:
+    fontFamily: "Charter, 'Bitstream Charter', 'Charis SIL', 'Charis Fallback', Cambria, serif"
+    fontSize: "42px"
+    fontWeight: 400
+    lineHeight: "50px"
   wordmark:
     fontFamily: "'Noe Display', 'Playfair Display', 'Playfair Fallback', Didot, serif"
     fontSize: "24px"
     fontWeight: 600
 rounded:
+  bar: "2px"
   xs: "4px"
   sm: "6px"
   md: "8px"
   popover: "10px"
   lg: "12px"
+  sheet-phone: "14px"
   xl: "16px"
   pill: "999px"
 spacing:
@@ -170,6 +244,9 @@ A graphite (or porcelain) neutral scale carries the page, and Executive Navy is 
 - **Labels, four steps**: primary text, secondary grey for metadata, tertiary for hints and placeholders, and a quaternary for walked-but-unlit track and disabled marks.
 - **Porcelain** mirrors each role in daylight: canvas `#f5f6f8`, white panels and floating surfaces, slate labels.
 
+### Status
+- **Danger** (a soft coral on graphite, a deep red on porcelain): destructive actions only, such as delete and discard. It's never an accent.
+
 ### Named Rules
 **The One Bright Line Rule.** Navy belongs to the Path, to "you", and to the one primary action in view. If a second thing on the screen is navy for decoration, it isn't navy.
 
@@ -180,15 +257,20 @@ A graphite (or porcelain) neutral scale carries the page, and Executive Navy is 
 **Interface and headings:** Schibsted Grotesk (with Schibsted Fallback, a metric-matched Arial)
 **Reading:** Charter, or Charis SIL where Charter isn't installed (with Charis Fallback)
 **Wordmark:** Playfair Display standing in for Noe Display, for the name only
+**Symbols:** PathedIn Symbols, a small subset from Inter that draws only the glyphs Schibsted lacks (↕ ↖ ↙ ↩ ↪ ⇧ ⌘ ⌥). It sits second in the interface stack and never sets text.
 
 **Character:** a newsroom grotesk. It is precise and quiet at 13px, and its headlines have a voice, so the product never reads as a template. Charter gives long stories the calm of a printed page.
 
 ### Hierarchy
+The ramp follows Apple's text styles, each available as a `.t-` class.
 - **Display** (600, clamp 64–112px, line-height 0.94, -0.035em): the intro page's one headline.
-- **Headline** (600, 32/38px, -0.024em): page titles. Profiles take 36/42px.
-- **Title** (600, 22/28px, -0.02em): section headings and card titles. Rail headings drop to 16/20px.
-- **Body** (400, 16/24px): interface prose, post summaries and subtitles in secondary grey.
-- **Label** (550, 13/18px): buttons, metadata rows and tags. Small buttons run 13px and medium 14px.
+- **Page title and large title** (600, 32/38 and 34/40px): page titles. Profiles take 36/42px.
+- **Title 1–3** (600, 28/34, 22/28 and 19/25px): section headings and card titles. Rail headings drop to 16/20px.
+- **Subtitle** (400, 17/26px): the grey line under a page title.
+- **Headline and body** (600 and 400, 16/22 and 16/24px): row titles, then interface prose and post summaries.
+- **Callout and subhead** (400, 15/22 and 14/20px): supporting copy, list rows and card bodies.
+- **Footnote and label** (400 and 550, 13/18px): metadata rows, and buttons and tags. Small buttons run 13px and medium 14px.
+- **Captions** (400, 12/16 and 11/13px): counts, timestamps and hints.
 - **Reading** (Charter 400, 20/32px, 45–75 characters to the line): story bodies. Story titles are Charter at 42/50px.
 
 ### Named Rules
@@ -221,7 +303,7 @@ A hybrid system. Surfaces step up in value (canvas, then panel, then floating), 
 
 ## Shapes
 
-Gently rounded rectangles throughout. The radii are 6px for rows inside lists and menus, 8px for buttons, fields, slots and icon buttons, 10px for popovers and tooltips, 12px for cards and panels, and 16px for sheets, the palette and the sign-in card. Pills are kept for tags, counts and badges. Portraits are circles with a 1px edge, and where they sit on a coloured surface they are knocked out with a ring in that surface's colour. The Path's own geometry is fixed: solid track for walked steps, a ringed present node, a dashed navy future and an open destination ring.
+Gently rounded rectangles throughout. The radii are 2px for thin bars (tab underlines, progress), 6px for rows inside lists and menus, 8px for buttons, fields, slots and icon buttons, 10px for popovers and tooltips, 12px for cards and panels, and 16px for sheets, the palette and the sign-in card (14px for a phone sheet's top corners). Pills are kept for tags, counts and badges. Portraits are circles with a 1px edge, and where they sit on a coloured surface they are knocked out with a ring in that surface's colour. The Path's own geometry is fixed: solid track for walked steps, a ringed present node, a dashed navy future and an open destination ring.
 
 ## Components
 

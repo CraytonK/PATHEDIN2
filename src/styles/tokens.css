@@ -80,6 +80,8 @@
   --green: #a3b3f5;
   --red: #8ea2f2;
   --badge: #3654c6;
+  /* Destructive actions only (delete, discard). */
+  --danger: #f2877d;
 
   --bar-bg: rgba(11, 12, 15, 0.78);
   --bar-blur: saturate(180%) blur(20px);
@@ -177,6 +179,7 @@
   --green: #1e3a8a;
   --red: #1e3a8a;
   --badge: #1e3a8a;
+  --danger: #b42318;
 
   --bar-bg: rgba(245, 246, 248, 0.82);
 
@@ -233,6 +236,7 @@
     --green: #1e3a8a;
     --red: #1e3a8a;
     --badge: #1e3a8a;
+    --danger: #b42318;
     --bar-bg: rgba(245, 246, 248, 0.82);
     --surface-edge: 0 0 0 1px rgba(15, 23, 42, 0.07), 0 1px 2px rgba(15, 23, 42, 0.04);
     --shadow-popover: 0 0 0 1px rgba(15, 23, 42, 0.08), 0 2px 6px rgba(15, 23, 42, 0.06), 0 16px 40px -12px rgba(15, 23, 42, 0.22);

@@ -11,6 +11,33 @@
         ],
         "createdAt": "2026-09-24T23:19:41.531Z",
         "reason": "Claude: false positive, the match is a regular expression that reads the first <img> src out of the draft HTML, not a rendered image"
+      },
+      {
+        "rule": "design-system-color",
+        "value": "#000",
+        "files": [
+          "src/components/path/routeband.css"
+        ],
+        "createdAt": "2026-09-25T16:47:57.294Z",
+        "reason": "Claude: mask-image gradient stop; masks read alpha only, so the colour is not a palette colour"
+      },
+      {
+        "rule": "design-system-color",
+        "value": "#000",
+        "files": [
+          "src/components/path/path.css"
+        ],
+        "createdAt": "2026-09-25T16:47:57.305Z",
+        "reason": "Claude: mask-image gradient stop; masks read alpha only, so the colour is not a palette colour"
+      },
+      {
+        "rule": "design-system-color",
+        "value": "#000",
+        "files": [
+          "src/styles/base.css"
+        ],
+        "createdAt": "2026-09-25T16:47:57.317Z",
+        "reason": "Claude: mask-image gradient stop; masks read alpha only, so the colour is not a palette colour"
       }
     ]
   }
