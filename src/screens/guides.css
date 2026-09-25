@@ -15,19 +15,64 @@
     margin-left: auto;
   }
 }
+/* The moves are stretches of one route, so they hang off one line: the first starts where you are,
+   and the line runs dashed in navy because all of it is still ahead of you. */
 .guides__section {
-  padding: 36px 0 12px;
-  border-top: var(--hairline) solid var(--separator);
+  position: relative;
   margin-top: 28px;
+  padding: 36px 0 12px 44px;
+}
+.guides__section::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 44px;
+  right: 0;
+  border-top: var(--hairline) solid var(--separator);
+}
+.guides__section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: -28px;
+  left: 9px;
+  width: 4px;
+  background: linear-gradient(var(--tint) 0 7px, transparent 7px 13px) top center / 4px 13px repeat-y;
+}
+.guides__section:first-of-type::before {
+  top: 48px;
+}
+.guides__section:last-of-type::before {
+  bottom: auto;
+  height: 48px;
+}
+.guides__section:first-of-type:last-of-type::before {
+  display: none;
 }
 .guides__head {
   display: flex;
-  gap: 18px;
   align-items: flex-start;
   margin-bottom: 18px;
 }
-.guides__num {
-  margin-top: 2px;
+.guides__stop {
+  position: absolute;
+  z-index: 1;
+  top: 38px;
+  left: 1px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--bg);
+  box-shadow:
+    inset 0 0 0 3.5px var(--tint),
+    0 0 0 4px var(--bg);
+}
+/* Where you are: the brand's "now" node, an ink ring round a navy dot. */
+.guides__stop.is-now {
+  background: radial-gradient(circle, var(--tint) 0 3.8px, var(--bg) 4.4px);
+  box-shadow:
+    inset 0 0 0 3.5px var(--ink),
+    0 0 0 4px var(--bg);
 }
 .guides__move {
   display: flex;
@@ -43,7 +88,6 @@
   display: grid;
   grid-template-columns: minmax(0, 1fr);
   gap: 0;
-  padding-left: 46px;
 }
 .guides__title {
   font-size: 20px;

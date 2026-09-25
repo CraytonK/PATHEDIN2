@@ -119,7 +119,11 @@ export function Guides() {
       {sections.map((s, i) => (
         <section key={`${s.from}-${s.to}`} className="guides__section">
           <header className="guides__head">
-            <span className="guides__num num-tag">{String(i + 1).padStart(2, '0')}</span>
+            <span className={`guides__stop ${i === 0 ? 'is-now' : ''}`}>
+              <span className="visually-hidden">
+                Move {i + 1} of {sections.length}
+              </span>
+            </span>
             <div>
               <h2 className="guides__title">{s.title}</h2>
               <p className="guides__move t-subhead">

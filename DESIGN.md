@@ -92,7 +92,7 @@ All pages share Medium's page shape.
 | Question / Decision | The reading column holds the question or fork. The right column holds the people who made the move, the ones to ask, and similar forks. |
 | Decision Points | Your fork, then the ones near your Path, as post rows with fork thumbnails. |
 | Communities / a community | A publication: title, description, members and Join, then tabs and post rows. The right column holds the community's Guides and journeys that cross this one. |
-| Profile | Medium's profile. The reading column holds the name as a large title, then Path / Stories / Answers / Decisions tabs. The right column holds the person (photo, bio, buttons), what they're doing now, the Path Guide card, *Where your Paths meet* and communities. On iPhone the person card leads. |
+| Profile | Medium's profile, opened by a **Path cover** (below). The reading column holds the name as a large title, then Path / Stories / Answers / Decisions tabs. The right column holds the person (photo, bio, buttons), what they're doing now, the Path Guide card, *Where your Paths meet* and communities. On iPhone the person card leads. |
 | Discover | Text tabs for **For you, People, Path Guides, Communities and Destinations**. For you mixes a row of each (people worth knowing, Guides for your next move, communities along your route, futures near your Path), each with a "See all" link to its tab. People, Guides and communities are a quiet three-column grid with a hairline above each card and no boxes; on a phone the For you rows scroll sideways. Destinations keep the topic grid: a quiet image area with the route art, then title, summary and counts. |
 | Network, Guides, Connections, Requests, Notifications, Saved, Search | Hairline lists with text tabs. Notifications drop the blue unread panels for a small dot. Each page has a right column (people worth knowing, your communities, or office hours). |
 
@@ -292,6 +292,15 @@ The same vocabulary appears at every scale:
 - the right column's *Your Path this week*
 - the intro illustration
 - the sign-in splash
+
+### The Path cover, and Guides as a route
+These two took their cue from the patterns in common UI kits (social profiles, mentoring and booking apps), translated into PathedIn's line language rather than copied.
+- **Every profile opens on its Path, as a social profile opens on a cover photo** (`components/path/PathCover.tsx`).
+  - The route runs across a panel: walked steps in solid ink with their years, the person's portrait in a navy ring at "Now", then dashed navy to an open ring at where they're heading.
+  - On someone else's profile it also shows where the two Paths touch. Your own small face sits on every step you both took, and steps on your way ahead are tagged **On your route**.
+  - The caption says how many steps you share and opens **Align Paths**; on your own profile it opens My Path.
+  - It draws itself once, stop by stop, and holds still with Reduce Motion. When it's wider than the screen, it scrolls sideways and opens centred on "Now".
+- **Path Guides hang off one route.** The moves toward your destination used to be numbered 01, 02 in black squares. Now they're stations on a vertical line, dashed in navy because all of it is still ahead of you. The first starts at the brand's "now" node, and each move after it is an open navy ring.
 
 ### Paths on posts: one line, the rest on hover
 A full Path on every post and person row was too much to read. In feeds, lists and cards a Path is now a **Path hint**: the brand mark and one quiet line, where someone is now and where they're heading ("CRO → Pharma R&D"), with a dotted underline to show there's more (`components/path/PathHint.tsx`).

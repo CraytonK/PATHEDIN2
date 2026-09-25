@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import { Page } from '../components/chrome';
 import { TransitMap } from '../components/path/TransitMap';
 import { AlignMap, compareSummary } from '../components/path/Compare';
+import { PathCover } from '../components/path/PathCover';
 import { ConnectButton, CredibilityLabel, DecisionItem, RequestButton, StoryItem } from '../components/content';
 import { RailFooter, RailPills, RailSection } from '../components/Rail';
 import { Button, GroupedList, PathChips, RelationTag, TextTabs } from '../components/ui';
@@ -206,6 +207,7 @@ export function Profile() {
 
   return (
     <Page title={p.name} large={false} back rail={isMobile ? rest : <>{identity}{rest}</>}>
+      <PathCover id={id} />
       {isMobile ? (
         identity
       ) : (

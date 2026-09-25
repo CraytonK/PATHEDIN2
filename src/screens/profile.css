@@ -1,7 +1,7 @@
 /* ── Profile, laid out like Medium's: the name and tabs in the reading column,
       the person (photo, bio, buttons) in the right-hand column. ── */
 .profile__head {
-  padding: 40px 0 8px;
+  padding: 0 0 8px;
 }
 /* A person's name is a hero heading: Noe Display Medium. */
 .profile__name {

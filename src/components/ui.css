@@ -87,22 +87,6 @@
   flex-wrap: wrap;
   gap: 6px;
 }
-/* Numbered tag (brand kit section markers) */
-.num-tag {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 28px;
-  height: 28px;
-  border-radius: 8px;
-  background: var(--primary);
-  color: var(--on-primary);
-  font-size: 13px;
-  font-weight: 700;
-  flex: none;
-  font-variant-numeric: tabular-nums;
-}
-
 .avatar-stack {
   display: inline-flex;
   align-items: center;

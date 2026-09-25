@@ -1,0 +1,178 @@
+/* ── A profile's cover: their Path, drawn across the top ─────
+   The node vocabulary is the brand's, as on the week's line: been = solid ink, now = their portrait
+   in a navy ring, going = dashed navy to an open navy ring. */
+.pcover {
+  margin: 0 0 36px;
+  padding: 26px 0 0;
+  border-radius: 8px;
+  background: var(--bg-grouped);
+}
+.pcover__line {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(100px, 1fr);
+  padding: 0 8px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.pcover__line::-webkit-scrollbar {
+  display: none;
+}
+.pcover__stop {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 0;
+  padding: 0 4px 22px;
+  text-align: center;
+}
+.pcover__track {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 64px;
+}
+/* Each stop draws the line back to the one before it, centre to centre. */
+.pcover__link {
+  position: absolute;
+  top: 50%;
+  right: 50%;
+  width: calc(100% + 8px);
+  height: 4px;
+  margin-top: -2px;
+  border-radius: 2px;
+  background: var(--ink);
+  transform-origin: left center;
+}
+.pcover__stop.is-future .pcover__link,
+.pcover__stop.is-dest .pcover__link {
+  background: linear-gradient(90deg, var(--tint) 0 7px, transparent 7px 13px) left center / 13px 4px repeat-x;
+}
+.pcover__node {
+  position: relative;
+  z-index: 1;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--ink);
+  box-shadow: 0 0 0 4px var(--bg-grouped);
+}
+.pcover__stop.is-future .pcover__node {
+  width: 16px;
+  height: 16px;
+  background: var(--bg-grouped);
+  box-shadow:
+    inset 0 0 0 3px var(--tint),
+    0 0 0 4px var(--bg-grouped);
+}
+.pcover__stop.is-dest .pcover__node {
+  width: 26px;
+  height: 26px;
+  background: var(--bg);
+  box-shadow:
+    inset 0 0 0 4px var(--tint),
+    0 0 0 4px var(--bg-grouped);
+}
+.pcover__face {
+  position: relative;
+  z-index: 1;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow:
+    0 0 0 3px var(--tint),
+    0 0 0 7px var(--bg-grouped);
+}
+/* Your own face, on a step you both took. */
+.pcover__you {
+  position: absolute;
+  z-index: 2;
+  top: 50%;
+  left: calc(50% + 6px);
+  width: 24px;
+  height: 24px;
+  margin-top: -26px;
+  border-radius: 50%;
+  box-shadow: 0 0 0 2px var(--bg-grouped);
+}
+.pcover__you img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+}
+.pcover__name {
+  margin-top: 10px;
+  font-size: 15px;
+  line-height: 20px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--label);
+}
+.pcover__stop.is-past .pcover__name {
+  color: var(--label-2);
+  font-weight: 500;
+}
+.pcover__stop.is-future .pcover__name,
+.pcover__stop.is-dest .pcover__name {
+  color: var(--tint-text);
+}
+.pcover__when {
+  margin-top: 2px;
+  font-size: 13px;
+  line-height: 18px;
+  color: var(--label-2);
+  font-variant-numeric: tabular-nums;
+}
+.pcover__stop.is-present .pcover__when {
+  color: var(--tint-text);
+  font-weight: 600;
+}
+.pcover__mark {
+  margin-top: 6px;
+  padding: 1px 8px;
+  border-radius: var(--r-pill);
+  background: var(--tint-softer);
+  color: var(--tint-text);
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.pcover__caption {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 12px 20px;
+  border-top: 1px solid var(--separator);
+  font-size: 13px;
+  color: var(--label-2);
+}
+.pcover__action {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--tint-text);
+  text-align: right;
+}
+@media (hover: hover) {
+  .pcover__action:hover {
+    text-decoration: underline;
+  }
+}
+@media (max-width: 767px) {
+  .pcover {
+    margin: 0 calc(var(--gutter) * -1) 28px;
+    border-radius: 0;
+  }
+  .pcover__line {
+    grid-auto-columns: minmax(108px, 1fr);
+    padding: 0 calc(var(--gutter) - 8px);
+  }
+  .pcover__caption {
+    padding: 12px var(--gutter);
+  }
+}
