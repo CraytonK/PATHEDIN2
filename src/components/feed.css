@@ -264,7 +264,7 @@
   flex: none;
   margin-left: auto;
   padding: 6px 14px;
-  border-radius: var(--r-pill);
+  border-radius: var(--r-md);
   background: var(--primary);
   color: var(--on-primary);
   font-size: 13px;

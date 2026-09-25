@@ -19,7 +19,7 @@
   right: 22px;
   height: 36px;
   padding: 0 14px;
-  border-radius: var(--r-pill);
+  border-radius: var(--r-md);
   color: var(--label-2);
   font-size: 14px;
 }
