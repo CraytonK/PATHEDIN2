@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-09-25T16:48:12Z",
+  "generatedAt": "2026-09-25T20:47:35Z",
   "title": "Design System: PathedIn",
   "extensions": {
     "colorMeta": {
@@ -593,6 +593,11 @@
         "name": "surface-edge-porcelain",
         "value": "0 0 0 1px rgba(15,23,42,0.07), 0 1px 2px rgba(15,23,42,0.04)",
         "purpose": "Panels at rest in the light appearance."
+      },
+      {
+        "name": "edge-light",
+        "value": "radial-gradient(260px circle at pointer, rgba(255,255,255,0.34), transparent 70%) masked to the 1px border",
+        "purpose": "A card's edge catching light where the cursor is (porcelain: navy at 42%)."
       }
     ],
     "motion": [
@@ -625,6 +630,41 @@
         "name": "overlay-enter",
         "value": "scale 0.98 to 1 with fade",
         "purpose": "Sheets and the command palette."
+      },
+      {
+        "name": "portrait-flight",
+        "value": "420–680 ms ease-out (1-(1-t)^4), arc lift up to 56px, re-aimed each frame",
+        "purpose": "Continuity from a person card to the now station of their Path."
+      },
+      {
+        "name": "landing-ripple",
+        "value": "560ms ease-out ring from 7px to 20px, fading",
+        "purpose": "The station answering the portrait."
+      },
+      {
+        "name": "press-touch",
+        "value": "scale 0.975 in 90ms, release over 380ms ease-out",
+        "purpose": "Cards under a finger."
+      },
+      {
+        "name": "tab-settle",
+        "value": "scale 0.78 to 1, spring response 0.6, damping 0.72",
+        "purpose": "A newly chosen tab-bar icon."
+      },
+      {
+        "name": "nudge",
+        "value": "translateX(2px) over 240ms ease-out",
+        "purpose": "Forward arrows on hover."
+      },
+      {
+        "name": "theme-reveal",
+        "value": "clip-path circle from the switch point, 620ms ease-out (View Transitions)",
+        "purpose": "Switching appearance."
+      },
+      {
+        "name": "rolling-number",
+        "value": "±80% vertical roll with fade, spring snappy",
+        "purpose": "Counts that change."
       }
     ],
     "breakpoints": [
@@ -751,14 +791,16 @@
       "**Do** use 8px corners for anything pressed and 12px for panels, and keep pills for tags and counts.",
       "**Do** show the keyboard: keycaps beside shortcuts, arrow-key navigation in lists and the palette.",
       "**Do** move with purpose: 120–180 ms for feedback, springs for shared indicators, a 200 ms rise between screens, and overlays growing from 0.98. Respect Reduce Motion.",
-      "**Do** draw every Path with the transit vocabulary: solid walked track, ringed present, dashed navy future, open destination."
+      "**Do** draw every Path with the transit vocabulary: solid walked track, ringed present, dashed navy future, open destination.",
+      "**Do** give motion a job: acknowledge an action, explain a change of state or place, or carry continuity. The portrait flight is the one authored moment. Everything else stays quick and quiet."
     ],
     "donts": [
       "**Don't** bring back the cream paper ground, the serif-led reading-app look, or Medium's black pills.",
       "**Don't** use glows, gradient text, neon edges or coloured side stripes.",
       "**Don't** set a label above a heading as a kicker or eyebrow. Metadata rows name the post's kind and its stretch of the Path, and headings carry their own weight.",
       "**Don't** set interface text in Charter or Playfair, or reach for Inter, Geist or Mona Sans as the interface face.",
-      "**Don't** use Unicode glyphs or emoji as icons. Icons are drawn SVG in one stroke weight."
+      "**Don't** use Unicode glyphs or emoji as icons. Icons are drawn SVG in one stroke weight.",
+      "**Don't** add scroll-triggered entrances to every section, parallax, bounce or elastic easing, or hover lifts on things that don't open anything."
     ]
   }
 }

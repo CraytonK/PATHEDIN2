@@ -343,6 +343,16 @@ Across the top of a person's card, their Path is drawn on a sunken 64px band: wa
 ### Office Hours Booking (signature)
 A two-pane sheet. The Guide sits on a recessed panel on the left. On the right: three session tiles (a calendar leaf each, with a sliding navy selection), a grid of time slots (the chosen one fills navy, and taken ones recede with a strike), topic tags, a note field, and a sticky blurred footer with the summary and the primary action. It confirms on a ticket: a navy-washed date stub behind a dashed perforation, with the details in a definition list and a check that draws itself.
 
+### Portrait Flight (signature motion)
+Opening someone from a card carries their portrait to the "now" station on their profile's Path. It lifts 6% while the new screen arrives, travels on a shallow arc (420–680 ms, ease-out, re-aimed every frame so it lands true while the screen settles), and hands over to the station, which answers with one ring ripple before the line draws out. Any profile link launches it. It is skipped under Reduce Motion.
+
+### Interaction Language
+- **Pointer:** cards that open something catch light along their 1px edge where the cursor is (a masked radial light, never an outer glow). A quiet surface follows the pointer across tabs. Forward chevrons and arrows lean 2px toward where they lead. After the first tooltip, neighbours appear without the wait. Feed photos lean in to 1.04 over 700 ms.
+- **Scroll:** the top bar belongs to the page at the top and frosts, taking its hairline, only once content passes beneath it. Reading a story walks you along a Path: solid navy behind, dashed ahead, and a small "you" node at your place.
+- **Touch:** cards give to 0.975 under a finger in 90 ms and spring back over 380 ms. List rows light at once and fade as the finger lifts. A newly chosen tab's icon settles from 0.78 on a spring. A control inside a card takes the press for itself.
+- **State:** counts roll to their new value (up when they grow, down when they shrink). Switching appearance opens the new theme in a circle from where you switched (View Transitions, 620 ms).
+- **Reduce Motion:** the flight, the reveal and spatial movement are dropped. Fades and colour changes that confirm an action stay.
+
 ## Do's and Don'ts
 
 ### Do:
@@ -352,6 +362,7 @@ A two-pane sheet. The Guide sits on a recessed panel on the left. On the right: 
 - **Do** show the keyboard: keycaps beside shortcuts, arrow-key navigation in lists and the palette.
 - **Do** move with purpose: 120–180 ms for feedback, springs for shared indicators, a 200 ms rise between screens, and overlays growing from 0.98. Respect Reduce Motion.
 - **Do** draw every Path with the transit vocabulary: solid walked track, ringed present, dashed navy future, open destination.
+- **Do** give motion a job: acknowledge an action, explain a change of state or place, or carry continuity. The portrait flight is the one authored moment. Everything else stays quick and quiet.
 
 ### Don't:
 - **Don't** bring back the cream paper ground, the serif-led reading-app look, or Medium's black pills.
@@ -359,3 +370,4 @@ A two-pane sheet. The Guide sits on a recessed panel on the left. On the right: 
 - **Don't** set a label above a heading as a kicker or eyebrow. Metadata rows name the post's kind and its stretch of the Path, and headings carry their own weight.
 - **Don't** set interface text in Charter or Playfair, or reach for Inter, Geist or Mona Sans as the interface face.
 - **Don't** use Unicode glyphs or emoji as icons. Icons are drawn SVG in one stroke weight.
+- **Don't** add scroll-triggered entrances to every section, parallax, bounce or elastic easing, or hover lifts on things that don't open anything.
