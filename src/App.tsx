@@ -6,7 +6,7 @@ import { PeekLayer } from './components/Peek';
 import { PathSplash } from './components/PathSplash';
 import { CompareLayer } from './components/path/Compare';
 import { RequestLayer } from './components/RequestComposer';
-import { SearchLayer } from './components/SearchLayer';
+import { CommandPalette } from './components/CommandPalette';
 import { useIsMobile } from './lib/motion';
 import { useApp } from './lib/store';
 import { useUI } from './lib/ui';
@@ -138,10 +138,11 @@ function Shell() {
         <AnimatePresence mode="wait" initial={false} onExitComplete={restore}>
           <motion.main
             key={routeKey}
-            initial={isMobile ? { opacity: 0, x: back ? -28 : 36 } : { opacity: 0, y: 6 }}
-            animate={{ opacity: 1, x: 0, y: 0 }}
-            exit={{ opacity: 0, transition: { duration: 0.09 } }}
-            transition={{ type: 'spring', stiffness: 420, damping: 40, mass: 0.8 }}
+            // Desktop screens arrive with a short rise out of a 3px blur; iPhone keeps the push from the side.
+            initial={isMobile ? { opacity: 0, x: back ? -28 : 36 } : { opacity: 0, y: 8, filter: 'blur(3px)' }}
+            animate={isMobile ? { opacity: 1, x: 0, y: 0 } : { opacity: 1, y: 0, filter: 'blur(0px)' }}
+            exit={{ opacity: 0, transition: { duration: 0.08 } }}
+            transition={isMobile ? { type: 'spring', stiffness: 420, damping: 40, mass: 0.8 } : { duration: 0.26, ease: [0.16, 1, 0.3, 1] }}
           >
             <Routes location={location}>
               <Route path="/" element={<Home />} />
@@ -175,7 +176,7 @@ function Shell() {
         <PeekLayer />
         <CompareLayer />
         <RequestLayer />
-        <SearchLayer />
+        <CommandPalette />
         <ToastLayer />
       </div>
       {splashLayer}

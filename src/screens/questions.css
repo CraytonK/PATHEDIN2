@@ -136,10 +136,11 @@
 }
 .qd__title {
   font-family: var(--font-brand);
-  font-size: 36px;
-  line-height: 42px;
-  font-weight: 500;
-  letter-spacing: -0.025em;
+  font-stretch: var(--display-stretch);
+  font-size: 30px;
+  line-height: 36px;
+  font-weight: var(--display-weight);
+  letter-spacing: -0.022em;
   margin: 10px 0 14px;
   text-wrap: balance;
 }

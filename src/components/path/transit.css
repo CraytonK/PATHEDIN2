@@ -195,7 +195,8 @@
 .tmap__row--present .tmap__title,
 .tmap__row--destination .tmap__title {
   font-family: var(--font-brand);
-  font-weight: 500;
+  font-stretch: var(--display-stretch);
+  font-weight: var(--display-weight);
   font-size: 22px;
   line-height: 26px;
   letter-spacing: -0.02em;

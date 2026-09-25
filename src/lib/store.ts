@@ -119,8 +119,8 @@ export const useApp = create<AppState>()(
       readThreads: {},
       weighIns: {},
       addedRoutes: {},
-      // Light by default, like Medium on the web; dark is something you choose.
-      theme: 'light',
+      // Graphite by default; Light and Automatic are a choice away in Settings and ⌘K.
+      theme: 'dark',
       signedIn: false,
       sidebar: true,
       highlights: {},
@@ -173,11 +173,11 @@ export const useApp = create<AppState>()(
     {
       name: 'pathedin:v1',
       storage: createJSONStorage(() => safeStorage),
-      // v1: appearance used to follow the system by default; start everyone on light again.
-      version: 1,
+      // v2: the graphite redesign opens in dark for everyone once; Light and Automatic stay a choice away.
+      version: 2,
       migrate: (persisted, version) => {
         const s = (persisted ?? {}) as Partial<AppState>;
-        if (version < 1 && (!s.theme || s.theme === 'system')) s.theme = 'light';
+        if (version < 2) s.theme = 'dark';
         return s as AppState;
       },
       partialize: (s) => ({

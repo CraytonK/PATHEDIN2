@@ -4,21 +4,20 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta name="description" content="PathedIn — the living career path. Where you've been, where you are, where you want to go. Don't just ask who you know; ask who you should know to get where you want to go." />
-    <meta name="theme-color" content="#f8f6f1" />
+    <meta name="theme-color" content="#0b0c0f" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="default" />
     <meta name="apple-mobile-web-app-title" content="PathedIn" />
     <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
     <title>PathedIn</title>
     <script>
-      // Apply the saved appearance before first paint (light unless the viewer chose otherwise).
+      // Apply the saved appearance before first paint (graphite unless the viewer chose otherwise).
       try {
         var s = JSON.parse(localStorage.getItem('pathedin:v1') || '{}');
-        var t = (s.state && s.state.theme) || 'light';
-        if (s.version !== 1 && t === 'system') t = 'light';
+        var t = s.version === 2 && s.state && s.state.theme ? s.state.theme : 'dark';
         if (t !== 'system') document.documentElement.dataset.theme = t;
       } catch (e) {
-        document.documentElement.dataset.theme = 'light';
+        document.documentElement.dataset.theme = 'dark';
       }
     </script>
   </head>

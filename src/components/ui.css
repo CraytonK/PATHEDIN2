@@ -125,70 +125,69 @@
   text-underline-offset: 3px;
 }
 
-/* ── Buttons (HIG: filled / tinted / gray / plain) ── */
+/* ── Buttons: rounded rectangles; primary is Executive Navy with a lit top edge ── */
 .btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 6px;
-  /* Active CTAs: semibold. */
-  font-weight: 600;
+  font-weight: 550;
   white-space: nowrap;
-  border-radius: var(--r-pill);
+  border-radius: var(--r-md);
   transition:
-    background-color var(--dur-2) var(--ease-out),
-    color var(--dur-2) var(--ease-out),
-    box-shadow var(--dur-2) var(--ease-out),
-    filter var(--dur-2) var(--ease-out);
+    background-color var(--dur-1) var(--ease-out),
+    color var(--dur-1) var(--ease-out),
+    box-shadow var(--dur-1) var(--ease-out),
+    filter var(--dur-1) var(--ease-out);
   will-change: transform;
 }
 .btn__icon {
   display: inline-flex;
 }
 .btn--small {
-  height: 32px;
+  height: 30px;
+  padding: 0 12px;
+  font-size: 13px;
+  letter-spacing: -0.004em;
+}
+.btn--small .btn__icon svg {
+  width: 15px;
+  height: 15px;
+}
+.btn--medium {
+  height: 36px;
   padding: 0 14px;
   font-size: 14px;
   letter-spacing: -0.006em;
 }
-.btn--small .btn__icon svg {
+.btn--medium .btn__icon svg {
   width: 17px;
   height: 17px;
 }
-.btn--medium {
-  height: 38px;
-  padding: 0 18px;
-  font-size: 14px;
-  letter-spacing: -0.006em;
-}
-.btn--medium .btn__icon svg {
-  width: 19px;
-  height: 19px;
-}
 .btn--large {
-  height: 46px;
-  padding: 0 24px;
-  font-size: 16px;
-  letter-spacing: -0.011em;
+  height: 44px;
+  padding: 0 20px;
+  font-size: 15px;
+  letter-spacing: -0.01em;
 }
 .btn--block {
   width: 100%;
 }
-/* Pills in the brand colours: primary is Deep Slate Navy, outline is a 1px ink line, secondary is the navy-outlined porcelain. */
 .btn--filled,
 .btn--ink {
   background: var(--primary);
   color: var(--on-primary);
+  box-shadow: var(--btn-highlight), 0 1px 2px rgba(0, 0, 0, 0.25);
 }
-/* The kit's secondary action: porcelain with an Executive Navy line and label. */
+/* Secondary: the navy, softly. */
 .btn--tinted {
-  background: var(--fill-3);
+  background: var(--tint-soft);
   color: var(--tint-text);
-  box-shadow: inset 0 0 0 1px var(--tint);
 }
 .btn--gray {
   background: var(--fill);
   color: var(--label);
+  box-shadow: inset 0 0 0 1px var(--separator);
 }
 .btn--plain {
   color: var(--tint-text);
@@ -196,9 +195,11 @@
   padding-right: 4px;
   font-weight: 500;
 }
+/* Outline reads as a raised surface: a panel with an edge. */
 .btn--outline {
   color: var(--label);
-  box-shadow: inset 0 0 0 1px var(--label);
+  background: var(--bg-grouped);
+  box-shadow: inset 0 0 0 1px var(--border), 0 1px 2px rgba(0, 0, 0, 0.12);
 }
 @media (hover: hover) {
   .btn--filled:hover,
@@ -206,13 +207,13 @@
     background: var(--primary-hover);
   }
   .btn--tinted:hover {
-    background: var(--tint-softer);
+    background: color-mix(in srgb, var(--tint-soft) 100%, var(--tint) 10%);
   }
   .btn--gray:hover {
-    background: color-mix(in srgb, var(--fill) 100%, var(--label) 5%);
+    background: color-mix(in srgb, var(--fill) 100%, var(--label) 6%);
   }
   .btn--outline:hover {
-    background: var(--bg-hover);
+    box-shadow: inset 0 0 0 1px var(--border-strong), 0 1px 2px rgba(0, 0, 0, 0.12);
   }
   .btn--plain:hover {
     opacity: 0.75;
@@ -228,11 +229,13 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: var(--hit);
-  height: var(--hit);
-  border-radius: 50%;
+  width: 34px;
+  height: 34px;
+  border-radius: var(--r-md);
   color: var(--label);
-  transition: background-color var(--dur-2) var(--ease-out);
+  transition:
+    background-color var(--dur-1) var(--ease-out),
+    color var(--dur-1) var(--ease-out);
 }
 @media (hover: hover) {
   .icon-btn:hover {
@@ -244,11 +247,11 @@
 }
 .badge {
   position: absolute;
-  top: 5px;
-  right: 3px;
-  min-width: 17px;
-  height: 17px;
-  padding: 0 5px;
+  top: 1px;
+  right: 0;
+  min-width: 16px;
+  height: 16px;
+  padding: 0 4px;
   border-radius: 999px;
   background: var(--badge);
   color: #fff;
@@ -295,9 +298,10 @@
 .segmented {
   display: inline-flex;
   position: relative;
-  padding: 3px;
-  border-radius: var(--r-pill);
-  background: var(--fill);
+  padding: 2px;
+  border-radius: var(--r-md);
+  background: var(--fill-3);
+  box-shadow: inset 0 0 0 1px var(--separator);
   gap: 0;
   max-width: 100%;
 }
@@ -305,14 +309,15 @@
   position: relative;
   /* Grow to share the space, but never shrink below the label. */
   flex: 1 0 auto;
-  height: 30px;
-  padding: 0 16px;
-  border-radius: var(--r-pill);
-  font-size: 14px;
-  font-weight: 400;
+  height: 28px;
+  padding: 0 14px;
+  border-radius: var(--r-sm);
+  font-size: 13px;
+  font-weight: 450;
   color: var(--label-2);
   letter-spacing: 0;
   white-space: nowrap;
+  transition: color var(--dur-1) var(--ease-out);
 }
 .segmented--large .segmented__item {
   height: 32px;
@@ -334,7 +339,7 @@
   opacity: 0;
 }
 .segmented__item.is-active {
-  font-weight: 600;
+  font-weight: 550;
   color: var(--label);
 }
 .segmented__item {
@@ -342,20 +347,14 @@
 }
 .segmented__thumb {
   position: absolute;
-  top: 3px;
-  bottom: 3px;
+  top: 2px;
+  bottom: 2px;
   left: 0;
-  border-radius: var(--r-pill);
+  border-radius: var(--r-sm);
   background: var(--bg-elevated);
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-}
-:root[data-theme='dark'] .segmented__thumb {
-  background: var(--label-4);
-}
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme='light']) .segmented__thumb {
-    background: var(--label-4);
-  }
+  box-shadow:
+    0 0 0 1px var(--border),
+    0 1px 2px rgba(0, 0, 0, 0.2);
 }
 .segmented__label {
   position: relative;
@@ -379,9 +378,9 @@
 .text-tabs__item {
   position: relative;
   flex: none;
-  height: 44px;
+  height: 42px;
   font-size: 14px;
-  font-weight: 400;
+  font-weight: 450;
   color: var(--label-2);
   display: inline-flex;
   align-items: center;
@@ -390,7 +389,7 @@
 }
 .text-tabs__item.is-active {
   color: var(--label);
-  font-weight: 500;
+  font-weight: 550;
 }
 @media (hover: hover) {
   .text-tabs__item:hover {
@@ -405,8 +404,9 @@
 .text-tabs__bar {
   position: absolute;
   left: 0;
-  bottom: 0;
-  height: 1px;
+  bottom: -1px;
+  height: 2px;
+  border-radius: 2px;
   background: var(--label);
 }
 

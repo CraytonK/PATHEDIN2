@@ -448,7 +448,9 @@
 /* A community's name is a hero heading: Noe Display Medium. */
 .community-title--lg {
   font-family: var(--font-brand);
-  letter-spacing: -0.025em;
+  font-stretch: var(--display-stretch);
+  font-weight: var(--display-weight);
+  letter-spacing: -0.022em;
 }
 .community-title--lg .community-title__to {
   font-weight: 500;

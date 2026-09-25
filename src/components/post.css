@@ -27,9 +27,27 @@
 /* ── Post: a feed row laid out like a Medium story preview ── */
 /* Each row is its own container, so it lays out the same in the feed, a side column or a phone. */
 .post {
+  position: relative;
+  isolation: isolate;
   container-type: inline-size;
   padding: 28px 0 22px;
   border-bottom: 1px solid var(--separator);
+}
+/* Rows light up under the pointer, like a list in Linear: a surface just wider than the text. */
+@media (hover: hover) {
+  .post::before {
+    content: '';
+    position: absolute;
+    inset: 6px -16px;
+    z-index: -1;
+    border-radius: var(--r-lg);
+    background: var(--bg-hover);
+    opacity: 0;
+    transition: opacity var(--dur-2) var(--ease-out);
+  }
+  .post:hover::before {
+    opacity: 1;
+  }
 }
 .post:last-child {
   border-bottom: 0;

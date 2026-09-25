@@ -104,27 +104,27 @@ export function TopBar() {
           aria-controls="sidebar"
           onClick={() => (docked ? toggleSidebar() : setDrawer(!drawer))}
         >
-          <IconMenu size={24} strokeWidth={1.5} />
+          <IconMenu size={20} strokeWidth={1.6} />
         </button>
         <Link to="/" className="wordmark" aria-label="PathedIn home">
           <Wordmark />
         </Link>
-        <button className="mbar__search" onClick={() => setSearch(true)}>
-          <IconSearch size={20} strokeWidth={1.6} />
-          <span>Search</span>
-          <kbd>⌘K</kbd>
+        <button className="mbar__search" onClick={() => setSearch(true)} aria-keyshortcuts="Meta+K Control+K">
+          <IconSearch size={15} strokeWidth={1.8} />
+          <span>Search or jump to…</span>
+          <kbd className="kbd">⌘K</kbd>
         </button>
       </div>
       <div className="mbar__right">
         <Link to="/write" className="mbar__write">
-          <IconCompose size={22} strokeWidth={1.5} />
+          <IconCompose size={16} strokeWidth={1.8} />
           <span>Write</span>
         </Link>
         <IconButton label="Messages" tipPos="below" badge={unread.messages} onClick={() => navigate('/messages')} active={pathname.startsWith('/messages')}>
-          <IconMessage size={23} strokeWidth={1.5} filled={pathname.startsWith('/messages')} />
+          <IconMessage size={19} strokeWidth={1.6} filled={pathname.startsWith('/messages')} />
         </IconButton>
         <IconButton label="Notifications" tipPos="below" badge={unread.notifications} onClick={() => navigate('/notifications')} active={pathname.startsWith('/notifications')}>
-          <IconBell size={23} strokeWidth={1.5} filled={pathname.startsWith('/notifications')} />
+          <IconBell size={19} strokeWidth={1.6} filled={pathname.startsWith('/notifications')} />
         </IconButton>
         <AccountMenu />
       </div>
@@ -194,8 +194,9 @@ export function Sidebar() {
               return (
                 <li key={item.to}>
                   <NavLink to={item.to} className={`sidebar__item ${active ? 'is-active' : ''}`} aria-current={active ? 'page' : undefined}>
+                    {active && <motion.span layoutId="sidebar-active" className="sidebar__active" transition={springs.snappy} />}
                     <span className="sidebar__icon">
-                      <Icon size={24} filled={active} strokeWidth={1.5} />
+                      <Icon size={18} filled={active} strokeWidth={1.7} />
                     </span>
                     <span className="sidebar__label">{item.label}</span>
                     {!!item.badge && <span className="sidebar__badge">{item.badge}</span>}

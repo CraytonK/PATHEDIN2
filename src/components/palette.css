@@ -1,0 +1,178 @@
+/* ── ⌘K: the command palette ─────────────────────────────── */
+.cmdk-layer {
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 14vh 16px 16px;
+  background: var(--scrim);
+}
+.cmdk {
+  --bg: var(--bg-elevated);
+  display: flex;
+  flex-direction: column;
+  width: min(640px, 100%);
+  max-height: min(560px, 72vh);
+  overflow: hidden;
+  border-radius: var(--r-xl);
+  background: var(--bg-elevated);
+  box-shadow: var(--shadow-modal);
+  transform-origin: top center;
+}
+.cmdk__field {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  height: 56px;
+  padding: 0 14px 0 18px;
+  border-bottom: 1px solid var(--separator);
+  color: var(--label-3);
+}
+.cmdk__field input {
+  flex: 1;
+  min-width: 0;
+  height: 100%;
+  border: 0;
+  outline: none;
+  background: none;
+  font-size: 16px;
+  letter-spacing: -0.01em;
+  color: var(--label);
+}
+.cmdk__list {
+  flex: 1;
+  overflow-y: auto;
+  padding: 6px 8px 8px;
+  scrollbar-width: thin;
+}
+.cmdk__group {
+  padding: 12px 10px 6px;
+  font-size: 12px;
+  font-weight: 550;
+  color: var(--label-3);
+}
+.cmdk__item {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  min-height: 44px;
+  padding: 6px 10px;
+  border-radius: var(--r-md);
+  text-align: left;
+  color: var(--label-2);
+}
+.cmdk__item.is-active {
+  color: var(--label);
+}
+/* The highlight is one surface that slides to whichever row is active. */
+.cmdk__active {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  border-radius: var(--r-md);
+  background: var(--bg-selected);
+  box-shadow: inset 0 0 0 1px var(--separator);
+}
+.cmdk__item > :not(.cmdk__active) {
+  position: relative;
+  z-index: 1;
+}
+.cmdk__lead {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: var(--r-sm);
+  background: var(--fill-3);
+  box-shadow: inset 0 0 0 1px var(--separator);
+  color: var(--label-2);
+}
+.cmdk__lead img {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+.cmdk__item.is-active .cmdk__lead {
+  color: var(--tint-text);
+}
+.cmdk__text {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+.cmdk__title {
+  font-size: 14px;
+  line-height: 19px;
+  font-weight: 500;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.cmdk__sub {
+  font-size: 12.5px;
+  line-height: 17px;
+  color: var(--label-3);
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.cmdk__arrow {
+  color: var(--label-3);
+}
+.cmdk__empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 40px 16px;
+  font-size: 14px;
+  color: var(--label-2);
+  text-align: center;
+}
+.cmdk__empty svg {
+  margin-bottom: 6px;
+  color: var(--label-3);
+}
+.cmdk__foot {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  height: 40px;
+  padding: 0 16px;
+  border-top: 1px solid var(--separator);
+  font-size: 12px;
+  color: var(--label-3);
+}
+.cmdk__foot span {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+.cmdk__foot .kbd {
+  min-width: 18px;
+  height: 18px;
+  font-size: 10.5px;
+}
+.cmdk__brand {
+  margin-left: auto;
+  color: var(--label-3);
+}
+@media (max-width: 767px) {
+  .cmdk-layer {
+    padding: calc(12px + var(--safe-top)) 10px 10px;
+  }
+  .cmdk {
+    max-height: 70vh;
+  }
+  .cmdk__foot {
+    display: none;
+  }
+}

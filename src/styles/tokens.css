@@ -1,94 +1,103 @@
 /*
-  PathedIn design tokens, from the PathedIn Brand Kit (v2), laid onto Medium's reading layout
-  and Apple's HIG behaviour.
+  PathedIn design tokens.
 
-  Palette — the Minimal Navy Principle: ~90% gallery neutrals, ~10% purposeful deep navy.
-    Gallery White   #FFFFFF  canvas (60%)
-    Warm Porcelain  #F8FAFC  surfaces (25%)
-    Deep Slate Navy #0F172A  text, primary actions, the walked Path (10%)
-    Mineral Slate   #64748B  secondary text
-    Hairline        #E2E8F0  1px dividers
-    Executive Navy  #1E3A8A  the accent: the future, "you", links, status lines, focus
+  The world: a precise instrument for a big decision. The Path is the one bright, living line on a quiet,
+  layered surface, in the company of Linear, Arc and Raycast (the user's references).
 
-  Type — Noe Display (brand), Inter (interface, in the spirit of Medium's sohne), Charter (content),
-  each on a Modern Font Stacks classification. See styles/fonts.css.
+    Graphite (default)  #0B0C0F canvas · #111317 panels · #181A1F floating · white-7% edges
+    Porcelain           #F5F6F8 canvas · #FFFFFF panels and floating · slate-7% edges
+    Executive Navy      #1E3A8A the one accent: primary actions, the future, "you", focus.
+                        On graphite it fills at #2C49B6 and reads as #93A6F3.
+
+  Type — Mona Sans for the interface and every heading, Charter for long-form reading, and the Playfair
+  wordmark. See styles/fonts.css.
+
+  Depth — surfaces step up in value and carry a 1px edge; things that float add a soft, offset shadow.
+  No glows.
 */
 
 :root {
-  color-scheme: light dark;
+  color-scheme: dark;
 
   /* ── Type families ─────────────────────────────────────────── */
-  /* Interface, on the Neo-Grotesque stack. */
-  --font-sans: Inter, 'Inter Fallback', Roboto, 'Helvetica Neue', 'Arial Nova', 'Nimbus Sans', Arial, sans-serif;
+  /* Interface and headings, on the Neo-Grotesque stack. */
+  --font-sans: 'Mona Sans', 'PathedIn Symbols', 'Mona Fallback', Roboto, 'Helvetica Neue', 'Arial Nova', 'Nimbus Sans', Arial, sans-serif;
   --font-display: var(--font-sans);
-  /* Noe Display Medium: wordmark, hero headings, milestone moments. On the Didone stack. */
-  --font-brand: 'Noe Display', 'Playfair Display', 'Playfair Fallback', Didot, 'Bodoni MT', 'Noto Serif Display', 'URW Palladio L', P052, Sylfaen, serif;
-  /* Charter: editorial content — stories, quotes, bios. On the Transitional stack. */
+  /* Headings that used to be set in the brand serif are now Mona Sans, a little wide and semibold. */
+  --font-brand: var(--font-sans);
+  /* The wordmark alone keeps its high-contrast serif. On the Didone stack. */
+  --font-wordmark: 'Noe Display', 'Playfair Display', 'Playfair Fallback', Didot, 'Bodoni MT', 'Noto Serif Display', 'URW Palladio L', P052, Sylfaen, serif;
+  /* Charter: long-form reading only — stories, quotes, bios. On the Transitional stack. */
   --font-serif: Charter, 'Bitstream Charter', 'Charis SIL', 'Charis Fallback', 'Sitka Text', Cambria, serif;
   --font-rounded: var(--font-sans);
+  --font-mono: ui-monospace, 'SF Mono', 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, monospace;
+  /* Display headings: a touch wide, semibold, tight. */
+  --display-stretch: 108%;
+  --display-weight: 600;
 
-  /* ── Semantic colors (light) ───────────────────────────────── */
-  /* A warm paper ground, like Medium's: never pure white. Floating things (menus, sheets,
-     cards that lift) stay white, and panels sit a shade deeper than the page. */
-  --bg: #f8f6f1;
-  --bg-elevated: #ffffff;
-  --bg-grouped: #f1eee7;
-  --bg-sunken: #f1eee7;
-  --bg-intro: #f7f4ed; /* Medium's cream: the signed-out intro page and the sign-in splash */
-  --bg-hover: rgba(15, 23, 42, 0.04);
-  --bg-press: rgba(15, 23, 42, 0.07);
+  /* ── Graphite (the default appearance) ─────────────────────── */
+  --bg: #0b0c0f;
+  --bg-grouped: #111317;
+  --bg-elevated: #181a1f;
+  --bg-sunken: #08090b;
+  --bg-intro: #0b0c0f;
+  --bg-hover: rgba(255, 255, 255, 0.045);
+  --bg-press: rgba(255, 255, 255, 0.08);
+  --bg-selected: rgba(255, 255, 255, 0.065);
 
-  --label: #0f172a;
-  --label-2: #64748b;
-  --label-3: #94a3b8;
-  --label-4: #cbd5e1;
+  --label: #eceef2;
+  --label-2: #9ba0ac;
+  --label-3: #6c717d;
+  --label-4: #3a3e47;
 
-  --fill: #ece8df;
-  --fill-2: #ece8df;
-  --fill-3: #f3f0ea;
+  --fill: #1c1f25;
+  --fill-2: #1c1f25;
+  --fill-3: #15171b;
 
-  /* Hairlines are warm too, so they sit in the paper instead of on it. */
-  --separator: #e4dfd4;
-  --separator-strong: #d3ccbe;
+  --separator: rgba(255, 255, 255, 0.075);
+  --separator-strong: rgba(255, 255, 255, 0.13);
+  --border: rgba(255, 255, 255, 0.09);
+  --border-strong: rgba(255, 255, 255, 0.16);
 
-  /* Executive Navy: the brand's one accent. */
-  --tint: #1e3a8a;
-  --tint-strong: #1e3a8a;
-  --tint-text: #1e3a8a;
-  --tint-soft: #dbeafe;
-  --tint-softer: #eff6ff;
-  --tint-border: #bfdbfe;
-  --on-tint: #ffffff;
-  --future-soft: #bfdbfe; /* routes you're considering but not focused on */
+  /* Executive Navy, lifted so it reads on graphite. */
+  --tint: #8ea2f2;
+  --tint-strong: #8ea2f2;
+  --tint-text: #a3b3f5;
+  --tint-soft: rgba(142, 162, 242, 0.16);
+  --tint-softer: rgba(142, 162, 242, 0.09);
+  --tint-border: rgba(142, 162, 242, 0.34);
+  --on-tint: #0b0c0f;
+  --future-soft: rgba(142, 162, 242, 0.4);
 
-  /* Deep Slate Navy: primary actions and the walked Path. */
-  --primary: #0f172a;
-  --primary-hover: #1e293b;
+  /* Primary actions are filled with the navy itself. */
+  --primary: #2c49b6;
+  --primary-hover: #3654c6;
   --on-primary: #ffffff;
-  --ink: #0f172a;
-  --ink-soft: rgba(15, 23, 42, 0.06);
-  --path-them: #94a3b8; /* the other Path when two are aligned */
+  --ink: #e4e7ec;
+  --ink-soft: rgba(255, 255, 255, 0.08);
+  --path-them: #6c717d;
 
-  /* The kit has no green or red: availability and counts use the navy. */
-  --green: #1e3a8a;
-  --red: #1e3a8a;
-  --badge: #1e3a8a;
+  --green: #a3b3f5;
+  --red: #8ea2f2;
+  --badge: #3654c6;
 
-  --bar-bg: rgba(248, 246, 241, 0.94);
-  --bar-blur: saturate(160%) blur(20px);
+  --bar-bg: rgba(11, 12, 15, 0.78);
+  --bar-blur: saturate(180%) blur(20px);
 
-  --panel-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
-  /* One soft shadow for everything that floats: a 4px ambient glow and a short drop, no border. */
-  --shadow-popover: 0 0 4px rgba(15, 23, 42, 0.05), 0 2px 8px rgba(15, 23, 42, 0.15);
-  --shadow-lift: 0 1px 4px rgba(15, 23, 42, 0.08);
-  --scrim: rgba(15, 23, 42, 0.28);
-  /* Side drawers fade the page to 60% white instead of darkening it. */
-  --scrim-soft: rgba(248, 246, 241, 0.6);
-  --tip-bg: #0f172a;
-  --tip-fg: #ffffff;
-  /* Highlights on a story: the passage most readers marked, and your own. */
-  --highlight: #e6eefc;
-  --highlight-mine: #d3e2fb;
+  /* A panel's edge: a hairline and a faint top highlight, as if lit from above. */
+  --surface-edge: 0 0 0 1px rgba(255, 255, 255, 0.065), inset 0 1px 0 rgba(255, 255, 255, 0.035);
+  --panel-shadow: var(--surface-edge);
+  /* Floating things: an edge, a short contact shadow and a long soft one. Offset, never a glow. */
+  --shadow-popover: 0 0 0 1px rgba(255, 255, 255, 0.09), 0 2px 6px rgba(0, 0, 0, 0.35), 0 16px 40px -12px rgba(0, 0, 0, 0.7);
+  --shadow-modal: 0 0 0 1px rgba(255, 255, 255, 0.09), 0 32px 80px -20px rgba(0, 0, 0, 0.8);
+  --shadow-lift: 0 0 0 1px rgba(255, 255, 255, 0.1), 0 8px 24px -10px rgba(0, 0, 0, 0.6);
+  --btn-highlight: inset 0 1px 0 rgba(255, 255, 255, 0.14);
+  --scrim: rgba(3, 4, 6, 0.62);
+  --scrim-soft: rgba(11, 12, 15, 0.6);
+  --tip-bg: #262930;
+  --tip-fg: #eceef2;
+  --highlight: rgba(142, 162, 242, 0.14);
+  --highlight-mine: rgba(142, 162, 242, 0.26);
 
   /* ── Geometry ─────────────────────────────────────────────── */
   --gutter: 16px;
@@ -96,147 +105,151 @@
   --r-sm: 6px;
   --r-md: 8px;
   --r-lg: 12px;
-  --r-xl: 8px;
+  --r-xl: 16px;
   --r-pill: 999px;
-  --r-popover: 4px;
+  --r-popover: 10px;
   --hairline: 1px;
   --hit: 44px;
 
   --tabbar-h: 50px;
   --navbar-h: 44px;
-  --topbar-h: 57px;
-  --sidebar-w: 240px;
+  --topbar-h: 52px;
+  --sidebar-w: 236px;
   --safe-top: env(safe-area-inset-top, 0px);
   --safe-bottom: env(safe-area-inset-bottom, 0px);
 
   /* ── Motion ───────────────────────────────────────────────── */
-  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  /* Confident arrivals, quick exits. */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
-  /* Drawers: a fast start and a long, soft landing. */
   --ease-drawer: cubic-bezier(0.23, 1, 0.32, 1);
-  --dur-drawer: 600ms;
+  --dur-drawer: 420ms;
   --dur-1: 120ms;
-  --dur-2: 220ms;
-  --dur-3: 360ms;
+  --dur-2: 180ms;
+  --dur-3: 300ms;
 }
 
 /*
-  Dark appearance (opt-in; the app is light by default): a warm charcoal ground with paper-white
-  ink, never pure black or navy. Executive Navy is too deep to read on charcoal, so the accent
-  lifts to a soft periwinkle from the same family.
+  Porcelain, the light appearance: cool near-white canvas, white panels that sit on it with a hairline
+  and a whisper of shadow, and Executive Navy at full depth.
 */
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme='light']) {
-    color-scheme: dark;
-    --bg: #1f1e1c;
-    --bg-elevated: #292825;
-    --bg-grouped: #262522;
-    --bg-sunken: #232220;
-    --bg-intro: #24221e;
-    --bg-hover: rgba(255, 248, 235, 0.05);
-    --bg-press: rgba(255, 248, 235, 0.09);
+:root[data-theme='light'] {
+  color-scheme: light;
+  --bg: #f5f6f8;
+  --bg-grouped: #ffffff;
+  --bg-elevated: #ffffff;
+  --bg-sunken: #eef0f3;
+  --bg-intro: #f5f6f8;
+  --bg-hover: rgba(15, 23, 42, 0.045);
+  --bg-press: rgba(15, 23, 42, 0.08);
+  --bg-selected: rgba(15, 23, 42, 0.06);
 
-    --label: #ede9e2;
-    --label-2: #aca79e;
-    --label-3: #7d7870;
-    --label-4: #47443f;
+  --label: #0f1523;
+  --label-2: #5d6576;
+  --label-3: #8e95a3;
+  --label-4: #cdd2da;
 
-    --fill: #312f2b;
-    --fill-2: #312f2b;
-    --fill-3: #292724;
+  --fill: #eceef2;
+  --fill-2: #eceef2;
+  --fill-3: #f3f4f7;
 
-    --separator: #34322e;
-    --separator-strong: #423f3a;
+  --separator: rgba(15, 23, 42, 0.08);
+  --separator-strong: rgba(15, 23, 42, 0.14);
+  --border: rgba(15, 23, 42, 0.1);
+  --border-strong: rgba(15, 23, 42, 0.18);
 
-    --tint: #8fa7ee;
-    --tint-strong: #8fa7ee;
-    --tint-text: #a9bcf4;
-    --tint-soft: rgba(143, 167, 238, 0.18);
-    --tint-softer: rgba(143, 167, 238, 0.1);
-    --tint-border: rgba(143, 167, 238, 0.4);
-    --on-tint: #1f1e1c;
-    --future-soft: rgba(143, 167, 238, 0.42);
+  --tint: #1e3a8a;
+  --tint-strong: #1e3a8a;
+  --tint-text: #1e3a8a;
+  --tint-soft: #dfe6fb;
+  --tint-softer: #eef2fd;
+  --tint-border: #bccaf3;
+  --on-tint: #ffffff;
+  --future-soft: #bccaf3;
 
-    --primary: #ede9e2;
-    --primary-hover: #ffffff;
-    --on-primary: #1f1e1c;
-    --ink: #e8e3db;
-    --ink-soft: rgba(255, 255, 255, 0.08);
-    --path-them: #7d7870;
+  --primary: #1e3a8a;
+  --primary-hover: #25449e;
+  --on-primary: #ffffff;
+  --ink: #0f1523;
+  --ink-soft: rgba(15, 23, 42, 0.06);
+  --path-them: #8e95a3;
 
-    --green: #a9bcf4;
-    --red: #8fa7ee;
-    --badge: #4f6bc8;
+  --green: #1e3a8a;
+  --red: #1e3a8a;
+  --badge: #1e3a8a;
 
-    --bar-bg: rgba(31, 30, 28, 0.92);
-    --panel-shadow: none;
-    --shadow-popover: 0 0 0 1px rgba(255, 255, 255, 0.08), 0 2px 12px rgba(0, 0, 0, 0.55);
-    --shadow-lift: 0 0 0 1px rgba(255, 255, 255, 0.08);
-    --scrim: rgba(0, 0, 0, 0.6);
-    --scrim-soft: rgba(31, 30, 28, 0.6);
-    --tip-bg: #ede9e2;
-    --tip-fg: #1f1e1c;
-    --highlight: rgba(143, 167, 238, 0.16);
-    --highlight-mine: rgba(143, 167, 238, 0.3);
+  --bar-bg: rgba(245, 246, 248, 0.82);
+
+  --surface-edge: 0 0 0 1px rgba(15, 23, 42, 0.07), 0 1px 2px rgba(15, 23, 42, 0.04);
+  --shadow-popover: 0 0 0 1px rgba(15, 23, 42, 0.08), 0 2px 6px rgba(15, 23, 42, 0.06), 0 16px 40px -12px rgba(15, 23, 42, 0.22);
+  --shadow-modal: 0 0 0 1px rgba(15, 23, 42, 0.08), 0 32px 80px -20px rgba(15, 23, 42, 0.35);
+  --shadow-lift: 0 0 0 1px rgba(15, 23, 42, 0.09), 0 8px 24px -10px rgba(15, 23, 42, 0.25);
+  --btn-highlight: inset 0 1px 0 rgba(255, 255, 255, 0.16);
+  --scrim: rgba(15, 21, 35, 0.32);
+  --scrim-soft: rgba(245, 246, 248, 0.6);
+  --tip-bg: #0f1523;
+  --tip-fg: #ffffff;
+  --highlight: #e3e9fb;
+  --highlight-mine: #d0dbf8;
+}
+
+/* "Automatic" follows the device, which may be light. */
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme]) {
+    color-scheme: light;
+    --bg: #f5f6f8;
+    --bg-grouped: #ffffff;
+    --bg-elevated: #ffffff;
+    --bg-sunken: #eef0f3;
+    --bg-intro: #f5f6f8;
+    --bg-hover: rgba(15, 23, 42, 0.045);
+    --bg-press: rgba(15, 23, 42, 0.08);
+    --bg-selected: rgba(15, 23, 42, 0.06);
+    --label: #0f1523;
+    --label-2: #5d6576;
+    --label-3: #8e95a3;
+    --label-4: #cdd2da;
+    --fill: #eceef2;
+    --fill-2: #eceef2;
+    --fill-3: #f3f4f7;
+    --separator: rgba(15, 23, 42, 0.08);
+    --separator-strong: rgba(15, 23, 42, 0.14);
+    --border: rgba(15, 23, 42, 0.1);
+    --border-strong: rgba(15, 23, 42, 0.18);
+    --tint: #1e3a8a;
+    --tint-strong: #1e3a8a;
+    --tint-text: #1e3a8a;
+    --tint-soft: #dfe6fb;
+    --tint-softer: #eef2fd;
+    --tint-border: #bccaf3;
+    --on-tint: #ffffff;
+    --future-soft: #bccaf3;
+    --primary: #1e3a8a;
+    --primary-hover: #25449e;
+    --on-primary: #ffffff;
+    --ink: #0f1523;
+    --ink-soft: rgba(15, 23, 42, 0.06);
+    --path-them: #8e95a3;
+    --green: #1e3a8a;
+    --red: #1e3a8a;
+    --badge: #1e3a8a;
+    --bar-bg: rgba(245, 246, 248, 0.82);
+    --surface-edge: 0 0 0 1px rgba(15, 23, 42, 0.07), 0 1px 2px rgba(15, 23, 42, 0.04);
+    --shadow-popover: 0 0 0 1px rgba(15, 23, 42, 0.08), 0 2px 6px rgba(15, 23, 42, 0.06), 0 16px 40px -12px rgba(15, 23, 42, 0.22);
+    --shadow-modal: 0 0 0 1px rgba(15, 23, 42, 0.08), 0 32px 80px -20px rgba(15, 23, 42, 0.35);
+    --shadow-lift: 0 0 0 1px rgba(15, 23, 42, 0.09), 0 8px 24px -10px rgba(15, 23, 42, 0.25);
+    --btn-highlight: inset 0 1px 0 rgba(255, 255, 255, 0.16);
+    --scrim: rgba(15, 21, 35, 0.32);
+    --scrim-soft: rgba(245, 246, 248, 0.6);
+    --tip-bg: #0f1523;
+    --tip-fg: #ffffff;
+    --highlight: #e3e9fb;
+    --highlight-mine: #d0dbf8;
   }
 }
 
 :root[data-theme='dark'] {
   color-scheme: dark;
-  --bg: #1f1e1c;
-  --bg-elevated: #292825;
-  --bg-grouped: #262522;
-  --bg-sunken: #232220;
-  --bg-intro: #24221e;
-  --bg-hover: rgba(255, 248, 235, 0.05);
-  --bg-press: rgba(255, 248, 235, 0.09);
-
-  --label: #ede9e2;
-  --label-2: #aca79e;
-  --label-3: #7d7870;
-  --label-4: #47443f;
-
-  --fill: #312f2b;
-  --fill-2: #312f2b;
-  --fill-3: #292724;
-
-  --separator: #34322e;
-  --separator-strong: #423f3a;
-
-  --tint: #8fa7ee;
-  --tint-strong: #8fa7ee;
-  --tint-text: #a9bcf4;
-  --tint-soft: rgba(143, 167, 238, 0.18);
-  --tint-softer: rgba(143, 167, 238, 0.1);
-  --tint-border: rgba(143, 167, 238, 0.4);
-  --on-tint: #1f1e1c;
-  --future-soft: rgba(143, 167, 238, 0.42);
-
-  --primary: #ede9e2;
-  --primary-hover: #ffffff;
-  --on-primary: #1f1e1c;
-  --ink: #e8e3db;
-  --ink-soft: rgba(255, 255, 255, 0.08);
-  --path-them: #7d7870;
-
-  --green: #a9bcf4;
-  --red: #8fa7ee;
-  --badge: #4f6bc8;
-
-  --bar-bg: rgba(31, 30, 28, 0.92);
-  --panel-shadow: none;
-  --shadow-popover: 0 0 0 1px rgba(255, 255, 255, 0.08), 0 2px 12px rgba(0, 0, 0, 0.55);
-  --shadow-lift: 0 0 0 1px rgba(255, 255, 255, 0.08);
-  --scrim: rgba(0, 0, 0, 0.6);
-  --scrim-soft: rgba(31, 30, 28, 0.6);
-  --tip-bg: #ede9e2;
-  --tip-fg: #1f1e1c;
-  --highlight: rgba(143, 167, 238, 0.16);
-  --highlight-mine: rgba(143, 167, 238, 0.3);
-}
-
-:root[data-theme='light'] {
-  color-scheme: light;
 }
 
 @media (min-width: 768px) {

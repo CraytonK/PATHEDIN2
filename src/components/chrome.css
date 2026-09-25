@@ -23,18 +23,18 @@
   align-items: center;
   gap: 8px;
 }
-/* Set like Medium's masthead: a heavy, high-contrast serif. */
+/* The wordmark keeps its high-contrast serif: the one serif in the interface. */
 .wordmark__text {
-  font-family: var(--font-brand);
+  font-family: var(--font-wordmark);
   font-weight: 500;
-  font-size: 27px;
+  font-size: 24px;
   line-height: 1;
   letter-spacing: -0.025em;
   color: var(--label);
   padding-bottom: 3px;
 }
 
-/* ── Desktop: Medium-style top bar ─────────────────────── */
+/* ── Desktop: the top bar, translucent over what scrolls beneath it ── */
 .mbar {
   position: fixed;
   inset: 0 0 auto 0;
@@ -44,8 +44,10 @@
   align-items: center;
   justify-content: space-between;
   gap: 16px;
-  padding: 0 24px 0 16px;
-  background: var(--bg);
+  padding: 0 16px 0 12px;
+  background: var(--bar-bg);
+  -webkit-backdrop-filter: var(--bar-blur);
+  backdrop-filter: var(--bar-blur);
   border-bottom: 1px solid var(--separator);
 }
 .mbar__left,
@@ -64,56 +66,63 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  border-radius: var(--r-sm);
   color: var(--label-2);
-  transition: color var(--dur-2);
+  transition:
+    color var(--dur-1) var(--ease-out),
+    background-color var(--dur-1) var(--ease-out);
 }
 .mbar__menu:hover {
   color: var(--label);
+  background: var(--bg-hover);
 }
+/* The ⌘K launcher: opens the command palette. */
 .mbar__search {
   display: inline-flex;
   align-items: center;
-  gap: 10px;
-  width: 240px;
-  height: 40px;
-  margin-left: 10px;
-  padding: 0 14px 0 12px;
-  border-radius: var(--r-pill);
-  background: var(--bg-elevated);
-  box-shadow: inset 0 0 0 1px var(--separator);
-  color: var(--label-2);
-  font-size: 14px;
-  font-weight: 400;
-  transition: background-color var(--dur-2);
+  gap: 8px;
+  width: 280px;
+  height: 32px;
+  margin-left: 16px;
+  padding: 0 6px 0 10px;
+  border-radius: var(--r-md);
+  background: var(--fill-3);
+  box-shadow: inset 0 0 0 1px var(--border);
+  color: var(--label-3);
+  font-size: 13px;
+  font-weight: 450;
+  transition:
+    background-color var(--dur-1) var(--ease-out),
+    box-shadow var(--dur-1) var(--ease-out),
+    color var(--dur-1) var(--ease-out);
 }
 .mbar__search span {
   flex: 1;
   text-align: left;
 }
-.mbar__search kbd {
-  font: inherit;
-  font-size: 12px;
-  color: var(--label-3);
-}
 .mbar__search:hover {
-  background: var(--fill);
+  color: var(--label-2);
+  box-shadow: inset 0 0 0 1px var(--border-strong);
 }
 .mbar__write {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  height: 40px;
-  padding: 0 12px;
-  margin-right: 8px;
-  color: var(--label-2);
-  font-size: 14px;
-  transition: color var(--dur-2);
+  gap: 7px;
+  height: 32px;
+  padding: 0 12px 0 10px;
+  margin-right: 6px;
+  border-radius: var(--r-md);
+  background: var(--primary);
+  box-shadow: var(--btn-highlight);
+  color: var(--on-primary);
+  font-size: 13px;
+  font-weight: 550;
+  transition: background-color var(--dur-1) var(--ease-out);
 }
 .mbar__write:hover {
-  color: var(--label);
+  background: var(--primary-hover);
 }
 .mbar .icon-btn {
   color: var(--label-2);
@@ -124,7 +133,7 @@
 }
 @media (max-width: 960px) {
   .mbar__search {
-    width: 40px;
+    width: 32px;
     padding: 0;
     justify-content: center;
     margin-left: 0;
@@ -144,7 +153,7 @@
   left: 0;
   z-index: 35;
   width: var(--sidebar-w);
-  padding: 24px 0 40px;
+  padding: 14px 0 40px;
   overflow-y: auto;
   overscroll-behavior: contain;
   scrollbar-width: none;
@@ -165,79 +174,94 @@
   transition: transform 420ms var(--ease-drawer);
 }
 .sidebar.is-overlay.is-open {
-  box-shadow: 0 0 24px rgba(0, 0, 0, 0.12);
+  box-shadow: var(--shadow-modal);
   z-index: 45;
 }
 .sidebar-scrim {
   position: fixed;
   inset: var(--topbar-h) 0 0 0;
   z-index: 44;
-  background: rgba(0, 0, 0, 0.12);
+  background: var(--scrim);
 }
 .sidebar__group {
-  padding: 0 16px 0 24px;
+  padding: 0 10px;
 }
 .sidebar__group + .sidebar__group {
-  margin-top: 20px;
-  padding-top: 20px;
+  margin-top: 12px;
+  padding-top: 12px;
   position: relative;
 }
 .sidebar__group + .sidebar__group::before {
   content: '';
   position: absolute;
   top: 0;
-  left: 24px;
-  right: 24px;
+  left: 20px;
+  right: 20px;
   border-top: 1px solid var(--separator);
 }
+/* Compact rows; the current page sits on a surface that slides between rows. */
 .sidebar__item {
   position: relative;
   display: flex;
   align-items: center;
-  gap: 16px;
-  height: 44px;
+  gap: 10px;
+  height: 32px;
+  padding: 0 10px;
+  border-radius: var(--r-sm);
   color: var(--label-2);
-  /* Medium's rail: 16px regular in grey, ink and medium weight when current. */
-  font-size: 16px;
-  transition: color var(--dur-2);
+  font-size: 14px;
+  font-weight: 450;
+  transition:
+    color var(--dur-1) var(--ease-out),
+    background-color var(--dur-1) var(--ease-out);
 }
 .sidebar__item:hover {
   color: var(--label);
+  background: var(--bg-hover);
 }
 .sidebar__item.is-active {
   color: var(--label);
-  font-weight: 500;
+  font-weight: 550;
 }
-/* Medium marks the current page with a short ink bar on the rail's far left edge. */
-.sidebar__item.is-active::before {
-  content: '';
+.sidebar__item.is-active:hover {
+  background: transparent;
+}
+.sidebar__active {
   position: absolute;
-  left: -24px;
-  top: 12px;
-  bottom: 12px;
-  width: 3px;
-  border-radius: 0 2px 2px 0;
-  background: var(--label);
+  inset: 0;
+  z-index: 0;
+  border-radius: var(--r-sm);
+  background: var(--bg-selected);
+  box-shadow: inset 0 0 0 1px var(--separator);
+}
+.sidebar__item > :not(.sidebar__active) {
+  position: relative;
+  z-index: 1;
 }
 .sidebar__icon {
   display: inline-flex;
   flex: none;
+}
+.sidebar__icon svg {
+  width: 18px;
+  height: 18px;
 }
 .sidebar__label {
   flex: 1;
   min-width: 0;
 }
 .sidebar__badge {
-  min-width: 20px;
-  height: 20px;
-  padding: 0 6px;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
   border-radius: var(--r-pill);
   background: var(--badge);
   color: #fff;
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 600;
-  line-height: 20px;
+  line-height: 18px;
   text-align: center;
+  font-variant-numeric: tabular-nums;
 }
 .sidebar__mine {
   display: flex;
@@ -247,16 +271,21 @@
 .sidebar__community {
   display: flex;
   align-items: center;
-  gap: 12px;
-  height: 36px;
-  padding-left: 4px;
+  gap: 10px;
+  height: 30px;
+  padding: 0 10px;
+  border-radius: var(--r-sm);
   color: var(--label-2);
-  font-size: 14px;
+  font-size: 13px;
   min-width: 0;
+  transition:
+    color var(--dur-1) var(--ease-out),
+    background-color var(--dur-1) var(--ease-out);
 }
 .sidebar__community:hover,
 .sidebar__community.is-active {
   color: var(--label);
+  background: var(--bg-hover);
 }
 .sidebar__dot {
   width: 16px;
@@ -268,11 +297,11 @@
 }
 .sidebar__suggest {
   display: flex;
-  gap: 16px;
-  color: var(--label-2);
-  font-size: 14px;
-  line-height: 20px;
-  padding-right: 8px;
+  gap: 10px;
+  color: var(--label-3);
+  font-size: 13px;
+  line-height: 19px;
+  padding: 4px 10px 0;
 }
 .sidebar__suggest svg {
   flex: none;
@@ -315,7 +344,7 @@
   background: var(--bg-elevated);
   border-radius: var(--r-popover);
   box-shadow: var(--shadow-popover);
-  padding: 8px 0;
+  padding: 6px;
   transform-origin: top right;
   z-index: 50;
 }
@@ -324,7 +353,8 @@
   align-items: center;
   gap: 12px;
   width: 100%;
-  padding: 8px 18px;
+  padding: 8px 10px;
+  border-radius: var(--r-sm);
   text-align: left;
 }
 .menu__profile img {
@@ -337,19 +367,23 @@
 }
 .menu__group {
   border-top: var(--hairline) solid var(--separator);
-  margin-top: 8px;
-  padding-top: 8px;
+  margin: 6px -6px 0;
+  padding: 6px 6px 0;
 }
 .menu__item {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
   width: 100%;
-  height: 38px;
-  padding: 0 18px;
-  font-size: 14px;
+  height: 32px;
+  padding: 0 10px;
+  border-radius: var(--r-sm);
+  font-size: 13px;
   color: var(--label-2);
   text-align: left;
+  transition:
+    background-color var(--dur-1) var(--ease-out),
+    color var(--dur-1) var(--ease-out);
 }
 .menu__item svg {
   color: var(--label-2);
@@ -357,6 +391,7 @@
 .menu__profile:hover,
 .menu__item:hover {
   color: var(--label);
+  background: var(--bg-hover);
 }
 .menu__item:hover svg {
   color: var(--label);
@@ -507,11 +542,11 @@
 .page__title-block {
   min-width: 0;
 }
-/* Page titles are hero headings: the brand serif, Noe Display Medium. */
+/* Page titles: Mona Sans, semibold and a touch wide, sized like an app, not a magazine. */
 .page__title {
-  font-size: 44px;
-  line-height: 50px;
-  letter-spacing: -0.025em;
+  font-size: 32px;
+  line-height: 38px;
+  letter-spacing: -0.024em;
 }
 /* Subtitles: the interface face at regular weight, in grey. */
 .page__subtitle {
