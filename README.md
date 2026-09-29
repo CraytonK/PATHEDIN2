@@ -6,8 +6,8 @@ PathedIn is a professional network built around one object: the **Path**. A Path
 
 This repository is a working front-end prototype. It's a React + TypeScript single-page app, built mobile-first.
 - **Behaviour** follows Apple's [Human Interface Guidelines](https://developer.apple.com/design/human-interface-guidelines).
-- **Look:** a layered graphite surface in the company of Linear, Arc and Raycast, with a porcelain light appearance. Executive Navy is the one accent, and the Path is the one bright line. See [DESIGN.md](DESIGN.md).
-- **Type:** Schibsted Grotesk for the interface, Charter for stories, and the Playfair wordmark.
+- **Look:** Soft Cream paper with Midnight Navy ink. Where the product shows itself (the intro, a Path cover, your week), it opens a Midnight Navy panel lit by route silk, with glass cards on it. Midnight is the dark appearance. See [DESIGN.md](DESIGN.md).
+- **Type:** Space Grotesk for the interface, headings and wordmark (large, light headings), and Charter for stories.
 - **Layout:** an intro page, a slim top bar with a ⌘K launcher and a left sidebar, and a For you feed beside a right-hand column of layered cards.
 - **Signature pieces:** the ⌘K palette ("Go anywhere on your Path"), Path Guide office hours you can book (with a real calendar file), and a route band that draws each person's Path on their card.
 
@@ -51,7 +51,7 @@ Requires Node 20+.
 | **Decision Points.** A decision drawn as a fork, showing who took each road and where it led them. People weigh in with their own Path. | Home, Decisions |
 | **Stories on a Path.** Each story's cover is generated from the author's Path, with the stretch it covers highlighted. | Stories |
 
-Everything is stateful in the browser: connecting, saving, joining, requests, weighing in, messages and added routes all persist to `localStorage` (and fail safely if storage is unavailable). The app opens in graphite (dark). Light and Automatic can be chosen from the account menu, your profile or ⌘K. **Sign out** (account menu, or the bottom of your own profile) returns you to the intro page.
+Everything is stateful in the browser: connecting, saving, joining, requests, weighing in, messages and added routes all persist to `localStorage` (and fail safely if storage is unavailable). The app opens in Soft Cream. Midnight (dark) and Automatic can be chosen from the account menu, your profile or ⌘K. **Sign out** (account menu, or the bottom of your own profile) returns you to the intro page.
 
 ## Project structure
 
@@ -82,7 +82,7 @@ src/
   screens/       one file per area of the product (Landing.tsx is the signed-out intro page and sign-in card;
                  Write.tsx is the editor and MyPost.tsx a published post)
   styles/        tokens (type ramp, palette, dark mode), self-hosted fonts and base styles
-  assets/fonts/  WOFF2 fonts: Schibsted Grotesk (with its arrows), Playfair Display, Charis SIL, and a small symbols subset
+  assets/fonts/  WOFF2 fonts: Space Grotesk (with its arrows), Charis SIL, and a small symbols subset
 ```
 
 ## Notes
@@ -90,13 +90,12 @@ src/
 - **Portraits** are AI-generated faces of people who don't exist, from the public [100k-faces](https://github.com/ozgrozer/100k-faces) set (originally from [generated.photos](https://generated.photos)). They are placeholders: replace them with licensed photography before any real use.
 - **Names, companies and people are fictional.** Universities are real places, used only as settings.
 - **Fonts** (all SIL Open Font License):
-  - **Schibsted Grotesk** for the interface
-  - **Playfair Display** standing in for the brand's Noe Display, a commercial face (the font stack names it first, so adding licensed files is enough to switch)
+  - **Space Grotesk** for the interface, headings and wordmark
   - **Charis SIL**, SIL's open edition of Charter, for reading; Apple devices use their own Charter
-  - each leads a [Modern Font Stacks](https://github.com/system-fonts/modern-font-stacks) stack (Neo-Grotesque, Didone, Transitional), with measured stand-in faces so nothing jumps while fonts load
+  - each leads a [Modern Font Stacks](https://github.com/system-fonts/modern-font-stacks) stack, with measured stand-in faces so nothing jumps while fonts load
 - **Sign-in** is a prototype: no passwords are requested and nothing leaves the browser.
 - See [DESIGN.md](./DESIGN.md) for:
-  - the visual world ("The Night Transit Map"): colour, type, layout, depth and shapes
+  - the visual world ("Navy Ink on Cream Paper"): colour, type, layout, depth and shapes
   - components, including the ⌘K palette, the route band and office-hours booking
   - the do's and don'ts that keep new screens in the world
 - See [PRODUCT.md](./PRODUCT.md) for who PathedIn is for, its terminology and its principles.

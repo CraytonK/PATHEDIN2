@@ -32,11 +32,14 @@ The Path is the unit of everything. People are placed on your Path (Path Twins, 
 
 ## Brand Commitments
 - The name PathedIn.
-- The three-node Path mark and the PathedIn wordmark.
-- Executive Navy (#1E3A8A) as the one accent.
+- The three-node Path mark, and the PathedIn wordmark set in the interface face (the user asked for it to match).
+- **Palette the user chose (September 29, 2026):** Soft Cream (#FFF7ED) as the ground and Midnight Navy (#0F172A) as the main accent. The dark appearance is the same pair turned over.
+- **Type the user pointed to:** Space Grotesk, the face of the reference site they supplied, with its large, light headings.
 - **The Path drawn as a transit line:** walked steps solid, the present marked, the future dashed toward an open destination ring, and "you are here".
-- **References the user made binding for the look (September 2026):** Linear, Arc and Raycast. Crisp, fast, layered surfaces with soft depth, fluid motion, excellent in dark.
-- **Replaced by the user's choice:** the cream paper ground and the previous fonts.
+- **The user's references:**
+  - The look follows a fintech site the user shared: immersive navy panels with glass cards, big numerals with coloured units, and generous white space.
+  - The motion follows Linear, Arc and Raycast, and the intro's own assembling motion, which the user asked to see more of.
+- **Replaced by the user's choice:** the graphite world, Schibsted Grotesk and the Playfair wordmark.
 - The user rejects anything that reads as generic or AI-built.
 
 ## Evidence on Hand
