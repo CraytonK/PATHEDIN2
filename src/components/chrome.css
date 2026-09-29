@@ -23,15 +23,14 @@
   align-items: center;
   gap: 8px;
 }
-/* The wordmark keeps its high-contrast serif: the one serif in the interface. */
+/* The wordmark is set in the interface face, bold and tight, like the reference's. */
 .wordmark__text {
   font-family: var(--font-wordmark);
-  font-weight: 500;
-  font-size: 24px;
+  font-weight: 700;
+  font-size: 21px;
   line-height: 1;
-  letter-spacing: -0.025em;
+  letter-spacing: -0.04em;
   color: var(--label);
-  padding-bottom: 3px;
 }
 
 /* ── Desktop: the top bar, translucent over what scrolls beneath it ── */
@@ -128,7 +127,7 @@
   box-shadow: var(--btn-highlight);
   color: var(--on-primary);
   font-size: 13px;
-  font-weight: 550;
+  font-weight: 500;
   transition: background-color var(--dur-1) var(--ease-out);
 }
 .mbar__write:hover {
@@ -231,7 +230,7 @@
 }
 .sidebar__item.is-active {
   color: var(--label);
-  font-weight: 550;
+  font-weight: 500;
 }
 .sidebar__item.is-active:hover {
   background: transparent;
@@ -268,7 +267,7 @@
   background: var(--badge);
   color: #fff;
   font-size: 11px;
-  font-weight: 600;
+  font-weight: 500;
   line-height: 18px;
   text-align: center;
   font-variant-numeric: tabular-nums;
@@ -412,7 +411,7 @@
 .menu__count {
   margin-left: auto;
   font-size: 13px;
-  font-weight: 600;
+  font-weight: 500;
   color: var(--tint-text);
 }
 
@@ -464,7 +463,7 @@
   letter-spacing: 0.01em;
 }
 .tabbar__item.is-active .tabbar__label {
-  font-weight: 600;
+  font-weight: 500;
 }
 
 /* ── Page & navigation bar ────────────────────────────── */
@@ -555,11 +554,12 @@
 .page__title-block {
   min-width: 0;
 }
-/* Page titles: the interface face, semibold, sized like an app, not a magazine. */
+/* Page titles: large and regular, tight, the way the reference sets its section heads. */
 .page__title {
-  font-size: 32px;
-  line-height: 38px;
-  letter-spacing: -0.024em;
+  font-size: 40px;
+  line-height: 44px;
+  font-weight: 400;
+  letter-spacing: -0.035em;
 }
 /* Subtitles: the interface face at regular weight, in grey. */
 .page__subtitle {
@@ -641,7 +641,8 @@
   .page__title {
     font-size: 34px;
     line-height: 40px;
-    letter-spacing: -0.025em;
+    font-weight: 400;
+    letter-spacing: -0.035em;
   }
   .page__subtitle {
     font-size: 16px;

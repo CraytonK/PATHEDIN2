@@ -73,7 +73,7 @@
 .pcard__title {
   font-size: 11px;
   line-height: 15px;
-  font-weight: 600;
+  font-weight: 500;
   letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--tint-text);
@@ -180,7 +180,7 @@
   border-radius: 999px;
   font-size: 10px;
   line-height: 16px;
-  font-weight: 700;
+  font-weight: 600;
   letter-spacing: 0.06em;
   text-transform: uppercase;
   color: var(--tint-text);
@@ -197,7 +197,7 @@
   opacity: 0.45;
 }
 .pcard__steps.has-segment .pcard__step.is-lit .pcard__label {
-  font-weight: 600;
+  font-weight: 500;
 }
 
 .pcard__actions {
@@ -217,7 +217,7 @@
   padding: 0 8px;
   border-radius: 6px;
   font-size: 13px;
-  font-weight: 600;
+  font-weight: 500;
   color: var(--tint-text);
 }
 .pcard__btn--quiet {
@@ -277,7 +277,7 @@
 }
 .phint-coach button {
   font-size: 13px;
-  font-weight: 600;
+  font-weight: 500;
   color: inherit;
   text-decoration: underline;
   text-underline-offset: 3px;

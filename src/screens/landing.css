@@ -29,7 +29,7 @@
   padding: 0 24px;
 }
 .landing__logo .wordmark__text {
-  font-size: 30px;
+  font-size: 24px;
 }
 .landing__nav {
   display: flex;
@@ -53,7 +53,7 @@
   color: var(--on-primary);
   box-shadow: var(--btn-highlight);
   font-size: 14px;
-  font-weight: 550;
+  font-weight: 500;
   transition: background-color var(--dur-2);
 }
 .landing__pill:hover,
@@ -62,12 +62,20 @@
 }
 
 /* Hero: text left, illustration bleeding off the right edge. */
+/* The hero is a Midnight Navy stage set into the cream page, lit by route silk, as in the reference. */
+.landing__stage {
+  flex: 1;
+  display: flex;
+  margin: 0 12px;
+  border-radius: var(--r-2xl);
+  box-shadow: 0 40px 80px -40px rgba(15, 23, 42, 0.6);
+}
 .landing__hero {
   position: relative;
   flex: 1;
   display: flex;
   align-items: center;
-  min-height: calc(100dvh - 75px - 71px);
+  min-height: calc(100dvh - 75px - 71px - 12px);
   width: 100%;
   max-width: 1192px;
   margin: 0 auto;
@@ -81,14 +89,18 @@
 .landing__title {
   font-family: var(--font-brand);
   font-stretch: var(--display-stretch);
-  font-size: clamp(64px, 9vw, 112px);
-  line-height: 0.94;
-  font-weight: var(--display-weight);
-  letter-spacing: -0.035em;
+  font-size: clamp(56px, 7.6vw, 100px);
+  line-height: 0.96;
+  font-weight: 500;
+  letter-spacing: -0.045em;
   text-wrap: balance;
 }
+.landing__line {
+  display: block;
+}
 .landing__amp {
-  font-style: italic;
+  color: var(--tint);
+  font-weight: 400;
 }
 .landing__sub {
   margin-top: 32px;
@@ -107,7 +119,7 @@
   color: var(--on-primary);
   box-shadow: var(--btn-highlight);
   font-size: 17px;
-  font-weight: 550;
+  font-weight: 500;
   letter-spacing: -0.01em;
   transition: background-color var(--dur-2);
 }
@@ -133,18 +145,18 @@
 }
 .hero-t--title {
   font-size: 16px;
-  font-weight: 600;
+  font-weight: 500;
 }
 .hero-t--label {
   fill: var(--label-2);
 }
 .hero-t--strong {
-  font-weight: 600;
+  font-weight: 500;
   font-size: 15px;
 }
 .hero-t--tint {
   fill: var(--tint-text);
-  font-weight: 600;
+  font-weight: 500;
 }
 .hero-t--muted {
   fill: var(--label-3);
@@ -153,28 +165,28 @@
 .hero-t--chip {
   fill: var(--on-primary);
   font-size: 12px;
-  font-weight: 600;
+  font-weight: 500;
 }
 .hero-t--q {
   fill: var(--tint);
   font-size: 14px;
-  font-weight: 700;
+  font-weight: 600;
 }
 .hero-t--dow {
   fill: var(--tint-text);
   font-size: 12px;
-  font-weight: 600;
+  font-weight: 500;
   letter-spacing: 0.06em;
 }
 .hero-t--day {
   font-size: 32px;
-  font-weight: 600;
+  font-weight: 500;
   font-stretch: var(--display-stretch);
 }
 .hero-t--btn {
   fill: var(--on-primary);
   font-size: 13px;
-  font-weight: 600;
+  font-weight: 500;
 }
 /* Layers float on offset shadows, as they do in the app. */
 .hero-float {
@@ -214,7 +226,7 @@
   margin: 18px 0 8px;
   font-size: 20px;
   line-height: 26px;
-  font-weight: 600;
+  font-weight: 500;
   font-stretch: var(--display-stretch);
   letter-spacing: -0.02em;
 }
@@ -289,7 +301,7 @@
     padding: 0 16px;
   }
   .landing__logo .wordmark__text {
-    font-size: 25px;
+    font-size: 21px;
   }
   .landing__link--wide {
     display: none;
@@ -405,7 +417,7 @@
   box-shadow: inset 0 0 0 1px var(--border);
   color: var(--label);
   font-size: 15px;
-  font-weight: 550;
+  font-weight: 500;
   transition:
     background-color var(--dur-2),
     box-shadow var(--dur-2);
@@ -438,7 +450,7 @@
   object-fit: cover;
 }
 .auth__account strong {
-  font-weight: 600;
+  font-weight: 500;
 }
 .auth__account span {
   font-size: 14px;
@@ -459,7 +471,7 @@
   transform: translateY(-50%);
 }
 .auth__mark {
-  font-weight: 700;
+  font-weight: 600;
   font-size: 18px;
 }
 .auth__switch {
@@ -468,7 +480,7 @@
 }
 .auth__switch button {
   color: var(--tint-text);
-  font-weight: 600;
+  font-weight: 500;
 }
 .auth__legal {
   margin-top: 56px;
@@ -520,7 +532,7 @@
   color: var(--on-primary);
   box-shadow: var(--btn-highlight);
   font-size: 15px;
-  font-weight: 550;
+  font-weight: 500;
 }
 .auth__submit:disabled {
   opacity: 0.35;

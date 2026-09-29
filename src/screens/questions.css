@@ -126,7 +126,7 @@
 }
 .qd__about {
   color: var(--tint-text);
-  font-weight: 600;
+  font-weight: 500;
 }
 .qd__about a {
   color: var(--label);
@@ -182,7 +182,7 @@
 }
 .qd__h {
   font-size: 17px;
-  font-weight: 600;
+  font-weight: 500;
   margin: 40px 0 4px;
   padding-bottom: 12px;
   border-bottom: var(--hairline) solid var(--separator);

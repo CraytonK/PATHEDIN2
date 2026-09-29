@@ -19,7 +19,7 @@
 .confluence__route {
   font-family: var(--font-sans);
   font-size: 13px;
-  font-weight: 600;
+  font-weight: 500;
   fill: var(--label);
 }
 .confluence__route.is-sel {
@@ -36,7 +36,7 @@
   fill: var(--label-2);
 }
 .confluence__stop.is-cap {
-  font-weight: 600;
+  font-weight: 500;
   fill: var(--label);
 }
 .confluence__people {
@@ -73,7 +73,7 @@
 }
 .confluence__me span {
   color: var(--tint-text);
-  font-weight: 600;
+  font-weight: 500;
   white-space: nowrap;
 }
 @media (max-width: 767px) {

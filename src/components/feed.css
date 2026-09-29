@@ -16,7 +16,7 @@
 }
 .post__kind-label {
   flex: none;
-  font-weight: 600;
+  font-weight: 500;
   color: var(--label);
 }
 .post__kind-note {
@@ -61,7 +61,7 @@
   flex: none;
 }
 .qa__who strong {
-  font-weight: 600;
+  font-weight: 500;
 }
 .qa__who > .qa__cred {
   flex: 1 1 auto;
@@ -119,7 +119,7 @@
   overflow: hidden;
 }
 .thread-peek__bubble strong {
-  font-weight: 600;
+  font-weight: 500;
 }
 
 /* ── Path Guide: a person on a quiet panel ──────────────── */
@@ -160,7 +160,7 @@
 .fguide__name {
   font-size: 20px;
   line-height: 26px;
-  font-weight: 600;
+  font-weight: 500;
   letter-spacing: -0.015em;
   color: var(--label);
 }
@@ -188,7 +188,7 @@
   color: var(--label-2);
 }
 .fguide__move strong {
-  font-weight: 600;
+  font-weight: 500;
   color: var(--label);
 }
 .move-glyph {
@@ -223,7 +223,7 @@
   color: var(--label);
 }
 .fguide__slot strong {
-  font-weight: 600;
+  font-weight: 500;
   color: var(--tint-text);
 }
 .fguide__cta {
@@ -268,7 +268,7 @@
   background: var(--primary);
   color: var(--on-primary);
   font-size: 13px;
-  font-weight: 600;
+  font-weight: 500;
 }
 @media (hover: hover) {
   .fweigh:hover {
@@ -299,7 +299,7 @@
 }
 .route-post__on {
   font-size: 13px;
-  font-weight: 600;
+  font-weight: 500;
   color: var(--tint-text);
 }
 
@@ -321,7 +321,7 @@
 }
 .milestone-foot__cta {
   font-size: 13px;
-  font-weight: 600;
+  font-weight: 500;
   color: var(--tint-text);
 }
 @media (hover: hover) {
@@ -408,7 +408,7 @@
   background: var(--tint-soft);
   box-shadow: inset 0 0 0 1px var(--tint-border);
   color: var(--tint-text);
-  font-weight: 550;
+  font-weight: 500;
 }
 .kind-filter__pill.is-on svg {
   color: currentColor;

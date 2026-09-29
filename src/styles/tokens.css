@@ -1,129 +1,140 @@
 /*
   PathedIn design tokens.
 
-  The world: a precise instrument for a big decision. The Path is the one bright, living line on a quiet,
-  layered surface, in the company of Linear, Arc and Raycast (the user's references).
+  The world: Soft Cream and Midnight Navy, the pairing the user chose (September 2026), set in Space Grotesk
+  after the reference they shared. Cream is the page; Midnight Navy is the ink and the accent that carries
+  weight: primary actions, the walked Path, and the immersive navy panels where the product shows itself.
+  One signal blue does the small, bright jobs: links, the road ahead, focus.
 
-    Graphite (default)  #0B0C0F canvas · #111317 panels · #181A1F floating · white-7% edges
-    Porcelain           #F5F6F8 canvas · #FFFFFF panels and floating · slate-7% edges
-    Executive Navy      #1E3A8A the one accent: primary actions, the future, "you", focus.
-                        On graphite it fills at #2C49B6 and reads as #93A6F3.
+    Soft Cream (default)   #FFF7ED canvas · warm white cards · navy-8% edges
+    Midnight (dark)        #0F172A canvas · lifted navy panels · cream type
+    Midnight Navy          #0F172A the main accent: buttons, the Path, immersive panels
+    Signal Blue            #2448C8 on cream (#8FA8FF on midnight): links, the future, focus, units
 
-  Type — Schibsted Grotesk for the interface and every heading, Charter for long-form reading, and the
-  Playfair wordmark. See styles/fonts.css.
+  Type — Space Grotesk for the interface, every heading and the wordmark; Charter for long-form reading.
+  Headings are set large and light rather than heavy. See styles/fonts.css.
 
-  Depth — surfaces step up in value and carry a 1px edge; things that float add a soft, offset shadow.
-  No glows.
+  Depth — cards sit on the cream with a hairline and a soft navy-tinted shadow; immersive panels are
+  Midnight Navy with glass cards on them.
 */
 
 :root {
-  color-scheme: dark;
+  color-scheme: light;
 
   /* ── Type families ─────────────────────────────────────────── */
-  /* Interface and headings, on the Neo-Grotesque stack. */
-  --font-sans: 'Schibsted Grotesk', 'PathedIn Symbols', 'Schibsted Fallback', Roboto, 'Helvetica Neue', 'Arial Nova', 'Nimbus Sans', Arial, sans-serif;
+  --font-sans: 'Space Grotesk', 'PathedIn Symbols', 'Space Grotesk Fallback', 'Helvetica Neue', Arial, sans-serif;
   --font-display: var(--font-sans);
-  /* Headings share the interface face, semibold and tight. */
   --font-brand: var(--font-sans);
-  /* The wordmark alone keeps its high-contrast serif. On the Didone stack. */
-  --font-wordmark: 'Noe Display', 'Playfair Display', 'Playfair Fallback', Didot, 'Bodoni MT', 'Noto Serif Display', 'URW Palladio L', P052, Sylfaen, serif;
+  --font-wordmark: var(--font-sans);
   /* Charter: long-form reading only — stories, quotes, bios. On the Transitional stack. */
   --font-serif: Charter, 'Bitstream Charter', 'Charis SIL', 'Charis Fallback', 'Sitka Text', Cambria, serif;
   --font-rounded: var(--font-sans);
   --font-mono: ui-monospace, 'SF Mono', 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, monospace;
-  /* Display headings: semibold, tight. The face has no width axis, so stretch stays normal. */
+  /* Headings are large and light, the way the reference sets them. */
   --display-stretch: 100%;
-  --display-weight: 600;
+  --display-weight: 400;
 
-  /* ── Graphite (the default appearance) ─────────────────────── */
-  --bg: #0b0c0f;
-  --bg-grouped: #111317;
-  --bg-elevated: #181a1f;
-  --bg-sunken: #08090b;
-  --bg-intro: #0b0c0f;
-  --bg-hover: rgba(255, 255, 255, 0.045);
-  --bg-press: rgba(255, 255, 255, 0.08);
-  --bg-selected: rgba(255, 255, 255, 0.065);
+  /* ── Soft Cream (the default appearance) ───────────────────── */
+  --bg: #fff7ed;
+  --bg-grouped: #fffcf8;
+  --bg-elevated: #ffffff;
+  --bg-sunken: #f9eddd;
+  --bg-intro: #fff7ed;
+  --bg-hover: rgba(15, 23, 42, 0.04);
+  --bg-press: rgba(15, 23, 42, 0.075);
+  --bg-selected: rgba(15, 23, 42, 0.06);
 
-  --label: #eceef2;
-  --label-2: #9ba0ac;
-  --label-3: #6c717d;
-  --label-4: #3a3e47;
+  --label: #0f172a;
+  --label-2: #545a69;
+  --label-3: #858895;
+  --label-4: #d8d1c6;
 
-  --fill: #1c1f25;
-  --fill-2: #1c1f25;
-  --fill-3: #15171b;
+  --fill: #f5e9d9;
+  --fill-2: #f5e9d9;
+  --fill-3: #fbf2e6;
 
-  --separator: rgba(255, 255, 255, 0.075);
-  --separator-strong: rgba(255, 255, 255, 0.13);
-  --border: rgba(255, 255, 255, 0.09);
-  --border-strong: rgba(255, 255, 255, 0.16);
+  --separator: rgba(15, 23, 42, 0.08);
+  --separator-strong: rgba(15, 23, 42, 0.14);
+  --border: rgba(15, 23, 42, 0.1);
+  --border-strong: rgba(15, 23, 42, 0.2);
 
-  /* Executive Navy, lifted so it reads on graphite. */
-  --tint: #8ea2f2;
-  --tint-strong: #8ea2f2;
-  --tint-text: #a3b3f5;
-  --tint-soft: rgba(142, 162, 242, 0.16);
-  --tint-softer: rgba(142, 162, 242, 0.09);
-  --tint-border: rgba(142, 162, 242, 0.34);
-  --on-tint: #0b0c0f;
-  --future-soft: rgba(142, 162, 242, 0.4);
+  /* Signal Blue: small, bright jobs only. */
+  --tint: #2448c8;
+  --tint-strong: #2448c8;
+  --tint-text: #1f3fb4;
+  --tint-soft: rgba(36, 72, 200, 0.1);
+  --tint-softer: rgba(36, 72, 200, 0.06);
+  --tint-border: rgba(36, 72, 200, 0.3);
+  --on-tint: #ffffff;
+  --future-soft: rgba(36, 72, 200, 0.34);
 
-  /* Primary actions are filled with the navy itself. */
-  --primary: #2c49b6;
-  --primary-hover: #3654c6;
-  --on-primary: #ffffff;
-  --ink: #e4e7ec;
-  --ink-soft: rgba(255, 255, 255, 0.08);
-  --path-them: #6c717d;
+  /* Midnight Navy: the main accent. */
+  --primary: #0f172a;
+  --primary-hover: #1e293b;
+  --on-primary: #fff7ed;
+  --ink: #0f172a;
+  --ink-soft: rgba(15, 23, 42, 0.06);
+  --path-them: #858895;
 
-  --green: #a3b3f5;
-  --red: #8ea2f2;
-  --badge: #3654c6;
+  --green: #1f3fb4;
+  --red: #1f3fb4;
+  --badge: #2448c8;
   /* Destructive actions only (delete, discard). */
-  --danger: #f2877d;
+  --danger: #b42318;
 
-  --bar-bg: rgba(11, 12, 15, 0.78);
-  --bar-blur: saturate(180%) blur(20px);
+  --bar-bg: rgba(255, 247, 237, 0.82);
+  --bar-blur: saturate(160%) blur(18px);
 
-  /* A panel's edge: a hairline and a faint top highlight, as if lit from above. */
-  --surface-edge: 0 0 0 1px rgba(255, 255, 255, 0.065), inset 0 1px 0 rgba(255, 255, 255, 0.035);
+  /* A card on cream: a hairline and a soft, navy-tinted fall-off. */
+  --surface-edge: 0 0 0 1px rgba(15, 23, 42, 0.07), 0 1px 2px rgba(15, 23, 42, 0.04);
   --panel-shadow: var(--surface-edge);
-  /* Floating things: an edge, a short contact shadow and a long soft one. Offset, never a glow. */
-  --shadow-popover: 0 0 0 1px rgba(255, 255, 255, 0.09), 0 2px 6px rgba(0, 0, 0, 0.35), 0 16px 40px -12px rgba(0, 0, 0, 0.7);
-  --shadow-modal: 0 0 0 1px rgba(255, 255, 255, 0.09), 0 32px 80px -20px rgba(0, 0, 0, 0.8);
-  --shadow-lift: 0 0 0 1px rgba(255, 255, 255, 0.1), 0 8px 24px -10px rgba(0, 0, 0, 0.6);
-  --btn-highlight: inset 0 1px 0 rgba(255, 255, 255, 0.14);
-  --scrim: rgba(3, 4, 6, 0.62);
+  --shadow-popover: 0 0 0 1px rgba(15, 23, 42, 0.08), 0 4px 10px -2px rgba(15, 23, 42, 0.06), 0 22px 44px -16px rgba(15, 23, 42, 0.22);
+  --shadow-modal: 0 0 0 1px rgba(15, 23, 42, 0.08), 0 40px 90px -24px rgba(15, 23, 42, 0.4);
+  --shadow-lift: 0 0 0 1px rgba(15, 23, 42, 0.08), 0 16px 36px -14px rgba(15, 23, 42, 0.24);
+  --btn-highlight: inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  --scrim: rgba(15, 23, 42, 0.36);
+  --scrim-soft: rgba(255, 247, 237, 0.62);
+  --tip-bg: #0f172a;
+  --tip-fg: #fff7ed;
+  --highlight: rgba(36, 72, 200, 0.12);
+  --highlight-mine: rgba(36, 72, 200, 0.22);
   /* The light a card's edge catches where the pointer is. */
-  --edge-light: rgba(255, 255, 255, 0.34);
-  --scrim-soft: rgba(11, 12, 15, 0.6);
-  --tip-bg: #262930;
-  --tip-fg: #eceef2;
-  --highlight: rgba(142, 162, 242, 0.14);
-  --highlight-mine: rgba(142, 162, 242, 0.26);
+  --edge-light: rgba(36, 72, 200, 0.5);
+
+  /* Immersive panels: Midnight Navy, lit by the Path, with glass cards on them. Same in both appearances. */
+  --immersive-bg: #0f172a;
+  --immersive-deep: #0a1020;
+  --immersive-glow: #1c3a9e;
+  --immersive-ink: #fff7ed;
+  --immersive-ink-2: rgba(255, 247, 237, 0.68);
+  --immersive-line: rgba(143, 168, 255, 0.5);
+  --immersive-card: rgba(255, 247, 237, 0.07);
+  --immersive-card-border: rgba(255, 247, 237, 0.14);
+  --immersive-surface:
+    radial-gradient(120% 90% at 85% 0%, var(--immersive-glow), transparent 60%),
+    linear-gradient(160deg, var(--immersive-bg), var(--immersive-deep));
 
   /* ── Geometry ─────────────────────────────────────────────── */
   --gutter: 16px;
   --r-xs: 4px;
   --r-sm: 6px;
   --r-md: 8px;
-  --r-lg: 12px;
-  --r-xl: 16px;
+  --r-lg: 16px;
+  --r-xl: 20px;
+  --r-2xl: 28px;
   --r-pill: 999px;
-  --r-popover: 10px;
+  --r-popover: 12px;
   --hairline: 1px;
   --hit: 44px;
 
   --tabbar-h: 50px;
   --navbar-h: 44px;
-  --topbar-h: 52px;
+  --topbar-h: 56px;
   --sidebar-w: 236px;
   --safe-top: env(safe-area-inset-top, 0px);
   --safe-bottom: env(safe-area-inset-bottom, 0px);
 
   /* ── Motion ───────────────────────────────────────────────── */
-  /* Confident arrivals, quick exits. */
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
   --ease-drawer: cubic-bezier(0.23, 1, 0.32, 1);
@@ -134,130 +145,178 @@
 }
 
 /*
-  Porcelain, the light appearance: cool near-white canvas, white panels that sit on it with a hairline
-  and a whisper of shadow, and Executive Navy at full depth.
+  Midnight, the dark appearance: the same pairing turned over. Midnight Navy is the page, cream is the type,
+  and primary actions fill with cream.
 */
-:root[data-theme='light'] {
-  color-scheme: light;
-  --bg: #f5f6f8;
-  --bg-grouped: #ffffff;
-  --bg-elevated: #ffffff;
-  --bg-sunken: #eef0f3;
-  --bg-intro: #f5f6f8;
-  --bg-hover: rgba(15, 23, 42, 0.045);
-  --bg-press: rgba(15, 23, 42, 0.08);
-  --bg-selected: rgba(15, 23, 42, 0.06);
-
-  --label: #0f1523;
-  --label-2: #5d6576;
-  --label-3: #8e95a3;
-  --label-4: #cdd2da;
-
-  --fill: #eceef2;
-  --fill-2: #eceef2;
-  --fill-3: #f3f4f7;
-
-  --separator: rgba(15, 23, 42, 0.08);
-  --separator-strong: rgba(15, 23, 42, 0.14);
-  --border: rgba(15, 23, 42, 0.1);
-  --border-strong: rgba(15, 23, 42, 0.18);
-
-  --tint: #1e3a8a;
-  --tint-strong: #1e3a8a;
-  --tint-text: #1e3a8a;
-  --tint-soft: #dfe6fb;
-  --tint-softer: #eef2fd;
-  --tint-border: #bccaf3;
-  --on-tint: #ffffff;
-  --future-soft: #bccaf3;
-
-  --primary: #1e3a8a;
-  --primary-hover: #25449e;
-  --on-primary: #ffffff;
-  --ink: #0f1523;
-  --ink-soft: rgba(15, 23, 42, 0.06);
-  --path-them: #8e95a3;
-
-  --green: #1e3a8a;
-  --red: #1e3a8a;
-  --badge: #1e3a8a;
-  --danger: #b42318;
-
-  --bar-bg: rgba(245, 246, 248, 0.82);
-
-  --surface-edge: 0 0 0 1px rgba(15, 23, 42, 0.07), 0 1px 2px rgba(15, 23, 42, 0.04);
-  --shadow-popover: 0 0 0 1px rgba(15, 23, 42, 0.08), 0 2px 6px rgba(15, 23, 42, 0.06), 0 16px 40px -12px rgba(15, 23, 42, 0.22);
-  --shadow-modal: 0 0 0 1px rgba(15, 23, 42, 0.08), 0 32px 80px -20px rgba(15, 23, 42, 0.35);
-  --shadow-lift: 0 0 0 1px rgba(15, 23, 42, 0.09), 0 8px 24px -10px rgba(15, 23, 42, 0.25);
-  --btn-highlight: inset 0 1px 0 rgba(255, 255, 255, 0.16);
-  --scrim: rgba(15, 21, 35, 0.32);
-  --edge-light: rgba(30, 58, 138, 0.42);
-  --scrim-soft: rgba(245, 246, 248, 0.6);
-  --tip-bg: #0f1523;
-  --tip-fg: #ffffff;
-  --highlight: #e3e9fb;
-  --highlight-mine: #d0dbf8;
+:root[data-theme='dark'] {
+  color-scheme: dark;
+  --bg: #0f172a;
+  --bg-grouped: #141e35;
+  --bg-elevated: #1a2540;
+  --bg-sunken: #0b1222;
+  --bg-intro: #0f172a;
+  --bg-hover: rgba(255, 247, 237, 0.05);
+  --bg-press: rgba(255, 247, 237, 0.09);
+  --bg-selected: rgba(255, 247, 237, 0.07);
+  --label: #fff7ed;
+  --label-2: #b8b6b3;
+  --label-3: #7f8394;
+  --label-4: #3a4459;
+  --fill: #1f2a45;
+  --fill-2: #1f2a45;
+  --fill-3: #18223a;
+  --separator: rgba(255, 247, 237, 0.08);
+  --separator-strong: rgba(255, 247, 237, 0.14);
+  --border: rgba(255, 247, 237, 0.1);
+  --border-strong: rgba(255, 247, 237, 0.2);
+  --tint: #8fa8ff;
+  --tint-strong: #8fa8ff;
+  --tint-text: #a9bcff;
+  --tint-soft: rgba(143, 168, 255, 0.16);
+  --tint-softer: rgba(143, 168, 255, 0.09);
+  --tint-border: rgba(143, 168, 255, 0.34);
+  --on-tint: #0f172a;
+  --future-soft: rgba(143, 168, 255, 0.4);
+  --primary: #fff7ed;
+  --primary-hover: #ffffff;
+  --on-primary: #0f172a;
+  --ink: #fff7ed;
+  --ink-soft: rgba(255, 247, 237, 0.08);
+  --path-them: #7f8394;
+  --green: #a9bcff;
+  --red: #a9bcff;
+  --badge: #4f6ef0;
+  --danger: #f2877d;
+  --bar-bg: rgba(15, 23, 42, 0.8);
+  --surface-edge: 0 0 0 1px rgba(255, 247, 237, 0.07), inset 0 1px 0 rgba(255, 247, 237, 0.04);
+  --shadow-popover: 0 0 0 1px rgba(255, 247, 237, 0.09), 0 2px 6px rgba(0, 0, 0, 0.3), 0 18px 44px -12px rgba(0, 0, 0, 0.6);
+  --shadow-modal: 0 0 0 1px rgba(255, 247, 237, 0.09), 0 32px 80px -20px rgba(0, 0, 0, 0.7);
+  --shadow-lift: 0 0 0 1px rgba(255, 247, 237, 0.1), 0 12px 30px -12px rgba(0, 0, 0, 0.55);
+  --btn-highlight: inset 0 1px 0 rgba(255, 255, 255, 0.4);
+  --scrim: rgba(5, 9, 18, 0.6);
+  --scrim-soft: rgba(15, 23, 42, 0.6);
+  --tip-bg: #fff7ed;
+  --tip-fg: #0f172a;
+  --highlight: rgba(143, 168, 255, 0.16);
+  --highlight-mine: rgba(143, 168, 255, 0.28);
+  --edge-light: rgba(255, 247, 237, 0.34);
+  --immersive-bg: #16213b;
+  --immersive-deep: #0b1222;
 }
 
-/* "Automatic" follows the device, which may be light. */
-@media (prefers-color-scheme: light) {
+/* "Automatic" follows the device, which may be dark. */
+@media (prefers-color-scheme: dark) {
   :root:not([data-theme]) {
-    color-scheme: light;
-    --bg: #f5f6f8;
-    --bg-grouped: #ffffff;
-    --bg-elevated: #ffffff;
-    --bg-sunken: #eef0f3;
-    --bg-intro: #f5f6f8;
-    --bg-hover: rgba(15, 23, 42, 0.045);
-    --bg-press: rgba(15, 23, 42, 0.08);
-    --bg-selected: rgba(15, 23, 42, 0.06);
-    --label: #0f1523;
-    --label-2: #5d6576;
-    --label-3: #8e95a3;
-    --label-4: #cdd2da;
-    --fill: #eceef2;
-    --fill-2: #eceef2;
-    --fill-3: #f3f4f7;
-    --separator: rgba(15, 23, 42, 0.08);
-    --separator-strong: rgba(15, 23, 42, 0.14);
-    --border: rgba(15, 23, 42, 0.1);
-    --border-strong: rgba(15, 23, 42, 0.18);
-    --tint: #1e3a8a;
-    --tint-strong: #1e3a8a;
-    --tint-text: #1e3a8a;
-    --tint-soft: #dfe6fb;
-    --tint-softer: #eef2fd;
-    --tint-border: #bccaf3;
-    --on-tint: #ffffff;
-    --future-soft: #bccaf3;
-    --primary: #1e3a8a;
-    --primary-hover: #25449e;
-    --on-primary: #ffffff;
-    --ink: #0f1523;
-    --ink-soft: rgba(15, 23, 42, 0.06);
-    --path-them: #8e95a3;
-    --green: #1e3a8a;
-    --red: #1e3a8a;
-    --badge: #1e3a8a;
-    --danger: #b42318;
-    --bar-bg: rgba(245, 246, 248, 0.82);
-    --surface-edge: 0 0 0 1px rgba(15, 23, 42, 0.07), 0 1px 2px rgba(15, 23, 42, 0.04);
-    --shadow-popover: 0 0 0 1px rgba(15, 23, 42, 0.08), 0 2px 6px rgba(15, 23, 42, 0.06), 0 16px 40px -12px rgba(15, 23, 42, 0.22);
-    --shadow-modal: 0 0 0 1px rgba(15, 23, 42, 0.08), 0 32px 80px -20px rgba(15, 23, 42, 0.35);
-    --shadow-lift: 0 0 0 1px rgba(15, 23, 42, 0.09), 0 8px 24px -10px rgba(15, 23, 42, 0.25);
-    --btn-highlight: inset 0 1px 0 rgba(255, 255, 255, 0.16);
-    --scrim: rgba(15, 21, 35, 0.32);
-    --edge-light: rgba(30, 58, 138, 0.42);
-    --scrim-soft: rgba(245, 246, 248, 0.6);
-    --tip-bg: #0f1523;
-    --tip-fg: #ffffff;
-    --highlight: #e3e9fb;
-    --highlight-mine: #d0dbf8;
+    color-scheme: dark;
+    --bg: #0f172a;
+    --bg-grouped: #141e35;
+    --bg-elevated: #1a2540;
+    --bg-sunken: #0b1222;
+    --bg-intro: #0f172a;
+    --bg-hover: rgba(255, 247, 237, 0.05);
+    --bg-press: rgba(255, 247, 237, 0.09);
+    --bg-selected: rgba(255, 247, 237, 0.07);
+    --label: #fff7ed;
+    --label-2: #b8b6b3;
+    --label-3: #7f8394;
+    --label-4: #3a4459;
+    --fill: #1f2a45;
+    --fill-2: #1f2a45;
+    --fill-3: #18223a;
+    --separator: rgba(255, 247, 237, 0.08);
+    --separator-strong: rgba(255, 247, 237, 0.14);
+    --border: rgba(255, 247, 237, 0.1);
+    --border-strong: rgba(255, 247, 237, 0.2);
+    --tint: #8fa8ff;
+    --tint-strong: #8fa8ff;
+    --tint-text: #a9bcff;
+    --tint-soft: rgba(143, 168, 255, 0.16);
+    --tint-softer: rgba(143, 168, 255, 0.09);
+    --tint-border: rgba(143, 168, 255, 0.34);
+    --on-tint: #0f172a;
+    --future-soft: rgba(143, 168, 255, 0.4);
+    --primary: #fff7ed;
+    --primary-hover: #ffffff;
+    --on-primary: #0f172a;
+    --ink: #fff7ed;
+    --ink-soft: rgba(255, 247, 237, 0.08);
+    --path-them: #7f8394;
+    --green: #a9bcff;
+    --red: #a9bcff;
+    --badge: #4f6ef0;
+    --danger: #f2877d;
+    --bar-bg: rgba(15, 23, 42, 0.8);
+    --surface-edge: 0 0 0 1px rgba(255, 247, 237, 0.07), inset 0 1px 0 rgba(255, 247, 237, 0.04);
+    --shadow-popover: 0 0 0 1px rgba(255, 247, 237, 0.09), 0 2px 6px rgba(0, 0, 0, 0.3), 0 18px 44px -12px rgba(0, 0, 0, 0.6);
+    --shadow-modal: 0 0 0 1px rgba(255, 247, 237, 0.09), 0 32px 80px -20px rgba(0, 0, 0, 0.7);
+    --shadow-lift: 0 0 0 1px rgba(255, 247, 237, 0.1), 0 12px 30px -12px rgba(0, 0, 0, 0.55);
+    --btn-highlight: inset 0 1px 0 rgba(255, 255, 255, 0.4);
+    --scrim: rgba(5, 9, 18, 0.6);
+    --scrim-soft: rgba(15, 23, 42, 0.6);
+    --tip-bg: #fff7ed;
+    --tip-fg: #0f172a;
+    --highlight: rgba(143, 168, 255, 0.16);
+    --highlight-mine: rgba(143, 168, 255, 0.28);
+    --edge-light: rgba(255, 247, 237, 0.34);
+    --immersive-bg: #16213b;
+    --immersive-deep: #0b1222;
   }
 }
 
-:root[data-theme='dark'] {
+:root[data-theme='light'] {
+  color-scheme: light;
+}
+
+/*
+  Immersive panels: a Midnight Navy surface in either appearance, where the product shows itself (the intro,
+  a profile's Path, what's coming up). Everything inside takes the midnight palette, so the Path, cards and
+  buttons in it need no special cases. Cards on it are glass: a translucent cream fill with a cream hairline.
+*/
+.immersive {
   color-scheme: dark;
+  --bg: var(--immersive-bg);
+  --bg-grouped: rgba(255, 247, 237, 0.06);
+  --bg-elevated: #1c2847;
+  --bg-sunken: rgba(5, 9, 18, 0.35);
+  --bg-hover: rgba(255, 247, 237, 0.06);
+  --bg-press: rgba(255, 247, 237, 0.1);
+  --bg-selected: rgba(255, 247, 237, 0.08);
+  --label: #fff7ed;
+  --label-2: rgba(255, 247, 237, 0.7);
+  --label-3: rgba(255, 247, 237, 0.5);
+  --label-4: rgba(255, 247, 237, 0.22);
+  --fill: rgba(255, 247, 237, 0.1);
+  --fill-2: rgba(255, 247, 237, 0.1);
+  --fill-3: rgba(255, 247, 237, 0.06);
+  --separator: rgba(255, 247, 237, 0.1);
+  --separator-strong: rgba(255, 247, 237, 0.16);
+  --border: rgba(255, 247, 237, 0.14);
+  --border-strong: rgba(255, 247, 237, 0.24);
+  --tint: #8fa8ff;
+  --tint-strong: #8fa8ff;
+  --tint-text: #b4c4ff;
+  --tint-soft: rgba(143, 168, 255, 0.18);
+  --tint-softer: rgba(143, 168, 255, 0.1);
+  --tint-border: rgba(143, 168, 255, 0.36);
+  --on-tint: #0f172a;
+  --future-soft: rgba(143, 168, 255, 0.42);
+  --primary: #fff7ed;
+  --primary-hover: #ffffff;
+  --on-primary: #0f172a;
+  --ink: #fff7ed;
+  --ink-soft: rgba(255, 247, 237, 0.08);
+  --path-them: rgba(255, 247, 237, 0.5);
+  --surface-edge: 0 0 0 1px rgba(255, 247, 237, 0.12), inset 0 1px 0 rgba(255, 247, 237, 0.06);
+  --shadow-lift: 0 0 0 1px rgba(255, 247, 237, 0.18), 0 16px 36px -14px rgba(0, 0, 0, 0.5);
+  --btn-highlight: inset 0 1px 0 rgba(255, 255, 255, 0.5);
+  --edge-light: rgba(255, 247, 237, 0.4);
+  --tip-bg: #fff7ed;
+  --tip-fg: #0f172a;
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  color: var(--label);
+  background: var(--immersive-surface);
 }
 
 @media (min-width: 768px) {

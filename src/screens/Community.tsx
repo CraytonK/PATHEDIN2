@@ -4,7 +4,7 @@ import { useLocation, useParams } from 'react-router-dom';
 import { Page } from '../components/chrome';
 import { CommunityRoute, membersAt } from '../components/CommunityRoute';
 import { CommunityTitle, DecisionItem, JoinButton, PersonRow, QuestionItem, StoryItem, ThreadItem } from '../components/content';
-import { Avatar, Button, PersonName, TextTabs, formatCount } from '../components/ui';
+import { Avatar, Button, PersonName, TextTabs, Stat } from '../components/ui';
 import { communities, communityList, threads as allThreads } from '../data/communities';
 import { questionList } from '../data/questions';
 import { decisionList } from '../data/decisions';
@@ -131,11 +131,12 @@ export function CommunityScreen() {
           <CommunityTitle c={c} size="lg" />
         </h1>
         <p className="cm__desc t-body c-2">{c.description}</p>
+        <div className="cm__stats">
+          <Stat value={c.members} label="on this journey" />
+          <Stat value={c.guides} label="Path Guides" />
+          <Stat value={c.activeNow} label="here now" live />
+        </div>
         <div className="cm__meta">
-          <span className="t-subhead">
-            <strong className="t-num">{formatCount(c.members)}</strong> on this journey · <strong>{c.guides}</strong> Path Guides ·{' '}
-            <span className="cm__live">{c.activeNow} here now</span>
-          </span>
           <span className="cm__host t-subhead c-2">
             <Avatar id={c.host} size={24} /> Hosted by <PersonName id={c.host} />
           </span>

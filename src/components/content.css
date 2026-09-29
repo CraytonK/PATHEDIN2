@@ -107,7 +107,7 @@
   align-items: flex-start;
   gap: 6px;
   color: var(--tint-text);
-  font-weight: 600;
+  font-weight: 500;
   margin-top: 6px;
 }
 .cred__glyph {
@@ -132,12 +132,12 @@
 }
 .seg-art__label.is-on {
   fill: var(--label);
-  font-weight: 600;
+  font-weight: 500;
 }
 .seg-art__years {
   font-family: var(--font-sans);
   font-size: 12px;
-  font-weight: 700;
+  font-weight: 600;
   fill: var(--tint-text);
   letter-spacing: 0.02em;
 }
@@ -222,7 +222,7 @@
 .story-item__title {
   font-size: 21px;
   line-height: 26px;
-  font-weight: 700;
+  font-weight: 600;
   letter-spacing: -0.015em;
   margin: 4px 0 6px;
   text-wrap: balance;
@@ -246,7 +246,7 @@
   align-items: center;
   gap: 7px;
   color: var(--label-2);
-  font-weight: 600;
+  font-weight: 500;
 }
 .q-item__mark {
   display: inline-flex;
@@ -258,13 +258,13 @@
   background: var(--label);
   color: var(--bg);
   font-size: 11px;
-  font-weight: 700;
+  font-weight: 600;
 }
 .q-item__title {
   font-family: var(--font-display);
   font-size: 20px;
   line-height: 25px;
-  font-weight: 600;
+  font-weight: 500;
   letter-spacing: -0.018em;
   margin: 8px 0 4px;
   text-wrap: balance;
@@ -301,7 +301,7 @@
 .fork__label {
   font-family: var(--font-sans);
   font-size: 13px;
-  font-weight: 600;
+  font-weight: 500;
   fill: var(--label);
 }
 .fork__count {
@@ -344,7 +344,7 @@
   font-family: var(--font-display);
   font-size: 19px;
   line-height: 24px;
-  font-weight: 600;
+  font-weight: 500;
   letter-spacing: -0.016em;
   margin: 3px 0 3px;
 }
@@ -359,7 +359,7 @@
 .thread-item__community {
   display: inline-block;
   color: var(--label-2);
-  font-weight: 600;
+  font-weight: 500;
   margin-bottom: 10px;
 }
 .thread-item__community:hover {
@@ -373,7 +373,7 @@
 }
 .thread-item__pin {
   color: var(--tint-text);
-  font-weight: 600;
+  font-weight: 500;
 }
 .thread-item__link {
   display: block;
@@ -382,7 +382,7 @@
 .thread-item__title {
   font-size: 18px;
   line-height: 23px;
-  font-weight: 600;
+  font-weight: 500;
   letter-spacing: -0.016em;
   margin-bottom: 4px;
 }
@@ -463,7 +463,7 @@
   color: var(--label-2);
 }
 .community-title__to {
-  font-weight: 600;
+  font-weight: 500;
 }
 .community-title__arrow {
   color: var(--tint-strong);
@@ -492,7 +492,7 @@
 }
 .community-row__reason {
   color: var(--tint-text);
-  font-weight: 600;
+  font-weight: 500;
 }
 .community-row:hover .community-title__to {
   text-decoration: underline;

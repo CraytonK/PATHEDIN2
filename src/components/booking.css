@@ -37,7 +37,7 @@
 .bk__name {
   font-size: 16px;
   line-height: 22px;
-  font-weight: 600;
+  font-weight: 500;
   letter-spacing: -0.012em;
 }
 .bk__who:hover .bk__name {
@@ -72,7 +72,7 @@
   color: var(--label-2);
 }
 .bk-move strong {
-  font-weight: 600;
+  font-weight: 500;
   color: var(--label);
 }
 .bk__facts {
@@ -121,7 +121,7 @@
 .bk__head h3 {
   font-size: 15px;
   line-height: 20px;
-  font-weight: 600;
+  font-weight: 500;
   letter-spacing: -0.01em;
 }
 .bk__head span {
@@ -172,7 +172,7 @@
 .bk-day__num {
   font-size: 26px;
   line-height: 32px;
-  font-weight: 600;
+  font-weight: 500;
   font-stretch: var(--display-stretch);
   letter-spacing: -0.02em;
   font-variant-numeric: tabular-nums;
@@ -181,7 +181,7 @@
   margin-top: 6px;
   font-size: 11px;
   line-height: 14px;
-  font-weight: 600;
+  font-weight: 500;
   color: var(--tint-text);
 }
 .bk-day.is-on .bk-day__dow,
@@ -210,7 +210,7 @@
   background: var(--fill-3);
   box-shadow: inset 0 0 0 1px var(--border);
   font-size: 14px;
-  font-weight: 550;
+  font-weight: 500;
   transition:
     box-shadow var(--dur-2) var(--ease-out),
     color var(--dur-2) var(--ease-out);
@@ -330,7 +330,7 @@
 .bk__summary strong {
   font-size: 14px;
   line-height: 20px;
-  font-weight: 600;
+  font-weight: 500;
 }
 .bk__summary span {
   font-size: 12px;
@@ -432,7 +432,7 @@
 .bk-ticket__month {
   font-size: 12px;
   line-height: 16px;
-  font-weight: 600;
+  font-weight: 500;
   color: var(--tint-text);
   text-transform: uppercase;
   letter-spacing: 0.06em;
@@ -440,7 +440,7 @@
 .bk-ticket__day {
   font-size: 32px;
   line-height: 38px;
-  font-weight: 600;
+  font-weight: 500;
   font-stretch: var(--display-stretch);
   letter-spacing: -0.02em;
   font-variant-numeric: tabular-nums;

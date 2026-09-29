@@ -133,8 +133,8 @@ export const useApp = create<AppState>()(
       readThreads: {},
       weighIns: {},
       addedRoutes: {},
-      // Graphite by default; Light and Automatic are a choice away in Settings and ⌘K.
-      theme: 'dark',
+      // Soft Cream by default; Midnight and Automatic are a choice away in Settings and ⌘K.
+      theme: 'light',
       signedIn: false,
       sidebar: true,
       highlights: {},
@@ -193,11 +193,11 @@ export const useApp = create<AppState>()(
     {
       name: 'pathedin:v1',
       storage: createJSONStorage(() => safeStorage),
-      // v2: the graphite redesign opens in dark for everyone once; Light and Automatic stay a choice away.
-      version: 2,
+      // v3: the Cream and Midnight redesign opens in cream for everyone once; Midnight stays a choice away.
+      version: 3,
       migrate: (persisted, version) => {
         const s = (persisted ?? {}) as Partial<AppState>;
-        if (version < 2) s.theme = 'dark';
+        if (version < 3) s.theme = 'light';
         return s as AppState;
       },
       partialize: (s) => ({

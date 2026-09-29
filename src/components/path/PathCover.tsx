@@ -7,6 +7,7 @@ import { edgeClass, springs, useScrollEdges } from '../../lib/motion';
 import { futureWaypoints, relationTo, stepsWithFuture, yearsLabel } from '../../lib/relations';
 import { useUI } from '../../lib/ui';
 import { useFlight } from '../../lib/flight';
+import { RouteSilk } from './RouteSilk';
 import './pcover.css';
 
 /*
@@ -43,7 +44,8 @@ export function PathCover({ id }: { id: string }) {
   }, [id]);
 
   return (
-    <figure className="pcover" aria-label={`${self ? 'Your' : `${p.first}’s`} Path`}>
+    <figure className="pcover immersive" aria-label={`${self ? 'Your' : `${p.first}’s`} Path`}>
+      <RouteSilk lines={22} />
       <ol className={`pcover__line ${edgeClass(edges)}`} ref={scroller}>
         {steps.map((s, i) => {
           const kind: Kind = s.status === 'present' ? 'present' : s.status === 'future' ? (i === steps.length - 1 ? 'dest' : 'future') : 'past';

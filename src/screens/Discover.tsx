@@ -22,9 +22,11 @@ import { people, peopleList, me, ME } from '../data/people';
 import { wp } from '../data/waypoints';
 import type { Community } from '../data/types';
 import { peopleAt, peopleThrough, relationCopy, relationTo, type RelationKind } from '../lib/relations';
-import { springs, useIsMobile } from '../lib/motion';
+import { rise, springs, useIsMobile } from '../lib/motion';
 import { useApp } from '../lib/store';
 import './discover.css';
+
+const MotionLink = motion.create(Link);
 
 function RouteFan({ n }: { n: number }) {
   const H = 44;
@@ -168,14 +170,14 @@ function Section({ title, sub, more, onMore, children }: { title: string; sub?: 
 }
 
 /** Someone worth knowing: their Path across the top, who they are, why they're here, and what to do next. */
-function PersonCard({ id, why }: { id: string; why?: string }) {
+function PersonCard({ id, why, i = 0 }: { id: string; why?: string; i?: number }) {
   const p = people[id];
   const rel = relationTo(id);
   const navigate = useNavigate();
   const openCompare = useUI((s) => s.openCompare);
   const shared = rel.shared?.length ?? 0;
   return (
-    <article className="dcard dcard--person" onClick={(e) => {
+    <motion.article className="dcard dcard--person" {...rise(i)} onClick={(e) => {
         flyFrom(id, e.currentTarget);
         navigate(`/p/${id}`);
       }}>
@@ -210,19 +212,19 @@ function PersonCard({ id, why }: { id: string; why?: string }) {
           </Button>
         </div>
       </div>
-    </article>
+    </motion.article>
   );
 }
 
 /** A Path Guide: the move they made, what they help with, and when you can book them. */
-function GuideCard({ id }: { id: string }) {
+function GuideCard({ id, i = 0 }: { id: string; i?: number }) {
   const g = people[id];
   const guide = g.guide!;
   const move = guide.transitions[0];
   const navigate = useNavigate();
   const spots = useOpenSpots(id);
   return (
-    <article className="dcard dcard--person dcard--guide" onClick={(e) => {
+    <motion.article className="dcard dcard--person dcard--guide" {...rise(i)} onClick={(e) => {
         flyFrom(id, e.currentTarget);
         navigate(`/p/${id}`);
       }}>
@@ -254,14 +256,14 @@ function GuideCard({ id }: { id: string }) {
           <RequestButton id={id} segment={move} variant="gray" label="Ask" />
         </div>
       </div>
-    </article>
+    </motion.article>
   );
 }
 
 /** A community, as a journey: who's on it and how alive it is. */
-function CommunityCard({ c, reason }: { c: Community; reason?: string }) {
+function CommunityCard({ c, reason, i = 0 }: { c: Community; reason?: string; i?: number }) {
   return (
-    <Link to={`/c/${c.id}`} className="dcard dcard--community">
+    <MotionLink to={`/c/${c.id}`} className="dcard dcard--community" {...rise(i)}>
       {reason && <p className="dcard__reason">{reason}</p>}
       <h3 className="dcard__title">
         <CommunityTitle c={c} />
@@ -279,7 +281,7 @@ function CommunityCard({ c, reason }: { c: Community; reason?: string }) {
         </span>
         <JoinButton id={c.id} />
       </div>
-    </Link>
+    </MotionLink>
   );
 }
 
@@ -288,22 +290,22 @@ function ForYou({ go }: { go: (t: Tab) => void }) {
     <>
       <Section title="People worth knowing" sub="Not in your network yet, and on or near your Path." more="See all people" onMore={() => go('people')}>
         <div className="dgrid dgrid--row">
-          {['aisha', 'yusuf', 'olivia'].map((id) => (
-            <PersonCard key={id} id={id} />
+          {['aisha', 'yusuf', 'olivia'].map((id, i) => (
+            <PersonCard key={id} i={i} id={id} />
           ))}
         </div>
       </Section>
       <Section title="Path Guides for your next move" sub="They made the moves you’re weighing, and they’ve said they’d help." more="See all Guides" onMore={() => go('guides')}>
         <div className="dgrid dgrid--row">
-          {['grace', 'priya', 'rafael'].map((id) => (
-            <GuideCard key={id} id={id} />
+          {['grace', 'priya', 'rafael'].map((id, i) => (
+            <GuideCard key={id} i={i} id={id} />
           ))}
         </div>
       </Section>
       <Section title="Communities along your route" sub="Built around journeys, not industries." more="See all communities" onMore={() => go('communities')}>
         <div className="dgrid dgrid--row">
-          {alongMyRoute.map((r) => (
-            <CommunityCard key={r.id} c={communities[r.id]} reason={r.reason} />
+          {alongMyRoute.map((r, i) => (
+            <CommunityCard key={r.id} i={i} c={communities[r.id]} reason={r.reason} />
           ))}
         </div>
       </Section>
@@ -354,8 +356,8 @@ function PeopleTab() {
         return (
           <Section key={g.title} title={g.title} sub={g.sub}>
             <div className="dgrid">
-              {ids.map((id) => (
-                <PersonCard key={id} id={id} />
+              {ids.map((id, i) => (
+                <PersonCard key={id} i={i} id={id} />
               ))}
             </div>
           </Section>
@@ -377,16 +379,16 @@ function GuidesTab() {
       </p>
       <Section title="On your route" sub="Guides who made the moves between you and Pharmaceutical R&D.">
         <div className="dgrid">
-          {mine.map((g) => (
-            <GuideCard key={g.id} id={g.id} />
+          {mine.map((g, i) => (
+            <GuideCard key={g.id} i={i} id={g.id} />
           ))}
         </div>
       </Section>
       {others.length > 0 && (
         <Section title="On other journeys" sub="If you’re curious about a different Path.">
           <div className="dgrid">
-            {others.map((g) => (
-              <GuideCard key={g.id} id={g.id} />
+            {others.map((g, i) => (
+              <GuideCard key={g.id} i={i} id={g.id} />
             ))}
           </div>
         </Section>
@@ -402,23 +404,23 @@ function CommunitiesTab() {
     <>
       <Section title="Along your route" sub="Journeys that cross yours.">
         <div className="dgrid">
-          {alongMyRoute.map((r) => (
-            <CommunityCard key={r.id} c={communities[r.id]} reason={r.reason} />
+          {alongMyRoute.map((r, i) => (
+            <CommunityCard key={r.id} i={i} c={communities[r.id]} reason={r.reason} />
           ))}
         </div>
       </Section>
       <Section title="Other journeys" sub="Far from your Path, just as alive.">
         <div className="dgrid">
-          {elsewhereCommunities.map((id) => (
-            <CommunityCard key={id} c={communities[id]} />
+          {elsewhereCommunities.map((id, i) => (
+            <CommunityCard key={id} i={i} c={communities[id]} />
           ))}
         </div>
       </Section>
       {mine.length > 0 && (
         <Section title="Yours" sub="Communities you’ve joined.">
           <div className="dgrid">
-            {mine.map((c) => (
-              <CommunityCard key={c.id} c={c} />
+            {mine.map((c, i) => (
+              <CommunityCard key={c.id} i={i} c={c} />
             ))}
           </div>
         </Section>

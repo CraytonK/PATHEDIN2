@@ -1,10 +1,11 @@
-import { useRef, useState } from 'react';
+import { useRef, useState, type CSSProperties } from 'react';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { Page, useUnread } from '../components/chrome';
 import { PathPulse, type PulseStop } from '../components/PathPulse';
 import { type PostKind } from '../components/Post';
 import { DecisionPost, GuidePost, KindFeed, KindFilter, MilestonePost, MyPostItem, QuestionPost, RoutePost, StoryPost, ThreadPost, feedKinds } from '../components/FeedItems';
 import { useWriting } from '../lib/writing';
+import { RouteSilk } from '../components/path/RouteSilk';
 import { dayLabel, fmtTime, useOpenSpots } from '../lib/booking';
 import { RailCommunities, RailFooter, RailPeople } from '../components/Rail';
 import { PersonTile } from '../components/content';
@@ -178,8 +179,8 @@ function Following() {
 function RailPath() {
   return (
     <ol className="rail-path">
-      {pulseStops.map((s) => (
-        <li key={s.key} className={`rail-path__stop is-${s.kind}`}>
+      {pulseStops.map((s, i) => (
+        <li key={s.key} className={`rail-path__stop is-${s.kind}`} style={{ '--i': i } as CSSProperties}>
           <span className="rail-path__node" aria-hidden="true">
             {s.kind === 'unknown' ? '?' : null}
           </span>
@@ -237,7 +238,8 @@ function Rail() {
         <h2 className="rail-h">Coming up</h2>
         <UpNext variant="list" />
       </section>
-      <section className="rail-card rail-card--path">
+      <section className="rail-card rail-card--path immersive">
+        <RouteSilk lines={16} />
         <div className="rail-head">
           <h2 className="rail-h">Your Path this week</h2>
           <Link to="/path" className="rail-more">
@@ -328,7 +330,8 @@ export function Home() {
           {isMobile && (
             <>
               <UpNext />
-              <section className="home__pulse">
+              <section className="home__pulse immersive">
+                <RouteSilk lines={18} />
                 <div className="home__pulse-head">
                   <h2 className="t-headline">Your Path this week</h2>
                   <Link to="/path" className="t-subhead c-tint">

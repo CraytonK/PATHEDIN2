@@ -1,5 +1,5 @@
-import { AnimatePresence, motion, type HTMLMotionProps } from 'framer-motion';
-import { forwardRef, useLayoutEffect, useRef, useState, type MouseEvent as ReactMouseEvent, type ReactNode } from 'react';
+import { AnimatePresence, animate, motion, useInView, useReducedMotion, type HTMLMotionProps } from 'framer-motion';
+import { forwardRef, useEffect, useLayoutEffect, useRef, useState, type MouseEvent as ReactMouseEvent, type ReactNode } from 'react';
 import { Link } from 'react-router-dom';
 import { springs, haptic } from '../lib/motion';
 import { people } from '../data/people';
@@ -208,6 +208,43 @@ export function Rolling({ value, format = (n: number) => n.toLocaleString('en-CA
         </motion.span>
       </AnimatePresence>
     </span>
+  );
+}
+
+/* ── Stat numerals ──────────────────────────────────────────────
+   A figure worth reading at a glance: large and regular, its unit in signal blue, its meaning beneath.
+   It counts up once, the first time it comes into view, the way the intro assembles. */
+
+export function CountUp({ value, format = (n: number) => n.toLocaleString('en-CA') }: { value: number; format?: (n: number) => string }) {
+  const ref = useRef<HTMLSpanElement>(null);
+  const inView = useInView(ref, { once: true, margin: '-40px' });
+  const reduce = useReducedMotion();
+  const [shown, setShown] = useState(reduce ? value : 0);
+  useEffect(() => {
+    if (!inView || reduce) {
+      if (reduce) setShown(value);
+      return;
+    }
+    const controls = animate(0, value, { duration: 1.2, ease: [0.16, 1, 0.3, 1], onUpdate: (v) => setShown(Math.round(v)) });
+    return () => controls.stop();
+  }, [inView, reduce, value]);
+  return (
+    <span ref={ref} className="t-num">
+      {format(shown)}
+    </span>
+  );
+}
+
+export function Stat({ value, unit, label, live }: { value: number; unit?: string; label: string; live?: boolean }) {
+  return (
+    <div className="stat">
+      <span className="stat__num">
+        <CountUp value={value} />
+        {unit && <span className="stat__unit">{unit}</span>}
+        {live && <span className="stat__live" aria-hidden="true" />}
+      </span>
+      <span className="stat__label">{label}</span>
+    </div>
   );
 }
 

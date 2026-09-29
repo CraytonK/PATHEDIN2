@@ -469,12 +469,19 @@ export function Page({
         )}
         <div className={`page__title-row ${!large ? 'visually-hidden' : ''}`}>
           <div className="page__title-block">
-            <h1 className="t-large-title page__title">{title}</h1>
+            {/* The title and subtitle arrive in order, a beat apart, the way the intro assembles. */}
+            <motion.h1 className="t-large-title page__title" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ ...springs.smooth, delay: 0.04 }}>
+              {title}
+            </motion.h1>
           </div>
           {(largeTrailing || (!isMobile && trailing)) && <div className="page__trailing">{largeTrailing ?? trailing}</div>}
         </div>
         {/* The subtitle runs the full width, so a button beside the title never squeezes it. */}
-        {subtitle && <p className={`page__subtitle t-callout c-2 ${!large ? 'visually-hidden' : ''}`}>{subtitle}</p>}
+        {subtitle && (
+          <motion.p className={`page__subtitle t-callout c-2 ${!large ? 'visually-hidden' : ''}`} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ ...springs.smooth, delay: 0.12 }}>
+            {subtitle}
+          </motion.p>
+        )}
       </div>
       <div ref={sentinel} className="page__sentinel" />
       <div className="page__body">{children}</div>

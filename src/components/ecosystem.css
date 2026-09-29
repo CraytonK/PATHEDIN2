@@ -13,7 +13,7 @@
 }
 .eco__stat strong {
   color: var(--label);
-  font-weight: 600;
+  font-weight: 500;
 }
 .eco__section {
   margin-top: 30px;
@@ -21,7 +21,7 @@
 .eco__h {
   font-size: 16px;
   line-height: 22px;
-  font-weight: 600;
+  font-weight: 500;
   color: var(--label);
   letter-spacing: -0.016em;
   padding-bottom: 8px;
@@ -141,5 +141,5 @@ a.route-item:hover .t-headline {
 }
 .route-line__stop.is-dest .route-line__label {
   color: var(--label);
-  font-weight: 600;
+  font-weight: 500;
 }

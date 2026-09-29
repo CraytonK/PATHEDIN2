@@ -28,6 +28,19 @@ export const springs = {
   press: spring(0.16, 0.9),
 };
 
+/**
+ * Rise: how a list arrives, the way the intro assembles. Each item lifts in once as it comes into view, a
+ * beat after the one before it (capped, so long lists never make you wait).
+ */
+export function rise(i = 0, distance = 16) {
+  return {
+    initial: { opacity: 0, y: distance },
+    whileInView: { opacity: 1, y: 0 },
+    viewport: { once: true, margin: '0px 0px -40px 0px' },
+    transition: { ...springs.smooth, delay: Math.min(i, 7) * 0.055 },
+  };
+}
+
 export const ease = {
   out: [0.22, 1, 0.36, 1] as [number, number, number, number],
   inOut: [0.65, 0, 0.35, 1] as [number, number, number, number],

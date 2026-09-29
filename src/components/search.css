@@ -55,7 +55,7 @@
 
 .search-empty__h,
 .search-results__h {
-  font-weight: 600;
+  font-weight: 500;
   color: var(--label-2);
   padding: 12px 8px 6px;
 }

@@ -7,6 +7,7 @@ import { springs } from '../lib/motion';
 import { useApp } from '../lib/store';
 import { me, people } from '../data/people';
 import { sessionsFor } from '../lib/booking';
+import { RouteSilk } from '../components/path/RouteSilk';
 import './landing.css';
 
 type AuthMode = 'join' | 'signin';
@@ -47,18 +48,41 @@ export function Landing({ onAuthed }: { onAuthed: () => void }) {
         </div>
       </header>
 
-      <main className="landing__hero" id="top">
-        <div className="landing__copy">
-          <h1 className="landing__title">
-            Your path <span className="landing__amp">&amp;</span> who’s walked it
-          </h1>
-          <p className="landing__sub">A place to map your career, see where it can go, and meet the people already there.</p>
-          <button className="landing__cta" onClick={() => setAuth('join')}>
-            Start your path
-          </button>
-        </div>
-        <HeroArt />
-      </main>
+      <div className="landing__stage immersive">
+        <RouteSilk lines={30} delay={0.2} />
+        <main className="landing__hero" id="top">
+          {/* The words assemble with the art: each line rises out of a soft blur, then the sentence, then the action. */}
+          <div className="landing__copy">
+            <h1 className="landing__title" aria-label="Your path & who’s walked it">
+              {['Your path', '& who’s', 'walked it'].map((line, i) => (
+                <motion.span
+                  key={line}
+                  className="landing__line"
+                  initial={{ opacity: 0, y: 28, filter: 'blur(8px)' }}
+                  animate={{ opacity: 1, y: 0, filter: 'blur(0px)', transitionEnd: { filter: 'none' } }}
+                  transition={{ duration: 0.9, delay: 0.1 + i * 0.12, ease: [0.16, 1, 0.3, 1] }}
+                >
+                  {line.startsWith('&') ? (
+                    <>
+                      <span className="landing__amp">&amp;</span>
+                      {line.slice(1)}
+                    </>
+                  ) : (
+                    line
+                  )}
+                </motion.span>
+              ))}
+            </h1>
+            <motion.p className="landing__sub" initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.55, ease: [0.16, 1, 0.3, 1] }}>
+              A place to map your career, see where it can go, and meet the people already there.
+            </motion.p>
+            <motion.button className="landing__cta" onClick={() => setAuth('join')} initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.7, ease: [0.16, 1, 0.3, 1] }}>
+              Start your path
+            </motion.button>
+          </div>
+          <HeroArt />
+        </main>
+      </div>
 
       <section className="landing__how" id="how" aria-label="How PathedIn works">
         <div className="landing__how-inner">

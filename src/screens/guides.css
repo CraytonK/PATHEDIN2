@@ -15,6 +15,24 @@
     margin-left: auto;
   }
 }
+.guides__route {
+  position: relative;
+  display: flow-root;
+}
+/* The part of the route you've read past, solid over the dashed line. */
+.guides__walked {
+  position: absolute;
+  z-index: 1;
+  left: 9px;
+  width: 4px;
+  border-radius: 2px;
+  background: var(--ink);
+  transform-origin: top;
+  pointer-events: none;
+}
+.guides__stop {
+  z-index: 2;
+}
 /* The moves are stretches of one route, so they hang off one line: the first starts where you are,
    and the line runs dashed in navy because all of it is still ahead of you. */
 .guides__section {
@@ -82,7 +100,7 @@
   flex-wrap: wrap;
 }
 .guides__move strong {
-  font-weight: 600;
+  font-weight: 500;
 }
 .guides__cards {
   display: grid;
@@ -92,7 +110,7 @@
 .guides__title {
   font-size: 20px;
   line-height: 26px;
-  font-weight: 600;
+  font-weight: 500;
   letter-spacing: -0.022em;
 }
 .guides__note {
@@ -162,7 +180,7 @@
 }
 .gcard__made {
   color: var(--tint-text);
-  font-weight: 600;
+  font-weight: 500;
 }
 .gcard__helps {
   margin-top: 2px;
@@ -191,7 +209,7 @@
 .gcard__slot {
   font-size: 14px;
   line-height: 19px;
-  font-weight: 550;
+  font-weight: 500;
 }
 .gcard__open {
   font-size: 12px;

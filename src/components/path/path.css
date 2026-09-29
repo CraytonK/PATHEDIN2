@@ -82,7 +82,7 @@
 }
 .strip__item.is-unknown .strip__label {
   color: var(--tint-text);
-  font-weight: 700;
+  font-weight: 600;
 }
 .strip__item.is-lit {
   color: var(--label);
@@ -96,5 +96,5 @@
   box-shadow: inset 0 0 0 2px var(--ink);
 }
 .strip__item.is-lit .strip__label {
-  font-weight: 600;
+  font-weight: 500;
 }

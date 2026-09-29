@@ -71,7 +71,7 @@
   align-items: center;
   justify-content: center;
   font-size: 11px;
-  font-weight: 700;
+  font-weight: 600;
   color: var(--tint-text);
 }
 .pulse__stop.is-present .pulse__dot {
@@ -136,7 +136,7 @@
 .pulse__name {
   font-size: 15px;
   line-height: 20px;
-  font-weight: 600;
+  font-weight: 500;
   letter-spacing: -0.01em;
 }
 .pulse__stop.is-unknown .pulse__name,

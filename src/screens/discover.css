@@ -3,7 +3,7 @@
   align-items: center;
   gap: 2px;
   color: var(--tint-text);
-  font-weight: 600;
+  font-weight: 500;
 }
 @media (max-width: 767px) {
   .discover__back {
@@ -134,18 +134,22 @@
   color: var(--label);
   cursor: pointer;
   transition:
-    transform var(--dur-3) var(--ease-out),
+    translate var(--dur-3) var(--ease-out),
+    scale var(--dur-3) var(--ease-out),
     box-shadow var(--dur-3) var(--ease-out);
 }
 @media (hover: hover) {
+  /* Lift and press use the independent translate and scale properties, so they compose with the
+     entrance motion (which owns transform) instead of fighting it. */
   .dcard:hover {
-    transform: translateY(-2px);
+    translate: 0 -2px;
     box-shadow: var(--shadow-lift);
   }
 }
 @media (hover: hover) {
   .dcard:active {
-    transform: translateY(0) scale(0.995);
+    translate: 0 0;
+    scale: 0.995;
   }
 }
 .dcard--person {
@@ -176,7 +180,7 @@
 .dcard__name {
   font-size: 17px;
   line-height: 22px;
-  font-weight: 600;
+  font-weight: 500;
   letter-spacing: -0.014em;
   color: var(--label);
 }
@@ -221,7 +225,7 @@
 .dcard__move {
   font-size: 13px;
   line-height: 18px;
-  font-weight: 550;
+  font-weight: 500;
   color: var(--tint-text);
 }
 .dcard__hours {
@@ -247,7 +251,7 @@
 .dcard__when {
   font-size: 13px;
   line-height: 18px;
-  font-weight: 550;
+  font-weight: 500;
 }
 .dcard__open {
   font-size: 12px;
@@ -270,14 +274,14 @@
 .dcard__reason {
   font-size: 12px;
   line-height: 16px;
-  font-weight: 550;
+  font-weight: 500;
   color: var(--tint-text);
   margin-bottom: 4px;
 }
 .dcard__title {
   font-size: 18px;
   line-height: 24px;
-  font-weight: 600;
+  font-weight: 500;
   letter-spacing: -0.016em;
 }
 .dcard__members {
@@ -343,7 +347,7 @@
   border-radius: var(--r-pill);
   background: var(--tint-soft);
   color: var(--tint-text);
-  font-weight: 550;
+  font-weight: 500;
   font-size: 12px;
   line-height: 16px;
 }
@@ -351,7 +355,7 @@
   font-family: var(--font-display);
   font-size: 20px;
   line-height: 25px;
-  font-weight: 600;
+  font-weight: 500;
   letter-spacing: -0.022em;
 }
 .door__meta {
@@ -363,7 +367,7 @@
 }
 .door__from {
   color: var(--tint-text);
-  font-weight: 600;
+  font-weight: 500;
 }
 
 .discover__confluence {
@@ -421,7 +425,7 @@
 }
 .route-panel__on {
   color: var(--tint-text);
-  font-weight: 600;
+  font-weight: 500;
 }
 .route-panel__line {
   margin: 20px 0 16px;

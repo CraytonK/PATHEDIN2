@@ -1,5 +1,5 @@
-import { motion } from 'framer-motion';
-import { useState } from 'react';
+import { motion, useScroll, useSpring } from 'framer-motion';
+import { useLayoutEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Page } from '../components/chrome';
 import { RailFooter, RailPosts, RailSection } from '../components/Rail';
@@ -72,6 +72,39 @@ function GuideCard({ id, from, to }: { id: string; from: string; to: string }) {
   );
 }
 
+/**
+ * The moves hang off one route. As you read down the page the route fills in solid behind you, from where you
+ * are toward where you're heading, the way a Path is walked.
+ */
+function RouteWalk({ count, children }: { count: number; children: React.ReactNode }) {
+  const wrap = useRef<HTMLDivElement>(null);
+  const [span, setSpan] = useState<{ top: number; height: number } | null>(null);
+  const { scrollYProgress } = useScroll({ target: wrap, offset: ['start 65%', 'end 55%'] });
+  const walked = useSpring(scrollYProgress, { stiffness: 140, damping: 28 });
+  useLayoutEffect(() => {
+    const el = wrap.current;
+    if (!el) return;
+    const measure = () => {
+      const stops = el.querySelectorAll<HTMLElement>('.guides__stop');
+      if (stops.length < 2) return setSpan(null);
+      const first = stops[0].getBoundingClientRect();
+      const last = stops[stops.length - 1].getBoundingClientRect();
+      const box = el.getBoundingClientRect();
+      setSpan({ top: first.top - box.top + first.height / 2, height: last.top - first.top });
+    };
+    measure();
+    const ro = new ResizeObserver(measure);
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, [count]);
+  return (
+    <div className="guides__route" ref={wrap}>
+      {span && <motion.span className="guides__walked" aria-hidden="true" style={{ top: span.top, height: span.height, scaleY: walked }} />}
+      {children}
+    </div>
+  );
+}
+
 export function Guides() {
   const [dest, setDest] = useState<'pharma-rnd' | 'reg-affairs'>('pharma-rnd');
   const bookings = useApp((s) => s.bookings);
@@ -122,35 +155,37 @@ export function Guides() {
         </Link>
       </div>
 
-      {sections.map((s, i) => (
-        <section key={`${s.from}-${s.to}`} className="guides__section">
-          <header className="guides__head">
-            <span className={`guides__stop ${i === 0 ? 'is-now' : ''}`}>
-              <span className="visually-hidden">
-                Move {i + 1} of {sections.length}
+      <RouteWalk count={sections.length}>
+        {sections.map((s, i) => (
+          <section key={`${s.from}-${s.to}`} className="guides__section">
+            <header className="guides__head">
+              <span className={`guides__stop ${i === 0 ? 'is-now' : ''}`}>
+                <span className="visually-hidden">
+                  Move {i + 1} of {sections.length}
+                </span>
               </span>
-            </span>
-            <div>
-              <h2 className="guides__title">{s.title}</h2>
-              <p className="guides__move t-subhead">
-                <span>{wp(s.from).label}</span>
-                <svg width="36" height="12" viewBox="0 0 36 12" aria-hidden="true">
-                  <path d="M9 6h17" stroke="var(--tint)" strokeWidth="2" strokeLinecap="round" strokeDasharray="3 4" />
-                  <circle cx="5" cy="6" r="3.5" fill="var(--ink)" />
-                  <circle cx="30.5" cy="6" r="3.5" fill="none" stroke="var(--tint)" strokeWidth="2" />
-                </svg>
-                <strong>{wp(s.to).label}</strong>
-              </p>
-              <p className="t-footnote c-2">{s.note}</p>
+              <div>
+                <h2 className="guides__title">{s.title}</h2>
+                <p className="guides__move t-subhead">
+                  <span>{wp(s.from).label}</span>
+                  <svg width="36" height="12" viewBox="0 0 36 12" aria-hidden="true">
+                    <path d="M9 6h17" stroke="var(--tint)" strokeWidth="2" strokeLinecap="round" strokeDasharray="3 4" />
+                    <circle cx="5" cy="6" r="3.5" fill="var(--ink)" />
+                    <circle cx="30.5" cy="6" r="3.5" fill="none" stroke="var(--tint)" strokeWidth="2" />
+                  </svg>
+                  <strong>{wp(s.to).label}</strong>
+                </p>
+                <p className="t-footnote c-2">{s.note}</p>
+              </div>
+            </header>
+            <div className="guides__cards">
+              {s.guides.map((g) => (
+                <GuideCard key={g.id} id={g.id} from={s.from} to={s.to} />
+              ))}
             </div>
-          </header>
-          <div className="guides__cards">
-            {s.guides.map((g) => (
-              <GuideCard key={g.id} id={g.id} from={s.from} to={s.to} />
-            ))}
-          </div>
-        </section>
-      ))}
+          </section>
+        ))}
+      </RouteWalk>
     </Page>
   );
 }

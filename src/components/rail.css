@@ -4,6 +4,10 @@
   border-radius: var(--r-lg);
   background: var(--bg-grouped);
 }
+.rail-card.immersive {
+  background: var(--immersive-surface);
+  box-shadow: 0 20px 44px -26px rgba(15, 23, 42, 0.6);
+}
 .rail-head {
   display: flex;
   align-items: baseline;
@@ -13,7 +17,7 @@
 .rail-h {
   font-size: 16px;
   line-height: 20px;
-  font-weight: 600;
+  font-weight: 500;
   letter-spacing: -0.016em;
   margin-bottom: 16px;
 }
@@ -72,7 +76,7 @@
   margin-top: 8px;
   font-size: 16px;
   line-height: 21px;
-  font-weight: 600;
+  font-weight: 500;
   letter-spacing: -0.018em;
   color: var(--label);
 }
@@ -103,7 +107,7 @@
 }
 .rail-people__name {
   font-size: 15px;
-  font-weight: 600;
+  font-weight: 500;
   letter-spacing: -0.012em;
 }
 .rail-people__why {

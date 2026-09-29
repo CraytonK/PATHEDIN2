@@ -191,27 +191,27 @@ ol {
   font-family: var(--font-display);
   font-size: 28px;
   line-height: 34px;
-  font-weight: 600;
+  font-weight: 500;
   letter-spacing: -0.024em;
 }
 .t-title2 {
   font-family: var(--font-display);
   font-size: 22px;
   line-height: 28px;
-  font-weight: 600;
+  font-weight: 500;
   letter-spacing: -0.02em;
 }
 .t-title3 {
   font-family: var(--font-display);
   font-size: 19px;
   line-height: 25px;
-  font-weight: 600;
+  font-weight: 500;
   letter-spacing: -0.016em;
 }
 .t-headline {
   font-size: 16px;
   line-height: 22px;
-  font-weight: 600;
+  font-weight: 500;
   letter-spacing: -0.012em;
 }
 .t-body {
@@ -256,7 +256,7 @@ ol {
 }
 /* Reflections in someone's own words: italic. */
 .t-reflection {
-  font-family: var(--font-sans);
+  font-family: var(--font-serif);
   font-style: italic;
   font-weight: 400;
   color: var(--label-2);
@@ -272,7 +272,7 @@ ol {
 }
 .c-2 strong,
 .c-2 b {
-  font-weight: 600;
+  font-weight: 500;
 }
 .c-3 {
   color: var(--label-3);
@@ -281,7 +281,7 @@ ol {
   color: var(--tint-text);
 }
 .w-600 {
-  font-weight: 600;
+  font-weight: 500;
 }
 .w-500 {
   font-weight: 500;
@@ -370,6 +370,9 @@ ol {
 /* Cards on the canvas: knockouts match the card, not the page. */
 .rail-card {
   --bg: var(--bg-grouped);
+}
+.rail-card.immersive {
+  --bg: #111a31;
 }
 
 /* ── Keycaps, for shortcuts shown beside the things they trigger ── */
@@ -483,7 +486,7 @@ ol {
   .door,
   .upnext--cards .upnext__item,
   .story-item {
-    transition: transform 380ms var(--ease-out);
+    transition: scale 380ms var(--ease-out);
   }
   .dcard:active,
   .gcard:active,
@@ -491,14 +494,14 @@ ol {
   .door:active,
   .upnext--cards .upnext__item:active,
   .story-item:active {
-    transform: scale(0.975);
+    scale: 0.975;
     transition-duration: 90ms;
   }
   /* A control inside a card takes the press for itself. */
   .dcard:has(button:active),
   .gcard:has(button:active),
   .person-tile:has(button:active) {
-    transform: none;
+    scale: none;
   }
 }
 
