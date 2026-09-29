@@ -38,6 +38,15 @@
         ],
         "createdAt": "2026-09-25T16:47:57.317Z",
         "reason": "Claude: mask-image gradient stop; masks read alpha only, so the colour is not a palette colour"
+      },
+      {
+        "rule": "overused-font",
+        "value": "space grotesk",
+        "files": [
+          "src/styles/fonts.css"
+        ],
+        "createdAt": "2026-09-29T20:37:17.352Z",
+        "reason": "User pinned it: the reference site they supplied (September 2026) is set in Space Grotesk, confirmed by glyph comparison"
       }
     ]
   }

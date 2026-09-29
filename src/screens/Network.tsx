@@ -97,8 +97,8 @@ export function Network() {
                 </div>
               </header>
               <div className="network__list">
-                {g.people.map((p) => (
-                  <PersonRow key={p.id} id={p.id} action={g.kind === 'guide' ? 'request' : 'connect'} />
+                {g.people.map((p, i) => (
+                  <PersonRow key={p.id} id={p.id} i={i} action={g.kind === 'guide' ? 'request' : 'connect'} />
                 ))}
               </div>
             </section>

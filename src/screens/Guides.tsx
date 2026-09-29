@@ -13,7 +13,7 @@ import { IconCalendar } from '../components/icons';
 import { peopleList, people, ME } from '../data/people';
 import { wp } from '../data/waypoints';
 import { compactSteps, relationTo } from '../lib/relations';
-import { springs, useIsMobile } from '../lib/motion';
+import { rise, useIsMobile } from '../lib/motion';
 import { usePeek } from '../components/Peek';
 import './guides.css';
 
@@ -28,14 +28,14 @@ const transitions: { from: string; to: string; title: string; dest: 'pharma-rnd'
   { from: 'pharma-rnd', to: 'rnd-lead', title: 'The long view', dest: 'pharma-rnd', note: 'What happens after you arrive.' },
 ];
 
-function GuideCard({ id, from, to }: { id: string; from: string; to: string }) {
+function GuideCard({ id, from, to, i = 0 }: { id: string; from: string; to: string; i?: number }) {
   const g = people[id];
   const rel = relationTo(id);
   const handlers = usePeek(id);
   const step = compactSteps(g.path).find((s) => s.wp === to);
   const spots = useOpenSpots(id);
   return (
-    <motion.article className="gcard" initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={springs.smooth}>
+    <motion.article className="gcard" {...rise(i)}>
       <Link to={`/p/${id}`} className="gcard__photo" data-portrait={id} {...handlers}>
         <img src={g.photo} alt="" loading="lazy" />
       </Link>
@@ -179,8 +179,8 @@ export function Guides() {
               </div>
             </header>
             <div className="guides__cards">
-              {s.guides.map((g) => (
-                <GuideCard key={g.id} id={g.id} from={s.from} to={s.to} />
+              {s.guides.map((g, gi) => (
+                <GuideCard key={g.id} id={g.id} from={s.from} to={s.to} i={gi} />
               ))}
             </div>
           </section>

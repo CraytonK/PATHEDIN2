@@ -28,8 +28,8 @@ export function Communities() {
       <h2 className="list-h list-h--first">Your journeys</h2>
       <p className="list-sub">Communities on your Path</p>
       <div className="cms__list">
-        {mine.map((c) => (
-          <CommunityRow key={c.id} c={c} />
+        {mine.map((c, i) => (
+          <CommunityRow key={c.id} c={c} i={i} />
         ))}
       </div>
       <h2 className="list-h">Along your route</h2>
@@ -37,15 +37,15 @@ export function Communities() {
       <div className="cms__list">
         {alongMyRoute
           .filter((r) => !joined[r.id])
-          .map((r) => (
-            <CommunityRow key={r.id} c={communities[r.id]} reason={r.reason} />
+          .map((r, i) => (
+            <CommunityRow key={r.id} c={communities[r.id]} reason={r.reason} i={i} />
           ))}
       </div>
       <h2 className="list-h">Other journeys</h2>
       <p className="list-sub">Far from your Path, just as alive</p>
       <div className="cms__list">
-        {elsewhereCommunities.map((id) => (
-          <CommunityRow key={id} c={communities[id]} />
+        {elsewhereCommunities.map((id, i) => (
+          <CommunityRow key={id} c={communities[id]} i={i} />
         ))}
       </div>
     </Page>

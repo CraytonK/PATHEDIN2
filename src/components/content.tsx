@@ -9,13 +9,15 @@ import { compactSteps, current, relationTo, stepTitle } from '../lib/relations';
 import { useApp } from '../lib/store';
 import { useUI } from '../lib/ui';
 import { flyFrom } from '../lib/flight';
-import { springs, haptic } from '../lib/motion';
+import { rise, springs, haptic } from '../lib/motion';
 import { PathHint } from './path/PathHint';
 import { Avatar, AvatarStack, Button, PathChips, PersonName, RelationGlyph, RelationTag, SaveToggle, formatCount } from './ui';
 import { IconCheck, IconChevronRight, IconFlag, IconMessage, IconPersonAdd, IconSend } from './icons';
 import { usePeek } from './Peek';
 import { Post } from './Post';
 import './content.css';
+
+const MotionLink = motion.create(Link);
 
 /* ── Connect ────────────────────────────────────────────────── */
 
@@ -71,13 +73,14 @@ export function RequestButton({ id, segment, size = 'small', variant = 'filled',
 
 /* ── People ─────────────────────────────────────────────────── */
 
-export function PersonRow({ id, why, action = 'connect', compact }: { id: string; why?: string; action?: 'connect' | 'request' | 'none'; compact?: boolean }) {
+export function PersonRow({ id, why, action = 'connect', compact, i }: { id: string; why?: string; action?: 'connect' | 'request' | 'none'; compact?: boolean; i?: number }) {
   const p = people[id];
   const rel = relationTo(id);
   const navigate = useNavigate();
   return (
-    <article
+    <motion.article
       className={`person-row ${compact ? 'person-row--compact' : ''}`}
+      {...(i !== undefined ? rise(i, 12) : {})}
       onClick={(e) => {
         flyFrom(id, e.currentTarget);
         navigate(`/p/${id}`);
@@ -98,7 +101,7 @@ export function PersonRow({ id, why, action = 'connect', compact }: { id: string
         {!compact && <p className="person-row__why t-callout">{why ?? rel.why}</p>}
         <PathHint id={id} className="person-row__path" />
       </div>
-    </article>
+    </motion.article>
   );
 }
 
@@ -462,9 +465,9 @@ export function JoinButton({ id, size = 'small' }: { id: string; size?: 'small' 
   );
 }
 
-export function CommunityRow({ c, reason }: { c: Community; reason?: string }) {
+export function CommunityRow({ c, reason, i }: { c: Community; reason?: string; i?: number }) {
   return (
-    <Link to={`/c/${c.id}`} className="community-row">
+    <MotionLink to={`/c/${c.id}`} className="community-row" {...(i !== undefined ? rise(i, 12) : {})}>
       <div className="community-row__main">
         {reason && <p className="community-row__reason t-caption1">{reason}</p>}
         <h3 className="community-row__title">
@@ -480,7 +483,7 @@ export function CommunityRow({ c, reason }: { c: Community; reason?: string }) {
       <div className="community-row__action">
         <JoinButton id={c.id} />
       </div>
-    </Link>
+    </MotionLink>
   );
 }
 
