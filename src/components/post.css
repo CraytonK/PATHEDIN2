@@ -2,12 +2,7 @@
 .list-tabs {
   margin-bottom: 4px;
 }
-@media (min-width: 768px) {
-  .list-tabs .text-tabs {
-    margin: 0;
-    padding: 0;
-  }
-}
+
 .list-h {
   margin-top: 48px;
   font-size: 20px;
@@ -24,99 +19,108 @@
   color: var(--label-2);
 }
 
-/* ── Post: a feed row laid out like a Medium story preview ── */
-/* Each row is its own container, so it lays out the same in the feed, a side column or a phone. */
+/* ── Post: a white card on the cream, like the reference's feed ── */
+/* Each card is its own container, so it lays out the same in the feed, a side column or a phone. */
 .post {
   position: relative;
   isolation: isolate;
   container-type: inline-size;
-  padding: 28px 0 22px;
-  border-bottom: 1px solid var(--separator);
+  padding: 18px 22px 8px;
+  border-radius: var(--r-card);
+  background: var(--card);
+  box-shadow: var(--card-shadow);
+  transition:
+    box-shadow 360ms var(--ease-out),
+    translate 360ms var(--ease-out);
 }
-/* Rows light up under the pointer, like a list in Linear: a surface just wider than the text. */
+.post + .post {
+  margin-top: 16px;
+}
+/* Under the pointer a card lifts a little and its shadow deepens; the edge catches the light (base.css). */
 @media (hover: hover) {
-  .post::before {
-    content: '';
-    position: absolute;
-    inset: 6px -16px;
-    z-index: -1;
-    border-radius: var(--r-lg);
-    background: var(--bg-hover);
-    opacity: 0;
-    transition: opacity var(--dur-2) var(--ease-out);
+  .post:hover {
+    translate: 0 -2px;
+    box-shadow: var(--card-shadow-hover);
   }
-  .post:hover::before {
-    opacity: 1;
-  }
-  /* The photo leans in a little while the row is under the pointer. */
+  /* The photo leans in a little while the card is under the pointer. */
   .post:hover .post__thumb--photo img {
     transform: scale(1.04);
   }
 }
-/* Under a finger the row lights at once, and fades as it lets go. */
+/* Under a finger the card gives a little, and springs back as it lets go. */
 @media (hover: none) {
-  .post::before {
-    content: '';
-    position: absolute;
-    inset: 6px calc(var(--gutter) * -0.5);
-    z-index: -1;
-    border-radius: var(--r-lg);
-    background: var(--bg-press);
-    opacity: 0;
-    transition: opacity 260ms var(--ease-out);
+  .post {
+    transition: scale 380ms var(--ease-out);
   }
-  .post:active::before {
-    opacity: 1;
-    transition-duration: 40ms;
+  .post:active:not(:has(button:active, .post__extra a:active)) {
+    scale: 0.985;
+    transition-duration: 90ms;
   }
-}
-.post:last-child {
-  border-bottom: 0;
 }
 .post__in {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
   grid-template-areas:
-    'kind kind'
     'by by'
-    'main thumb';
-  column-gap: 48px;
+    'kind kind'
+    'main thumb'
+    'meta meta';
+  column-gap: 28px;
   align-items: start;
 }
-/* Without a thumbnail the text takes the whole row, so every row ends on the same edge. */
+/* Without a thumbnail the text takes the whole card. */
 .post:not(.has-thumb) .post__in {
   grid-template-columns: minmax(0, 1fr);
   grid-template-areas:
-    'kind'
     'by'
-    'main';
+    'kind'
+    'main'
+    'meta';
 }
 .post__by {
   grid-area: by;
   display: flex;
   align-items: center;
-  flex-wrap: wrap;
-  gap: 4px 8px;
+  gap: 12px;
   min-width: 0;
-  margin-bottom: 12px;
+  margin-bottom: 16px;
+}
+.post__byline {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
   font-size: 13px;
-  line-height: 20px;
+  line-height: 18px;
   color: var(--label-2);
 }
 .post__author {
+  font-size: 15px;
+  line-height: 20px;
   color: var(--label);
-  font-weight: 400;
+  font-weight: 500;
+  letter-spacing: -0.01em;
 }
-.post__note {
-  color: var(--label-2);
-}
-.post__where {
+.post__byline-sub {
+  display: block;
   min-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.post__byline-sub > * + *::before {
+  content: '·';
+  margin: 0 6px;
+  color: var(--label-3);
 }
 .post__where a,
 .post__where strong {
   color: var(--label);
   font-weight: 400;
+}
+.post__by .post-more {
+  margin-right: -8px;
+  align-self: flex-start;
 }
 .post__main {
   grid-area: main;
@@ -126,12 +130,12 @@
   display: block;
   color: var(--label);
 }
-/* Card headers: the interface face, semibold. Stories set their titles in Charter Bold. */
+/* Card headers: the interface face, medium weight. Stories set their titles in Charter Bold. */
 .post__title {
   font-size: 21px;
   line-height: 27px;
   font-weight: 500;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.022em;
   text-wrap: pretty;
 }
 .post--story .post__title {
@@ -155,12 +159,16 @@
 .post__extra {
   margin-top: 16px;
 }
+/* The footer: why it's here on the left, its numbers and Save on the right, over a hairline. */
 .post__meta {
+  grid-area: meta;
   display: flex;
   align-items: center;
   gap: 6px 16px;
-  margin-top: 16px;
-  min-height: 32px;
+  margin-top: 18px;
+  padding-top: 8px;
+  min-height: 44px;
+  border-top: 1px solid var(--separator);
   font-size: 13px;
   color: var(--label-2);
 }
@@ -185,6 +193,7 @@
   align-items: center;
   gap: 14px;
   flex: none;
+  margin-left: auto;
   white-space: nowrap;
 }
 .post__stats > span {
@@ -197,22 +206,25 @@
   align-items: center;
   gap: 2px;
   margin-left: auto;
+  margin-right: -8px;
   flex: none;
   color: var(--label-2);
+}
+.post__stats + .post__actions {
+  margin-left: 0;
 }
 .post__actions .save-toggle {
   color: var(--label-2);
 }
 .post__thumb {
   grid-area: thumb;
-  /* Top-aligned with the title, however tall the post's extra block makes the text column. */
   align-self: start;
   margin-top: 2px;
-  width: 160px;
-  height: 107px;
+  width: 168px;
+  height: 120px;
   overflow: hidden;
-  border-radius: var(--r-md);
-  background: var(--bg-grouped);
+  border-radius: var(--r-lg);
+  background: var(--canvas);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -261,8 +273,8 @@
   top: calc(100% + 4px);
   z-index: 20;
   min-width: 240px;
-  padding: 8px 0;
-  border-radius: 4px;
+  padding: 6px;
+  border-radius: var(--r-lg);
   background: var(--bg-elevated);
   box-shadow: var(--shadow-popover);
   transform-origin: top right;
@@ -272,7 +284,8 @@
   align-items: center;
   gap: 10px;
   width: 100%;
-  padding: 9px 18px;
+  padding: 9px 12px;
+  border-radius: var(--r-md);
   font-size: 14px;
   color: var(--label);
   text-align: left;
@@ -290,7 +303,7 @@
 
 @container (max-width: 560px) {
   .post__in {
-    column-gap: 20px;
+    column-gap: 16px;
   }
   .post__title {
     font-size: 18px;
@@ -303,16 +316,17 @@
   }
   .post__thumb {
     align-self: start;
-    width: 80px;
-    height: 54px;
+    width: 88px;
+    height: 66px;
     margin-top: 2px;
+    border-radius: var(--r-md);
   }
   .post__thumb--art {
     padding: 4px 3px;
   }
   .post__meta {
     gap: 6px 12px;
-    margin-top: 12px;
+    margin-top: 14px;
   }
   .post__stats {
     display: none;
@@ -320,6 +334,12 @@
 }
 @media (max-width: 767px) {
   .post {
-    padding: 22px 0 14px;
+    padding: 16px 16px 6px;
+  }
+  .post + .post {
+    margin-top: 12px;
+  }
+  .post__by {
+    margin-bottom: 12px;
   }
 }

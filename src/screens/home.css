@@ -1,36 +1,73 @@
-/* ── Home, laid out like Medium's: a reading column and a quiet right rail ── */
+/* ── Home: the dashboard — you, the feed, your week — as white cards on the cream ── */
 .page--home {
-  padding-bottom: 0;
+  max-width: 1400px;
+  padding: 0 24px;
 }
 .home {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 352px;
-  gap: 0;
-  min-height: calc(100dvh - var(--topbar-h));
+  grid-template-columns: minmax(0, 1fr) 340px;
+  gap: 24px;
+  align-items: start;
+  padding: 24px 0 64px;
+}
+.home--three {
+  grid-template-columns: 296px minmax(0, 1fr) 340px;
+}
+.home__me {
+  min-width: 0;
+}
+/* The card beside the feed stays in view while you read, when the window is tall enough to hold it. */
+@media (min-height: 860px) {
+  .home__me {
+    position: sticky;
+    top: calc(var(--topbar-h) + 24px);
+  }
 }
 .home__main {
   min-width: 0;
   width: 100%;
-  max-width: 728px;
+  max-width: 720px;
   margin: 0 auto;
-  padding: 32px 48px 64px 0;
 }
-@media (min-width: 1200px) {
-  .home__main {
-    padding-right: 64px;
-  }
-}
+/* For you and Following, over the feed: the pill track and the filters on one card that stays in reach. */
 .home__tabs {
   position: sticky;
-  top: var(--topbar-h);
+  top: calc(var(--topbar-h) + 12px);
   z-index: 5;
+  margin-bottom: 16px;
+  padding: 8px 8px 0 8px;
+  border-radius: var(--r-card);
+  background: var(--card);
+  box-shadow: var(--card-shadow);
+}
+/* The cream above it, so the feed doesn't show in the gap under the top bar. */
+.home__tabs::before {
+  content: '';
+  position: absolute;
+  left: -12px;
+  right: -12px;
+  bottom: 100%;
+  height: 13px;
   background: var(--bg);
-  padding-top: 8px;
-  margin-bottom: 4px;
 }
 .home__tabs .text-tabs {
-  margin: 0;
-  padding: 0;
+  box-shadow: none;
+  background: var(--canvas);
+}
+.home__tabs .kind-filter {
+  padding: 10px 8px 12px;
+}
+.home__tabs .kind-filter__arrow {
+  top: 10px;
+}
+.home__tabs .kind-filter__arrow.is-left {
+  background: linear-gradient(90deg, var(--card) 45%, transparent);
+}
+.home__tabs .kind-filter__arrow.is-right {
+  background: linear-gradient(270deg, var(--card) 45%, transparent);
+}
+.home .feed .kind-intro {
+  padding: 4px 4px 16px;
 }
 .home__me img {
   width: 36px;
@@ -63,14 +100,15 @@
   color: var(--label);
 }
 
-/* Right rail: a full-height column with a hairline on its left edge, like Medium's. */
+/* The right-hand column: a stack of cards. */
 .home__rail {
   display: flex;
   flex-direction: column;
-  gap: 40px;
-  padding: 40px 0 40px 40px;
-  border-left: 1px solid var(--separator);
+  gap: 20px;
   min-width: 0;
+}
+.home__rail .rail-foot {
+  padding: 0 8px;
 }
 
 /* Coming up / up next */
@@ -365,31 +403,689 @@
 @media (max-width: 1099px) {
   .home {
     grid-template-columns: minmax(0, 1fr) 300px;
-  }
-  .home__main {
-    padding-right: 32px;
-  }
-  .home__rail {
-    padding-left: 28px;
+    gap: 20px;
   }
 }
 @media (max-width: 767px) {
+  .page--home {
+    padding: 0 var(--gutter);
+  }
   .home {
     display: block;
-    min-height: 0;
+    padding: 0;
   }
   .home__main {
     padding: 0 0 32px;
   }
   .home__tabs {
     top: calc(var(--navbar-h) + var(--safe-top));
-    padding-top: 0;
+    margin: 0 calc(var(--gutter) * -1) 12px;
+    padding: 8px var(--gutter) 0;
+    border-radius: 0;
+    background: var(--bg);
+    box-shadow: none;
+  }
+  .home__tabs::before {
+    content: none;
   }
   .home__tabs .text-tabs {
+    background: var(--card);
+    box-shadow: var(--card-shadow);
+  }
+  .home__tabs .kind-filter {
     margin: 0 calc(var(--gutter) * -1);
-    padding: 0 var(--gutter);
+    padding: 12px var(--gutter) 8px;
+  }
+  .home__tabs .kind-filter__arrow.is-left {
+    background: linear-gradient(90deg, var(--bg) 45%, transparent);
+  }
+  .home__tabs .kind-filter__arrow.is-right {
+    background: linear-gradient(270deg, var(--bg) 45%, transparent);
   }
   .home__worth .person-tile {
     width: 176px;
   }
+}
+
+/* ── A dashboard card with a heading and a link ── */
+.dash-card {
+  padding: 18px 20px 20px;
+  border-radius: var(--r-card);
+  background: var(--card);
+  box-shadow: var(--card-shadow);
+}
+.dash-card__head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+.dash-card__h {
+  font-size: 16px;
+  line-height: 20px;
+  font-weight: 500;
+  letter-spacing: -0.016em;
+}
+.dash-card__more {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  font-size: 13px;
+  color: var(--label-2);
+  transition: color var(--dur-2) var(--ease-out);
+}
+.dash-card__more:hover {
+  color: var(--label);
+}
+
+/* ── You: the left-hand card ── */
+.me-card {
+  position: relative;
+  padding: 0 0 18px;
+  border-radius: var(--r-card);
+  background: var(--card);
+  box-shadow: var(--card-shadow);
+  overflow: hidden;
+  text-align: center;
+}
+.me-card__cover {
+  height: 92px;
+  border-radius: var(--r-card) var(--r-card) 0 0;
+}
+.me-card__who {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 20px;
+  margin-top: -40px;
+}
+.me-card__photo {
+  position: relative;
+  z-index: 1;
+  display: block;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  padding: 4px;
+  background: var(--card);
+  transition: scale 320ms var(--ease-out);
+}
+.me-card__photo:hover {
+  scale: 1.03;
+}
+.me-card__photo img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+}
+.me-card__name {
+  margin-top: 10px;
+  font-size: 19px;
+  line-height: 24px;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  color: var(--label);
+}
+.me-card__name:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.me-card__headline {
+  margin-top: 4px;
+  font-size: 13px;
+  line-height: 18px;
+  color: var(--label-2);
+  text-wrap: balance;
+}
+.me-card__stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  margin: 18px 16px 0;
+  padding: 14px 0;
+  border-top: 1px solid var(--separator);
+  border-bottom: 1px solid var(--separator);
+}
+.me-card__stats li + li {
+  box-shadow: -1px 0 0 var(--separator);
+}
+.me-card__stats a {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 2px 4px;
+  border-radius: var(--r-md);
+  transition: background-color var(--dur-2) var(--ease-out);
+}
+.me-card__stats a:hover {
+  background: var(--bg-hover);
+}
+.me-card__num {
+  font-size: 22px;
+  line-height: 26px;
+  font-weight: 500;
+  letter-spacing: -0.03em;
+  color: var(--label);
+  font-variant-numeric: tabular-nums;
+}
+.me-card__label {
+  font-size: 12px;
+  line-height: 16px;
+  color: var(--label-2);
+}
+.me-card__block {
+  padding: 16px 20px 4px;
+  text-align: left;
+}
+.me-card__head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+.me-card__h {
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+}
+.me-card__more {
+  font-size: 13px;
+  color: var(--tint-text);
+}
+.me-card__more:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.me-card__steps {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+/* Your steps as tags: walked in cream, where you are in navy, where you're going outlined in signal blue. */
+.me-step {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  height: 28px;
+  padding: 0 11px;
+  border-radius: var(--r-pill);
+  background: var(--canvas);
+  box-shadow: inset 0 0 0 1px var(--separator);
+  font-size: 12.5px;
+  font-weight: 500;
+  color: var(--label-2);
+  transition:
+    box-shadow var(--dur-2) var(--ease-out),
+    color var(--dur-2) var(--ease-out);
+}
+.me-step:hover {
+  color: var(--label);
+  box-shadow: inset 0 0 0 1px var(--border-strong);
+}
+.me-step.is-present {
+  background: var(--primary);
+  box-shadow: var(--btn-highlight);
+  color: var(--on-primary);
+}
+.me-step__you {
+  font-size: 11px;
+  font-weight: 500;
+  opacity: 0.66;
+}
+.me-step.is-destination {
+  background: var(--tint-softer);
+  box-shadow: inset 0 0 0 1px var(--tint-border);
+  color: var(--tint-text);
+}
+.me-card__links {
+  margin: 12px 10px 0;
+  padding-top: 8px;
+  border-top: 1px solid var(--separator);
+  text-align: left;
+}
+.me-card__link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  height: 40px;
+  padding: 0 10px;
+  border-radius: var(--r-md);
+  font-size: 14px;
+  color: var(--label);
+  transition: background-color var(--dur-2) var(--ease-out);
+}
+.me-card__link:hover {
+  background: var(--bg-hover);
+}
+.me-card__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 10px;
+  background: var(--canvas);
+  color: var(--label-2);
+  transition:
+    background-color var(--dur-2) var(--ease-out),
+    color var(--dur-2) var(--ease-out);
+}
+.me-card__link:hover .me-card__icon {
+  background: var(--primary);
+  color: var(--on-primary);
+}
+.me-card__link-label {
+  flex: 1;
+  min-width: 0;
+}
+.me-card__badge {
+  min-width: 20px;
+  height: 20px;
+  padding: 0 6px;
+  border-radius: var(--r-pill);
+  background: var(--badge);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 20px;
+  text-align: center;
+}
+.me-card__chev {
+  color: var(--label-3);
+}
+.me-card__write {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: 44px;
+  margin: 14px 20px 0;
+  border-radius: var(--r-pill);
+  box-shadow: inset 0 0 0 1.5px var(--primary);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--label);
+  transition:
+    background-color 220ms var(--ease-out),
+    color 220ms var(--ease-out),
+    scale 160ms var(--ease-out);
+}
+.me-card__write:hover {
+  background: var(--primary);
+  color: var(--on-primary);
+}
+.me-card__write:active {
+  scale: 0.98;
+}
+
+/* ── People worth knowing: faces in rings ── */
+.worth {
+  margin-bottom: 16px;
+}
+.worth__row {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 8px;
+}
+.worth__face {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  min-width: 0;
+}
+.worth__link {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 0;
+  width: 100%;
+  color: var(--label);
+}
+.worth__ring {
+  position: relative;
+  display: block;
+  width: 76px;
+  height: 76px;
+  transition: scale 360ms var(--ease-out);
+}
+.worth__link:hover .worth__ring {
+  scale: 1.05;
+}
+.worth__arc {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+.worth__photo {
+  position: absolute;
+  inset: 5px;
+  border-radius: 50%;
+  overflow: hidden;
+  background: var(--canvas);
+}
+.worth__photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.worth__name {
+  margin-top: 8px;
+  max-width: 100%;
+  font-size: 14px;
+  line-height: 18px;
+  font-weight: 500;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.worth__rel {
+  max-width: 100%;
+  min-height: 16px;
+  font-size: 12px;
+  line-height: 16px;
+  color: var(--tint-text);
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+/* Connect sits on the ring, where a story app puts its plus. */
+.worth__add {
+  position: absolute;
+  top: 54px;
+  left: calc(50% + 20px);
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--primary);
+  color: var(--on-primary);
+  box-shadow: 0 0 0 3px var(--card);
+  transition:
+    scale 200ms var(--ease-out),
+    background-color 200ms var(--ease-out);
+}
+.worth__add:hover {
+  scale: 1.12;
+}
+.worth__add:active {
+  scale: 0.92;
+}
+.worth__add.is-pending {
+  background: var(--tint);
+  color: var(--on-tint);
+}
+.worth__add.is-connected {
+  background: var(--card);
+  color: var(--label);
+  box-shadow:
+    0 0 0 3px var(--card),
+    inset 0 0 0 1.5px var(--border-strong);
+}
+@media (max-width: 1099px) {
+  .worth__row {
+    display: flex;
+    overflow-x: auto;
+    scrollbar-width: none;
+    margin: 0 -20px;
+    padding: 2px 20px;
+    gap: 14px;
+  }
+  .worth__row::-webkit-scrollbar {
+    display: none;
+  }
+  .worth__face {
+    flex: none;
+    width: 84px;
+  }
+}
+
+/* ── Coming up, as a week ── */
+.week .rail-head {
+  align-items: center;
+  margin-bottom: 14px;
+}
+.week .rail-h {
+  margin-bottom: 0;
+}
+.week__nav {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+.week__month {
+  margin-right: 6px;
+  font-size: 13px;
+  color: var(--label-2);
+  font-variant-numeric: tabular-nums;
+}
+.week__step {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  color: var(--label-2);
+  transition:
+    background-color var(--dur-2) var(--ease-out),
+    color var(--dur-2) var(--ease-out);
+}
+.week__step:hover:not(:disabled) {
+  background: var(--bg-hover);
+  color: var(--label);
+}
+.week__step:disabled {
+  color: var(--label-4);
+}
+.week__strip {
+  overflow: hidden;
+  margin: 0 -4px 12px;
+  padding: 0 4px;
+}
+.week__days {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4px;
+}
+.week__day {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 8px 0 7px;
+  border-radius: 14px;
+  background: var(--canvas);
+  transition:
+    background-color 220ms var(--ease-out),
+    box-shadow 220ms var(--ease-out),
+    translate 260ms var(--ease-out);
+}
+.week__dow {
+  font-size: 11px;
+  line-height: 14px;
+  color: var(--label-2);
+}
+.week__num {
+  font-size: 16px;
+  line-height: 20px;
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+  color: var(--label);
+}
+.week__day.is-past .week__num,
+.week__day.is-past .week__dow {
+  color: var(--label-3);
+}
+.week__dot {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: transparent;
+}
+.week__day.has-items .week__dot {
+  background: var(--tint);
+}
+.week__day.is-today {
+  background: var(--primary);
+  box-shadow:
+    var(--btn-highlight),
+    0 10px 20px -12px rgba(15, 23, 42, 0.7);
+}
+.week__day.is-today .week__num,
+.week__day.is-today .week__dow {
+  color: var(--on-primary);
+}
+.week__day.is-today.has-items .week__dot {
+  background: var(--on-primary);
+}
+.week__day.is-hot {
+  translate: 0 -2px;
+  box-shadow: inset 0 0 0 1.5px var(--tint);
+}
+.week__day.is-today.is-hot {
+  box-shadow:
+    var(--btn-highlight),
+    0 0 0 2px var(--card),
+    0 0 0 3.5px var(--tint);
+}
+
+/* The schedule: a coloured bar says what kind of thing it is — Office Hours blue, a call navy, requests pale. */
+.upnext--schedule {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.upnext--schedule .upnext__item {
+  gap: 12px;
+  min-height: 60px;
+  padding: 10px 12px 10px 10px;
+  border-radius: 14px;
+  background: var(--canvas);
+  transition:
+    opacity 220ms var(--ease-out),
+    background-color 220ms var(--ease-out),
+    box-shadow 220ms var(--ease-out);
+}
+.upnext--schedule .upnext__item:hover,
+.upnext--schedule .upnext__item.is-hot {
+  box-shadow: inset 0 0 0 1px var(--border-strong);
+}
+.upnext--schedule .upnext__item.is-cool {
+  opacity: 0.45;
+}
+.upnext__bar {
+  flex: none;
+  align-self: stretch;
+  width: 4px;
+  border-radius: 4px;
+  background: var(--tint);
+}
+.upnext__item--call .upnext__bar {
+  background: var(--ink);
+}
+.upnext__item--requests .upnext__bar {
+  background: var(--future-soft);
+}
+.upnext--schedule .upnext__title {
+  font-size: 14px;
+  line-height: 19px;
+}
+.upnext--schedule .upnext__sub {
+  font-size: 12.5px;
+  line-height: 17px;
+}
+.upnext--schedule .avatar-stack {
+  flex: none;
+}
+
+/* ── Your communities, as a list ── */
+.cm-list {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin: 0 -8px;
+}
+.cm-list__row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px;
+  border-radius: 14px;
+  color: var(--label);
+  transition: background-color var(--dur-2) var(--ease-out);
+}
+.cm-list__row:hover {
+  background: var(--bg-hover);
+}
+.cm-list__mosaic {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2px;
+  flex: none;
+  width: 44px;
+  height: 44px;
+  padding: 2px;
+  border-radius: 12px;
+  background: var(--canvas);
+  overflow: hidden;
+}
+.cm-list__mosaic img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 4px;
+}
+.cm-list__mosaic img:first-child {
+  border-top-left-radius: 10px;
+}
+.cm-list__mosaic img:nth-child(2) {
+  border-top-right-radius: 10px;
+}
+.cm-list__mosaic img:nth-child(3) {
+  border-bottom-left-radius: 10px;
+}
+.cm-list__mosaic img:nth-child(4) {
+  border-bottom-right-radius: 10px;
+}
+.cm-list__text {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+}
+.cm-list__title {
+  font-size: 14px;
+  line-height: 19px;
+  font-weight: 500;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.cm-list__live {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12.5px;
+  line-height: 17px;
+  color: var(--label-2);
+}
+.cm-list__dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--tint);
+  box-shadow: 0 0 0 3px var(--tint-soft);
+}
+.cm-list__chev {
+  flex: none;
+  color: var(--label-3);
 }

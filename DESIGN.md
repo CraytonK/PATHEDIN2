@@ -3,7 +3,7 @@ name: PathedIn
 description: A professional network organised around career Paths, drawn as a transit line in Midnight Navy on Soft Cream.
 colors:
   soft-cream: "#fff7ed"
-  cream-card: "#fffcf8"
+  cream-card: "#ffffff"
   cream-floating: "#ffffff"
   cream-sunken: "#f9eddd"
   cream-fill: "#f5e9d9"
@@ -152,15 +152,18 @@ rounded:
   sheet-phone: "14px"
   lg: "16px"
   xl: "20px"
+  card: "20px"
   stage: "28px"
   pill: "999px"
 spacing:
   gutter-phone: "16px"
   gutter-tablet: "24px"
   gutter-desktop: "40px"
-  sidebar: "236px"
-  topbar: "56px"
-  tabbar: "50px"
+  drawer: "264px"
+  topbar: "64px"
+  tabbar: "64px"
+  dashboard-left: "296px"
+  dashboard-right: "340px"
 components:
   button-primary:
     backgroundColor: "{colors.midnight-navy}"
@@ -191,8 +194,14 @@ components:
     padding: "10px 12px"
   card:
     backgroundColor: "{colors.cream-card}"
-    rounded: "{rounded.lg}"
-    padding: "18px"
+    rounded: "{rounded.card}"
+    padding: "18px 20px"
+  nav-pill:
+    backgroundColor: "{colors.midnight-navy}"
+    textColor: "{colors.on-navy}"
+    rounded: "{rounded.pill}"
+    height: "40px"
+    width: "56px"
   immersive-panel:
     backgroundColor: "{colors.midnight-navy}"
     textColor: "{colors.cream-type}"
@@ -202,9 +211,9 @@ components:
     rounded: "{rounded.xl}"
   sidebar-item:
     textColor: "{colors.ink-secondary}"
-    rounded: "{rounded.sm}"
-    height: "32px"
-    padding: "0 10px"
+    rounded: "{rounded.md}"
+    height: "38px"
+    padding: "0 12px"
   tag:
     backgroundColor: "{colors.cream-fill-quiet}"
     textColor: "{colors.ink-secondary}"
@@ -221,7 +230,7 @@ components:
 
 PathedIn is a calm, confident place to plan a career. The page is warm cream paper; the ink is Midnight Navy. Where the product has something to show — the intro, a person's Path, your week — it opens a Midnight Navy panel, lit by route silk, and the Path draws itself across it with glass cards floating on top. The look follows the reference the user chose: generous space, big light headings in Space Grotesk, numerals that carry a small blue unit, and navy panels with glass on them.
 
-Density stays an app's density. Rows are 32px, controls 30 to 44px, and cards sit on the cream with a hairline and a soft navy-tinted fall-off. Headings are set large and regular rather than heavy, so the page reads as considered rather than loud. Motion follows the intro: things assemble once when they arrive. Lines rise out of a soft blur, cards rise a beat apart, Paths and silk draw themselves, numbers count up. Then everything holds still. Feedback is quick, and one keystroke, ⌘K, reaches anyone or anything.
+The app is laid out as a dashboard, after the social dashboard the user shared (September 2026): a white top bar with the sections as icons in the middle, and every screen's content on white cards over the cream, with 20px corners, a faint navy hairline and a long, soft fall-off. Home is three columns: you on the left, the feed in the middle under a row of faces in rings, and your week on the right. Density stays an app's density: controls are 30 to 44px. Headings are set large and regular rather than heavy, so the page reads as considered rather than loud. Motion follows the intro: things assemble once when they arrive. Lines rise out of a soft blur, cards rise a beat apart, Paths and silk draw themselves, numbers count up. Then everything holds still. Feedback is quick, and one keystroke, ⌘K, reaches anyone or anything.
 
 Soft Cream is the default. Midnight is the same pair turned over: a Midnight Navy page with cream type, and primary actions that fill with cream. The graphite dev-tool look this replaces, and the generic white SaaS template, are what this world refuses.
 
@@ -230,6 +239,8 @@ Soft Cream is the default. Midnight is the same pair turned over: a Midnight Nav
 - One signal blue does the small, bright jobs: links, the road ahead, focus, and the unit on a numeral.
 - Immersive navy panels are where the product shows itself, lit by route silk with glass cards on them.
 - Space Grotesk for every interface word, heading and the bold wordmark; Charter only for long-form reading.
+- White cards on the cream carry every screen's content; wells inside them are cream again, never a second card.
+- The current thing is a navy pill: the section in the top bar, the tab in a tab track, the tab on the phone, today in the week. It slides when you move.
 - Things assemble on arrival and then hold still. No loops, no bounce.
 
 ## Colors
@@ -242,7 +253,7 @@ A warm cream ground with navy ink, one Midnight Navy accent for anything with we
 
 ### Neutral
 - **Soft Cream**: the page.
-- **Cream Card**: cards and panels, a warm white a step above the cream.
+- **Cream Card**: cards and panels, white on the cream (the dashboard's cards).
 - **Cream Floating**: sheets, menus and the palette, pure white.
 - **Cream Sunken / Fill**: recessed wells, the route band, quiet buttons, fields, slots and tags.
 - **Navy ink, four steps**: primary text, secondary for metadata, tertiary for hints, and a warm quaternary for unlit track and disabled marks.
@@ -253,6 +264,8 @@ A warm cream ground with navy ink, one Midnight Navy accent for anything with we
 
 ### Named Rules
 **The Ink and Signal Rule.** Navy for anything with weight, signal blue for anything small and bright. A large area of signal blue, or navy used for a hairline accent, is the wrong colour for the job.
+
+**The Navy Pill Rule.** Whatever is current or chosen sits in a navy pill with cream type, and the pill slides from the old choice to the new one. Nothing else on a screen is a navy pill except the primary action.
 
 **The Stage Rule.** Immersive navy panels are for the product showing itself: the intro, a Path cover, your week. They are never a decoration behind ordinary content, and never more than one or two on a screen.
 
@@ -285,31 +298,37 @@ The ramp follows Apple's text styles, each available as a `.t-` class, with disp
 
 ## Layout
 
-The layouts are kept; the look was redesigned.
-- **Desktop:** a 56px cream top bar (menu, bold wordmark, a ⌘K field, Write, messages, notifications, you), a 236px sidebar, a main column up to 728px, and a right column where Coming up is a white card and Your Path this week is a navy panel.
+The pieces of the app are unchanged; they are laid out as a dashboard.
+- **Top bar (desktop):** 64px, white and frosted over the cream. Left: the drawer button, the bold wordmark and a cream ⌘K field. Centre: the five sections (Home, Discover, My Path, Network, Communities) as icons on a cream track, the current one in a sliding navy pill. Right: Write as a navy pill, messages and notifications in cream circles, a hairline, and you as a chip (photo, name, chevron) that opens the account menu.
+- **Drawer:** every destination (the sections, Saved, Profile, Path Requests, Guides, Stories, Questions, Decision Points, your communities) in a 264px card that slides over the page from the drawer button. There is no docked sidebar.
+- **Home, three columns from 1200px:** a 296px profile card (route-silk cover, your photo, name and headline, three counts, your Path as tags, shortcuts, Write), the feed (People worth knowing as faces in rings, then For you and Following with the kind filter on one card that stays in reach, then the posts as cards), and a 340px column of cards: Coming up as a week, Your Path this week on navy, Office Hours, your communities, the footer. From 768 to 1199px the profile card joins the right column under the week.
+- **Other pages:** the page title on the cream, the content as cards, and a 340px column beside it that is a stack of cards (300px under 1100px).
 - **Intro:** a Midnight Navy stage set into the cream page with 12px margins and 28px corners, the headline left and the product composition floating right.
-- **Gutters:** 16px on phones, 24px from 768px and 40px from 1100px.
-- **Phones:** large title, Coming up cards, your week as a navy panel, and a 50px tab bar. Sheets rise from the bottom with a grabber.
-- **Rhythm:** 4px steps inside components and 28–40px between sections. Stats sit in a row with 56px between them, above a hairline.
+- **Gutters:** 16px on phones, 24px from 768px and 40px from 1100px; Home keeps 24px.
+- **Phones:** large title, Coming up cards, your week as a navy panel, posts and rows as cards, and a floating tab bar: a white pill 12px from the edges and 10px off the bottom, the current tab in a sliding navy pill. Sheets rise from the bottom with a grabber.
+- **Rhythm:** 4px steps inside components, 16px between feed cards (12px on phones), 12px between row cards, 20px between cards in a side column.
 - **Grids:** card grids run three columns, two under 760px of container width and one under 480px.
 
 ## Elevation & Depth
 
-Cards sit on the cream with a hairline and a soft navy-tinted fall-off; things that float add a longer one. Immersive panels are the deepest surface: a navy gradient with a blue glow from the top right, route silk drawn across it, and glass cards (translucent cream fill, cream hairline) on top. The dark appearance keeps the same structure with cream hairlines and darker shadows.
+Cards are white on the cream with a faint navy hairline and a long, soft fall-off; under the pointer the fall-off deepens and the card rises 2px. Things that float add a longer shadow. Immersive panels are the deepest surface: a navy gradient with a blue glow from the top right, route silk drawn across it, and glass cards (translucent cream fill, cream hairline) on top. The dark appearance keeps the same structure with cream hairlines and darker shadows.
 
 ### Shadow Vocabulary
-- **Surface edge** (`box-shadow: 0 0 0 1px rgba(15,23,42,0.07), 0 1px 2px rgba(15,23,42,0.04)`): every card at rest.
-- **Lift** (`box-shadow: 0 0 0 1px rgba(15,23,42,0.08), 0 16px 36px -14px rgba(15,23,42,0.24)`): a card under the pointer, which also rises 2px.
+- **Card** (`box-shadow: 0 0 0 1px rgba(15,23,42,0.055), 0 1px 2px rgba(15,23,42,0.035), 0 16px 36px -26px rgba(15,23,42,0.22)`): every card at rest (`--card-shadow`, also `--surface-edge`).
+- **Card hover** (`box-shadow: 0 0 0 1px rgba(15,23,42,0.08), 0 2px 4px rgba(15,23,42,0.04), 0 26px 48px -26px rgba(15,23,42,0.32)`): a card under the pointer, which also rises 2px.
+- **Lift** (`box-shadow: 0 0 0 1px rgba(15,23,42,0.08), 0 16px 36px -14px rgba(15,23,42,0.24)`): a Guide card under the pointer.
 - **Popover** (`box-shadow: 0 0 0 1px rgba(15,23,42,0.08), 0 4px 10px -2px rgba(15,23,42,0.06), 0 22px 44px -16px rgba(15,23,42,0.22)`): menus, tooltips and hover cards.
 - **Modal** (`box-shadow: 0 0 0 1px rgba(15,23,42,0.08), 0 40px 90px -24px rgba(15,23,42,0.4)`): sheets and the command palette.
 - **Stage** (`box-shadow: 0 24px 60px -30px rgba(15,23,42,0.55)`): immersive navy panels on cream.
 
 ### Named Rules
-**The Glass on Navy Rule.** Glass only exists on an immersive panel. On cream, cards are solid warm white.
+**The Glass on Navy Rule.** Glass only exists on an immersive panel. On cream, cards are solid white.
+
+**The One Card Deep Rule.** Cards never nest. Something set into a card (a quoted request, a day tile, a tag, a route line, a reply bubble) is a cream well with no shadow.
 
 ## Shapes
 
-Gently rounded rectangles. The radii are 2px for thin bars, 6px for rows in lists and menus, 8px for buttons, fields, slots and icon buttons, 12px for popovers and tooltips, 16px for cards, 20px for sheets and immersive panels (14px for a phone sheet's top corners), and 28px for the intro stage. Pills are kept for tags, counts and badges. Portraits are circles with a hairline, knocked out with a ring in the colour of the surface they sit on. The Path's geometry is fixed: solid track for walked steps, a ringed present, a dashed future and an open destination ring.
+Gently rounded rectangles. The radii are 2px for thin bars, 6px for rows in lists and menus, 8px for buttons, fields, slots and icon buttons, 12px for popovers and tooltips, 14px for wells in a card (day tiles, schedule items), 16px for menus, 20px for cards, sheets and immersive panels (14px for a phone sheet's top corners), and 28px for the intro stage. Pills are kept for tags, counts, badges, tab tracks, the top bar's field and buttons, and the navy pill that marks what is current. Portraits are circles with a hairline, knocked out with a ring in the colour of the surface they sit on. The Path's geometry is fixed: solid track for walked steps, a ringed present, a dashed future and an open destination ring.
 
 ## Components
 
@@ -326,10 +345,20 @@ Gently rounded rectangles. The radii are 2px for thin bars, 6px for rows in list
 - **State:** selected tags take the blue wash, a blue border and primary ink.
 
 ### Cards / Containers
-- **Corner Style:** 16px.
-- **Background:** Cream Card with the Surface edge. Inside a card, wells use the quiet fill or the sunken cream.
-- **Hover:** the Lift shadow and a 2px rise, for cards that open something. The rise uses the `translate` property so it composes with entrance motion.
-- **Internal Padding:** 18px (14px on phones).
+- **Corner Style:** 20px.
+- **Background:** white (`--card`) with the Card shadow; knockouts inside take the card's colour. Wells inside a card are cream (`--canvas`).
+- **Rows are cards:** people, communities, conversations, requests, notifications, answers, weigh-ins and decisions are each a card, 12px apart (8px for notifications), instead of rows between hairlines.
+- **Hover:** the Card hover shadow and a 2px rise, for cards that open something, with the edge catching light where the cursor is. The rise uses the `translate` property so it composes with entrance motion.
+- **Internal Padding:** 18px 20px (16px on phones).
+
+### Post Card
+The author across the top (a 40px face, the name, what they are to you and when) with the "…" menu; the kind as a small cream tag with its note beside it; the title and the post's own body (a quoted answer, a reply bubble, the fork, the route line, the Guide's hours); the photo or Path art on the right; and a footer over a hairline that says why it's here, with its numbers and Save.
+
+### Dashboard Home (signature)
+- **Profile card:** a navy cover lit by route silk, your photo knocked out of it on a white ring, name and headline, three counts that count up (Connections, Communities, Saved), Your Path as tags (walked in cream, now in navy, the destination outlined in blue), the shortcuts with navy-on-hover icon tiles, and Write as an outline pill.
+- **People worth knowing:** faces in rings that shade from navy to signal blue and draw themselves one after another; the name and relation beneath; Connect as a small navy disc on the ring (a check once requested, a message bubble once connected).
+- **Coming up:** a week strip (today in navy, a blue dot on days with something booked, earlier days faded) that slides between weeks, then the schedule: each item a cream well with a 4px bar for its kind (blue for Office Hours, navy for a call, pale blue for requests) and the face it's with. Pointing at a day lights its items and fades the rest; pointing at an item lights its day.
+- **Your communities:** a four-face mosaic, the name, and who's here now beside a live dot.
 
 ### Immersive Panel (signature)
 A Midnight Navy surface in either appearance: a navy gradient with a blue glow and route silk (26 thin routes flowing to one destination, yours brighter, drawn in once on arrival). Anything inside takes the midnight palette automatically (the `.immersive` class), so Paths, buttons and cards need no special cases. Used for the intro stage, a profile's Path cover and Your Path this week.
@@ -342,9 +371,10 @@ A number set at 44px regular with tight tracking, an optional signal-blue unit a
 - **Focus:** the edge turns signal blue, with a faint blue halo outside it.
 
 ### Navigation
-- **Sidebar:** 32px rows at 14px in secondary ink, 18px outline icons. The active row is primary ink on a selected surface, which slides between rows on a spring.
-- **Top bar:** part of the cream page at the top; it frosts and takes its hairline once content slides beneath it. The ⌘K field shows its keycap.
-- **Phone:** a 50px tab bar with badges; a newly chosen icon settles into place.
+- **Top bar:** see Layout. The sections are 56×40px icon pills with tooltips; hovering one grows a cream surface under it, and the current one is the navy pill, which slides on a spring. Once content slides beneath it, the bar lifts with a soft shadow.
+- **Drawer:** 38px rows at 14px, 18px outline icons; the current row is a navy pill that slides between rows.
+- **Tabs:** a white pill track (cream inside a card) with 36px tabs; the chosen tab is a navy pill that slides, and a cream surface follows the pointer.
+- **Phone:** a floating white tab bar with badges; the chosen tab is a navy pill that slides, and its icon settles into place.
 
 ### Command Palette (signature)
 "Go anywhere on your Path." A 640px white sheet (16px corners, the Modal shadow) with grouped results (people, destinations, communities, stories, questions) and actions (write, open My Path, book office hours, align Paths, switch appearance). The highlighted row slides between results. Keyboard-first: ↑ ↓, ↵, esc.
@@ -356,6 +386,7 @@ Across the top of a person's card, their Path is drawn on a sunken cream band: w
 A two-pane sheet: the Guide on a recessed cream panel, then three session tiles, a grid of time slots (the chosen one fills navy, taken ones recede with a strike), topic tags, a note, and a sticky footer with the summary and the primary action. It confirms on a ticket with a perforated date stub and a check that draws itself.
 
 ### Motion
+- **Dashboard:** the profile card rises in, its Path tags pop in turn and its counts count up; the rings around People worth knowing draw one after another (90 ms apart); the week slides between weeks; schedule items and communities rise a beat apart; the navy pill slides wherever the current thing changes.
 - **Assembling (the intro's language, used across the app):** the intro headline rises line by line out of an 8px blur, then the sentence, then the action. Page titles and subtitles arrive 80 ms apart. Cards and rows rise 16px as they come into view, 55 ms apart, capped at eight. Route silk, Path covers and Your Path this week draw themselves. Stat numerals count up over 1.2 s. The Guides route fills in solid as you read down the page.
 - **Portrait flight:** opening someone carries their portrait on a shallow arc to the "now" station of their Path cover (420–680 ms), which answers with one ring ripple.
 - **Pointer:** card edges catch signal-blue light where the cursor is; a surface follows across tabs; forward arrows lean 2px; tooltips answer at once after the first; feed photos lean in.
@@ -372,12 +403,16 @@ A two-pane sheet: the Guide on a recessed cream panel, then three session tiles,
 - **Do** show the product on an immersive navy panel when a screen has one thing to show, and keep it to one or two per screen.
 - **Do** let things assemble once on arrival: rise, draw, count up. Then hold still.
 - **Do** draw every Path with the transit vocabulary: solid walked track, ringed present, dashed future, open destination.
-- **Do** use 8px corners for anything pressed, 16px for cards and 20px for panels, and keep pills for tags and counts.
+- **Do** put content on white cards on the cream, 20px corners, and keep what's inside a card as cream wells.
+- **Do** mark what's current with the sliding navy pill.
+- **Do** use 8px corners for small pressed controls and pills for tags, counts, tab tracks and the top bar.
 - **Do** respect Reduce Motion with an intentional quieter path.
 
 ### Don't:
 - **Don't** bring back the graphite world, Schibsted Grotesk or the Playfair wordmark.
-- **Don't** use large areas of signal blue, gradient text, neon edges or coloured side stripes.
+- **Don't** use large areas of signal blue, gradient text, neon edges or coloured side stripes. The one exception is the schedule's 4px event bar, a calendar marker from the reference that says what kind of event it is.
+- **Don't** nest a card in a card, or bring back rows between hairlines on the cream.
+- **Don't** dock the sidebar beside the content again; the drawer holds it.
 - **Don't** put glass on cream. Glass lives only on navy.
 - **Don't** set a label above a heading as a kicker or eyebrow, even where the reference does. Headings carry their own weight.
 - **Don't** set interface text in Charter, or use a synthesized italic of Space Grotesk.

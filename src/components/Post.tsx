@@ -28,8 +28,10 @@ export function KindLabel({ kind, note }: { kind: PostKind; note?: ReactNode }) 
   const Icon = k.icon;
   return (
     <p className={`post__kind post__kind--${kind}`}>
-      <Icon size={15} strokeWidth={1.9} />
-      <span className="post__kind-label">{k.label}</span>
+      <span className="post__kind-label">
+        <Icon size={14} strokeWidth={1.9} />
+        {k.label}
+      </span>
       {note && <span className="post__kind-note">{note}</span>}
     </p>
   );
@@ -62,54 +64,76 @@ export interface PostProps {
 }
 
 /**
- * A feed row laid out like a Medium story preview: byline, bold title, grey subtitle,
- * a quiet meta row, and a thumbnail on the right.
+ * A post as a dashboard card: who it's from across the top with the "…" menu, what kind of post it is,
+ * the title and the post's own body, and a footer that says why it's here, with its numbers and Save.
  */
 export function Post({ author, where, note, ago, to, title, subtitle, why, stats, thumb, thumbKind = 'art', extra, saveKey, i = 0, variant, kind, kindNote }: PostProps) {
   return (
     <motion.article
       className={`post ${variant ? `post--${variant}` : ''} ${kind ? `post--is-${kind}` : ''} ${thumb ? 'has-thumb' : ''}`}
-      initial={{ opacity: 0, y: 12 }}
+      initial={{ opacity: 0, y: 18 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: '-40px' }}
-      transition={{ ...springs.smooth, delay: Math.min(i, 3) * 0.04 }}
+      transition={{ ...springs.smooth, delay: Math.min(i, 3) * 0.05 }}
     >
       <div className="post__in">
-      {kind && <KindLabel kind={kind} note={kindNote} />}
-      <p className="post__by">
-        <Avatar id={author} size={20} />
-        <PersonName id={author} className="post__author" />
-        {note && <span className="post__note">· {note}</span>}
-        {where && <span className="post__where">in {where}</span>}
-        {ago && <span className="post__ago">· {ago}</span>}
-      </p>
-      <div className="post__main">
-        <Link to={to} className="post__link">
-          <h2 className="post__title">{title}</h2>
-          {subtitle && <p className="post__sub">{subtitle}</p>}
-        </Link>
-        {extra && <div className="post__extra">{extra}</div>}
-        <div className="post__meta">
-          {why && (
-            <span className="post__why">
-              <RelationGlyph kind={why.kind} size={15} />
-              <span>{why.text}</span>
-            </span>
-          )}
-          {stats && <span className="post__stats">{stats}</span>}
-          <span className="post__actions">
-            {saveKey && <SaveToggle saveKey={saveKey} compact />}
-            <PostMore person={author} />
-          </span>
+        <PostByline author={author} note={note} where={where} ago={ago} />
+        {kind && <KindLabel kind={kind} note={kindNote} />}
+        <div className="post__main">
+          <Link to={to} className="post__link">
+            <h2 className="post__title">{title}</h2>
+            {subtitle && <p className="post__sub">{subtitle}</p>}
+          </Link>
+          {extra && <div className="post__extra">{extra}</div>}
         </div>
-      </div>
-      {thumb && (
-        <Link to={to} className={`post__thumb post__thumb--${thumbKind}`} tabIndex={-1} aria-hidden="true">
-          {thumb}
-        </Link>
-      )}
+        {thumb && (
+          <Link to={to} className={`post__thumb post__thumb--${thumbKind}`} tabIndex={-1} aria-hidden="true">
+            {thumb}
+          </Link>
+        )}
+        <PostFoot why={why} stats={stats} saveKey={saveKey} />
       </div>
     </motion.article>
+  );
+}
+
+/** The top of every post card: the author's face and name, what they are to you, and the "…" menu. */
+export function PostByline({ author, note, where, ago }: { author: string; note?: ReactNode; where?: ReactNode; ago?: string }) {
+  return (
+    <div className="post__by">
+      <Avatar id={author} size={40} />
+      <p className="post__byline">
+        <PersonName id={author} className="post__author" />
+        {(note || where || ago) && (
+          <span className="post__byline-sub">
+            {note && <span className="post__note">{note}</span>}
+            {where && <span className="post__where">in {where}</span>}
+            {ago && <span className="post__ago">{ago}</span>}
+          </span>
+        )}
+      </p>
+      <PostMore person={author} />
+    </div>
+  );
+}
+
+/** The footer of every post card: why it's in your feed, its numbers, and Save. */
+export function PostFoot({ why, stats, saveKey }: { why?: PostProps['why']; stats?: ReactNode; saveKey?: string }) {
+  return (
+    <div className="post__meta">
+      {why && (
+        <span className="post__why">
+          <RelationGlyph kind={why.kind} size={15} />
+          <span>{why.text}</span>
+        </span>
+      )}
+      {stats && <span className="post__stats">{stats}</span>}
+      {saveKey && (
+        <span className="post__actions">
+          <SaveToggle saveKey={saveKey} compact />
+        </span>
+      )}
+    </div>
   );
 }
 

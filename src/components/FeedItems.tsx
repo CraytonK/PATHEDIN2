@@ -20,8 +20,8 @@ import { IconCalendar, IconCheck, IconChevronLeft, IconChevronRight, IconPlus } 
 import { PathHint } from './path/PathHint';
 import { BookButton } from './Booking';
 import { useOpenSpots } from '../lib/booking';
-import { KindLabel, Post, PostMore, postKinds, type PostKind } from './Post';
-import { Avatar, AvatarStack, Button, RelationGlyph, SaveToggle, formatCount } from './ui';
+import { KindLabel, Post, PostFoot, PostMore, postKinds, type PostKind } from './Post';
+import { Avatar, AvatarStack, Button, formatCount } from './ui';
 import './feed.css';
 
 /*
@@ -184,7 +184,10 @@ export function GuidePost({ id, move, why, i = 0 }: { id: string; move?: [string
       transition={{ ...springs.smooth, delay: Math.min(i, 3) * 0.04 }}
     >
       <div className="fguide">
-        <KindLabel kind="guide" note={hours.open > 0 ? 'Office Hours this week' : undefined} />
+        <div className="fguide__kind">
+          <KindLabel kind="guide" note={hours.open > 0 ? 'Office Hours this week' : undefined} />
+          <PostMore person={id} />
+        </div>
         <div className="fguide__top">
           <Link to={`/p/${id}`} className="fguide__photo" data-portrait={id} tabIndex={-1} aria-hidden="true">
             <img src={g.photo} alt="" loading="lazy" />
@@ -216,19 +219,7 @@ export function GuidePost({ id, move, why, i = 0 }: { id: string; move?: [string
             <BookButton id={id} label="Book a spot" />
           </span>
         </div>
-        <div className="post__meta">
-          <span className="post__why">
-            <RelationGlyph kind={why.kind} size={15} />
-            <span>{why.text}</span>
-          </span>
-          <span className="post__stats">
-            <span>Helped {guide.helped}</span>
-          </span>
-          <span className="post__actions">
-            <SaveToggle saveKey={`person:${id}`} compact />
-            <PostMore person={id} />
-          </span>
-        </div>
+        <PostFoot why={why} stats={<span>Helped {guide.helped}</span>} saveKey={`person:${id}`} />
       </div>
     </motion.article>
   );

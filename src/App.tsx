@@ -1,7 +1,7 @@
 import { AnimatePresence, motion, MotionConfig } from 'framer-motion';
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { BrowserRouter, HashRouter, Route, Routes, useLocation, useNavigationType } from 'react-router-dom';
-import { Sidebar, TabBar, TopBar, ToastLayer, useSidebarVisible } from './components/chrome';
+import { Sidebar, TabBar, TopBar, ToastLayer } from './components/chrome';
 import { PeekLayer } from './components/Peek';
 import { PathSplash } from './components/PathSplash';
 import { CompareLayer } from './components/path/Compare';
@@ -94,7 +94,6 @@ function Shell() {
   const location = useLocation();
   const { type, restore } = useScrollMemory();
   const setSearch = useUI((s) => s.setSearch);
-  const sidebar = useSidebarVisible();
   const signedIn = useApp((s) => s.signedIn);
   const signIn = useApp((s) => s.signIn);
   const [splash, setSplash] = useState(false);
@@ -138,7 +137,7 @@ function Shell() {
 
   return (
     <>
-      <div className={`app ${inWrite ? 'app--write' : isMobile ? (inThread ? 'app--thread' : 'app--mobile') : 'app--desktop'} ${!isMobile && sidebar && !inWrite ? 'app--sidebar' : ''}`}>
+      <div className={`app ${inWrite ? 'app--write' : isMobile ? (inThread ? 'app--thread' : 'app--mobile') : 'app--desktop'}`}>
         {!isMobile && !inWrite && <TopBar />}
         {!isMobile && !inWrite && <Sidebar />}
         <AnimatePresence mode="wait" initial={false} onExitComplete={restore}>

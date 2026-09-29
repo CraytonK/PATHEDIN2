@@ -1,3 +1,4 @@
+import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 import { useRef, useState, type CSSProperties } from 'react';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { Page, useUnread } from '../components/chrome';
@@ -7,20 +8,25 @@ import { DecisionPost, GuidePost, KindFeed, KindFilter, MilestonePost, MyPostIte
 import { useWriting } from '../lib/writing';
 import { RouteSilk } from '../components/path/RouteSilk';
 import { dayLabel, fmtTime, useOpenSpots } from '../lib/booking';
-import { RailCommunities, RailFooter, RailPeople } from '../components/Rail';
+import { RailFooter } from '../components/Rail';
 import { PersonTile } from '../components/content';
-import { Avatar, AvatarStack, IconButton, PersonName, SectionHeader, TextTabs } from '../components/ui';
-import { IconBell, IconChevronRight, IconCompose, IconMessage } from '../components/icons';
+import { Avatar, AvatarStack, CountUp, IconButton, PersonName, Rolling, SectionHeader, TextTabs } from '../components/ui';
+import { IconArrowRight, IconBell, IconCheck, IconChevronLeft, IconChevronRight, IconCompose, IconDoc, IconFlag, IconMessage, IconPlus, IconQuestion, IconSend, IconSignpost } from '../components/icons';
 import { people, me, ME } from '../data/people';
 import { stories } from '../data/stories';
 import { questions, questionList } from '../data/questions';
 import { decisions } from '../data/decisions';
 import { threads, communities } from '../data/communities';
 import { destinations } from '../data/destinations';
-import { edgeClass, useIsMobile, useScrollEdges } from '../lib/motion';
+import { edgeClass, rise, springs, useIsMobile, useMediaQuery, useScrollEdges } from '../lib/motion';
+import { relationTo } from '../lib/relations';
+import { usePeek } from '../components/Peek';
+import { conversationList } from '../data/social';
 import { useApp } from '../lib/store';
 import { useUI } from '../lib/ui';
 import './home.css';
+
+const MotionLink = motion.create(Link);
 
 const pulseStops: PulseStop[] = [
   { key: 'bsc', label: 'BSc Chemistry', kind: 'past', href: '/path', activity: { ids: ['lucas'], text: 'Lucas asked you about this step' } },
@@ -45,43 +51,78 @@ function joinNames(ids: string[]) {
   return names.length > 1 ? `${names.slice(0, -1).join(', ')} and ${names[names.length - 1]}` : names[0];
 }
 
-/** What's actually on your plate: the next call you've booked, and requests waiting on you. */
-function UpNext({ variant = 'cards' }: { variant?: 'cards' | 'list' }) {
+const dayKey = (d: Date) => d.toDateString();
+
+/** What's on your plate, with the day each thing falls on (requests wait on you, so they have none). */
+function usePlate() {
   const requests = useApp((s) => s.requests);
   const bookings = useApp((s) => s.bookings);
-  const openBooking = useUI((s) => s.openBooking);
   const call = requests.find((r) => r.from === ME && r.status === 'accepted' && r.proposed);
   const incoming = requests.filter((r) => r.to === ME && r.status === 'pending');
   const ahead = bookings.filter((b) => new Date(b.at).getTime() + b.minutes * 60_000 > Date.now()).sort((a, b) => +new Date(a.at) - +new Date(b.at));
+  const callDay = nextWeekday(4);
+  const days = new Set([...ahead.map((b) => dayKey(new Date(b.at))), ...(call ? [dayKey(callDay)] : [])]);
+  return { call, incoming, ahead, callDay, days };
+}
+
+/** What's actually on your plate: the next call you've booked, and requests waiting on you. */
+function UpNext({ variant = 'cards', hot, onHot }: { variant?: 'cards' | 'list' | 'schedule'; hot?: string | null; onHot?: (day: string | null) => void }) {
+  const openBooking = useUI((s) => s.openBooking);
+  const { call, incoming, ahead, callDay: day } = usePlate();
   if (!call && !incoming.length && !ahead.length) return null;
-  const day = nextWeekday(4);
   const time = call?.proposed?.split(', ')[1];
-  const tile = (d: Date) => (
-    <span className="upnext__date" aria-hidden="true">
-      <span className="upnext__dow">{d.toLocaleDateString('en-CA', { weekday: 'short' }).replace('.', '')}</span>
-      <span className="upnext__day">{d.getDate()}</span>
-    </span>
-  );
+  const schedule = variant === 'schedule';
+  const tile = (d: Date) =>
+    schedule ? null : (
+      <span className="upnext__date" aria-hidden="true">
+        <span className="upnext__dow">{d.toLocaleDateString('en-CA', { weekday: 'short' }).replace('.', '')}</span>
+        <span className="upnext__day">{d.getDate()}</span>
+      </span>
+    );
+  // On the dashboard, pointing at an item lights its day in the week above, and the other way round.
+  const link = (d?: Date) =>
+    schedule
+      ? {
+          'data-day': d ? dayKey(d) : undefined,
+          onPointerEnter: () => onHot?.(d ? dayKey(d) : null),
+          onPointerLeave: () => onHot?.(null),
+        }
+      : {};
+  const state = (d?: Date) => (schedule && hot ? (d && dayKey(d) === hot ? 'is-hot' : 'is-cool') : '');
   return (
     <div className={`upnext upnext--${variant}`}>
-      {ahead.map((b) => {
+      {ahead.map((b, i) => {
         const at = new Date(b.at);
         return (
-          <button key={b.id} type="button" className="upnext__item" onClick={() => openBooking(b.guide, { booking: b.id })}>
+          <motion.button
+            key={b.id}
+            type="button"
+            className={`upnext__item upnext__item--hours ${state(at)}`}
+            onClick={() => openBooking(b.guide, { booking: b.id })}
+            {...link(at)}
+            {...(schedule ? rise(i, 10) : {})}
+          >
             {tile(at)}
+            {schedule && <span className="upnext__bar" aria-hidden="true" />}
             <span className="upnext__text">
               <span className="upnext__title truncate">Office hours with {people[b.guide].first}</span>
               <span className="upnext__sub truncate">
                 {dayLabel(at)} · {fmtTime(at)} · {b.minutes} min
               </span>
             </span>
-            <IconChevronRight size={16} className="c-3" />
-          </button>
+            {schedule ? <Avatar id={b.guide} size={28} peek={false} /> : <IconChevronRight size={16} className="c-3" />}
+          </motion.button>
         );
       })}
       {call && (
-        <Link to={call.thread ? `/messages/${call.thread}` : '/requests'} className="upnext__item">
+        <MotionLink
+          to={call.thread ? `/messages/${call.thread}` : '/requests'}
+          className={`upnext__item upnext__item--call ${state(day)}`}
+          {...link(day)}
+          {...(schedule ? rise(ahead.length, 10) : {})}
+        >
           {tile(day)}
+          {schedule && <span className="upnext__bar" aria-hidden="true" />}
           <span className="upnext__text">
             <span className="upnext__title truncate">Call with {people[call.to].name}</span>
             <span className="upnext__sub truncate">
@@ -89,22 +130,26 @@ function UpNext({ variant = 'cards' }: { variant?: 'cards' | 'list' }) {
               {time && ` · ${time}`}
             </span>
           </span>
-          <IconChevronRight size={16} className="c-3" />
-        </Link>
+          {schedule ? <Avatar id={call.to} size={28} peek={false} /> : <IconChevronRight size={16} className="c-3" />}
+        </MotionLink>
       )}
       {incoming.length > 0 && (
-        <Link to="/requests" className="upnext__item">
-          <span className="upnext__faces">
-            <AvatarStack ids={incoming.map((r) => r.from)} size={variant === 'list' ? 24 : 28} max={3} />
-          </span>
+        <MotionLink to="/requests" className={`upnext__item upnext__item--requests ${state()}`} {...link()} {...(schedule ? rise(ahead.length + 1, 10) : {})}>
+          {schedule ? (
+            <span className="upnext__bar" aria-hidden="true" />
+          ) : (
+            <span className="upnext__faces">
+              <AvatarStack ids={incoming.map((r) => r.from)} size={variant === 'list' ? 24 : 28} max={3} />
+            </span>
+          )}
           <span className="upnext__text">
             <span className="upnext__title truncate">
               {incoming.length} Path {incoming.length === 1 ? 'Request' : 'Requests'}
             </span>
             <span className="upnext__sub truncate">From {joinNames(incoming.map((r) => r.from))}</span>
           </span>
-          <IconChevronRight size={16} className="c-3" />
-        </Link>
+          {schedule ? <AvatarStack ids={incoming.map((r) => r.from)} size={24} max={3} /> : <IconChevronRight size={16} className="c-3" />}
+        </MotionLink>
       )}
     </div>
   );
@@ -174,7 +219,259 @@ function Following() {
   );
 }
 
-/* ── Right rail, after Medium's ─────────────────────────────── */
+/* ── The dashboard, after the reference: you on the left, the feed in the middle, your week on the right ── */
+
+/** You, as the dashboard's left-hand card: your Path's colours on the cover, your numbers, where you're going. */
+function MeCard() {
+  const connections = useApp((s) => s.connections);
+  const joined = useApp((s) => s.joined);
+  const saved = useApp((s) => s.saved);
+  const unread = useUnread();
+  const stats = [
+    { to: '/connections', value: Object.values(connections).filter((c) => c === 'connected').length, label: 'Connections' },
+    { to: '/communities', value: Object.keys(joined).filter((k) => joined[k] && communities[k]).length, label: 'Communities' },
+    { to: '/saved', value: Object.values(saved).filter(Boolean).length, label: 'Saved' },
+  ];
+  const shortcuts = [
+    { to: '/requests', label: 'Path Requests', icon: IconSend, badge: unread.incoming },
+    { to: '/guides', label: 'Path Guides', icon: IconSignpost },
+    { to: '/stories', label: 'Stories', icon: IconDoc },
+    { to: '/questions', label: 'Questions', icon: IconQuestion },
+    { to: '/decisions', label: 'Decision Points', icon: IconFlag },
+  ];
+  return (
+    <section className="me-card" aria-label="Your profile">
+      <div className="me-card__cover immersive" aria-hidden="true">
+        <RouteSilk lines={14} delay={0.15} />
+      </div>
+      <motion.div className="me-card__who" {...rise(1, 10)}>
+        <Link to={`/p/${ME}`} className="me-card__photo" data-portrait={ME} tabIndex={-1} aria-hidden="true">
+          <img src={me.photo} alt="" />
+        </Link>
+        <Link to={`/p/${ME}`} className="me-card__name">
+          {me.name}
+        </Link>
+        <p className="me-card__headline">{me.headline}</p>
+      </motion.div>
+      <ul className="me-card__stats">
+        {stats.map((st) => (
+          <li key={st.to}>
+            <Link to={st.to}>
+              <span className="me-card__num">
+                <CountUp value={st.value} />
+              </span>
+              <span className="me-card__label">{st.label}</span>
+            </Link>
+          </li>
+        ))}
+      </ul>
+      <div className="me-card__block">
+        <div className="me-card__head">
+          <h2 className="me-card__h">Your Path</h2>
+          <Link to="/path" className="me-card__more">
+            Open My Path
+          </Link>
+        </div>
+        <ul className="me-card__steps">
+          {pulseStops
+            .filter((st) => st.kind !== 'unknown')
+            .map((st, i) => (
+              <motion.li key={st.key} initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} transition={{ ...springs.smooth, delay: 0.35 + i * 0.07 }}>
+                <Link to={st.href} className={`me-step is-${st.kind}`}>
+                  {st.kind === 'destination' && <IconArrowRight size={13} strokeWidth={2.2} />}
+                  {st.label}
+                  {st.kind === 'present' && <span className="me-step__you">You</span>}
+                </Link>
+              </motion.li>
+            ))}
+        </ul>
+      </div>
+      <ul className="me-card__links">
+        {shortcuts.map((sc) => {
+          const Icon = sc.icon;
+          return (
+            <li key={sc.to}>
+              <Link to={sc.to} className="me-card__link">
+                <span className="me-card__icon">
+                  <Icon size={17} strokeWidth={1.7} />
+                </span>
+                <span className="me-card__link-label">{sc.label}</span>
+                {!!sc.badge && (
+                  <span className="me-card__badge">
+                    <Rolling value={sc.badge} />
+                  </span>
+                )}
+                <IconChevronRight size={15} className="me-card__chev" data-dir="forward" />
+              </Link>
+            </li>
+          );
+        })}
+      </ul>
+      <Link to="/write" className="me-card__write">
+        <IconCompose size={16} strokeWidth={1.8} />
+        Write
+      </Link>
+    </section>
+  );
+}
+
+/** People worth knowing, as a row of faces ringed in your Path's colours. Each ring draws itself in turn. */
+function WorthFace({ id, i }: { id: string; i: number }) {
+  const p = people[id];
+  const rel = relationTo(id);
+  const state = useApp((s) => s.connections[id]);
+  const connect = useApp((s) => s.connect);
+  const toast = useUI((s) => s.showToast);
+  const navigate = useNavigate();
+  const handlers = usePeek(id);
+  const reduce = useReducedMotion();
+  const gid = `worth-${id}`;
+  const convo = conversationList.find((c) => c.with === id);
+  return (
+    <motion.li className="worth__face" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ ...springs.smooth, delay: 0.08 + i * 0.06 }}>
+      <Link to={`/p/${id}`} className="worth__link" {...handlers}>
+        <span className="worth__ring">
+          <svg viewBox="0 0 80 80" aria-hidden="true" className="worth__arc">
+            <defs>
+              <linearGradient id={gid} x1="0" y1="1" x2="1" y2="0">
+                <stop offset="0" style={{ stopColor: 'var(--ink)' }} />
+                <stop offset="1" style={{ stopColor: 'var(--tint)' }} />
+              </linearGradient>
+            </defs>
+            <motion.circle
+              cx="40"
+              cy="40"
+              r="38"
+              fill="none"
+              stroke={`url(#${gid})`}
+              strokeWidth="2.5"
+              strokeLinecap="round"
+              transform="rotate(-90 40 40)"
+              initial={reduce ? false : { pathLength: 0 }}
+              animate={{ pathLength: 1 }}
+              transition={{ duration: 0.9, delay: 0.2 + i * 0.09, ease: [0.16, 1, 0.3, 1] }}
+            />
+          </svg>
+          <span className="worth__photo" data-portrait={id}>
+            <img src={p.photo} alt="" loading="lazy" draggable={false} />
+          </span>
+        </span>
+        <span className="worth__name">{p.first}</span>
+        <span className="worth__rel">{rel.kind === 'other' ? '' : rel.label}</span>
+      </Link>
+      <button
+        type="button"
+        className={`worth__add ${state ? `is-${state}` : ''}`}
+        aria-label={state === 'connected' ? `Message ${p.first}` : state === 'pending' ? `Connection requested with ${p.first}` : `Connect with ${p.first}`}
+        aria-pressed={state === 'pending' ? true : undefined}
+        data-tip={state === 'connected' ? 'Message' : state === 'pending' ? 'Requested' : 'Connect'}
+        data-tip-pos="below"
+        onClick={() => {
+          if (state === 'connected') return navigate(convo ? `/messages/${convo.id}` : `/messages?to=${id}`);
+          if (!state) toast(`Connection request sent to ${p.first}`);
+          connect(id);
+        }}
+      >
+        {state === 'connected' ? <IconMessage size={13} strokeWidth={2} /> : state === 'pending' ? <IconCheck size={13} strokeWidth={2.4} /> : <IconPlus size={13} strokeWidth={2.4} />}
+      </button>
+    </motion.li>
+  );
+}
+
+function WorthRow() {
+  return (
+    <section className="worth dash-card" aria-labelledby="worth-h">
+      <div className="dash-card__head">
+        <h2 className="dash-card__h" id="worth-h">
+          People worth knowing
+        </h2>
+        <Link to="/network" className="dash-card__more">
+          See more suggestions
+          <IconChevronRight size={14} strokeWidth={2.2} data-dir="forward" />
+        </Link>
+      </div>
+      <ul className="worth__row">
+        {worth.map((id, i) => (
+          <WorthFace key={id} id={id} i={i} />
+        ))}
+      </ul>
+    </section>
+  );
+}
+
+/** Coming up, as a week: today in navy, a dot on the days something's booked, then the list itself. */
+function WeekCard() {
+  const { days: busy } = usePlate();
+  const [offset, setOffset] = useState(0);
+  const [dir, setDir] = useState(1);
+  const [hot, setHot] = useState<string | null>(null);
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  const monday = new Date(today);
+  monday.setDate(today.getDate() - ((today.getDay() + 6) % 7) + offset * 7);
+  const days = Array.from({ length: 7 }, (_, i) => {
+    const d = new Date(monday);
+    d.setDate(monday.getDate() + i);
+    return d;
+  });
+  const month = (d: Date) => d.toLocaleDateString('en-CA', { month: 'long' });
+  const range = month(days[0]) === month(days[6]) ? `${month(days[0])} ${days[0].getFullYear()}` : `${days[0].toLocaleDateString('en-CA', { month: 'short' })} – ${days[6].toLocaleDateString('en-CA', { month: 'short' })} ${days[6].getFullYear()}`;
+  const go = (step: number) => {
+    setDir(step);
+    setOffset((o) => o + step);
+  };
+  return (
+    <section className="rail-card week" aria-labelledby="week-h">
+      <div className="rail-head">
+        <h2 className="rail-h" id="week-h">
+          Coming up
+        </h2>
+        <div className="week__nav">
+          <span className="week__month">{range}</span>
+          <button type="button" className="week__step" aria-label="Previous week" disabled={offset <= 0} onClick={() => go(-1)}>
+            <IconChevronLeft size={15} strokeWidth={2.2} />
+          </button>
+          <button type="button" className="week__step" aria-label="Next week" disabled={offset >= 3} onClick={() => go(1)}>
+            <IconChevronRight size={15} strokeWidth={2.2} />
+          </button>
+        </div>
+      </div>
+      <div className="week__strip">
+        <AnimatePresence mode="popLayout" initial={false} custom={dir}>
+          <motion.ol
+            key={offset}
+            className="week__days"
+            custom={dir}
+            initial={{ opacity: 0, x: dir * 36 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: dir * -36, transition: { duration: 0.16 } }}
+            transition={springs.smooth}
+          >
+            {days.map((d) => {
+              const key = dayKey(d);
+              const isToday = key === dayKey(today);
+              const has = busy.has(key);
+              return (
+                <li
+                  key={key}
+                  className={`week__day ${isToday ? 'is-today' : ''} ${has ? 'has-items' : ''} ${hot === key ? 'is-hot' : ''} ${d < today ? 'is-past' : ''}`}
+                  onPointerEnter={() => has && setHot(key)}
+                  onPointerLeave={() => has && setHot(null)}
+                  aria-current={isToday ? 'date' : undefined}
+                >
+                  <span className="week__dow">{d.toLocaleDateString('en-CA', { weekday: 'short' }).replace('.', '')}</span>
+                  <span className="week__num">{d.getDate()}</span>
+                  <span className="week__dot" aria-hidden="true" />
+                </li>
+              );
+            })}
+          </motion.ol>
+        </AnimatePresence>
+      </div>
+      <UpNext variant="schedule" hot={hot} onHot={setHot} />
+    </section>
+  );
+}
 
 function RailPath() {
   return (
@@ -207,7 +504,7 @@ function RailHoursRow({ id }: { id: string }) {
   const openBooking = useUI((s) => s.openBooking);
   return (
     <li>
-      <Avatar id={id} size={24} />
+      <Avatar id={id} size={36} />
       <span className="rail-hours__text">
         <PersonName id={id} className="rail-hours__name" />
         <span>
@@ -231,13 +528,45 @@ function RailHours() {
   );
 }
 
-function Rail() {
+/** Your communities, as the reference's list: a mosaic of members, the name, and who's here now. */
+function RailCommunityList() {
+  const joined = useApp((s) => s.joined);
+  const list = Object.keys(joined)
+    .filter((k) => joined[k] && communities[k])
+    .map((k) => communities[k]);
+  return (
+    <ul className="cm-list">
+      {list.map((c, i) => (
+        <motion.li key={c.id} {...rise(i, 8)}>
+          <Link to={`/c/${c.id}`} className="cm-list__row">
+            <span className="cm-list__mosaic" aria-hidden="true">
+              {c.memberIds
+                .filter((m) => m !== ME)
+                .slice(0, 4)
+                .map((m) => (
+                  <img key={m} src={people[m].photo} alt="" loading="lazy" />
+                ))}
+            </span>
+            <span className="cm-list__text">
+              <span className="cm-list__title">{c.title}</span>
+              <span className="cm-list__live">
+                <span className="cm-list__dot" aria-hidden="true" />
+                {c.activeNow} here now
+              </span>
+            </span>
+            <IconChevronRight size={15} className="cm-list__chev" data-dir="forward" />
+          </Link>
+        </motion.li>
+      ))}
+    </ul>
+  );
+}
+
+function Rail({ withMe }: { withMe: boolean }) {
   return (
     <aside className="home__rail" aria-label="Your Path at a glance">
-      <section className="rail-card">
-        <h2 className="rail-h">Coming up</h2>
-        <UpNext variant="list" />
-      </section>
+      <WeekCard />
+      {withMe && <MeCard />}
       <section className="rail-card rail-card--path immersive">
         <RouteSilk lines={16} />
         <div className="rail-head">
@@ -248,23 +577,16 @@ function Rail() {
         </div>
         <RailPath />
       </section>
-      <section>
-        <h2 className="rail-h">People worth knowing</h2>
-        <RailPeople ids={worth.slice(0, 3)} />
-        <Link to="/network" className="rail-more rail-more--below">
-          See more suggestions
-        </Link>
-      </section>
-      <section>
+      <section className="rail-card">
         <h2 className="rail-h">Path Office Hours this week</h2>
         <RailHours />
         <Link to="/guides" className="rail-more rail-more--below">
           See all Path Guides
         </Link>
       </section>
-      <section>
+      <section className="rail-card">
         <h2 className="rail-h">Your communities</h2>
-        <RailCommunities />
+        <RailCommunityList />
         <Link to="/communities" className="rail-more rail-more--below">
           See more communities
         </Link>
@@ -276,6 +598,7 @@ function Rail() {
 
 export function Home() {
   const isMobile = useIsMobile();
+  const threeUp = useMediaQuery('(min-width: 1200px)');
   const unread = useUnread();
   const navigate = useNavigate();
   const [tab, setTab] = useState<'for-you' | 'following'>('for-you');
@@ -325,7 +648,12 @@ export function Home() {
         ) : undefined
       }
     >
-      <div className="home">
+      <div className={`home ${threeUp ? 'home--three' : ''}`}>
+        {!isMobile && threeUp && (
+          <aside className="home__me" aria-label="You">
+            <MeCard />
+          </aside>
+        )}
         <div className="home__main">
           {isMobile && (
             <>
@@ -352,6 +680,7 @@ export function Home() {
               </section>
             </>
           )}
+          {!isMobile && <WorthRow />}
           <div ref={feedTop} />
           <div className="home__tabs">
             <TextTabs
@@ -366,7 +695,7 @@ export function Home() {
           </div>
           {tab === 'for-you' ? kind === 'all' ? <ForYou /> : <KindFeed key={kind} kind={kind} /> : <Following />}
         </div>
-        {!isMobile && <Rail />}
+        {!isMobile && <Rail withMe={!threeUp} />}
       </div>
     </Page>
   );

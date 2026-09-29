@@ -5,7 +5,7 @@ import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { me } from '../data/people';
 import { communities } from '../data/communities';
 import { notificationList, conversationList } from '../data/social';
-import { easings, springs, useIsMobile, useMediaQuery, useScrolled, haptic } from '../lib/motion';
+import { easings, springs, useIsMobile, useScrolled, haptic } from '../lib/motion';
 import { useApp } from '../lib/store';
 import { useUI } from '../lib/ui';
 import { switchTheme } from '../lib/theme';
@@ -32,6 +32,7 @@ import {
   IconQuestion,
   IconFlag,
   IconPlus,
+  IconChevronDown,
 } from './icons';
 import { IconButton, Rolling } from './ui';
 import './chrome.css';
@@ -73,50 +74,51 @@ export function useUnread() {
   return { notifications, messages, incoming };
 }
 
-/* ── Desktop: Medium-style top bar and left sidebar ─────────── */
-
-/** The sidebar sits beside the content when there's room for both; otherwise it slides over it. */
-export const useSidebarDocked = () => useMediaQuery('(min-width: 1320px)');
-
-export function useSidebarVisible() {
-  const docked = useSidebarDocked();
-  const sidebar = useApp((s) => s.sidebar);
-  return docked && sidebar;
-}
+/* ── Desktop: the dashboard's top bar, with the sections as icons in the middle ── */
 
 export function TopBar() {
   const { pathname } = useLocation();
   const unread = useUnread();
   const setSearch = useUI((s) => s.setSearch);
   const navigate = useNavigate();
-  const docked = useSidebarDocked();
-  const sidebar = useApp((s) => s.sidebar);
-  const toggleSidebar = useApp((s) => s.toggleSidebar);
   const drawer = useUI((s) => s.drawer);
   const setDrawer = useUI((s) => s.setDrawer);
-  const open = docked ? sidebar : drawer;
+  const current = useActiveSection(pathname);
   const scrolled = useScrolled();
   return (
     <header className={`mbar ${scrolled ? 'is-scrolled' : ''}`}>
       <div className="mbar__left">
-        <button
-          className="mbar__menu"
-          aria-label={open ? 'Hide sidebar' : 'Show sidebar'}
-          aria-expanded={open}
-          aria-controls="sidebar"
-          onClick={() => (docked ? toggleSidebar() : setDrawer(!drawer))}
-        >
+        <button className="mbar__menu" aria-label={drawer ? 'Hide sidebar' : 'Show sidebar'} aria-expanded={drawer} aria-controls="sidebar" onClick={() => setDrawer(!drawer)}>
           <IconMenu size={20} strokeWidth={1.6} />
         </button>
         <Link to="/" className="wordmark" aria-label="PathedIn home">
           <Wordmark />
         </Link>
         <button className="mbar__search" onClick={() => setSearch(true)} aria-keyshortcuts="Meta+K Control+K">
-          <IconSearch size={15} strokeWidth={1.8} />
+          <IconSearch size={16} strokeWidth={1.8} />
           <span>Search or jump to…</span>
           <kbd className="kbd">⌘K</kbd>
         </button>
       </div>
+      {/* The five sections, as on the phone's tab bar. The current one sits in a navy pill that slides between them. */}
+      <nav className="mbar__nav" aria-label="Sections">
+        {sections.map((s) => {
+          const active = s.to === current;
+          const Icon = s.icon;
+          const badge = s.to === '/network' ? unread.incoming : 0;
+          return (
+            <NavLink key={s.to} to={s.to} className={`mbar__tab ${active ? 'is-active' : ''}`} aria-label={s.label} aria-current={active ? 'page' : undefined} data-tip={s.label} data-tip-pos="below">
+              {active && <motion.span layoutId="mbar-active" className="mbar__tab-pill" transition={springs.snappy} />}
+              <Icon size={20} filled={active} strokeWidth={active ? 1.9 : 1.6} />
+              {badge > 0 && (
+                <span className="badge t-caption2">
+                  <Rolling value={badge} />
+                </span>
+              )}
+            </NavLink>
+          );
+        })}
+      </nav>
       <div className="mbar__right">
         <Link to="/write" className="mbar__write">
           <IconCompose size={16} strokeWidth={1.8} />
@@ -128,6 +130,7 @@ export function TopBar() {
         <IconButton label="Notifications" tipPos="below" badge={unread.notifications} onClick={() => navigate('/notifications')} active={pathname.startsWith('/notifications')}>
           <IconBell size={19} strokeWidth={1.6} filled={pathname.startsWith('/notifications')} />
         </IconButton>
+        <span className="mbar__rule" aria-hidden="true" />
         <AccountMenu />
       </div>
     </header>
@@ -139,22 +142,19 @@ type SideItem = { to: string; label: string; icon: (p: { size?: number; filled?:
 export function Sidebar() {
   const { pathname } = useLocation();
   const unread = useUnread();
-  const docked = useSidebarDocked();
-  const sidebar = useApp((s) => s.sidebar);
   const joined = useApp((s) => s.joined);
-  const drawer = useUI((s) => s.drawer);
+  const open = useUI((s) => s.drawer);
   const setDrawer = useUI((s) => s.setDrawer);
-  const open = docked ? sidebar : drawer;
 
   useEffect(() => {
     setDrawer(false);
   }, [pathname, setDrawer]);
   useEffect(() => {
-    if (docked || !drawer) return;
+    if (!open) return;
     const onKey = (e: KeyboardEvent) => e.key === 'Escape' && setDrawer(false);
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
-  }, [docked, drawer, setDrawer]);
+  }, [open, setDrawer]);
 
   const groups: SideItem[][] = [
     [
@@ -183,11 +183,11 @@ export function Sidebar() {
   return (
     <>
       <AnimatePresence>
-        {!docked && drawer && (
+        {open && (
           <motion.div className="sidebar-scrim" onClick={() => setDrawer(false)} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.2 }} />
         )}
       </AnimatePresence>
-      <nav id="sidebar" className={`sidebar ${open ? 'is-open' : ''} ${docked ? 'is-docked' : 'is-overlay'}`} aria-label="Primary" aria-hidden={!open} inert={!open}>
+      <nav id="sidebar" className={`sidebar is-overlay ${open ? 'is-open' : ''}`} aria-label="Primary" aria-hidden={!open} inert={!open}>
         {groups.map((g, i) => (
           <ul key={i} className="sidebar__group">
             {g.map((item) => {
@@ -258,8 +258,10 @@ function AccountMenu() {
   const isDark = theme === 'dark' || (theme === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches);
   return (
     <div className="account" ref={ref}>
-      <motion.button className="account__btn" onClick={() => setOpen((o) => !o)} aria-haspopup="menu" aria-expanded={open} whileTap={{ scale: 0.92 }} transition={springs.press}>
-        <img src={me.photo} alt="Your profile" width={30} height={30} />
+      <motion.button className="account__btn" onClick={() => setOpen((o) => !o)} aria-haspopup="menu" aria-expanded={open} aria-label="Your profile" whileTap={{ scale: 0.96 }} transition={springs.press}>
+        <img src={me.photo} alt="" width={32} height={32} />
+        <span className="account__name">{me.name}</span>
+        <IconChevronDown size={14} strokeWidth={2} className="account__chev" />
       </motion.button>
       <AnimatePresence>
         {open && (
@@ -364,6 +366,7 @@ export function TabBar() {
               if (active) window.scrollTo({ top: 0, behavior: 'smooth' });
             }}
           >
+            {active && <motion.span layoutId="tabbar-active" className="tabbar__pill" transition={springs.snappy} />}
             <motion.span className="tabbar__icon" whileTap={{ scale: 0.86 }} transition={springs.press}>
               {/* The chosen tab's icon fills and settles into place, like a tab bar on iPhone. */}
               <motion.span
@@ -373,7 +376,7 @@ export function TabBar() {
                 animate={{ scale: 1 }}
                 transition={springs.settle}
               >
-                <Icon size={27} filled={active} strokeWidth={active ? 1.9 : 1.6} />
+                <Icon size={24} filled={active} strokeWidth={active ? 1.9 : 1.6} />
               </motion.span>
               {badge > 0 && <span className="badge t-caption2"><Rolling value={badge} /></span>}
             </motion.span>

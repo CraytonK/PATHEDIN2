@@ -36,7 +36,7 @@
 
   /* ── Soft Cream (the default appearance) ───────────────────── */
   --bg: #fff7ed;
-  --bg-grouped: #fffcf8;
+  --bg-grouped: #ffffff;
   --bg-elevated: #ffffff;
   --bg-sunken: #f9eddd;
   --bg-intro: #fff7ed;
@@ -86,8 +86,16 @@
   --bar-blur: saturate(160%) blur(18px);
 
   /* A card on cream: a hairline and a soft, navy-tinted fall-off. */
-  --surface-edge: 0 0 0 1px rgba(15, 23, 42, 0.07), 0 1px 2px rgba(15, 23, 42, 0.04);
+  --surface-edge: 0 0 0 1px rgba(15, 23, 42, 0.055), 0 1px 2px rgba(15, 23, 42, 0.035), 0 16px 36px -26px rgba(15, 23, 42, 0.22);
   --panel-shadow: var(--surface-edge);
+  /* Dashboard cards: white on the cream, a faint navy hairline and a long, soft fall-off that deepens under
+     the pointer. Every page's content sits on these. */
+  --card: #ffffff;
+  /* The page's own cream, for wells set into a card (tags, day tiles, fields). */
+  --canvas: #fff7ed;
+  --card-shadow: 0 0 0 1px rgba(15, 23, 42, 0.055), 0 1px 2px rgba(15, 23, 42, 0.035), 0 16px 36px -26px rgba(15, 23, 42, 0.22);
+  --card-shadow-hover: 0 0 0 1px rgba(15, 23, 42, 0.08), 0 2px 4px rgba(15, 23, 42, 0.04), 0 26px 48px -26px rgba(15, 23, 42, 0.32);
+  --topbar-bg: rgba(255, 255, 255, 0.86);
   --shadow-popover: 0 0 0 1px rgba(15, 23, 42, 0.08), 0 4px 10px -2px rgba(15, 23, 42, 0.06), 0 22px 44px -16px rgba(15, 23, 42, 0.22);
   --shadow-modal: 0 0 0 1px rgba(15, 23, 42, 0.08), 0 40px 90px -24px rgba(15, 23, 42, 0.4);
   --shadow-lift: 0 0 0 1px rgba(15, 23, 42, 0.08), 0 16px 36px -14px rgba(15, 23, 42, 0.24);
@@ -122,14 +130,16 @@
   --r-lg: 16px;
   --r-xl: 20px;
   --r-2xl: 28px;
+  --r-card: 20px;
   --r-pill: 999px;
   --r-popover: 12px;
   --hairline: 1px;
   --hit: 44px;
 
-  --tabbar-h: 50px;
+  /* The floating tab bar: 64px tall, 10px off the bottom edge. */
+  --tabbar-h: 74px;
   --navbar-h: 44px;
-  --topbar-h: 56px;
+  --topbar-h: 64px;
   --sidebar-w: 236px;
   --safe-top: env(safe-area-inset-top, 0px);
   --safe-bottom: env(safe-area-inset-bottom, 0px);
@@ -188,7 +198,12 @@
   --badge: #4f6ef0;
   --danger: #f2877d;
   --bar-bg: rgba(15, 23, 42, 0.8);
-  --surface-edge: 0 0 0 1px rgba(255, 247, 237, 0.07), inset 0 1px 0 rgba(255, 247, 237, 0.04);
+  --surface-edge: 0 0 0 1px rgba(255, 247, 237, 0.065), inset 0 1px 0 rgba(255, 247, 237, 0.03), 0 18px 40px -26px rgba(0, 0, 0, 0.7);
+  --card: #141e35;
+  --canvas: #0f172a;
+  --card-shadow: 0 0 0 1px rgba(255, 247, 237, 0.065), inset 0 1px 0 rgba(255, 247, 237, 0.03), 0 18px 40px -26px rgba(0, 0, 0, 0.7);
+  --card-shadow-hover: 0 0 0 1px rgba(255, 247, 237, 0.11), inset 0 1px 0 rgba(255, 247, 237, 0.04), 0 26px 52px -24px rgba(0, 0, 0, 0.8);
+  --topbar-bg: rgba(20, 30, 53, 0.86);
   --shadow-popover: 0 0 0 1px rgba(255, 247, 237, 0.09), 0 2px 6px rgba(0, 0, 0, 0.3), 0 18px 44px -12px rgba(0, 0, 0, 0.6);
   --shadow-modal: 0 0 0 1px rgba(255, 247, 237, 0.09), 0 32px 80px -20px rgba(0, 0, 0, 0.7);
   --shadow-lift: 0 0 0 1px rgba(255, 247, 237, 0.1), 0 12px 30px -12px rgba(0, 0, 0, 0.55);
@@ -246,7 +261,13 @@
     --badge: #4f6ef0;
     --danger: #f2877d;
     --bar-bg: rgba(15, 23, 42, 0.8);
-    --surface-edge: 0 0 0 1px rgba(255, 247, 237, 0.07), inset 0 1px 0 rgba(255, 247, 237, 0.04);
+    --surface-edge: 0 0 0 1px rgba(255, 247, 237, 0.065), inset 0 1px 0 rgba(255, 247, 237, 0.03), 0 18px 40px -26px rgba(0, 0, 0, 0.7);
+    --card: #141e35;
+    --canvas: #0f172a;
+  --canvas: #0f172a;
+    --card-shadow: 0 0 0 1px rgba(255, 247, 237, 0.065), inset 0 1px 0 rgba(255, 247, 237, 0.03), 0 18px 40px -26px rgba(0, 0, 0, 0.7);
+    --card-shadow-hover: 0 0 0 1px rgba(255, 247, 237, 0.11), inset 0 1px 0 rgba(255, 247, 237, 0.04), 0 26px 52px -24px rgba(0, 0, 0, 0.8);
+    --topbar-bg: rgba(20, 30, 53, 0.86);
     --shadow-popover: 0 0 0 1px rgba(255, 247, 237, 0.09), 0 2px 6px rgba(0, 0, 0, 0.3), 0 18px 44px -12px rgba(0, 0, 0, 0.6);
     --shadow-modal: 0 0 0 1px rgba(255, 247, 237, 0.09), 0 32px 80px -20px rgba(0, 0, 0, 0.7);
     --shadow-lift: 0 0 0 1px rgba(255, 247, 237, 0.1), 0 12px 30px -12px rgba(0, 0, 0, 0.55);
@@ -310,6 +331,10 @@
   --shadow-lift: 0 0 0 1px rgba(255, 247, 237, 0.18), 0 16px 36px -14px rgba(0, 0, 0, 0.5);
   --btn-highlight: inset 0 1px 0 rgba(255, 255, 255, 0.5);
   --edge-light: rgba(255, 247, 237, 0.4);
+  --card: rgba(255, 247, 237, 0.07);
+  --canvas: rgba(255, 247, 237, 0.06);
+  --card-shadow: 0 0 0 1px rgba(255, 247, 237, 0.12), inset 0 1px 0 rgba(255, 247, 237, 0.06);
+  --card-shadow-hover: 0 0 0 1px rgba(255, 247, 237, 0.2), inset 0 1px 0 rgba(255, 247, 237, 0.08);
   --tip-bg: #fff7ed;
   --tip-fg: #0f172a;
   position: relative;

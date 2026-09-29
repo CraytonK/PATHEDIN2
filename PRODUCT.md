@@ -39,6 +39,7 @@ The Path is the unit of everything. People are placed on your Path (Path Twins, 
 - **The user's references:**
   - The look follows a fintech site the user shared: immersive navy panels with glass cards, big numerals with coloured units, and generous white space.
   - The motion follows Linear, Arc and Raycast, and the intro's own assembling motion, which the user asked to see more of.
+  - The layout and feel follow a social dashboard the user shared (September 29, 2026): a white top bar with the sections as icons in the middle, a profile card on the left, a row of faces in rings over a feed of white cards, and a calendar with an upcoming schedule and a communities list on the right. The user asked that every piece of content, action and feature stay the same, and that the whole app take this look.
 - **Replaced by the user's choice:** the graphite world, Schibsted Grotesk and the Playfair wordmark.
 - The user rejects anything that reads as generic or AI-built.
 

@@ -9,7 +9,7 @@
   showing, its neighbours answer at once, as they do in native apps.
 */
 
-export const LIT = '.dcard, .gcard, .fguide, .door, .route-post';
+export const LIT = '.dcard, .gcard, .post, .door';
 
 export function installPointerDetails() {
   if (typeof window === 'undefined' || !window.matchMedia('(hover: hover) and (pointer: fine)').matches) return () => {};

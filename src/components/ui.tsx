@@ -365,7 +365,7 @@ function useActiveBox(value: string) {
   return [ref, box] as const;
 }
 
-/* ── Text tabs with a sliding underline (for longer filter sets) ─ */
+/* ── Text tabs: a pill track, the chosen tab in a navy pill that slides between them ─ */
 
 export function TextTabs<T extends string>({
   value,
@@ -396,7 +396,7 @@ export function TextTabs<T extends string>({
         className="text-tabs__hover"
         aria-hidden="true"
         initial={false}
-        animate={hover ? { x: hover.left - 10, width: hover.width + 20, opacity: 1 } : { opacity: 0 }}
+        animate={hover ? { x: hover.left, width: hover.width, opacity: 1 } : { opacity: 0 }}
         transition={hover?.slide ? springs.snappy : { x: { duration: 0 }, width: { duration: 0 }, opacity: { duration: 0.15 } }}
       />
       {options.map((o) => {

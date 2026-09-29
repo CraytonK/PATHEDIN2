@@ -1,0 +1,271 @@
+/*
+  The dashboard's card language, shared by every screen.
+
+  Content sits on white cards over the cream (Midnight panels in the dark appearance): 20px corners, a faint
+  navy hairline and a long, soft fall-off. Rows that used to sit between hairlines are each a card of their
+  own, a little apart, so a list reads like the reference's feed; side columns are stacks of cards. Anything
+  set into a card (a quoted note, a day tile, a tag) is a cream well, never a second card.
+*/
+
+/* ── Rows that are cards ── */
+:root .person-row,
+:root .community-row,
+:root .thread-item,
+:root .req-card,
+:root .notif,
+:root .profile__answer,
+:root .story-item,
+:root .decision-item {
+  --bg: var(--card);
+  position: relative;
+  border-radius: var(--r-card);
+  background: var(--card);
+  box-shadow: var(--card-shadow);
+}
+:root .person-row,
+:root .community-row,
+:root .thread-item,
+:root .req-card,
+:root .profile__answer {
+  padding: 18px 20px;
+}
+:root .notif {
+  padding: 16px 18px;
+}
+:root .story-item {
+  padding: 12px 12px 18px;
+}
+:root .decision-item {
+  padding: 16px 18px;
+}
+:root .person-row + .person-row,
+:root .community-row + .community-row,
+:root .thread-item + .thread-item,
+:root .req-card + .req-card,
+:root .notif + .notif,
+:root .profile__answer + .profile__answer,
+:root .decision-item + .decision-item {
+  margin-top: 12px;
+  border-top: 0;
+}
+:root .notif,
+:root .req-card,
+:root .profile__answer {
+  border-bottom: 0;
+}
+:root .notif + .notif {
+  margin-top: 8px;
+}
+/* The hover surface these rows drew under themselves gives way to the card's own lift. */
+:root .person-row::before {
+  content: none;
+}
+:root a.person-row,
+:root .community-row,
+:root a.notif,
+:root a.profile__answer,
+:root .story-item,
+:root a.decision-item,
+:root .decision-item:has(> a) {
+  transition:
+    :root box-shadow 320ms var(--ease-out),
+    translate 320ms var(--ease-out);
+}
+@media (hover: hover) {
+  :root .person-row:hover,
+  :root .community-row:hover,
+  :root a.notif:hover,
+  :root a.profile__answer:hover,
+  :root .story-item:hover,
+  :root .decision-item:hover {
+    translate: 0 -2px;
+    box-shadow: var(--card-shadow-hover);
+  }
+}
+
+/* Wells inside a card are cream, not raised. */
+:root .req-card__about,
+:root .notif__context,
+:root .story-item__art {
+  box-shadow: none;
+}
+:root .req-card__about,
+:root[data-theme='dark'] .req-card__about {
+  background: var(--canvas);
+}
+:root .story-item__art {
+  border-radius: var(--r-lg);
+  background: var(--canvas);
+}
+
+/* A group of rows under a heading: the heading sits on the cream, the rows below it as cards. */
+:root .list-group__h {
+  padding: 0 4px 12px;
+  border-bottom: 0;
+}
+:root .list-h {
+  padding-left: 2px;
+}
+
+/* ── Grouped lists (settings-style) are one card ── */
+:root .glist__rows {
+  border-radius: var(--r-card);
+  background: var(--card);
+  box-shadow: var(--card-shadow);
+}
+:root[data-theme='dark'] .glist__rows {
+  background: var(--card);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) .glist__rows {
+    background: var(--card);
+  }
+}
+
+/* ── Panels that were grouped fills take the card's corners ── */
+:root .dcard,
+:root .gcard,
+:root .network__lens,
+:root .discover__confluence,
+:root .saved__dest,
+:root .cm__route,
+:root .composer,
+:root .add-routes,
+:root .dd__fork,
+:root .dd__compose,
+:root .ask,
+:root .qd__reach,
+:root .qd__answer {
+  border-radius: var(--r-card);
+}
+
+/* ── Side columns: a stack of cards ── */
+:root .page__rail > section:not(.immersive):not(.pcover),
+:root .page__rail-mobile > section:not(.immersive):not(.pcover) {
+  --bg: var(--card);
+  padding: 18px 20px 20px;
+  border-radius: var(--r-card);
+  background: var(--card);
+  box-shadow: var(--card-shadow);
+}
+:root .page__rail > section .rail-h:first-child,
+:root .page__rail > section .rail-head:first-child .rail-h {
+  margin-bottom: 14px;
+}
+:root .page__rail .rail-foot {
+  padding: 0 8px;
+}
+
+/* ── On the phone, cards run a little tighter ── */
+@media (max-width: 767px) {
+  :root .person-row,
+  :root .community-row,
+  :root .thread-item,
+  :root .req-card,
+  :root .profile__answer {
+    padding: 16px;
+  }
+  :root .notif {
+    padding: 14px 16px;
+  }
+  :root .person-row + .person-row,
+  :root .community-row + .community-row,
+  :root .thread-item + .thread-item,
+  :root .req-card + .req-card,
+  :root .profile__answer + .profile__answer,
+  :root .decision-item + .decision-item {
+    margin-top: 10px;
+  }
+}
+
+/* ── More rows that are cards: answers, weigh-ins ── */
+:root .answer,
+:root .weigh {
+  --bg: var(--card);
+  padding: 20px 22px;
+  border-radius: var(--r-card);
+  background: var(--card);
+  box-shadow: var(--card-shadow);
+}
+:root .answer + .answer,
+:root .weigh + .weigh {
+  margin-top: 12px;
+  border-top: 0;
+}
+:root .answer {
+  margin-top: 12px;
+}
+
+/* ── The featured story leads on its own card ── */
+:root .stories__lead {
+  padding-bottom: 0;
+  margin-bottom: 28px;
+  border-bottom: 0;
+}
+:root .story-lead {
+  --bg: var(--card);
+  padding: 20px;
+  border-bottom: 0;
+  border-radius: var(--r-card);
+  background: var(--card);
+  box-shadow: var(--card-shadow);
+}
+:root .story-lead__art {
+  border-radius: var(--r-lg);
+  background: var(--canvas);
+  box-shadow: none;
+}
+
+/* ── My Path: the map on a white sheet; the inspector beside it holds its own cards ── */
+:root .mypath__map {
+  --bg: var(--card);
+  padding: 28px 32px 32px;
+  border-radius: var(--r-card);
+  background: var(--card);
+  box-shadow: var(--card-shadow);
+}
+:root .mypath__map .add-routes {
+  background: var(--canvas);
+  box-shadow: none;
+}
+:root .mypath__inspector {
+  padding-left: 4px;
+  border-left: 0;
+}
+
+/* ── Messages: the split view is one card ── */
+:root .messages {
+  --bg: var(--card);
+  background: var(--card);
+  border-radius: var(--r-card);
+  box-shadow: var(--card-shadow);
+}
+
+@media (max-width: 767px) {
+  :root .answer,
+  :root .weigh {
+    padding: 16px;
+  }
+  :root .mypath__map {
+    padding: 18px 16px 20px;
+  }
+  :root .story-lead {
+    padding: 14px;
+  }
+}
+
+/* ── A person, as a tile in a carousel ── */
+:root .person-tile {
+  --bg: var(--card);
+  padding: 10px 10px 14px;
+  border-radius: var(--r-card);
+  background: var(--card);
+  box-shadow: var(--card-shadow);
+}
+:root .person-tile__photo {
+  border-radius: 14px;
+}
+:root .person-tile > :not(.person-tile__photo) {
+  margin-left: 4px;
+  margin-right: 4px;
+}

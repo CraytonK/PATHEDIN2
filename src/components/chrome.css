@@ -5,9 +5,6 @@
 .app--desktop {
   padding-top: var(--topbar-h);
 }
-.app--sidebar > main {
-  margin-left: var(--sidebar-w);
-}
 .app--mobile {
   padding-bottom: calc(var(--tabbar-h) + var(--safe-bottom));
 }
@@ -33,31 +30,28 @@
   color: var(--label);
 }
 
-/* ── Desktop: the top bar, translucent over what scrolls beneath it ── */
+/* ── Desktop: the dashboard top bar — brand and search, the sections in the middle, you on the right ── */
 .mbar {
   position: fixed;
   inset: 0 0 auto 0;
   z-index: 40;
   height: var(--topbar-h);
-  display: flex;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
   align-items: center;
-  justify-content: space-between;
   gap: 16px;
-  padding: 0 16px 0 12px;
-  /* At the top the bar is part of the page; once content slides beneath it, it frosts and takes its edge. */
-  background: var(--bg);
-  border-bottom: 1px solid transparent;
-  transition:
-    background-color 240ms var(--ease-out),
-    border-color 240ms var(--ease-out),
-    -webkit-backdrop-filter 240ms var(--ease-out),
-    backdrop-filter 240ms var(--ease-out);
-}
-.mbar.is-scrolled {
-  background: var(--bar-bg);
+  padding: 0 20px 0 14px;
+  background: var(--topbar-bg);
   -webkit-backdrop-filter: var(--bar-blur);
   backdrop-filter: var(--bar-blur);
-  border-bottom-color: var(--separator);
+  box-shadow: 0 1px 0 var(--separator);
+  transition: box-shadow 280ms var(--ease-out);
+}
+/* Once the page slides beneath it, the bar lifts off the cream. */
+.mbar.is-scrolled {
+  box-shadow:
+    0 1px 0 var(--separator),
+    0 14px 30px -24px rgba(15, 23, 42, 0.4);
 }
 .mbar__left,
 .mbar__right {
@@ -66,18 +60,20 @@
   min-width: 0;
 }
 .mbar__left {
-  gap: 14px;
+  gap: 12px;
 }
 .mbar__right {
-  gap: 6px;
+  justify-self: end;
+  gap: 8px;
 }
 .mbar__menu {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 32px;
-  height: 32px;
-  border-radius: var(--r-sm);
+  flex: none;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
   color: var(--label-2);
   transition:
     color var(--dur-1) var(--ease-out),
@@ -87,88 +83,229 @@
   color: var(--label);
   background: var(--bg-hover);
 }
-/* The ⌘K launcher: opens the command palette. */
+.mbar .wordmark {
+  flex: none;
+  margin-right: 8px;
+}
+/* The ⌘K launcher: a cream field set into the white bar. */
 .mbar__search {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  width: 280px;
-  height: 32px;
-  margin-left: 16px;
-  padding: 0 6px 0 10px;
-  border-radius: var(--r-md);
-  background: var(--fill-3);
-  box-shadow: inset 0 0 0 1px var(--border);
+  gap: 10px;
+  width: min(320px, 100%);
+  min-width: 0;
+  height: 42px;
+  padding: 0 8px 0 16px;
+  border-radius: var(--r-pill);
+  background: var(--canvas);
+  box-shadow: inset 0 0 0 1px var(--separator);
   color: var(--label-3);
-  font-size: 13px;
-  font-weight: 450;
+  font-size: 14px;
+  font-weight: 400;
   transition:
-    background-color var(--dur-1) var(--ease-out),
-    box-shadow var(--dur-1) var(--ease-out),
-    color var(--dur-1) var(--ease-out);
+    box-shadow var(--dur-2) var(--ease-out),
+    color var(--dur-2) var(--ease-out);
 }
 .mbar__search span {
   flex: 1;
+  min-width: 0;
   text-align: left;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.mbar__search .kbd {
+  height: 24px;
+  padding: 0 7px;
+  border-radius: var(--r-pill);
 }
 .mbar__search:hover {
   color: var(--label-2);
   box-shadow: inset 0 0 0 1px var(--border-strong);
 }
+/* The sections sit on a cream track; the current one is a navy pill that slides from tab to tab. */
+.mbar__nav {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px;
+  border-radius: var(--r-pill);
+  background: var(--canvas);
+  box-shadow: inset 0 0 0 1px var(--separator);
+}
+.mbar__tab {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 40px;
+  border-radius: var(--r-pill);
+  color: var(--label-3);
+  transition: color 200ms var(--ease-out);
+}
+.mbar__tab::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: var(--bg-hover);
+  opacity: 0;
+  scale: 0.8;
+  transition:
+    opacity 200ms var(--ease-out),
+    scale 260ms var(--ease-out);
+}
+@media (hover: hover) {
+  .mbar__tab:hover {
+    color: var(--label);
+  }
+  .mbar__tab:not(.is-active):hover::before {
+    opacity: 1;
+    scale: 1;
+  }
+}
+/* Icons that knock out their detail in the page colour knock out in navy on the pill. */
+.mbar__tab.is-active {
+  --bg: var(--primary);
+  color: var(--on-primary);
+}
+.mbar__tab svg {
+  position: relative;
+  z-index: 1;
+}
+.mbar__tab:active svg {
+  scale: 0.9;
+}
+.mbar__tab svg {
+  transition: scale 160ms var(--ease-out);
+}
+.mbar__tab-pill {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  border-radius: var(--r-pill);
+  background: var(--primary);
+  box-shadow:
+    var(--btn-highlight),
+    0 8px 18px -10px rgba(15, 23, 42, 0.7);
+}
+.mbar__tab .badge {
+  z-index: 2;
+  top: 3px;
+  right: 9px;
+  box-shadow: 0 0 0 2px var(--canvas);
+}
 .mbar__write {
   display: inline-flex;
   align-items: center;
-  gap: 7px;
-  height: 32px;
-  padding: 0 12px 0 10px;
-  margin-right: 6px;
-  border-radius: var(--r-md);
+  gap: 8px;
+  height: 42px;
+  padding: 0 18px 0 15px;
+  margin-right: 4px;
+  border-radius: var(--r-pill);
   background: var(--primary);
   box-shadow: var(--btn-highlight);
   color: var(--on-primary);
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 500;
-  transition: background-color var(--dur-1) var(--ease-out);
+  transition:
+    background-color var(--dur-1) var(--ease-out),
+    scale 160ms var(--ease-out);
 }
 .mbar__write:hover {
   background: var(--primary-hover);
 }
+.mbar__write:active {
+  scale: 0.97;
+}
+/* Messages and notifications sit in cream circles, like the reference's. */
 .mbar .icon-btn {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: var(--canvas);
+  box-shadow: inset 0 0 0 1px var(--separator);
   color: var(--label-2);
 }
 .mbar .icon-btn:hover,
 .mbar .icon-btn.is-active {
   color: var(--label);
+  background: var(--canvas);
+  box-shadow: inset 0 0 0 1px var(--border-strong);
 }
-@media (max-width: 960px) {
+.mbar .icon-btn .badge {
+  top: 2px;
+  right: 1px;
+  box-shadow: 0 0 0 2px var(--card);
+}
+.mbar__rule {
+  width: 1px;
+  height: 28px;
+  margin: 0 6px;
+  background: var(--separator-strong);
+}
+@media (max-width: 1239px) {
+  .account__name,
+  .account__chev {
+    display: none;
+  }
+  .account__btn {
+    padding: 4px;
+  }
+}
+@media (max-width: 1099px) {
   .mbar__search {
-    width: 32px;
+    width: 42px;
     padding: 0;
     justify-content: center;
-    margin-left: 0;
   }
   .mbar__search span,
   .mbar__search kbd,
   .mbar__write span {
     display: none;
   }
+  .mbar__write {
+    width: 42px;
+    padding: 0;
+    justify-content: center;
+    margin-right: 0;
+  }
+  .mbar__tab {
+    width: 46px;
+  }
+  .mbar__rule {
+    display: none;
+  }
+}
+@media (max-width: 899px) {
+  .mbar {
+    padding-right: 14px;
+    gap: 10px;
+  }
+  .mbar .wordmark__text {
+    display: none;
+  }
+  .mbar__tab {
+    width: 42px;
+  }
 }
 
-/* ── Desktop: left sidebar ─────────────────────────────── */
+/* ── Desktop: every destination, in a drawer that slides out as a card ── */
 .sidebar {
   position: fixed;
-  top: var(--topbar-h);
-  bottom: 0;
-  left: 0;
+  top: calc(var(--topbar-h) + 12px);
+  bottom: 12px;
+  left: 12px;
   z-index: 35;
-  width: var(--sidebar-w);
-  padding: 14px 0 40px;
+  width: 264px;
+  padding: 16px 0 28px;
   overflow-y: auto;
   overscroll-behavior: contain;
   scrollbar-width: none;
-  background: var(--bg);
-  border-right: 1px solid var(--separator);
-  transform: translateX(-100%);
+  border-radius: var(--r-card);
+  background: var(--card);
+  transform: translateX(calc(-100% - 24px));
   visibility: hidden;
   transition:
     transform 420ms var(--ease-drawer),
@@ -213,10 +350,10 @@
   position: relative;
   display: flex;
   align-items: center;
-  gap: 10px;
-  height: 32px;
-  padding: 0 10px;
-  border-radius: var(--r-sm);
+  gap: 12px;
+  height: 38px;
+  padding: 0 12px;
+  border-radius: var(--r-md);
   color: var(--label-2);
   font-size: 14px;
   font-weight: 450;
@@ -239,9 +376,13 @@
   position: absolute;
   inset: 0;
   z-index: 0;
-  border-radius: var(--r-sm);
-  background: var(--bg-selected);
-  box-shadow: inset 0 0 0 1px var(--separator);
+  border-radius: var(--r-md);
+  background: var(--primary);
+  box-shadow: var(--btn-highlight);
+}
+.sidebar__item.is-active {
+  --bg: var(--primary);
+  color: var(--on-primary);
 }
 .sidebar__item > :not(.sidebar__active) {
   position: relative;
@@ -329,29 +470,49 @@
 
 .account {
   position: relative;
-  margin-left: 6px;
 }
+/* You, as a chip: your photo, your name, and the menu behind it. */
 .account__btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  height: 44px;
+  padding: 4px 12px 4px 4px;
+  border-radius: var(--r-pill);
+  color: var(--label);
+  transition: background-color var(--dur-2) var(--ease-out);
+}
+.account__btn:hover,
+.account__btn[aria-expanded='true'] {
+  background: var(--bg-hover);
+}
+.account__btn img {
   width: 36px;
   height: 36px;
   border-radius: 50%;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-}
-.account__btn img {
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
   object-fit: cover;
+  box-shadow: 0 0 0 2px var(--card), 0 0 0 3.5px var(--separator-strong);
+}
+.account__name {
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+}
+.account__chev {
+  color: var(--label-3);
+  transition: rotate 260ms var(--ease-out);
+}
+.account__btn[aria-expanded='true'] .account__chev {
+  rotate: 180deg;
 }
 .menu {
   position: absolute;
-  top: calc(100% + 8px);
+  top: calc(100% + 10px);
   right: 0;
-  width: 264px;
+  width: 272px;
   background: var(--bg-elevated);
-  border-radius: var(--r-popover);
+  border-radius: var(--r-lg);
   box-shadow: var(--shadow-popover);
   padding: 6px;
   transform-origin: top right;
@@ -415,38 +576,55 @@
   color: var(--tint-text);
 }
 
-/* ── Mobile tab bar ───────────────────────────────────── */
+/* ── Mobile tab bar: a white pill floating over the page; the current tab is a navy pill that slides ── */
 .tabbar {
   position: fixed;
-  inset: auto 0 0 0;
+  left: 12px;
+  right: 12px;
+  bottom: calc(var(--safe-bottom) + 10px);
   z-index: 40;
-  height: calc(var(--tabbar-h) + var(--safe-bottom));
-  padding-bottom: var(--safe-bottom);
+  height: 64px;
+  padding: 6px;
   display: grid;
   grid-template-columns: repeat(5, 1fr);
-  background: var(--bar-bg);
+  gap: 2px;
+  border-radius: 26px;
+  background: var(--topbar-bg);
   -webkit-backdrop-filter: var(--bar-blur);
   backdrop-filter: var(--bar-blur);
-  border-top: var(--hairline) solid var(--separator);
+  box-shadow:
+    0 0 0 1px var(--separator),
+    0 18px 40px -18px rgba(15, 23, 42, 0.4);
 }
 .tabbar__item {
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-start;
-  padding-top: 5px;
-  gap: 1px;
+  justify-content: center;
+  gap: 2px;
+  border-radius: 20px;
   color: var(--label-3);
   -webkit-touch-callout: none;
+  transition: color 200ms var(--ease-out);
 }
-/* Restrained by the brand's Minimal Blue Principle: the selected tab is Deep Slate Navy. */
 .tabbar__item.is-active {
-  color: var(--label);
+  --bg: var(--primary);
+  color: var(--on-primary);
+}
+.tabbar__pill {
+  position: absolute;
+  inset: 0;
+  border-radius: 20px;
+  background: var(--primary);
+  box-shadow:
+    var(--btn-highlight),
+    0 10px 20px -12px rgba(15, 23, 42, 0.8);
 }
 .tabbar__icon {
   position: relative;
   display: inline-flex;
-  height: 29px;
+  height: 26px;
   align-items: center;
 }
 .tabbar__glyph {
@@ -454,16 +632,15 @@
 }
 .tabbar__icon .badge {
   top: -3px;
-  right: -9px;
+  right: -10px;
+  box-shadow: 0 0 0 2px var(--card);
 }
 .tabbar__label {
+  position: relative;
   font-size: 10px;
   line-height: 12px;
-  font-weight: 400;
-  letter-spacing: 0.01em;
-}
-.tabbar__item.is-active .tabbar__label {
   font-weight: 500;
+  letter-spacing: 0.01em;
 }
 
 /* ── Page & navigation bar ────────────────────────────── */
@@ -476,48 +653,40 @@
 .page--wide {
   max-width: 1280px;
 }
-/* Medium's layout: a reading column and a right-hand column behind a full-height hairline. */
+/* Two columns on the dashboard's cream: the page's content, and a stack of cards beside it. */
 .page--rail {
-  max-width: 1336px;
-  padding-bottom: 0;
+  max-width: 1320px;
 }
 .page__cols {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 344px;
-  min-height: calc(100dvh - var(--topbar-h));
+  grid-template-columns: minmax(0, 1fr) 340px;
+  gap: 28px;
+  align-items: start;
 }
 .page__main {
   width: 100%;
   min-width: 0;
-  max-width: 728px;
+  max-width: 760px;
   margin: 0 auto;
-  padding: 0 48px 72px 0;
+  padding: 0 0 72px;
 }
 .page__rail {
   display: flex;
   flex-direction: column;
-  gap: 40px;
+  gap: 20px;
   min-width: 0;
-  padding: 44px 0 48px 40px;
-  border-left: 1px solid var(--separator);
+  padding: 44px 0 48px;
 }
 .page__rail-mobile {
   display: flex;
   flex-direction: column;
-  gap: 36px;
-  margin-top: 40px;
-  padding-top: 32px;
-  border-top: 1px solid var(--separator);
+  gap: 16px;
+  margin-top: 32px;
 }
 @media (max-width: 1099px) {
   .page__cols {
-    grid-template-columns: minmax(0, 1fr) 296px;
-  }
-  .page__main {
-    padding-right: 32px;
-  }
-  .page__rail {
-    padding-left: 28px;
+    grid-template-columns: minmax(0, 1fr) 300px;
+    gap: 20px;
   }
 }
 .page__sentinel {

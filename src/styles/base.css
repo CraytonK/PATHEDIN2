@@ -367,9 +367,12 @@ ol {
 .resp__sort-menu {
   --bg: var(--bg-elevated);
 }
-/* Cards on the canvas: knockouts match the card, not the page. */
-.rail-card {
-  --bg: var(--bg-grouped);
+/* Cards on the canvas: knockouts match the card, not the page; wells in them use --canvas. */
+.rail-card,
+.dash-card,
+.me-card,
+.post {
+  --bg: var(--card);
 }
 .rail-card.immersive {
   --bg: #111a31;
@@ -397,9 +400,6 @@ ol {
 /* ── Raised panels carry an edge and a faint top light ──────────────
    Each component keeps any shadow it sets itself; these are the panels that relied on a flat fill. */
 .story-lead__art,
-.fguide,
-.route-post,
-.rail-card,
 .glist__rows,
 .cm__route,
 .composer,
@@ -429,9 +429,8 @@ ol {
 @media (hover: hover) and (pointer: fine) {
   .dcard::after,
   .gcard::after,
-  .fguide::after,
-  .door__top::after,
-  .route-post::after {
+  .post::after,
+  .door__top::after {
     content: '';
     position: absolute;
     inset: 0;
@@ -452,9 +451,8 @@ ol {
   }
   .dcard:hover::after,
   .gcard:hover::after,
-  .fguide:hover::after,
-  .door:hover .door__top::after,
-  .route-post:hover::after {
+  .post:hover::after,
+  .door:hover .door__top::after {
     opacity: 1;
   }
 
@@ -473,9 +471,7 @@ ol {
     transform: translate(1.5px, -1.5px);
   }
 }
-.gcard,
-.fguide,
-.route-post {
+.gcard {
   position: relative;
 }
 

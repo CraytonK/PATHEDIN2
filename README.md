@@ -8,7 +8,7 @@ This repository is a working front-end prototype. It's a React + TypeScript sing
 - **Behaviour** follows Apple's [Human Interface Guidelines](https://developer.apple.com/design/human-interface-guidelines).
 - **Look:** Soft Cream paper with Midnight Navy ink. Where the product shows itself (the intro, a Path cover, your week), it opens a Midnight Navy panel lit by route silk, with glass cards on it. Midnight is the dark appearance. See [DESIGN.md](DESIGN.md).
 - **Type:** Space Grotesk for the interface, headings and wordmark (large, light headings), and Charter for stories.
-- **Layout:** an intro page, a slim top bar with a ⌘K launcher and a left sidebar, and a For you feed beside a right-hand column of layered cards.
+- **Layout:** an intro page, then a dashboard: a white top bar with the sections as icons in the middle (the rest of the app in a drawer), and every screen's content on white cards. Home is three columns: your profile card, People worth knowing in rings above the For you feed, and your week as a calendar and schedule beside Your Path, Office Hours and your communities.
 - **Signature pieces:** the ⌘K palette ("Go anywhere on your Path"), Path Guide office hours you can book (with a real calendar file), and a route band that draws each person's Path on their card.
 
 It ships with a believable, interconnected sample network centred on Maya Okafor, an MSc chemistry student heading for pharmaceutical R&D.
@@ -70,7 +70,7 @@ src/
   components/
     path/        TransitMap, PathStrip, PathHint (one-line Path + hover card), Align (Compare), Confluence, PathLens,
                  PathCover (profile cover), RouteBand (the Path across a person's card)
-    chrome.tsx   top bar with the ⌘K launcher and sidebar, iPhone tab bar, navigation bars with large titles, sheets
+    chrome.tsx   top bar with the section icons, ⌘K launcher and account chip, the drawer, the floating iPhone tab bar, navigation bars with large titles, sheets
     CommandPalette.tsx  ⌘K: go anywhere on your Path
     Booking.tsx  booking a Guide's office hours, and the confirmation ticket
     Post.tsx     the feed row (kind label, byline, title, subtitle, why it's here, thumbnail)
@@ -81,7 +81,7 @@ src/
     …            content building blocks (people, stories, questions, decisions, communities)
   screens/       one file per area of the product (Landing.tsx is the signed-out intro page and sign-in card;
                  Write.tsx is the editor and MyPost.tsx a published post)
-  styles/        tokens (type ramp, palette, dark mode), self-hosted fonts and base styles
+  styles/        tokens (type ramp, palette, dark mode), self-hosted fonts, base styles, and cards.css (the dashboard card language every screen shares)
   assets/fonts/  WOFF2 fonts: Space Grotesk (with its arrows), Charis SIL, and a small symbols subset
 ```
 

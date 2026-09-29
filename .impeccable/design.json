@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-09-29T20:45:34Z",
+  "generatedAt": "2026-09-29T21:29:03Z",
   "title": "Design System: PathedIn",
   "extensions": {
     "colorMeta": {
@@ -22,16 +22,16 @@
       "cream-card": {
         "role": "neutral",
         "displayName": "Cream Card",
-        "canonical": "#fffcf8",
+        "canonical": "#ffffff",
         "tonalRamp": [
-          "oklch(15% 0.006 75)",
-          "oklch(25% 0.006 75)",
-          "oklch(35% 0.006 75)",
-          "oklch(45% 0.006 75)",
-          "oklch(55% 0.006 75)",
-          "oklch(68% 0.006 75)",
-          "oklch(82% 0.006 75)",
-          "oklch(95% 0.006 75)"
+          "oklch(15% 0.000 90)",
+          "oklch(25% 0.000 90)",
+          "oklch(35% 0.000 90)",
+          "oklch(45% 0.000 90)",
+          "oklch(55% 0.000 90)",
+          "oklch(68% 0.000 90)",
+          "oklch(82% 0.000 90)",
+          "oklch(95% 0.000 90)"
         ]
       },
       "cream-floating": {
@@ -684,18 +684,25 @@
   ],
   "narrative": {
     "northStar": "Navy Ink on Cream Paper",
-    "overview": "PathedIn is a calm, confident place to plan a career. The page is warm cream paper; the ink is Midnight Navy. Where the product has something to show — the intro, a person's Path, your week — it opens a Midnight Navy panel, lit by route silk, and the Path draws itself across it with glass cards floating on top. The look follows the reference the user chose: generous space, big light headings in Space Grotesk, numerals that carry a small blue unit, and navy panels with glass on them.\n\nDensity stays an app's density. Rows are 32px, controls 30 to 44px, and cards sit on the cream with a hairline and a soft navy-tinted fall-off. Headings are set large and regular rather than heavy, so the page reads as considered rather than loud. Motion follows the intro: things assemble once when they arrive. Lines rise out of a soft blur, cards rise a beat apart, Paths and silk draw themselves, numbers count up. Then everything holds still. Feedback is quick, and one keystroke, ⌘K, reaches anyone or anything.\n\nSoft Cream is the default. Midnight is the same pair turned over: a Midnight Navy page with cream type, and primary actions that fill with cream. The graphite dev-tool look this replaces, and the generic white SaaS template, are what this world refuses.",
+    "overview": "PathedIn is a calm, confident place to plan a career. The page is warm cream paper; the ink is Midnight Navy. Where the product has something to show — the intro, a person's Path, your week — it opens a Midnight Navy panel, lit by route silk, and the Path draws itself across it with glass cards floating on top. The look follows the reference the user chose: generous space, big light headings in Space Grotesk, numerals that carry a small blue unit, and navy panels with glass on them.\n\nThe app is laid out as a dashboard, after the social dashboard the user shared (September 2026): a white top bar with the sections as icons in the middle, and every screen's content on white cards over the cream, with 20px corners, a faint navy hairline and a long, soft fall-off. Home is three columns: you on the left, the feed in the middle under a row of faces in rings, and your week on the right. Density stays an app's density: controls are 30 to 44px. Headings are set large and regular rather than heavy, so the page reads as considered rather than loud. Motion follows the intro: things assemble once when they arrive. Lines rise out of a soft blur, cards rise a beat apart, Paths and silk draw themselves, numbers count up. Then everything holds still. Feedback is quick, and one keystroke, ⌘K, reaches anyone or anything.\n\nSoft Cream is the default. Midnight is the same pair turned over: a Midnight Navy page with cream type, and primary actions that fill with cream. The graphite dev-tool look this replaces, and the generic white SaaS template, are what this world refuses.",
     "keyCharacteristics": [
       "Cream paper, navy ink. Navy carries the weight: primary actions, the walked Path, immersive panels.",
       "One signal blue does the small, bright jobs: links, the road ahead, focus, and the unit on a numeral.",
       "Immersive navy panels are where the product shows itself, lit by route silk with glass cards on them.",
       "Space Grotesk for every interface word, heading and the bold wordmark; Charter only for long-form reading.",
+      "White cards on the cream carry every screen's content; wells inside them are cream again, never a second card.",
+      "The current thing is a navy pill: the section in the top bar, the tab in a tab track, the tab on the phone, today in the week. It slides when you move.",
       "Things assemble on arrival and then hold still. No loops, no bounce."
     ],
     "rules": [
       {
         "name": "The Ink and Signal Rule",
         "body": "Navy for anything with weight, signal blue for anything small and bright. A large area of signal blue, or navy used for a hairline accent, is the wrong colour for the job.",
+        "section": "colors"
+      },
+      {
+        "name": "The Navy Pill Rule",
+        "body": "Whatever is current or chosen sits in a navy pill with cream type, and the pill slides from the old choice to the new one. Nothing else on a screen is a navy pill except the primary action.",
         "section": "colors"
       },
       {
@@ -715,7 +722,12 @@
       },
       {
         "name": "The Glass on Navy Rule",
-        "body": "Glass only exists on an immersive panel. On cream, cards are solid warm white.",
+        "body": "Glass only exists on an immersive panel. On cream, cards are solid white.",
+        "section": "elevation"
+      },
+      {
+        "name": "The One Card Deep Rule",
+        "body": "Cards never nest. Something set into a card (a quoted request, a day tile, a tag, a route line, a reply bubble) is a cream well with no shadow.",
         "section": "elevation"
       }
     ],
@@ -725,12 +737,16 @@
       "**Do** show the product on an immersive navy panel when a screen has one thing to show, and keep it to one or two per screen.",
       "**Do** let things assemble once on arrival: rise, draw, count up. Then hold still.",
       "**Do** draw every Path with the transit vocabulary: solid walked track, ringed present, dashed future, open destination.",
-      "**Do** use 8px corners for anything pressed, 16px for cards and 20px for panels, and keep pills for tags and counts.",
+      "**Do** put content on white cards on the cream, 20px corners, and keep what's inside a card as cream wells.",
+      "**Do** mark what's current with the sliding navy pill.",
+      "**Do** use 8px corners for small pressed controls and pills for tags, counts, tab tracks and the top bar.",
       "**Do** respect Reduce Motion with an intentional quieter path."
     ],
     "donts": [
       "**Don't** bring back the graphite world, Schibsted Grotesk or the Playfair wordmark.",
-      "**Don't** use large areas of signal blue, gradient text, neon edges or coloured side stripes.",
+      "**Don't** use large areas of signal blue, gradient text, neon edges or coloured side stripes. The one exception is the schedule's 4px event bar, a calendar marker from the reference that says what kind of event it is.",
+      "**Don't** nest a card in a card, or bring back rows between hairlines on the cream.",
+      "**Don't** dock the sidebar beside the content again; the drawer holds it.",
       "**Don't** put glass on cream. Glass lives only on navy.",
       "**Don't** set a label above a heading as a kicker or eyebrow, even where the reference does. Headings carry their own weight.",
       "**Don't** set interface text in Charter, or use a synthesized italic of Space Grotesk.",
