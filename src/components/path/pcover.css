@@ -4,6 +4,8 @@
 .pcover {
   /* Knockouts around nodes are a solid navy close to the panel behind them. */
   --pcover-knock: #111a31;
+  /* The silk runs along the line and fades out before the step names, so it never crosses them. */
+  --silk-mask: linear-gradient(180deg, #000 0, #000 58px, transparent 94px);
   margin: 0 0 36px;
   padding: 34px 0 0;
   border-radius: var(--r-xl);
@@ -169,7 +171,7 @@
   gap: 16px;
   padding: 14px 22px;
   border-top: 1px solid var(--separator);
-  background: rgba(5, 9, 18, 0.22);
+  background: var(--bg-sunken);
   font-size: 13px;
   color: var(--label-2);
 }

@@ -64,6 +64,8 @@
 /* Hero: text left, illustration bleeding off the right edge. */
 /* The hero is a Midnight Navy stage set into the cream page, lit by route silk, as in the reference. */
 .landing__stage {
+  /* The silk lives behind the composition, clear of the headline and the sentence. */
+  --silk-mask: linear-gradient(90deg, transparent 0, transparent 44%, #000 60%);
   flex: 1;
   display: flex;
   margin: 0 12px;
@@ -235,6 +237,9 @@
 
 /* Narrow screens: the illustration becomes a band across the top of the hero. */
 @media (max-width: 1000px) {
+  .landing__stage {
+    --silk-mask: linear-gradient(180deg, #000 0, #000 calc(clamp(220px, 34vh, 360px) - 72px), transparent clamp(220px, 34vh, 360px));
+  }
   .landing__hero {
     flex-direction: column;
     align-items: stretch;

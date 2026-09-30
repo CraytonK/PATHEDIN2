@@ -116,7 +116,10 @@
   --immersive-ink: #fff7ed;
   --immersive-ink-2: rgba(255, 247, 237, 0.68);
   --immersive-line: rgba(143, 168, 255, 0.5);
-  --immersive-card: rgba(255, 247, 237, 0.07);
+  /* Surfaces on a navy panel are solid, so the route silk never shows through the words on them. */
+  --immersive-card: #172140;
+  --immersive-well: #1d2848;
+  --immersive-fill: #26335a;
   --immersive-card-border: rgba(255, 247, 237, 0.14);
   --immersive-surface:
     radial-gradient(120% 90% at 85% 0%, var(--immersive-glow), transparent 60%),
@@ -291,24 +294,25 @@
 /*
   Immersive panels: a Midnight Navy surface in either appearance, where the product shows itself (the intro,
   a profile's Path, what's coming up). Everything inside takes the midnight palette, so the Path, cards and
-  buttons in it need no special cases. Cards on it are glass: a translucent cream fill with a cream hairline.
+  buttons in it need no special cases. Cards, wells, chips and knockouts on it are solid navy lifts with a cream
+  hairline, never see-through, so the route silk behind them never crosses their words.
 */
 .immersive {
   color-scheme: dark;
   --bg: var(--immersive-bg);
-  --bg-grouped: rgba(255, 247, 237, 0.06);
+  --bg-grouped: var(--immersive-card);
   --bg-elevated: #1c2847;
-  --bg-sunken: rgba(5, 9, 18, 0.35);
-  --bg-hover: rgba(255, 247, 237, 0.06);
-  --bg-press: rgba(255, 247, 237, 0.1);
-  --bg-selected: rgba(255, 247, 237, 0.08);
+  --bg-sunken: #0b1122;
+  --bg-hover: var(--immersive-well);
+  --bg-press: var(--immersive-fill);
+  --bg-selected: #222e52;
   --label: #fff7ed;
   --label-2: rgba(255, 247, 237, 0.7);
   --label-3: rgba(255, 247, 237, 0.5);
   --label-4: rgba(255, 247, 237, 0.22);
-  --fill: rgba(255, 247, 237, 0.1);
-  --fill-2: rgba(255, 247, 237, 0.1);
-  --fill-3: rgba(255, 247, 237, 0.06);
+  --fill: var(--immersive-fill);
+  --fill-2: var(--immersive-fill);
+  --fill-3: var(--immersive-well);
   --separator: rgba(255, 247, 237, 0.1);
   --separator-strong: rgba(255, 247, 237, 0.16);
   --border: rgba(255, 247, 237, 0.14);
@@ -316,8 +320,8 @@
   --tint: #8fa8ff;
   --tint-strong: #8fa8ff;
   --tint-text: #b4c4ff;
-  --tint-soft: rgba(143, 168, 255, 0.18);
-  --tint-softer: rgba(143, 168, 255, 0.1);
+  --tint-soft: #2d3962;
+  --tint-softer: #232f53;
   --tint-border: rgba(143, 168, 255, 0.36);
   --on-tint: #0f172a;
   --future-soft: rgba(143, 168, 255, 0.42);
@@ -325,14 +329,14 @@
   --primary-hover: #ffffff;
   --on-primary: #0f172a;
   --ink: #fff7ed;
-  --ink-soft: rgba(255, 247, 237, 0.08);
+  --ink-soft: #2a324e;
   --path-them: rgba(255, 247, 237, 0.5);
   --surface-edge: 0 0 0 1px rgba(255, 247, 237, 0.12), inset 0 1px 0 rgba(255, 247, 237, 0.06);
   --shadow-lift: 0 0 0 1px rgba(255, 247, 237, 0.18), 0 16px 36px -14px rgba(0, 0, 0, 0.5);
   --btn-highlight: inset 0 1px 0 rgba(255, 255, 255, 0.5);
   --edge-light: rgba(255, 247, 237, 0.4);
-  --card: rgba(255, 247, 237, 0.07);
-  --canvas: rgba(255, 247, 237, 0.06);
+  --card: var(--immersive-card);
+  --canvas: var(--immersive-well);
   --card-shadow: 0 0 0 1px rgba(255, 247, 237, 0.12), inset 0 1px 0 rgba(255, 247, 237, 0.06);
   --card-shadow-hover: 0 0 0 1px rgba(255, 247, 237, 0.2), inset 0 1px 0 rgba(255, 247, 237, 0.08);
   --tip-bg: #fff7ed;

@@ -542,7 +542,6 @@ function Guides({ onJoin }: { onJoin: () => void }) {
         </div>
 
         <div className="tour-earn immersive">
-          <RouteSilk lines={14} />
           <h3 className="tour-earn__h">Or guide the moves you’ve made</h3>
           <p className="tour-earn__p">Answer for free, hold free Office Hours, and charge for the rest. PathedIn keeps {Math.round(PLATFORM_FEE * 100)}%.</p>
           <label className="tour-range">

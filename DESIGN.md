@@ -29,6 +29,9 @@ colors:
   signal-blue-text-on-navy: "#a9bcff"
   immersive-deep: "#0a1020"
   immersive-glow: "#1c3a9e"
+  immersive-card: "#172140"
+  immersive-well: "#1d2848"
+  immersive-fill: "#26335a"
   danger: "#b42318"
   danger-on-navy: "#f2877d"
 typography:
@@ -228,7 +231,7 @@ components:
 
 **Creative North Star: "Navy Ink on Cream Paper"**
 
-PathedIn is a calm, confident place to plan a career. The page is warm cream paper; the ink is Midnight Navy. Where the product has something to show — the intro, a person's Path, your week — it opens a Midnight Navy panel, lit by route silk, and the Path draws itself across it with glass cards floating on top. The look follows the reference the user chose: generous space, big light headings in Space Grotesk, numerals that carry a small blue unit, and navy panels with glass on them.
+PathedIn is a calm, confident place to plan a career. The page is warm cream paper; the ink is Midnight Navy. Where the product has something to show — the intro, a person's Path, your week — it opens a Midnight Navy panel, lit by route silk, and the Path draws itself across it with solid navy cards floating on top. The look follows the reference the user chose: generous space, big light headings in Space Grotesk, numerals that carry a small blue unit, and navy panels with cards floating on them.
 
 The app is laid out as a dashboard, after the social dashboard the user shared (September 2026): a white top bar with the sections as icons in the middle, and every screen's content on white cards over the cream, with 20px corners, a faint navy hairline and a long, soft fall-off. Home is three columns: you on the left, the feed in the middle under a row of faces in rings, and your week on the right. Density stays an app's density: controls are 30 to 44px. Headings are set large and regular rather than heavy, so the page reads as considered rather than loud. Motion follows the intro: things assemble once when they arrive. Lines rise out of a soft blur, cards rise a beat apart, Paths and silk draw themselves, numbers count up. Then everything holds still. Feedback is quick, and one keystroke, ⌘K, reaches anyone or anything.
 
@@ -237,7 +240,7 @@ Soft Cream is the default. Midnight is the same pair turned over: a Midnight Nav
 **Key Characteristics:**
 - Cream paper, navy ink. Navy carries the weight: primary actions, the walked Path, immersive panels.
 - One signal blue does the small, bright jobs: links, the road ahead, focus, and the unit on a numeral.
-- Immersive navy panels are where the product shows itself, lit by route silk with glass cards on them.
+- Immersive navy panels are where the product shows itself, lit by route silk, with solid navy cards on them. The silk never runs behind words.
 - Space Grotesk for every interface word, heading and the bold wordmark; Charter only for long-form reading.
 - White cards on the cream carry every screen's content; wells inside them are cream again, never a second card.
 - The current thing is a navy pill: the section in the top bar, the tab in a tab track, the tab on the phone, today in the week. It slides when you move.
@@ -312,7 +315,7 @@ The pieces of the app are unchanged; they are laid out as a dashboard.
 
 ## Elevation & Depth
 
-Cards are white on the cream with a faint navy hairline and a long, soft fall-off; under the pointer the fall-off deepens and the card rises 2px. Things that float add a longer shadow. Immersive panels are the deepest surface: a navy gradient with a blue glow from the top right, route silk drawn across it, and glass cards (translucent cream fill, cream hairline) on top. The dark appearance keeps the same structure with cream hairlines and darker shadows.
+Cards are white on the cream with a faint navy hairline and a long, soft fall-off; under the pointer the fall-off deepens and the card rises 2px. Things that float add a longer shadow. Immersive panels are the deepest surface: a navy gradient with a blue glow from the top right, route silk drawn across it, and solid navy cards (a lifted navy with a cream hairline) on top. Nothing on a navy panel is see-through: cards, wells, chips, buttons, knockouts and a cover's caption strip are all solid (the user's call, September 30, 2026), so the silk never shows through words. The dark appearance keeps the same structure with cream hairlines and darker shadows.
 
 ### Shadow Vocabulary
 - **Card** (`box-shadow: 0 0 0 1px rgba(15,23,42,0.055), 0 1px 2px rgba(15,23,42,0.035), 0 16px 36px -26px rgba(15,23,42,0.22)`): every card at rest (`--card-shadow`, also `--surface-edge`).
@@ -323,7 +326,9 @@ Cards are white on the cream with a faint navy hairline and a long, soft fall-of
 - **Stage** (`box-shadow: 0 24px 60px -30px rgba(15,23,42,0.55)`): immersive navy panels on cream.
 
 ### Named Rules
-**The Glass on Navy Rule.** Glass only exists on an immersive panel. On cream, cards are solid white.
+**The Solid on Navy Rule.** Surfaces on an immersive panel are solid navy lifts (#172140 for cards and knockouts, #1d2848 for wells and hovers, #26335a for chips and quiet buttons), never translucent, so nothing behind them shows through their words. On cream, cards are solid white.
+
+**The Clear Words Rule.** Route silk lives only where a panel has no words: behind the intro's composition, along the top of a Path cover above the step names, to the right of the destination's words, and on the profile card's cover. Each panel masks the silk away from its text (`--silk-mask`); panels that are all text (Your Path this week, the earnings card, Become a Guide) keep the glow and leave the silk out.
 
 **The One Card Deep Rule.** Cards never nest. Something set into a card (a quoted request, a day tile, a tag, a route line, a reply bubble) is a cream well with no shadow.
 
@@ -376,7 +381,7 @@ Every group uses the same person card (face, name and relation tag, headline, wh
 - **Your communities:** a four-face mosaic, the name, and who's here now beside a live dot.
 
 ### Immersive Panel (signature)
-A Midnight Navy surface in either appearance: a navy gradient with a blue glow and route silk (26 thin routes flowing to one destination, yours brighter, drawn in once on arrival). Anything inside takes the midnight palette automatically (the `.immersive` class), so Paths, buttons and cards need no special cases. Used for the intro stage, a profile's Path cover and Your Path this week.
+A Midnight Navy surface in either appearance: a navy gradient with a blue glow and route silk (26 thin routes flowing to one destination, yours brighter, drawn in once on arrival). Anything inside takes the midnight palette automatically (the `.immersive` class), so Paths, buttons and cards need no special cases. Used for the intro stage, a profile's Path cover and Your Path this week. The silk is drawn only where there are no words (see The Clear Words Rule).
 
 ### Stat Numerals
 A number set at 44px regular with tight tracking, an optional signal-blue unit and a live dot for things happening now, with its meaning beneath in secondary ink. It counts up once, the first time it comes into view.
@@ -439,7 +444,7 @@ A two-pane sheet: the Guide on a recessed cream panel, then three session tiles,
 - **Don't** nest a card in a card, or bring back rows between hairlines on the cream.
 - **Don't** dock the sidebar beside the content again; the drawer holds it.
 - **Don't** give a kind of post or a Network group its own layout; tell them apart with the tag, the thumbnail, the strip or the signal line. Don't put a card field for payment anywhere in the prototype.
-- **Don't** put glass on cream. Glass lives only on navy.
+- **Don't** make anything on a navy panel see-through, or let route silk run behind words.
 - **Don't** set a label above a heading as a kicker or eyebrow, even where the reference does. Headings carry their own weight.
 - **Don't** set interface text in Charter, or use a synthesized italic of Space Grotesk.
 - **Don't** use Unicode glyphs or emoji as icons. Icons are drawn SVG in one stroke weight.

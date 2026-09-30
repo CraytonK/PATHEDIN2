@@ -5,4 +5,8 @@
   width: 100%;
   height: 100%;
   pointer-events: none;
+  /* The silk lives where a panel has no words: each panel masks it away from its text with --silk-mask.
+     Panels that are all text (Your Path this week, the earnings card, Become a Guide) don't draw it at all. */
+  -webkit-mask-image: var(--silk-mask, none);
+  mask-image: var(--silk-mask, none);
 }

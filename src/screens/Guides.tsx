@@ -9,7 +9,6 @@ import { openSpots, useOpenSpots } from '../lib/booking';
 import { useApp } from '../lib/store';
 import { Avatar, PersonName, Segmented } from '../components/ui';
 import { IconStar } from '../components/icons';
-import { RouteSilk } from '../components/path/RouteSilk';
 import { communities } from '../data/communities';
 import type { ServiceKind } from '../data/types';
 import { communityGuides, economyOf, priceLabel, serviceKinds, servicesOf, topStanding } from '../lib/guides';
@@ -130,7 +129,6 @@ function BecomeGuide() {
   const mine = useApp((s) => s.myGuide);
   return (
     <section className="become immersive">
-      <RouteSilk lines={12} />
       <h2 className="become__h">{mine?.live ? 'You’re a Path Guide' : 'You’ve made moves others are weighing'}</h2>
       <p className="become__p">{mine?.live ? 'Your Guide profile is live. Keep it current as your Path grows.' : 'Lucas already asked you about BSc Chem → Research. Guide the moves you’ve made, for free or for a fee.'}</p>
       <Link to="/guide/setup" className="become__cta">

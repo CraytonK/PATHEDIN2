@@ -6,7 +6,7 @@ PathedIn is a professional network built around one object: the **Path**. A Path
 
 This repository is a working front-end prototype. It's a React + TypeScript single-page app, built mobile-first.
 - **Behaviour** follows Apple's [Human Interface Guidelines](https://developer.apple.com/design/human-interface-guidelines).
-- **Look:** Soft Cream paper with Midnight Navy ink. Where the product shows itself (the intro, a Path cover, your week), it opens a Midnight Navy panel lit by route silk, with glass cards on it. Midnight is the dark appearance. See [DESIGN.md](DESIGN.md).
+- **Look:** Soft Cream paper with Midnight Navy ink. Where the product shows itself (the intro, a Path cover, your week), it opens a Midnight Navy panel lit by route silk, with solid cards on it; the silk never runs behind words. Midnight is the dark appearance. See [DESIGN.md](DESIGN.md).
 - **Type:** Space Grotesk for the interface, headings and wordmark (large, light headings), and Charter for stories.
 - **Layout:** an intro page, then a dashboard: a white top bar with the sections as icons in the middle (the rest of the app in a drawer), and every screen's content on white cards. Home is three columns: your profile card, People worth knowing in rings above the For you feed, and your week as a calendar and schedule beside Your Path, Office Hours and your communities.
 - **Signature pieces:** the ⌘K palette ("Go anywhere on your Path"), Path Guide office hours you can book (with a real calendar file), and a route band that draws each person's Path on their card.

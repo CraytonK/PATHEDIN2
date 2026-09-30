@@ -785,6 +785,8 @@
   margin-bottom: 32px;
 }
 .tour-dest {
+  /* The words keep the left; the silk only draws to the right of them (and not at all on a phone). */
+  --silk-mask: linear-gradient(90deg, transparent 0, transparent 640px, #000 800px);
   padding: 56px 48px;
   border-radius: var(--r-2xl);
   box-shadow: 0 40px 80px -40px rgba(15, 23, 42, 0.6);
@@ -798,6 +800,7 @@
 }
 .tour-dest__list {
   position: relative;
+  max-width: 560px;
   display: flex;
   flex-wrap: wrap;
   gap: 10px 24px;

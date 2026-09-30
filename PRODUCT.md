@@ -37,7 +37,7 @@ The Path is the unit of everything. People are placed on your Path (Path Twins, 
 - **Type the user pointed to:** Space Grotesk, the face of the reference site they supplied, with its large, light headings.
 - **The Path drawn as a transit line:** walked steps solid, the present marked, the future dashed toward an open destination ring, and "you are here".
 - **The user's references:**
-  - The look follows a fintech site the user shared: immersive navy panels with glass cards, big numerals with coloured units, and generous white space.
+  - The look follows a fintech site the user shared: immersive navy panels with cards on them, big numerals with coloured units, and generous white space. The user asked (September 30, 2026) for the cards on navy to be solid so the lines behind never come through the text, everywhere.
   - The motion follows Linear, Arc and Raycast, and the intro's own assembling motion, which the user asked to see more of.
   - The layout and feel follow a social dashboard the user shared (September 29, 2026): a white top bar with the sections as icons in the middle, a profile card on the left, a row of faces in rings over a feed of white cards, and a calendar with an upcoming schedule and a communities list on the right. The user asked that every piece of content, action and feature stay the same, and that the whole app take this look.
   - The intro page follows the feature-tour sites the user described (September 30, 2026): visitors scroll down through interactive, moving demos of the real product (key features and what it looks like) before they sign in.

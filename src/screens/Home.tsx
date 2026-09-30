@@ -569,7 +569,6 @@ function Rail({ withMe }: { withMe: boolean }) {
       <WeekCard />
       {withMe && <MeCard />}
       <section className="rail-card rail-card--path immersive">
-        <RouteSilk lines={16} />
         <div className="rail-head">
           <h2 className="rail-h">Your Path this week</h2>
           <Link to="/path" className="rail-more">
@@ -660,7 +659,6 @@ export function Home() {
             <>
               <UpNext />
               <section className="home__pulse immersive">
-                <RouteSilk lines={18} />
                 <div className="home__pulse-head">
                   <h2 className="t-headline">Your Path this week</h2>
                   <Link to="/path" className="t-subhead c-tint">
