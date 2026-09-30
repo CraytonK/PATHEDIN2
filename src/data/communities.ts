@@ -7,7 +7,7 @@ const list: Community[] = [
     to: 'Pharmaceutical R&D',
     title: 'Chemistry → Pharmaceutical R&D',
     kind: 'transition',
-    description: 'For chemists heading into drug discovery and development — whichever route you’re taking to get there.',
+    description: 'For chemists heading into drug discovery and development, whichever route you’re taking to get there.',
     members: 2418,
     guides: 36,
     stages: [
@@ -71,7 +71,7 @@ const list: Community[] = [
     to: 'Pharma R&D',
     title: 'CRO → Pharma R&D',
     kind: 'transition',
-    description: 'For people using a contract research organization as a bridge into pharma — and the people who crossed it.',
+    description: 'For people using a contract research organization as a bridge into pharma, and the people who crossed it.',
     members: 612,
     guides: 11,
     stages: [
@@ -129,7 +129,7 @@ const list: Community[] = [
     to: 'Canada',
     title: 'Newcomers Rebuilding a Science Career',
     kind: 'circumstance',
-    description: 'For scientists who moved to Canada and are rebuilding — credentials, networks, and confidence.',
+    description: 'For scientists who moved to Canada and are rebuilding: credentials, networks, and confidence.',
     members: 980,
     guides: 15,
     stages: [
@@ -221,7 +221,7 @@ export const threads: Thread[] = [
     community: 'chem-pharma',
     author: 'amara',
     title: 'Start here: the routes into pharma R&D, and who to ask about each',
-    body: 'Every week someone asks “what’s the best way in?” There isn’t one. There are about five, and every one of them has people here who walked it. I’ve linked a Guide for each route below — tap their Path to see exactly when they made the move.',
+    body: 'Every week someone asks “what’s the best way in?” There isn’t one. There are about five, and every one of them has people here who walked it. I’ve linked a Guide for each route below. Tap their Path to see exactly when they made the move.',
     replies: [
       { author: 'grace', body: 'Adding the QC route since it’s always the forgotten one. Happy to talk to anyone on it.', ago: '3w' },
       { author: 'tomas', body: 'PhD route here. I’ll be blunt about the costs if you ask.', ago: '3w' },
@@ -274,10 +274,10 @@ export const threads: Thread[] = [
     id: 't-three-weeks',
     community: 'cro-rnd',
     author: 'elena',
-    title: 'Three weeks into R&D after five years at a CRO — what transferred and what didn’t',
+    title: 'Three weeks into R&D after five years at a CRO: what transferred and what didn’t',
     body: 'Transferred: documentation discipline, method development instincts, and being unflappable when an instrument dies at 4 p.m. on a Friday. Didn’t transfer: the pace. R&D has more ambiguity and fewer checklists, and I’m relearning how to decide what matters.',
     replies: [
-      { author: 'fatima', body: 'The ambiguity gets better around month three. Keep a decision log — it helped me enormously.', ago: '2d' },
+      { author: 'fatima', body: 'The ambiguity gets better around month three. Keep a decision log. It helped me enormously.', ago: '2d' },
       { author: 'daniel', body: 'This is really useful. Did your manager care about the CRO years, or only the R&D-relevant bits?', ago: '2d' },
       { author: 'yusuf', body: 'Saving this for the day I make the jump.', ago: '1d' },
     ],
@@ -289,7 +289,7 @@ export const threads: Thread[] = [
     community: 'msc-industry',
     author: 'rafael',
     title: 'Industry internships for summer 2027 open in October. Here’s the list I keep.',
-    body: 'Every year I keep a list of companies in Canada that take MSc-level interns into R&D, with when their postings usually open. Most open in October and close before the holidays. If you’re defending in winter, a post-defence internship is a legitimate route — it’s how I got in.',
+    body: 'Every year I keep a list of companies in Canada that take MSc-level interns into R&D, with when their postings usually open. Most open in October and close before the holidays. If you’re defending in winter, a post-defence internship is a legitimate route. It’s how I got in.',
     replies: [
       { author: 'aisha', body: 'Can confirm, this is exactly how I got to Aldren. Apply before the defence, start after.', ago: '6h' },
     ],
@@ -304,7 +304,7 @@ export const threads: Thread[] = [
     body: 'BSc in chemistry, nine years of teaching. I’m good at explaining things and at documentation (report cards count, right?). Is RA a realistic first step back into industry?',
     replies: [
       { author: 'hannah', body: 'More realistic than you think. Regulatory writing is explaining science precisely to a sceptical reader. That’s what you do all day.', ago: '1d' },
-      { author: 'leila', body: 'Look at regulatory associate roles at smaller companies — they’re more open to non-traditional backgrounds.', ago: '1d' },
+      { author: 'leila', body: 'Look at regulatory associate roles at smaller companies. They’re more open to non-traditional backgrounds.', ago: '1d' },
     ],
     replyCount: 16,
     ago: '2d',
@@ -316,7 +316,7 @@ export const threads: Thread[] = [
     title: 'Does Canadian QC experience count more than six years abroad?',
     body: 'It shouldn’t. But every recruiter asks about “Canadian experience.” I’m working as a lab tech now to get it. Did anyone find a way to make their international experience count?',
     replies: [
-      { author: 'amara', body: 'Yes — describe it in the language Canadian labs use: GMP, the specific instruments, the regulators you worked under. And get one Canadian reference as quickly as you can. It unlocks a lot.', ago: '10h' },
+      { author: 'amara', body: 'Yes. Describe it in the language Canadian labs use: GMP, the specific instruments, the regulators you worked under. And get one Canadian reference as quickly as you can. It unlocks a lot.', ago: '10h' },
       { author: 'grace', body: 'QC teams here value it more than recruiters do. Try to reach the hiring manager, not just the posting.', ago: '8h' },
     ],
     replyCount: 38,
@@ -342,7 +342,7 @@ export const threads: Thread[] = [
     title: 'I’m writing more specs than code. Is that a sign?',
     body: 'Two years as a backend engineer and I’m increasingly the one writing the product spec. My manager says I’m “naturally product-minded.” Is that the beginning of a PM path or just scope creep?',
     replies: [
-      { author: 'marcus', body: 'It’s a sign. Ask to own one small feature end-to-end — discovery to launch — before you ask for the title.', ago: '2h' },
+      { author: 'marcus', body: 'It’s a sign. Ask to own one small feature end-to-end, discovery to launch, before you ask for the title.', ago: '2h' },
       { author: 'joon', body: 'This is exactly what got me into our APM program.', ago: '1h' },
     ],
     replyCount: 44,
@@ -352,7 +352,7 @@ export const threads: Thread[] = [
     id: 't-portfolio',
     community: 'teach-ux',
     author: 'jamal',
-    title: 'Portfolio pieces from a classroom — what counts?',
+    title: 'Portfolio pieces from a classroom: what counts?',
     body: 'I’ve run parent surveys, redesigned our homework portal with student feedback, and I interview twelve-year-olds daily. Which of these would a hiring team take seriously?',
     replies: [
       { author: 'claire', body: 'The homework portal, written up as a research case study: question, method, what you learned, what changed. That’s a portfolio piece.', ago: '1d' },
@@ -364,9 +364,9 @@ export const threads: Thread[] = [
     id: 't-informatics',
     community: 'nursing-healthtech',
     author: 'arjun',
-    title: 'Clinical informatics roles — how did you find yours?',
+    title: 'Clinical informatics roles: how did you find yours?',
     body: 'I keep seeing “clinical informatics” as the bridge between nursing and health tech. How did you find a role? Internal posting? Super-user program?',
-    replies: [{ author: 'rosa', body: 'Super-user for our EHR rollout. Volunteer for the next system change on your unit — that’s the door.', ago: '3d' }],
+    replies: [{ author: 'rosa', body: 'Super-user for our EHR rollout. Volunteer for the next system change on your unit. That’s the door.', ago: '3d' }],
     replyCount: 27,
     ago: '4d',
   },

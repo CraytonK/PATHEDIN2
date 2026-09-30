@@ -12,7 +12,7 @@ import { bookingTitle } from '../lib/guides';
 import { RailFooter } from '../components/Rail';
 import { PersonTile } from '../components/content';
 import { Avatar, AvatarStack, CountUp, IconButton, PersonName, Rolling, SectionHeader, TextTabs } from '../components/ui';
-import { IconBell, IconCheck, IconPencil, IconChevronLeft, IconChevronRight, IconCompose, IconDoc, IconFlag, IconMessage, IconPlus, IconQuestion, IconSend, IconSignpost, IconSparkle } from '../components/icons';
+import { IconBell, IconCheck, IconPencil, IconChevronLeft, IconChevronRight, IconCompose, IconDoc, IconFlag, IconMessage, IconPlus, IconQuestion, IconSend, IconSignpost, IconGuidePlus } from '../components/icons';
 import { people, me, ME } from '../data/people';
 import { stories } from '../data/stories';
 import { questions, questionList } from '../data/questions';
@@ -242,7 +242,7 @@ function MeCard() {
     { to: '/stories', label: 'Stories', icon: IconDoc },
     { to: '/questions', label: 'Questions', icon: IconQuestion },
     { to: '/decisions', label: 'Decision Points', icon: IconFlag },
-    myGuide?.live ? { to: `/p/${ME}`, label: 'Your Guide profile', icon: IconSparkle } : { to: '/guide/setup', label: 'Become a Path Guide', icon: IconSparkle },
+    myGuide?.live ? { to: `/p/${ME}`, label: 'Your Guide profile', icon: IconGuidePlus } : { to: '/guide/setup', label: 'Become a Path Guide', icon: IconGuidePlus },
   ];
   return (
     <section className="me-card" aria-label="Your profile">

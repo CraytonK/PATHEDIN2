@@ -75,8 +75,8 @@
 }
 .gpath__years {
   margin-top: 2px;
-  font-size: 11.5px;
-  line-height: 15px;
+  font-size: 12px;
+  line-height: 16px;
   color: var(--label-3);
   font-variant-numeric: tabular-nums;
 }
@@ -145,7 +145,7 @@
   color: var(--tint);
 }
 .gp__label {
-  font-size: 12.5px;
+  font-size: 13px;
   color: var(--label-2);
 }
 
@@ -176,7 +176,7 @@
   min-width: 40px;
   height: 32px;
   padding: 0 8px;
-  border-radius: 10px;
+  border-radius: 4px;
   background: var(--card);
   box-shadow: inset 0 0 0 1px var(--separator);
   font-size: 12px;
@@ -269,8 +269,8 @@
 }
 .gsvc__blurb {
   margin-top: 2px;
-  font-size: 13.5px;
-  line-height: 19px;
+  font-size: 14px;
+  line-height: 20px;
   color: var(--label-2);
 }
 .gsvc__meta {
@@ -332,7 +332,7 @@
   padding: 10px 12px;
   border-radius: 14px;
   background: var(--canvas);
-  font-size: 12.5px;
+  font-size: 13px;
   color: var(--label-2);
 }
 .gavail__days strong {
@@ -401,8 +401,8 @@
 .grev__svc {
   display: block;
   margin-top: 10px;
-  font-size: 12.5px;
-  line-height: 16px;
+  font-size: 13px;
+  line-height: 18px;
   color: var(--label-3);
 }
 
@@ -435,8 +435,8 @@
   font-weight: 500;
 }
 .gcontrib__a {
-  font-size: 13.5px;
-  line-height: 19px;
+  font-size: 14px;
+  line-height: 20px;
   color: var(--label-2);
   display: -webkit-box;
   -webkit-line-clamp: 2;
@@ -504,13 +504,13 @@
   border-bottom: 1px solid var(--separator);
 }
 .grail__nums dt {
-  font-size: 11.5px;
+  font-size: 12px;
   color: var(--label-3);
 }
 .grail__nums dd {
   margin: 0;
-  font-size: 18px;
-  line-height: 24px;
+  font-size: 19px;
+  line-height: 25px;
   font-weight: 500;
   letter-spacing: -0.02em;
 }
@@ -545,7 +545,7 @@
   display: inline-flex;
   align-items: center;
   gap: 4px;
-  font-size: 12.5px;
+  font-size: 13px;
   font-weight: 500;
   color: var(--label);
 }
@@ -636,6 +636,6 @@
 
 .gpath__legend {
   margin-top: 10px;
-  font-size: 12.5px;
+  font-size: 13px;
   color: var(--label-3);
 }

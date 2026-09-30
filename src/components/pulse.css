@@ -91,7 +91,7 @@
   height: 24px;
   border-radius: 50%;
   box-shadow: 0 0 0 1.5px var(--tint);
-  animation: pulse-breathe 2.8s var(--ease-out) infinite;
+  animation: pulse-breathe 2.8s var(--ease-out) 3;
 }
 @keyframes pulse-breathe {
   0% {

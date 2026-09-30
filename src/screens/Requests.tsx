@@ -89,7 +89,7 @@ export function Requests() {
   const outgoing = requests.filter((r) => r.from === ME);
   const list = tab === 'in' ? incoming : outgoing;
   return (
-    <Page title="Path Requests" subtitle="Requests arrive with the part of the Path they’re about — so you know exactly what you’re being asked." back="Network" rail={<DefaultRail people={['amara', 'elena', 'daniel']} />}>
+    <Page title="Path Requests" subtitle="Requests arrive with the part of the Path they’re about, so you know exactly what you’re being asked." back="Network" rail={<DefaultRail people={['amara', 'elena', 'daniel']} />}>
       <div className="list-page">
         <div className="list-tabs">
           <TextTabs

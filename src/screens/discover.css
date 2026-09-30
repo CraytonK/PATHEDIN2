@@ -79,6 +79,45 @@
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 14px;
 }
+/* Two Guides side by side, each given room. */
+.dgrid--pair {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+/* Communities as rows: what it is on the left, who's there and Join on the right. */
+.dgrid--list {
+  grid-template-columns: minmax(0, 1fr);
+  gap: 12px;
+}
+.dgrid--list .dcard--community {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 250px;
+  grid-template-areas:
+    'title members'
+    'why members'
+    'reason foot';
+  column-gap: 32px;
+  row-gap: 6px;
+}
+.dgrid--list .dcard__title {
+  grid-area: title;
+}
+.dgrid--list .dcard__why {
+  grid-area: why;
+}
+.dgrid--list .dcard__reason {
+  grid-area: reason;
+  align-self: end;
+}
+.dgrid--list .dcard__members {
+  grid-area: members;
+  align-self: start;
+  margin-top: 2px;
+}
+.dgrid--list .dcard__foot {
+  grid-area: foot;
+  align-self: end;
+  margin-top: 0;
+}
 @container (max-width: 760px) {
   .dgrid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -264,16 +303,16 @@
 .dcard--community .dcard__foot {
   justify-content: space-between;
 }
+/* Why this community is here: under its description, in the Path's blue, never as a label above the name. */
 .dcard__reason {
-  font-size: 12px;
-  line-height: 16px;
+  font-size: 13px;
+  line-height: 18px;
   font-weight: 500;
   color: var(--tint-text);
-  margin-bottom: 4px;
 }
 .dcard__title {
-  font-size: 18px;
-  line-height: 24px;
+  font-size: 19px;
+  line-height: 25px;
   font-weight: 500;
   letter-spacing: -0.016em;
 }
@@ -299,6 +338,25 @@
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
   gap: 40px 32px;
+}
+/* On For you, four destinations in a row (two by two on a narrow screen). */
+.doors--pairs {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 32px 20px;
+}
+@container (max-width: 760px) {
+  .doors--pairs {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  /* In a narrow section a community row stacks again. */
+  .dgrid--list .dcard--community {
+    display: flex;
+  }
+}
+@container (max-width: 480px) {
+  .doors--pairs {
+    grid-template-columns: minmax(0, 1fr);
+  }
 }
 .door {
   display: flex;
@@ -333,7 +391,7 @@
   text-underline-offset: 4px;
 }
 .door__mine {
-  font-size: 12.5px;
+  font-size: 13px;
 }
 .door__title {
   font-family: var(--font-display);
@@ -448,7 +506,7 @@
   font-size: 12px;
 }
 .dcard__price {
-  font-size: 12.5px;
+  font-size: 13px;
   color: var(--label-2);
 }
 .dcard__price strong {

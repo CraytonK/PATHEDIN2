@@ -236,7 +236,7 @@
   align-items: flex-start;
   gap: 8px;
   margin-top: 16px;
-  font-size: 12.5px;
+  font-size: 13px;
   line-height: 18px;
   color: var(--label-3);
 }
@@ -259,8 +259,7 @@
   font-weight: 500;
   color: var(--label-2);
 }
-.ep__field em {
-  font-style: normal;
+.ep__count {
   font-weight: 400;
   color: var(--label-3);
   font-variant-numeric: tabular-nums;

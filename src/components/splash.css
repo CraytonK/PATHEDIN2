@@ -77,7 +77,7 @@
   margin-left: 2px;
   vertical-align: -0.15em;
   background: var(--tint);
-  animation: splash-blink 0.9s steps(1) infinite;
+  animation: splash-blink 0.9s steps(1) 4;
 }
 .splash__welcome {
   min-height: 1.2em;

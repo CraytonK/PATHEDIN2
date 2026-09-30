@@ -37,11 +37,11 @@ function suggestion(to: string, seg: [string, string] | undefined, ask: Ask) {
   const p = people[to];
   const me = people[ME];
   const now = walked(me).at(-1)!;
-  if (!seg) return `Hi ${p.first} — I’d love to learn from your Path.`;
+  if (!seg) return `Hi ${p.first}, I’d love to learn from your Path.`;
   const [a, b] = seg.map((w) => wp(w).label);
-  if (ask === 'question') return `Hi ${p.first} — I’m at ${wp(now).label} and considering ${b}. What do you wish you’d known before you moved from ${a} to ${b}?`;
-  if (ask === 'review') return `Hi ${p.first} — I’m applying for my first ${b} roles. Would you be open to looking over how I describe my ${wp(now).label} work?`;
-  return `Hi ${p.first} — I’m at ${wp(now).label}, defending in December, and weighing a move to ${b}. Would you have 20 minutes to talk about how you went from ${a} to ${b}?`;
+  if (ask === 'question') return `Hi ${p.first}, I’m at ${wp(now).label} and considering ${b}. What do you wish you’d known before you moved from ${a} to ${b}?`;
+  if (ask === 'review') return `Hi ${p.first}, I’m applying for my first ${b} roles. Would you be open to looking over how I describe my ${wp(now).label} work?`;
+  return `Hi ${p.first}, I’m at ${wp(now).label}, defending in December, and weighing a move to ${b}. Would you have 20 minutes to talk about how you went from ${a} to ${b}?`;
 }
 
 function draft(to: string, seg: [string, string] | undefined, ask: Ask, quote?: string) {

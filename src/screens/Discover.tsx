@@ -275,11 +275,11 @@ function GuideCard({ id, i = 0 }: { id: string; i?: number }) {
 function CommunityCard({ c, reason, i = 0 }: { c: Community; reason?: string; i?: number }) {
   return (
     <MotionLink to={`/c/${c.id}`} className="dcard dcard--community" {...rise(i)}>
-      {reason && <p className="dcard__reason">{reason}</p>}
       <h3 className="dcard__title">
         <CommunityTitle c={c} />
       </h3>
       <p className="dcard__why clamp-3">{c.description}</p>
+      {reason && <p className="dcard__reason">{reason}</p>}
       <div className="dcard__members">
         <AvatarStack ids={c.memberIds.filter((m) => m !== ME)} size={22} max={4} />
         <span>
@@ -307,22 +307,24 @@ function ForYou({ go }: { go: (t: Tab) => void }) {
         </div>
       </Section>
       <Section title="Path Guides for your next move" sub="They made the moves you’re weighing, and they’ve said they’d help." more="See all Guides" onMore={() => go('guides')}>
-        <div className="dgrid dgrid--row">
-          {['grace', 'priya', 'rafael'].map((id, i) => (
+        {/* Two Guides, given room, rather than another row of three. */}
+        <div className="dgrid dgrid--row dgrid--pair">
+          {['grace', 'priya'].map((id, i) => (
             <GuideCard key={id} i={i} id={id} />
           ))}
         </div>
       </Section>
       <Section title="Communities along your route" sub="Built around journeys, not industries." more="See all communities" onMore={() => go('communities')}>
-        <div className="dgrid dgrid--row">
+        {/* Communities as a list of rows, the name and why on the left, who's there and Join on the right. */}
+        <div className="dgrid dgrid--list">
           {alongMyRoute.map((r, i) => (
             <CommunityCard key={r.id} i={i} c={communities[r.id]} reason={r.reason} />
           ))}
         </div>
       </Section>
       <Section title="Futures near your Path" sub="Destinations people reached from an MSc in Chemistry." more="See all destinations" onMore={() => go('destinations')}>
-        <div className="doors">
-          {nearMe.slice(0, 3).map((id, i) => (
+        <div className="doors doors--pairs">
+          {nearMe.slice(0, 4).map((id, i) => (
             <DestinationDoor key={id} id={id} i={i} />
           ))}
         </div>

@@ -168,7 +168,7 @@ function computeRelation(v: Person, o: Person): Relation {
   const oIdx = O.indexOf(oCur);
   if (vIdx >= 0 && oIdx > vIdx && (vFut.has(oCur) || O.slice(vIdx + 1).some((w) => vFut.has(w)))) {
     const n = oIdx - vIdx;
-    return make('ahead', reached && n > 1 ? 'Reached your destination' : `${plural(n)} ahead`, `${plural(n)} ahead on your Path — now ${wp(oCur).label}.`, {
+    return make('ahead', reached && n > 1 ? 'Reached your destination' : `${plural(n)} ahead`, `${plural(n)} ahead on your Path, now at ${wp(oCur).label}.`, {
       stepsAhead: n,
     });
   }

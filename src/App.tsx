@@ -9,6 +9,7 @@ import { RequestLayer } from './components/RequestComposer';
 import { CommandPalette } from './components/CommandPalette';
 import { BookingLayer } from './components/Booking';
 import { EditProfileLayer } from './components/EditProfile';
+import { SkipLink } from './components/SkipLink';
 import { FlightLayer } from './components/FlightLayer';
 import { installProfileFlights } from './lib/flight';
 import { installPointerDetails } from './lib/pointer';
@@ -140,10 +141,13 @@ function Shell() {
   return (
     <>
       <div className={`app ${inWrite ? 'app--write' : isMobile ? (inThread ? 'app--thread' : 'app--mobile') : 'app--desktop'}`}>
+        <SkipLink />
         {!isMobile && !inWrite && <TopBar />}
         <AnimatePresence mode="wait" initial={false} onExitComplete={restore}>
           <motion.main
             key={routeKey}
+            id="main"
+            tabIndex={-1}
             // Desktop screens arrive with a short rise out of a 3px blur; iPhone keeps the push from the side.
             initial={isMobile ? { opacity: 0, x: back ? -28 : 36 } : { opacity: 0, y: 8, filter: 'blur(3px)' }}
             // The blur is cleared once it lands: a filter left on the page would pin every fixed child to it.

@@ -106,13 +106,15 @@
   --tip-fg: #fff7ed;
   --highlight: rgba(36, 72, 200, 0.12);
   --highlight-mine: rgba(36, 72, 200, 0.22);
-  /* The light a card's edge catches where the pointer is. */
-  --edge-light: rgba(36, 72, 200, 0.5);
 
-  /* Immersive panels: Midnight Navy, lit by the Path, with glass cards on them. Same in both appearances. */
+  /* Film grain, as a tiling SVG noise: dark specks on the cream paper, light specks on navy. */
+  --grain-light: url("data:image/svg+xml,%3Csvg%20xmlns=%27http://www.w3.org/2000/svg%27%20width=%27180%27%20height=%27180%27%3E%3Cfilter%20id=%27g%27%3E%3CfeTurbulence%20type=%27fractalNoise%27%20baseFrequency=%270.9%27%20numOctaves=%273%27%20stitchTiles=%27stitch%27/%3E%3CfeColorMatrix%20values=%270%200%200%200%200%200%200%200%200%200%200%200%200%200%200%200%200%200%201.6%20-0.62%27/%3E%3C/filter%3E%3Crect%20width=%27100%25%27%20height=%27100%25%27%20filter=%27url%28%23g%29%27%20opacity=%270.22%27/%3E%3C/svg%3E");
+  --grain-dark: url("data:image/svg+xml,%3Csvg%20xmlns=%27http://www.w3.org/2000/svg%27%20width=%27180%27%20height=%27180%27%3E%3Cfilter%20id=%27g%27%3E%3CfeTurbulence%20type=%27fractalNoise%27%20baseFrequency=%270.9%27%20numOctaves=%273%27%20stitchTiles=%27stitch%27/%3E%3CfeColorMatrix%20values=%270%200%200%200%201%200%200%200%200%201%200%200%200%200%201%200%200%200%201.6%20-0.62%27/%3E%3C/filter%3E%3Crect%20width=%27100%25%27%20height=%27100%25%27%20filter=%27url%28%23g%29%27%20opacity=%270.2%27/%3E%3C/svg%3E");
+  --grain: var(--grain-light);
+
+  /* Immersive panels: flat Midnight Navy with grain, lit by the route silk. Same in both appearances. */
   --immersive-bg: #0f172a;
   --immersive-deep: #0a1020;
-  --immersive-glow: #1c3a9e;
   --immersive-ink: #fff7ed;
   --immersive-ink-2: rgba(255, 247, 237, 0.68);
   --immersive-line: rgba(143, 168, 255, 0.5);
@@ -121,9 +123,8 @@
   --immersive-well: #1d2848;
   --immersive-fill: #26335a;
   --immersive-card-border: rgba(255, 247, 237, 0.14);
-  --immersive-surface:
-    radial-gradient(120% 90% at 85% 0%, var(--immersive-glow), transparent 60%),
-    linear-gradient(160deg, var(--immersive-bg), var(--immersive-deep));
+  /* Flat navy with a fine film grain: depth from texture and the route silk, never from a gradient. */
+  --immersive-surface: var(--grain-dark) 0 0 / 180px 180px, var(--immersive-bg);
 
   /* ── Geometry ─────────────────────────────────────────────── */
   --gutter: 16px;
@@ -161,6 +162,7 @@
   and primary actions fill with cream.
 */
 :root[data-theme='dark'] {
+  --grain: var(--grain-dark);
   color-scheme: dark;
   --bg: #0f172a;
   --bg-grouped: #141e35;
@@ -216,7 +218,6 @@
   --tip-fg: #0f172a;
   --highlight: rgba(143, 168, 255, 0.16);
   --highlight-mine: rgba(143, 168, 255, 0.28);
-  --edge-light: rgba(255, 247, 237, 0.34);
   --immersive-bg: #16213b;
   --immersive-deep: #0b1222;
 }
@@ -225,6 +226,7 @@
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme]) {
     color-scheme: dark;
+    --grain: var(--grain-dark);
     --bg: #0f172a;
     --bg-grouped: #141e35;
     --bg-elevated: #1a2540;
@@ -280,8 +282,7 @@
     --tip-fg: #0f172a;
     --highlight: rgba(143, 168, 255, 0.16);
     --highlight-mine: rgba(143, 168, 255, 0.28);
-    --edge-light: rgba(255, 247, 237, 0.34);
-    --immersive-bg: #16213b;
+      --immersive-bg: #16213b;
     --immersive-deep: #0b1222;
   }
 }
@@ -333,7 +334,6 @@
   --surface-edge: 0 0 0 1px rgba(255, 247, 237, 0.12), inset 0 1px 0 rgba(255, 247, 237, 0.06);
   --shadow-lift: 0 0 0 1px rgba(255, 247, 237, 0.18), 0 16px 36px -14px rgba(0, 0, 0, 0.5);
   --btn-highlight: inset 0 1px 0 rgba(255, 255, 255, 0.5);
-  --edge-light: rgba(255, 247, 237, 0.4);
   --card: var(--immersive-card);
   --canvas: var(--immersive-well);
   --card-shadow: 0 0 0 1px rgba(255, 247, 237, 0.12), inset 0 1px 0 rgba(255, 247, 237, 0.06);

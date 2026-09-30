@@ -25,7 +25,7 @@ import {
   IconSun,
   IconCompose,
   IconChevronDown,
-  IconSparkle,
+  IconGuidePlus,
 } from './icons';
 import { IconButton, Rolling } from './ui';
 import './chrome.css';
@@ -188,7 +188,7 @@ function AccountMenu() {
                 <IconBookmark size={19} /> Saved
               </button>
               <button className="menu__item" onClick={() => go('/guide/setup')}>
-                <IconSparkle size={19} /> {myGuide?.live ? 'Your Guide profile' : 'Become a Path Guide'}
+                <IconGuidePlus size={19} /> {myGuide?.live ? 'Your Guide profile' : 'Become a Path Guide'}
               </button>
             </div>
             <div className="menu__group">
@@ -373,9 +373,14 @@ export function Page({
         <div className={`page__title-row ${!large ? 'visually-hidden' : ''}`}>
           <div className="page__title-block">
             {/* The title and subtitle arrive in order, a beat apart, the way the intro assembles. */}
-            <motion.h1 className="t-large-title page__title" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ ...springs.smooth, delay: 0.04 }}>
-              {title}
-            </motion.h1>
+            {large ? (
+              <motion.h1 className="t-large-title page__title" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ ...springs.smooth, delay: 0.04 }}>
+                {title}
+              </motion.h1>
+            ) : (
+              // The page draws its own h1 (a name, a story's title), so this one stays a plain line.
+              <p className="page__title">{title}</p>
+            )}
           </div>
           {(largeTrailing || (!isMobile && trailing)) && <div className="page__trailing">{largeTrailing ?? trailing}</div>}
         </div>

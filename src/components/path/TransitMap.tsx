@@ -579,7 +579,7 @@ export function TransitMap({
 
       {walkable && ready && (
         <button className="tmap__walk t-footnote" onClick={walkTo}>
-          <span className="tmap__walk-arrow">↓</span> Drag your photo down to walk ahead — or tap to take the walk
+          <span className="tmap__walk-arrow">↓</span> Drag your photo down to walk ahead, or tap to take the walk
         </button>
       )}
     </div>

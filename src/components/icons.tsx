@@ -184,6 +184,15 @@ export const IconSignpost = (p: P) => (
   </Svg>
 );
 
+/** Become a Guide: the signpost with a plus beside it, in place of a sparkle. */
+export const IconGuidePlus = (p: P) => (
+  <Svg {...p}>
+    <path d="M10 3v18" />
+    <path d="M10 5h6l2.5 2.5L16 10h-6z" />
+    <path d="M18 14v6M15 17h6" />
+  </Svg>
+);
+
 export const IconQuestion = (p: P) => (
   <Svg {...p}>
     <path d="M12 3.8c4.7 0 8.5 3.2 8.5 7.2s-3.8 7.2-8.5 7.2c-.9 0-1.8-.1-2.6-.3L5 19.8l1.1-3.6C4.4 14.9 3.5 13 3.5 11c0-4 3.8-7.2 8.5-7.2z" />
@@ -310,6 +319,20 @@ export const IconMilestone = (p: P) => (
   <Svg {...p}>
     <circle cx="12" cy="12" r="8" />
     <circle cx="12" cy="12" r="3.4" fill="currentColor" stroke="none" />
+  </Svg>
+);
+
+/** Pause: two bars. */
+export const IconPause = (p: P) => (
+  <Svg {...p}>
+    <path d="M9 6.5v11M15 6.5v11" />
+  </Svg>
+);
+
+/** Play: a triangle pointing forward. */
+export const IconPlay = (p: P) => (
+  <Svg {...p}>
+    <path d="M8.5 6.2v11.6a.6.6 0 0 0 .9.5l9.1-5.8a.6.6 0 0 0 0-1L9.4 5.7a.6.6 0 0 0-.9.5z" />
   </Svg>
 );
 

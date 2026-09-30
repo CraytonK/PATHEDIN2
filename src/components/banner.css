@@ -31,9 +31,7 @@
   color: var(--ink);
 }
 .banner--dawn {
-  background:
-    radial-gradient(55% 130% at 85% 50%, #2446c4 0%, rgba(36, 70, 196, 0) 70%),
-    linear-gradient(90deg, #0a1020, #111b3c);
+  background: var(--grain-dark) 0 0 / 180px 180px, #101b3d;
 }
 
 /* The pencil on your own banner: a solid cream disc, so it reads on any photo. */

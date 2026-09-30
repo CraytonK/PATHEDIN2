@@ -165,8 +165,8 @@
 .story-lead__title {
   margin: 12px 0 8px;
   font-family: var(--font-serif);
-  font-size: 30px;
-  line-height: 37px;
+  font-size: 28px;
+  line-height: 34px;
   font-weight: 700;
   letter-spacing: -0.015em;
   text-wrap: balance;
@@ -192,8 +192,8 @@
     gap: 18px;
   }
   .story-lead__title {
-    font-size: 24px;
-    line-height: 30px;
+    font-size: 22px;
+    line-height: 28px;
   }
 }
 .story-byline {
@@ -380,8 +380,8 @@
   margin-top: 10px;
 }
 .thread-item__title {
-  font-size: 18px;
-  line-height: 23px;
+  font-size: 19px;
+  line-height: 25px;
   font-weight: 500;
   letter-spacing: -0.016em;
   margin-bottom: 4px;
@@ -441,8 +441,8 @@
 }
 @media (max-width: 767px) {
   .community-title--lg {
-    font-size: 30px;
-    line-height: 36px;
+    font-size: 28px;
+    line-height: 34px;
   }
 }
 /* A community's name is a hero heading: Noe Display Medium. */

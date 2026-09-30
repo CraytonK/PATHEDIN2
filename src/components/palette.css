@@ -6,7 +6,7 @@
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  padding: 14vh 16px 16px;
+  padding: 14dvh 16px 16px;
   background: var(--scrim);
 }
 .cmdk {
@@ -14,7 +14,7 @@
   display: flex;
   flex-direction: column;
   width: min(640px, 100%);
-  max-height: min(560px, 72vh);
+  max-height: min(560px, 72dvh);
   overflow: hidden;
   border-radius: var(--r-xl);
   background: var(--bg-elevated);
@@ -117,8 +117,8 @@
   text-overflow: ellipsis;
 }
 .cmdk__sub {
-  font-size: 12.5px;
-  line-height: 17px;
+  font-size: 13px;
+  line-height: 18px;
   color: var(--label-3);
   overflow: hidden;
   white-space: nowrap;
@@ -159,7 +159,7 @@
 .cmdk__foot .kbd {
   min-width: 18px;
   height: 18px;
-  font-size: 10.5px;
+  font-size: 11px;
 }
 .cmdk__brand {
   margin-left: auto;
@@ -170,7 +170,7 @@
     padding: calc(12px + var(--safe-top)) 10px 10px;
   }
   .cmdk {
-    max-height: 70vh;
+    max-height: 70dvh;
   }
   .cmdk__foot {
     display: none;

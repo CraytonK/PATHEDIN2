@@ -443,8 +443,8 @@
 }
 .tabbar__label {
   position: relative;
-  font-size: 10px;
-  line-height: 12px;
+  font-size: 11px;
+  line-height: 13px;
   font-weight: 500;
   letter-spacing: 0.01em;
 }
@@ -681,7 +681,7 @@
 .sheet--modal {
   position: relative;
   pointer-events: auto;
-  max-height: min(86vh, 900px);
+  max-height: min(86dvh, 900px);
   border-radius: var(--r-xl);
   box-shadow: var(--shadow-modal);
 }

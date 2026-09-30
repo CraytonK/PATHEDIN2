@@ -46,7 +46,7 @@
 }
 @media (max-width: 767px) {
   .mypath__sentence .strip {
-    font-size: 18px;
+    font-size: 17px;
     line-height: 26px;
   }
   .mypath__sentence .strip__link {
@@ -57,7 +57,7 @@
 .mypath__inspector {
   position: sticky;
   top: calc(var(--topbar-h) + 24px);
-  max-height: calc(100vh - var(--topbar-h) - 48px);
+  max-height: calc(100dvh - var(--topbar-h) - 48px);
   overflow-y: auto;
   padding: 4px 4px 24px 32px;
   margin-right: -4px;

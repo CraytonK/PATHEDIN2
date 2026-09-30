@@ -14,7 +14,7 @@ export function Decisions() {
   return (
     <Page
       title="Decision Points"
-      subtitle="The forks in people’s Paths — and where each road actually led."
+      subtitle="The forks in people’s Paths, and where each road actually led."
       rail={
         <>
           <RailSection title="Deciding the same thing" more={{ to: '/network', label: 'See more suggestions' }}>

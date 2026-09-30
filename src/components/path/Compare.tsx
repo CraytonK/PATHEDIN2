@@ -266,10 +266,10 @@ export function compareSummary(otherId: string) {
   lines.push(
     shared.length
       ? `You share ${shared.length === 1 ? 'one step' : `${shared.length} steps`}: ${shared.map((r) => wp(r.wp).short).join(', ')}.`
-      : `Your Paths haven’t crossed yet — but ${o.first} knows somewhere you’re heading.`,
+      : `Your Paths haven’t crossed yet, but ${o.first} knows somewhere you’re heading.`,
   );
   const next = theirFuture.find((s) => s.wp !== dest);
-  if (next) lines.push(`${o.first} has already been at ${wp(next.wp).label} — one of your possible next steps.`);
+  if (next) lines.push(`${o.first} has already been at ${wp(next.wp).label}, one of your possible next steps.`);
   if (reached) lines.push(`${o.first} reached ${wp(dest!).label} in ${reached.start}.`);
   const divergeAt = rows.findIndex((r) => r.kind !== 'shared');
   const lastShared = divergeAt > 0 ? rows[divergeAt - 1] : undefined;

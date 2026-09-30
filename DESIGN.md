@@ -28,7 +28,6 @@ colors:
   signal-blue-on-navy: "#8fa8ff"
   signal-blue-text-on-navy: "#a9bcff"
   immersive-deep: "#0a1020"
-  immersive-glow: "#1c3a9e"
   immersive-card: "#172140"
   immersive-well: "#1d2848"
   immersive-fill: "#26335a"
@@ -251,10 +250,10 @@ A warm cream ground with navy ink, one Midnight Navy accent for anything with we
 
 ### Primary
 - **Midnight Navy**: primary buttons, the walked Path, active states, the ink of the Path mark, and the ground of immersive panels. In the dark appearance primary actions invert to cream.
-- **Signal Blue**: links, "Learn more"-style text actions, the dashed future, focus rings, "you", selected tags, and the unit beside a numeral. It is bright on purpose, so it stays small.
+- **Signal Blue**: links and text actions, the dashed future, focus rings, "you", selected tags, and the unit beside a numeral. It is bright on purpose, so it stays small.
 
 ### Neutral
-- **Soft Cream**: the page.
+- **Soft Cream**: the page, with a fine film grain over it so the cream reads as paper rather than a flat fill.
 - **Cream Card**: cards and panels, white on the cream (the dashboard's cards).
 - **Cream Floating**: sheets, menus and the palette, pure white.
 - **Cream Sunken / Fill**: recessed wells, the route band, quiet buttons, fields, slots and tags.
@@ -277,10 +276,10 @@ A warm cream ground with navy ink, one Midnight Navy accent for anything with we
 **Reading and quoted words:** Charter, or Charis SIL where Charter isn't installed (with Charis Fallback)
 **Symbols:** PathedIn Symbols, a small subset from Inter that draws only the glyphs Space Grotesk lacks (↕ ↖ ↙ ↩ ↪ ⇧ ⌘ ⌥). It never sets text.
 
-**Character:** a grotesk with a squared r and a flagged 1, set large and light for headings, which is where the reference gets its calm confidence. Charter gives long stories and people's own words the warmth of print. Space Grotesk has no italic, so italic always means Charter.
+**Character:** a grotesk with a squared r and a flagged 1, set large and light for headings, which is where the reference gets its calm confidence. Charter gives long stories and people's own words the warmth of print. Nothing is set in italic: a quoted line, a pull quote or a note is upright Charter, told apart by the face and its place, not by slant.
 
 ### Hierarchy
-The ramp follows Apple's text styles, each available as a `.t-` class, with display roles above it.
+The ramp follows Apple's text styles, each available as a `.t-` class, with display roles above it. Every size in the app is a step on this ramp with its own line height; nothing sits between steps (no 12.5px or 13.5px).
 - **Display** (500, clamp 56–100px, 0.96, -0.045em): the intro's headline, which assembles line by line.
 - **Station title** (400, clamp 34–60px, -0.035em): each stop on the intro tour, rising word by word out of a blur.
 - **Stat** (400, 44px, -0.045em): numerals such as a community's members, with an optional signal-blue unit.
@@ -299,6 +298,8 @@ The ramp follows Apple's text styles, each available as a `.t-` class, with disp
 
 **The Arrow Rule.** Paths are written "MSc Chem → Pharma R&D". The arrows are Space Grotesk's own, subset from the full family.
 
+**The Even Lines Rule.** Headings balance their lines and paragraphs avoid a lone last word (`text-wrap: balance` and `pretty`), so no line ends on an orphan.
+
 ## Layout
 
 The pieces of the app are unchanged; they are laid out as a dashboard.
@@ -310,11 +311,13 @@ The pieces of the app are unchanged; they are laid out as a dashboard.
 - **Gutters:** 16px on phones, 24px from 768px and 40px from 1100px; Home keeps 24px.
 - **Phones:** large title, Coming up cards, your week as a navy panel, posts and rows as cards, and a floating tab bar: a white pill 12px from the edges and 10px off the bottom, the current tab in a sliding navy pill. Sheets rise from the bottom with a grabber.
 - **Rhythm:** 4px steps inside components, 16px between feed cards (12px on phones), 12px between row cards, 20px between cards in a side column. A tab row sits one card gap above the list it switches. A list whose items are each wrapped (for an anchor or an entrance) is a `.card-stack`, so the gap holds however the markup nests; nothing in a list ever touches the card above it.
-- **Grids:** card grids run three columns, two under 760px of container width and one under 480px.
+- **Grids, not all threes:** a page uses a row of three at most once. On Discover, Guides are a pair of wide cards, communities are list rows (name and why on the left, members and Join in a 250px column on the right, stacked under 760px of container), and Futures near you are a row of four (two under 760px, one under 480px). Card grids elsewhere run three columns, two under 760px and one under 480px.
+- **Heights:** full-height things use `dvh` (the phone sheet, My Path's map) or `svh` (the intro stage and the tour's pinned track), never `100vh`, so a phone's browser bar never hides the bottom.
+- **Landmarks:** every screen has one `main` (the target of a Skip to content link that appears on the first Tab), one `h1` (visually hidden on Write, whose title is the story's), and the top bar and tab bar as `nav`. Card titles are headings in order under it.
 
 ## Elevation & Depth
 
-Cards are white on the cream with a faint navy hairline and a long, soft fall-off; under the pointer the fall-off deepens and the card rises 2px. Things that float add a longer shadow. Immersive panels are the deepest surface: a navy gradient with a blue glow from the top right, route silk drawn across it, and solid navy cards (a lifted navy with a cream hairline) on top. Nothing on a navy panel is see-through: cards, wells, chips, buttons, knockouts and a cover's caption strip are all solid (the user's call, September 30, 2026), so the silk never shows through words. The dark appearance keeps the same structure with cream hairlines and darker shadows.
+Cards are white on the cream with a faint navy hairline and a long, soft fall-off; under the pointer the fall-off deepens and the card rises 2px. Things that float add a longer shadow. Immersive panels are the deepest surface: flat Midnight Navy with a fine light grain (no gradient, no glow), route silk drawn across it, and solid navy cards (a lifted navy with a cream hairline) on top. Nothing on a navy panel is see-through: cards, wells, chips, buttons, knockouts and a cover's caption strip are all solid (the user's call, September 30, 2026), so the silk never shows through words. The dark appearance keeps the same structure with cream hairlines and darker shadows.
 
 ### Shadow Vocabulary
 - **Card** (`box-shadow: 0 0 0 1px rgba(15,23,42,0.055), 0 1px 2px rgba(15,23,42,0.035), 0 16px 36px -26px rgba(15,23,42,0.22)`): every card at rest (`--card-shadow`, also `--surface-edge`).
@@ -327,7 +330,7 @@ Cards are white on the cream with a faint navy hairline and a long, soft fall-of
 ### Named Rules
 **The Solid on Navy Rule.** Surfaces on an immersive panel are solid navy lifts (#172140 for cards and knockouts, #1d2848 for wells and hovers, #26335a for chips and quiet buttons), never translucent, so nothing behind them shows through their words. On cream, cards are solid white.
 
-**The Clear Words Rule.** Route silk lives only where a panel has no words: behind the intro's composition, along the top of a Path cover above the step names, to the right of the destination's words, and on the profile card's cover. Each panel masks the silk away from its text (`--silk-mask`); panels that are all text (Your Path this week, the earnings card, Become a Guide) keep the glow and leave the silk out.
+**The Clear Words Rule.** Route silk lives only where a panel has no words: behind the intro's composition, along the top of a Path cover above the step names, to the right of the destination's words, and on the profile card's cover. Each panel masks the silk away from its text (`--silk-mask`); panels that are all text (Your Path this week, the earnings card, Become a Guide) are plain grained navy with no silk.
 
 **The One Card Deep Rule.** Cards never nest. Something set into a card (a quoted request, a day tile, a tag, a route line, a reply bubble) is a cream well with no shadow.
 
@@ -361,7 +364,7 @@ A label is words, sometimes led by a glyph from the Path itself, never a tinted 
 - **Corner Style:** 20px.
 - **Background:** white (`--card`) with the Card shadow; knockouts inside take the card's colour. Wells inside a card are cream (`--canvas`).
 - **Rows are cards:** people, communities, conversations, requests, notifications, answers, weigh-ins and decisions are each a card, 12px apart (8px for notifications), instead of rows between hairlines.
-- **Hover:** the Card hover shadow and a 2px rise, for cards that open something, with the edge catching light where the cursor is. The rise uses the `translate` property so it composes with entrance motion.
+- **Hover:** the Card hover shadow and a 2px rise, for cards that open something. The rise uses the `translate` property so it composes with entrance motion.
 - **Internal Padding:** 18px 20px (16px on phones).
 
 ### Post Cards (one card, clear differences)
@@ -388,7 +391,7 @@ Every group uses the same person card (face, name and relation tag, headline, wh
 - **Your communities:** a four-face mosaic, the name, and who's here now beside a live dot.
 
 ### Immersive Panel (signature)
-A Midnight Navy surface in either appearance: a navy gradient with a blue glow and route silk (26 thin routes flowing to one destination, yours brighter, drawn in once on arrival). Anything inside takes the midnight palette automatically (the `.immersive` class), so Paths, buttons and cards need no special cases. Used for the intro stage, a profile's Path cover and Your Path this week. The silk is drawn only where there are no words (see The Clear Words Rule).
+A Midnight Navy surface in either appearance: flat navy with a fine light grain (the cream page has the same grain, dark) and route silk (26 thin routes flowing to one destination, yours brighter, drawn in once on arrival). Anything inside takes the midnight palette automatically (the `.immersive` class), so Paths, buttons and cards need no special cases. Used for the intro stage, a profile's Path cover and Your Path this week. The silk is drawn only where there are no words (see The Clear Words Rule).
 
 ### Stat Numerals
 A number set at 44px regular with tight tracking, an optional signal-blue unit and a live dot for things happening now, with its meaning beneath in secondary ink. It counts up once, the first time it comes into view.
@@ -412,9 +415,9 @@ Scrolling the intro is walking a Path. A line runs down the left edge: dashed wh
 - **Your career, drawn as a line:** a pinned stage that plays as you scroll: where you've been draws in, you appear at the step you're on, then the real routes to Pharmaceutical R&D branch off with how many people took each. It runs left to right on desktop and top to bottom on phones.
 - **Meet the people:** the real Path lens, filtered by chips (Path Twins, Peers, People Ahead, Guides, Explorers). Choosing a face opens the Join card.
 - **Where your Paths meet:** pick Sarah, Jonah, Daniel or Amara and the real Align view redraws, with what you share in one line.
-- **Every post says why:** tabs for each kind of post, each showing the real card; they advance every 4.2 seconds while you watch, until you choose one.
+- **Every post says why:** tabs for each kind of post, each showing the real card; they advance every 4.2 seconds while you watch, until you choose one or press Pause beside them.
 - **Learn from people who made the move:** a Guide's services with prices and a ticket that updates, beside a navy card where two sliders work out what a Guide would keep after PathedIn's share.
-- **Your path is waiting:** the destination, a navy panel with Start your path and Sign in.
+- **Your path is waiting:** the destination, a navy panel with Start your path and Sign in, and under it one plain line saying the people in the tour are sample members of a fictional network. PathedIn never shows a number or a quote as real when it isn't.
 
 ### Banners and Edit profile
 Like LinkedIn, anyone can put a banner behind their photo: on the identity card of their profile (edge to edge across the card's top, 104px; a rounded 112px band on a phone) and, for you, as the cover of the Home profile card. A banner never carries words, so nothing has to stay legible across it. It is either your own photo or one of PathedIn's four, each drawn from the Path: **Route silk** (the default), **Line map** (walked lines to a ringed present, dashed on to an open ring), **Paper** (the silk in ink on the page's own paper, the one light banner) and **First light** (a destination's open rings lit from the right, with a dashed route arriving). People who haven't chosen one show none.
@@ -431,10 +434,11 @@ A two-pane sheet: the Guide on a recessed cream panel, then three session tiles,
 - **Dashboard:** the profile card rises in, its Path steps pop in turn and its counts count up; the rings around People worth knowing draw one after another (90 ms apart); the week slides between weeks; schedule items and communities rise a beat apart; the navy pill slides wherever the current thing changes.
 - **Assembling (the intro's language, used across the app):** the intro headline rises line by line out of an 8px blur, then the sentence, then the action. Page titles and subtitles arrive 80 ms apart. Cards and rows rise 16px as they come into view, 55 ms apart, capped at eight. Route silk, Path covers and Your Path this week draw themselves. Stat numerals count up over 1.2 s. The Guides route fills in solid as you read down the page.
 - **Portrait flight:** opening someone carries their portrait on a shallow arc to the "now" station of their Path cover (420–680 ms), which answers with one ring ripple.
-- **Pointer:** card edges catch signal-blue light where the cursor is; a surface follows across tabs; forward arrows lean 2px; tooltips answer at once after the first; feed photos lean in.
-- **Scroll:** the top bar frosts only once content passes beneath it; reading a story walks you along a Path. On the intro tour, scrolling walks the tour's line, tilts the Home preview flat and plays the Path story (spring-smoothed, so it glides rather than jumps).
+- **Pointer:** a surface follows across tabs; forward arrows lean 2px; tooltips answer at once after the first; feed photos lean in.
+- **Scroll:** the top bar frosts only once content passes beneath it (watched by an IntersectionObserver on a 1px marker, not a scroll listener); reading a story walks you along a Path. On the intro tour, scrolling walks the tour's line, tilts the Home preview flat and plays the Path story (spring-smoothed, so it glides rather than jumps).
 - **Touch:** cards give to 0.975 under a finger and spring back; rows light at once.
 - **State:** counts roll; switching appearance opens the new theme in a circle from where you switched.
+- **Finite:** nothing loops. A live dot or the station you're at breathes three times and rests; the typing caret on the welcome blinks four times. Anything that moves on its own for more than five seconds (the tour's post tabs) has a Pause.
 - **Reduce Motion:** the flight, the reveal, the assembling rises and the drawing are dropped. Fades and colour changes that confirm an action stay. The intro tour shows the preview flat, the Path story fully drawn and unpinned, and the post tabs without the timer.
 
 ## Do's and Don'ts
@@ -450,16 +454,20 @@ A two-pane sheet: the Guide on a recessed cream panel, then three session tiles,
 - **Do** use 8px corners for small pressed controls and pills for filter chips, counts, tab tracks and the top bar.
 - **Do** label with marks: words led by the Path's own glyphs.
 - **Do** respect Reduce Motion with an intentional quieter path.
+- **Do** write copy in sentence case with plain punctuation: a full stop, a comma or a colon where another site would use an em dash. Name the thing a link opens ("See all communities", "Book office hours"), never "Learn more".
+- **Do** show sample people and numbers as samples. Everyone in the prototype is fictional and says so where it could be mistaken for proof.
 
 ### Don't:
 - **Don't** bring back the graphite world, Schibsted Grotesk or the Playfair wordmark.
-- **Don't** use large areas of signal blue, gradient text, neon edges or coloured side stripes. The one exception is the schedule's 4px event bar, a calendar marker from the reference that says what kind of event it is.
+- **Don't** use gradients on surfaces (a glow, a mesh, a sheen) or gradient text; surfaces are flat, with grain for texture. Don't use large areas of signal blue, neon edges, lit edges that follow the cursor, or coloured side stripes. The one exception is the schedule's 4px event bar, a calendar marker from the reference that says what kind of event it is.
 - **Don't** nest a card in a card, or bring back rows between hairlines on the cream.
 - **Don't** add a sidebar or drawer that repeats the top bar. One place for each way in: sections in the top bar, you in the account menu, everything by name in ⌘K.
 - **Don't** give a kind of post or a Network group its own layout; tell them apart with the context line, the thumbnail, the strip or the signal line. Don't put a card field for payment anywhere in the prototype.
 - **Don't** make anything on a navy panel see-through, or let route silk run behind words.
 - **Don't** set a label above a heading as a kicker or eyebrow, even where the reference does. Headings carry their own weight.
-- **Don't** set interface text in Charter, or use a synthesized italic of Space Grotesk.
+- **Don't** set interface text in Charter, or set anything in italic.
 - **Don't** put a label in a bubble (a tinted pill with a ring or a wash). It reads as a template; PathedIn labels with marks.
-- **Don't** use Unicode glyphs or emoji as icons. Icons are drawn SVG in one stroke weight.
-- **Don't** loop animations, bounce, or add parallax. Motion arrives, then rests. The intro tour is the one place scrolling drives motion, and it still rests the moment you stop.
+- **Don't** use Unicode glyphs or emoji as icons. Icons are drawn SVG in one stroke weight. No sparkles: Become a Path Guide is a signpost with a plus, and a first-place standing is the words "No. 1" on a square tile.
+- **Don't** use em dashes, Title Case headings, exclamation marks in interface copy, "Learn more", or sizes off the type ramp.
+- **Don't** use `100vh`, `z-index: 9999` or a scroll listener where CSS or an observer does the job.
+- **Don't** loop animations, bounce, or add parallax, or autoplay without a Pause. Motion arrives, then rests. The intro tour is the one place scrolling drives motion, and it still rests the moment you stop.

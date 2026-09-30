@@ -4,7 +4,7 @@
   align-self: stretch;
   flex: none;
   height: 64px;
-  border-radius: var(--r-lg) var(--r-lg) 0 0;
+  border-radius: var(--r-card) var(--r-card) 0 0;
   background: var(--rband-bg);
   border-bottom: 1px solid var(--separator);
   overflow: hidden;

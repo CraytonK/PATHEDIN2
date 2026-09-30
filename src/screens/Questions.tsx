@@ -76,7 +76,7 @@ export function Questions() {
   return (
     <Page
       title="Questions"
-      subtitle="Answered by people who’ve been there — and every answer tells you why it’s worth your time."
+      subtitle="Answered by people who’ve been there. Every answer tells you why it’s worth your time."
       rail={
         <>
           {/* Like Medium's "start writing" card, the composer lives at the top of the column. */}

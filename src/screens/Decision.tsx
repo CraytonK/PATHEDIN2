@@ -199,7 +199,7 @@ export function DecisionScreen() {
 
           {d.reflection && (
             <blockquote className="dd__reflection t-serif">
-              “{d.reflection}”<footer className="t-footnote c-2">— {owner.first}, looking back</footer>
+              “{d.reflection}”<footer className="t-footnote c-2">{owner.first}, looking back</footer>
             </blockquote>
           )}
 

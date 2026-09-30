@@ -14,7 +14,7 @@ import { useUI } from '../lib/ui';
 import { BookButton, Stars } from './Booking';
 import { RequestButton } from './content';
 import { Avatar, CountUp } from './ui';
-import { IconCalendar, IconChevronRight, IconSignpost, IconSparkle, IconStar } from './icons';
+import { IconCalendar, IconChevronRight, IconSignpost, IconStar } from './icons';
 import './guide-profile.css';
 
 /*
@@ -191,7 +191,7 @@ export function GuideTab({ id }: { id: string }) {
             {standing.map((s, i) => (
               <motion.li key={s.community} {...rise(i, 8)}>
                 <Link to={`/c/${s.community}`} className={`gstand__item ${s.rank === 1 ? 'is-top' : ''}`}>
-                  <span className="gstand__rank">{s.rank === 1 ? <IconSparkle size={16} /> : `No. ${s.rank}`}</span>
+                  <span className="gstand__rank">{`No. ${s.rank}`}</span>
                   <span className="gstand__text">
                     <strong>{s.label}</strong>
                     <span>{s.title}</span>

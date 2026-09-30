@@ -107,11 +107,11 @@
 }
 @media (max-width: 767px) {
   .story__title {
-    font-size: 30px;
-    line-height: 37px;
+    font-size: 28px;
+    line-height: 34px;
   }
   .story__dek {
-    font-size: 18px;
+    font-size: 17px;
     line-height: 26px;
   }
 }
@@ -219,15 +219,14 @@
 }
 @media (max-width: 767px) {
   .story__p {
-    font-size: 18px;
-    line-height: 29px;
+    font-size: 19px;
+    line-height: 30px;
   }
 }
-/* Pull quotes: Charter Bold Italic, opened by a short navy rule, as a magazine sets them. */
+/* Pull quotes: Charter semibold, upright, opened by a short navy rule. */
 .story__pull {
   font-size: 28px;
   line-height: 38px;
-  font-style: italic;
   font-weight: 600;
   letter-spacing: -0.014em;
   margin: 48px 0;
@@ -243,8 +242,8 @@
 }
 @media (max-width: 767px) {
   .story__pull {
-    font-size: 23px;
-    line-height: 31px;
+    font-size: 22px;
+    line-height: 30px;
   }
 }
 .story__section-h {

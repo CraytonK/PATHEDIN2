@@ -184,7 +184,7 @@ export function EditProfileLayer() {
           </label>
           <label className="ep__field">
             <span>
-              Headline <em>{fields.headline.length}/120</em>
+              Headline <span className="ep__count">{fields.headline.length}/120</span>
             </span>
             <input value={fields.headline} onChange={set('headline')} maxLength={120} required aria-invalid={!fields.headline.trim()} />
           </label>
@@ -200,7 +200,7 @@ export function EditProfileLayer() {
           </div>
           <label className="ep__field">
             <span>
-              About <em>{fields.bio.length}/300</em>
+              About <span className="ep__count">{fields.bio.length}/300</span>
             </span>
             <textarea value={fields.bio} onChange={set('bio')} rows={4} maxLength={300} />
           </label>

@@ -68,8 +68,8 @@
   padding: 26px 28px 8px;
 }
 .gs-h {
-  font-size: 26px;
-  line-height: 32px;
+  font-size: 28px;
+  line-height: 34px;
   font-weight: 400;
   letter-spacing: -0.03em;
 }
@@ -309,7 +309,7 @@
   color: var(--label-2);
 }
 .gs-row__text strong {
-  font-size: 14.5px;
+  font-size: 14px;
   line-height: 20px;
   font-weight: 500;
   color: var(--label);
@@ -388,7 +388,7 @@
 }
 .gs-grid__part {
   padding-bottom: 4px;
-  font-size: 12.5px;
+  font-size: 13px;
   font-weight: 500;
   color: var(--label-2);
   text-align: center;
@@ -447,7 +447,7 @@
 }
 .gs-terms {
   margin-top: 14px;
-  font-size: 12.5px;
+  font-size: 13px;
   line-height: 18px;
   color: var(--label-3);
 }
@@ -483,7 +483,7 @@
 .gs-preview__who > span {
   display: flex;
   flex-direction: column;
-  font-size: 12.5px;
+  font-size: 13px;
   color: var(--label-2);
 }
 .gs-preview__who strong {
@@ -535,8 +535,8 @@
   display: flex;
   flex-direction: column;
   gap: 10px;
-  font-size: 13.5px;
-  line-height: 19px;
+  font-size: 14px;
+  line-height: 20px;
   color: var(--label-2);
   counter-reset: how;
 }
@@ -577,8 +577,8 @@
 }
 .gs-done__title {
   margin-top: 16px;
-  font-size: 32px;
-  line-height: 38px;
+  font-size: 34px;
+  line-height: 40px;
   font-weight: 400;
   letter-spacing: -0.035em;
 }

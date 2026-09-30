@@ -287,7 +287,7 @@ function SelectionToolbar({ scope, story, onRespond }: { scope: React.RefObject<
           label: 'Share',
           run: () => {
             try {
-              navigator.clipboard?.writeText(`“${sel.text}” — ${author.name}, on PathedIn\n${window.location.href}`);
+              navigator.clipboard?.writeText(`“${sel.text}”\n${author.name}, on PathedIn\n${window.location.href}`);
             } catch {
               /* ignore */
             }

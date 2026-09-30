@@ -190,7 +190,7 @@ export function Guides() {
   return (
     <Page
       title="Path Guides"
-      subtitle="People who’ve already made the moves you’re weighing — and said they’d help."
+      subtitle="People who’ve already made the moves you’re weighing, and said they’d help."
       back="Network"
       rail={
         <>

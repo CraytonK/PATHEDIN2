@@ -73,7 +73,7 @@
   border-radius: 50%;
   transform: translate(-50%, -50%);
   box-shadow: 0 0 0 1.5px var(--tint);
-  animation: station-breathe 2.8s var(--ease-out) infinite;
+  animation: station-breathe 2.8s var(--ease-out) 3;
   pointer-events: none;
 }
 @keyframes station-breathe {
@@ -225,7 +225,6 @@
   color: var(--label-2);
   margin-top: 6px;
   max-width: 460px;
-  font-style: italic;
   font-weight: 400;
 }
 .tmap__shared {
@@ -332,7 +331,7 @@
   background: var(--tint-soft);
   color: var(--tint-text);
   font-weight: 600;
-  animation: nudge 2.4s var(--ease-in-out) infinite;
+  animation: nudge 2.4s var(--ease-in-out) 3;
 }
 @keyframes nudge {
   0%,

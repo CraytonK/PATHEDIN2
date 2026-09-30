@@ -3,7 +3,7 @@ import type { Destination } from './types';
 const list: Destination[] = [
   {
     wp: 'pharma-rnd',
-    blurb: 'Scientists who design, make and test drug candidates — and the processes that produce them.',
+    blurb: 'Scientists who design, make and test drug candidates, and the processes that produce them.',
     people: 1240,
     heading: ['maya', 'sarah', 'wei', 'jonah', 'nikhil', 'daniel', 'yusuf', 'lucas', 'analucia', 'olivia', 'julian'],
     routes: [

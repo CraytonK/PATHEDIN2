@@ -16,7 +16,7 @@ html {
 
 body {
   margin: 0;
-  background: var(--bg);
+  background: var(--grain) 0 0 / 180px 180px, var(--bg);
   color: var(--label);
   font-family: var(--font-sans);
   font-size: 16px;
@@ -256,10 +256,9 @@ ol {
   font-weight: var(--display-weight);
   letter-spacing: -0.022em;
 }
-/* Reflections in someone's own words: italic. */
+/* Reflections in someone's own words: set upright in the serif, which is what marks them as theirs. */
 .t-reflection {
   font-family: var(--font-serif);
-  font-style: italic;
   font-weight: 400;
   color: var(--label-2);
 }
@@ -425,39 +424,9 @@ ol {
 }
 
 /* ── Interaction language ───────────────────────────────────────
-   Pointer: cards that open something catch light on their edge where the cursor is (lib/pointer.ts writes
-   --mx and --my), and arrows lean toward where they lead. Touch: cards give a little under a finger and
-   spring back when released. Everything is transform, opacity or a masked gradient. */
+   Pointer: cards lift and their shadow deepens, and arrows lean toward where they lead. Touch: cards give a
+   little under a finger and spring back when released. Everything is transform, opacity or shadow. */
 @media (hover: hover) and (pointer: fine) {
-  .dcard::after,
-  .gcard::after,
-  .post::after,
-  .door__top::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    z-index: 2;
-    padding: 1px;
-    border-radius: inherit;
-    background: radial-gradient(260px circle at var(--mx, 50%) var(--my, 0%), var(--edge-light), transparent 70%);
-    -webkit-mask:
-      linear-gradient(#000 0 0) content-box,
-      linear-gradient(#000 0 0);
-    -webkit-mask-composite: xor;
-    mask:
-      linear-gradient(#000 0 0) content-box exclude,
-      linear-gradient(#000 0 0);
-    opacity: 0;
-    transition: opacity 320ms var(--ease-out);
-    pointer-events: none;
-  }
-  .dcard:hover::after,
-  .gcard:hover::after,
-  .post:hover::after,
-  .door:hover .door__top::after {
-    opacity: 1;
-  }
-
   svg[data-dir='forward'],
   svg[data-dir='out'] {
     transition: transform 240ms var(--ease-out);
@@ -531,4 +500,40 @@ ol {
 }
 .roll > span {
   display: inline-block;
+}
+
+/* ── Skip to content: hidden until a keyboard reaches it, then a navy pill at the top left ── */
+.skip-link {
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  z-index: 120;
+  padding: 10px 16px;
+  border-radius: var(--r-md);
+  background: var(--primary);
+  color: var(--on-primary);
+  font-size: 14px;
+  font-weight: 500;
+  transform: translateY(-160%);
+  transition: transform 160ms var(--ease-out);
+}
+.skip-link:focus-visible {
+  transform: none;
+}
+#main:focus {
+  outline: none;
+}
+
+/* Headings break into even lines, and paragraphs never leave one word alone on the last line. */
+h1,
+h2,
+h3,
+h4 {
+  text-wrap: balance;
+}
+p,
+li,
+dd,
+blockquote {
+  text-wrap: pretty;
 }

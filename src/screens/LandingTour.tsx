@@ -8,7 +8,7 @@ import { RouteSilk } from '../components/path/RouteSilk';
 import { DecisionPost, GuidePost, MilestonePost, QuestionPost, RoutePost, StoryPost, ThreadPost } from '../components/FeedItems';
 import { postKinds, type PostKind } from '../components/Post';
 import { Stars } from '../components/Booking';
-import { IconArrowRight, IconCheck } from '../components/icons';
+import { IconArrowRight, IconCheck, IconPause, IconPlay } from '../components/icons';
 import { Rolling } from '../components/ui';
 import { people, me } from '../data/people';
 import { wp } from '../data/waypoints';
@@ -100,7 +100,6 @@ function Preview() {
   const rotateX = useTransform(p, [0, 1], [22, 0]);
   const scale = useTransform(p, [0, 1], [0.88, 1]);
   const y = useTransform(p, [0, 1], [70, 0]);
-  const glow = useTransform(p, [0, 1], [0, 1]);
   // The app is laid out at a real screen size, then scaled to fit, so it looks exactly as it does in use.
   const virtual = isMobile ? { w: 390, h: 760 } : { w: 1440, h: 880 };
   const k = width ? Math.min(1, width / virtual.w) : 0;
@@ -111,7 +110,6 @@ function Preview() {
       </Station>
       <div className="tour-frame-wrap" ref={wrap} style={{ height: k ? virtual.h * k + (isMobile ? 0 : 34) : undefined }}>
         <motion.div className={`tour-frame ${isMobile ? 'is-phone' : ''}`} style={reduce ? undefined : { rotateX, scale, y }}>
-          <motion.span className="tour-frame__glow" aria-hidden="true" style={{ opacity: reduce ? 1 : glow }} />
           {!isMobile && (
             <div className="tour-frame__bar" aria-hidden="true">
               <i />
@@ -404,11 +402,12 @@ function Feed() {
   const visible = useInView(box, { margin: '-25% 0px' });
   const reduce = useReducedMotion();
   const [k, setK] = useState(0);
-  const [held, setHeld] = useState(false);
+  // Stopped by you: the pause button, or choosing a kind yourself. Paused for a moment: pointing at it or tabbing through it.
+  const [stopped, setStopped] = useState(false);
   const [paused, setPaused] = useState(false);
-  const playing = visible && !held && !paused && !reduce;
-  // It turns through the kinds on its own while you watch, waits while you point at it or tab through it,
-  // and stops for good once you choose one.
+  const playing = visible && !stopped && !paused && !reduce;
+  // It turns through the kinds on its own while you watch (WCAG 2.2.2: anything that moves by itself for more
+  // than five seconds can be paused), waits while you point at it or tab through it, and stops when you choose one.
   useEffect(() => {
     if (!playing) return;
     const t = setInterval(() => setK((x) => (x + 1) % tourKinds.length), 4200);
@@ -440,7 +439,7 @@ function Feed() {
                 aria-selected={i === k}
                 className={`tour-kind ${i === k ? 'is-on' : ''}`}
                 onClick={() => {
-                  setHeld(true);
+                  setStopped(true);
                   setK(i);
                 }}
               >
@@ -451,6 +450,13 @@ function Feed() {
               </button>
             );
           })}
+          {!reduce && (
+            <button type="button" className="tour-feed__pause" aria-pressed={stopped} onClick={() => setStopped((s) => !s)}>
+              {stopped ? <IconPlay size={15} strokeWidth={2} /> : <IconPause size={15} strokeWidth={2.2} />}
+              {stopped ? 'Play' : 'Pause'}
+              <span className="visually-hidden"> the tour of posts</span>
+            </button>
+          )}
         </div>
         <div className="tour-feed__stage">
           <AnimatePresence mode="popLayout" initial={false}>
@@ -645,6 +651,8 @@ export function Tour({ onJoin, onSignIn }: { onJoin: () => void; onSignIn: () =>
       <Feed />
       <Guides onJoin={onJoin} />
       <Destination onJoin={onJoin} onSignIn={onSignIn} />
+      {/* The tour is a demonstration, so it says so: nobody in it is a real member, and no rating is a real review. */}
+      <p className="tour__fine">Everyone in this tour is a sample member. Their Paths, prices and ratings show how PathedIn works; they aren’t real people or real reviews.</p>
     </div>
   );
 }

@@ -162,7 +162,6 @@
 /* ── Milestone: someone arriving, in their own words ────── */
 .milestone-words {
   font-family: var(--font-serif);
-  font-style: italic;
   font-weight: 400;
   color: var(--label);
 }
@@ -388,7 +387,7 @@
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  font-size: 11.5px;
+  font-size: 12px;
   color: var(--label-2);
 }
 .thumb-mosaic__live i {
@@ -427,7 +426,7 @@
   border-radius: var(--r-pill);
   background: var(--primary);
   color: var(--on-primary);
-  font-size: 11.5px;
+  font-size: 12px;
   font-weight: 500;
 }
 
@@ -450,7 +449,7 @@
   display: inline-flex;
   align-items: baseline;
   gap: 7px;
-  font-size: 13.5px;
+  font-size: 14px;
   line-height: 20px;
   color: var(--label-2);
   white-space: nowrap;
@@ -535,11 +534,11 @@
 
 @container (max-width: 560px) {
   .thumb-count strong {
-    font-size: 24px;
+    font-size: 22px;
     line-height: 28px;
   }
   .thumb-count span {
-    font-size: 10.5px;
+    font-size: 11px;
   }
   .thumb-mosaic {
     gap: 0;
@@ -561,7 +560,7 @@
     bottom: 4px;
     height: 18px;
     padding: 0 6px;
-    font-size: 10px;
+    font-size: 11px;
   }
   .guide-strip__book {
     margin-left: 0;

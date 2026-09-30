@@ -274,8 +274,8 @@
   .profile__card-name {
     font-family: var(--font-brand);
   font-stretch: var(--display-stretch);
-    font-size: 30px;
-    line-height: 36px;
+    font-size: 28px;
+    line-height: 34px;
     font-weight: var(--display-weight);
     letter-spacing: -0.022em;
   }

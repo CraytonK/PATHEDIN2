@@ -330,7 +330,7 @@ function PastInspector({ node, hideTitle }: { node: MapNode; hideTitle?: boolean
       )}
       {behind.length > 0 && (
         <section className="insp__section">
-          <h3 className="insp__h">Here now — you could help</h3>
+          <h3 className="insp__h">Here now, and you could help</h3>
           {behind.map((p) => (
             <PersonRow key={p.id} id={p.id} compact />
           ))}

@@ -9,6 +9,7 @@ import { me, people } from '../data/people';
 import { sessionsFor } from '../lib/booking';
 import { RouteSilk } from '../components/path/RouteSilk';
 import { Tour } from './LandingTour';
+import { SkipLink } from '../components/SkipLink';
 import './landing.css';
 
 type AuthMode = 'join' | 'signin';
@@ -20,13 +21,14 @@ type AuthMode = 'join' | 'signin';
 export function Landing({ onAuthed }: { onAuthed: () => void }) {
   const [auth, setAuth] = useState<AuthMode | null>(null);
   useEffect(() => {
-    document.title = 'PathedIn — Your path & who’s walked it';
+    document.title = 'PathedIn · Your path & who’s walked it';
     return () => {
       document.title = 'PathedIn';
     };
   }, []);
   return (
     <div className="landing">
+      <SkipLink />
       <header className="landing__bar">
         <div className="landing__bar-inner">
           <a href="#top" className="wordmark landing__logo" aria-label="PathedIn" onClick={(e) => e.preventDefault()}>
@@ -49,9 +51,10 @@ export function Landing({ onAuthed }: { onAuthed: () => void }) {
         </div>
       </header>
 
+      <main className="landing__main" id="main" tabIndex={-1}>
       <div className="landing__stage immersive">
         <RouteSilk lines={30} delay={0.2} />
-        <main className="landing__hero" id="top">
+        <div className="landing__hero" id="top">
           {/* The words assemble with the art: each line rises out of a soft blur, then the sentence, then the action. */}
           <div className="landing__copy">
             <h1 className="landing__title" aria-label="Your path & who’s walked it">
@@ -82,10 +85,11 @@ export function Landing({ onAuthed }: { onAuthed: () => void }) {
             </motion.button>
           </div>
           <HeroArt />
-        </main>
+        </div>
       </div>
 
       <Tour onJoin={() => setAuth('join')} onSignIn={() => setAuth('signin')} />
+      </main>
 
       <footer className="landing__foot">
         <nav aria-label="Footer">

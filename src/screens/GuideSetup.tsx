@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Page } from '../components/chrome';
 import { Button } from '../components/ui';
-import { IconCheck, IconMinus, IconPlus, IconSparkle } from '../components/icons';
+import { IconCheck, IconMinus, IconPlus, IconGuidePlus } from '../components/icons';
 import { people, peopleList, me, ME } from '../data/people';
 import { wp } from '../data/waypoints';
 import type { ServiceKind } from '../data/types';
@@ -473,7 +473,7 @@ export function GuideSetup() {
             <Button
               variant="filled"
               size="medium"
-              icon={<IconSparkle size={16} />}
+              icon={<IconGuidePlus size={16} />}
               onClick={() => {
                 goLive();
                 if (saved?.live) toast('Guide profile updated');

@@ -75,10 +75,18 @@ export function haptic(pattern: number | number[] = 8) {
 export function useScrolled(offset = 2) {
   const [scrolled, setScrolled] = useState(() => typeof window !== 'undefined' && window.scrollY > offset);
   useEffect(() => {
-    const on = () => setScrolled(window.scrollY > offset);
-    on();
-    window.addEventListener('scroll', on, { passive: true });
-    return () => window.removeEventListener('scroll', on);
+    // A 1px marker at the top of the page: once it has left the viewport, the page has scrolled. No scroll
+    // listener, so nothing runs while you scroll.
+    const mark = document.createElement('div');
+    mark.setAttribute('aria-hidden', 'true');
+    mark.style.cssText = `position:absolute;top:${offset}px;left:0;width:1px;height:1px;pointer-events:none`;
+    document.body.prepend(mark);
+    const io = new IntersectionObserver(([e]) => setScrolled(!e.isIntersecting));
+    io.observe(mark);
+    return () => {
+      io.disconnect();
+      mark.remove();
+    };
   }, [offset]);
   return scrolled;
 }

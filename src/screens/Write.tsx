@@ -331,7 +331,8 @@ export function WriteScreen() {
       </header>
       {isMobile && <div className="write__framing-row">{framing}</div>}
 
-      <main className="write__page">
+      <div className="write__page">
+        <h1 className="visually-hidden">Write a story</h1>
         <textarea
           ref={titleRef}
           className="write__title"
@@ -421,7 +422,7 @@ export function WriteScreen() {
             e.target.value = '';
           }}
         />
-      </main>
+      </div>
 
       <ComposeBar root={body} editing={editing} onChange={save} onPhoto={addPhoto} onPath={addPath} onBreak={addBreak} />
 

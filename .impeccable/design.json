@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-09-30T18:55:13Z",
+  "generatedAt": "2026-09-30T19:30:38Z",
   "title": "Design System: PathedIn",
   "extensions": {
     "colorMeta": {
@@ -394,21 +394,6 @@
           "oklch(95% 0.035 267)"
         ]
       },
-      "immersive-glow": {
-        "role": "neutral",
-        "displayName": "Immersive Glow",
-        "canonical": "#1c3a9e",
-        "tonalRamp": [
-          "oklch(15% 0.166 266)",
-          "oklch(25% 0.166 266)",
-          "oklch(35% 0.166 266)",
-          "oklch(45% 0.166 266)",
-          "oklch(55% 0.166 266)",
-          "oklch(68% 0.166 266)",
-          "oklch(82% 0.166 266)",
-          "oklch(95% 0.166 266)"
-        ]
-      },
       "immersive-card": {
         "role": "neutral",
         "displayName": "Immersive Card",
@@ -592,11 +577,6 @@
         "name": "stage",
         "value": "0 24px 60px -30px rgba(15,23,42,0.55)",
         "purpose": "Immersive navy panels on cream."
-      },
-      {
-        "name": "edge-light",
-        "value": "radial-gradient(260px circle at pointer, rgba(36,72,200,0.5), transparent 70%) masked to the 1px border",
-        "purpose": "A card's edge catching light where the cursor is."
       }
     ],
     "motion": [
@@ -706,9 +686,9 @@
       "name": "Immersive Panel",
       "kind": "custom",
       "refersTo": "immersive-panel",
-      "description": "Midnight Navy with a blue glow, route silk and a glass card on it.",
-      "html": "<div class=\"ds-imm\"><svg viewBox=\"0 0 300 160\" preserveAspectRatio=\"none\"><path d=\"M-10 150 C 80 120, 160 60, 310 30\" /><path d=\"M-10 120 C 90 100, 170 50, 310 36\" /><path d=\"M-10 90 C 100 80, 180 44, 310 42\" class=\"you\"/></svg><div class=\"ds-glass\">Office hours with Amara<br><small>7:30 PM · 15 minutes</small></div></div>",
-      "css": ".ds-imm{position:relative;width:300px;height:160px;border-radius:20px;overflow:hidden;background:radial-gradient(120% 90% at 85% 0%,#1c3a9e,transparent 60%),linear-gradient(160deg,#0f172a,#0a1020);font:500 13px/18px 'Space Grotesk',Arial,sans-serif;color:#fff7ed}.ds-imm svg{position:absolute;inset:0;width:100%;height:100%}.ds-imm path{fill:none;stroke:rgba(143,168,255,.45);stroke-width:1}.ds-imm path.you{stroke:#8fa8ff;stroke-width:1.8}.ds-glass{position:absolute;left:20px;bottom:20px;padding:10px 12px;border-radius:12px;background:rgba(255,247,237,.08);box-shadow:inset 0 0 0 1px rgba(255,247,237,.16)}.ds-glass small{color:rgba(255,247,237,.7);font-weight:400}"
+      "description": "Flat Midnight Navy with a fine grain, route silk kept clear of words, and a solid navy card on it.",
+      "html": "<div class=\"ds-imm\"><svg viewBox=\"0 0 300 160\" preserveAspectRatio=\"none\"><path d=\"M-10 150 C 80 120, 160 60, 310 30\" /><path d=\"M-10 120 C 90 100, 170 50, 310 36\" /><path d=\"M-10 90 C 100 80, 180 44, 310 42\" class=\"you\"/></svg><div class=\"ds-solid\">Office hours with Amara<br><small>7:30 PM · 15 minutes</small></div></div>",
+      "css": ".ds-imm{position:relative;width:300px;height:160px;border-radius:20px;overflow:hidden;background:#0f172a;font:500 13px/18px 'Space Grotesk',Arial,sans-serif;color:#fff7ed}.ds-imm svg{position:absolute;inset:0;width:100%;height:100%}.ds-imm path{fill:none;stroke:rgba(143,168,255,.45);stroke-width:1}.ds-imm path.you{stroke:#8fa8ff;stroke-width:1.8}.ds-solid{position:absolute;left:20px;bottom:20px;padding:10px 12px;border-radius:12px;background:#172140;box-shadow:inset 0 0 0 1px rgba(255,247,237,.16)}.ds-solid small{color:rgba(255,247,237,.7);font-weight:400}"
     },
     {
       "name": "Stat Numeral",
@@ -766,13 +746,18 @@
         "section": "typography"
       },
       {
+        "name": "The Even Lines Rule",
+        "body": "Headings balance their lines and paragraphs avoid a lone last word (`text-wrap: balance` and `pretty`), so no line ends on an orphan.",
+        "section": "typography"
+      },
+      {
         "name": "The Solid on Navy Rule",
         "body": "Surfaces on an immersive panel are solid navy lifts (#172140 for cards and knockouts, #1d2848 for wells and hovers, #26335a for chips and quiet buttons), never translucent, so nothing behind them shows through their words. On cream, cards are solid white.",
         "section": "elevation"
       },
       {
         "name": "The Clear Words Rule",
-        "body": "Route silk lives only where a panel has no words: behind the intro's composition, along the top of a Path cover above the step names, to the right of the destination's words, and on the profile card's cover. Each panel masks the silk away from its text (`--silk-mask`); panels that are all text (Your Path this week, the earnings card, Become a Guide) keep the glow and leave the silk out.",
+        "body": "Route silk lives only where a panel has no words: behind the intro's composition, along the top of a Path cover above the step names, to the right of the destination's words, and on the profile card's cover. Each panel masks the silk away from its text (`--silk-mask`); panels that are all text (Your Path this week, the earnings card, Become a Guide) are plain grained navy with no silk.",
         "section": "elevation"
       },
       {
@@ -791,20 +776,24 @@
       "**Do** mark what's current with the sliding navy pill.",
       "**Do** use 8px corners for small pressed controls and pills for filter chips, counts, tab tracks and the top bar.",
       "**Do** label with marks: words led by the Path's own glyphs.",
-      "**Do** respect Reduce Motion with an intentional quieter path."
+      "**Do** respect Reduce Motion with an intentional quieter path.",
+      "**Do** write copy in sentence case with plain punctuation: a full stop, a comma or a colon where another site would use an em dash. Name the thing a link opens (\"See all communities\", \"Book office hours\"), never \"Learn more\".",
+      "**Do** show sample people and numbers as samples. Everyone in the prototype is fictional and says so where it could be mistaken for proof."
     ],
     "donts": [
       "**Don't** bring back the graphite world, Schibsted Grotesk or the Playfair wordmark.",
-      "**Don't** use large areas of signal blue, gradient text, neon edges or coloured side stripes. The one exception is the schedule's 4px event bar, a calendar marker from the reference that says what kind of event it is.",
+      "**Don't** use gradients on surfaces (a glow, a mesh, a sheen) or gradient text; surfaces are flat, with grain for texture. Don't use large areas of signal blue, neon edges, lit edges that follow the cursor, or coloured side stripes. The one exception is the schedule's 4px event bar, a calendar marker from the reference that says what kind of event it is.",
       "**Don't** nest a card in a card, or bring back rows between hairlines on the cream.",
       "**Don't** add a sidebar or drawer that repeats the top bar. One place for each way in: sections in the top bar, you in the account menu, everything by name in ⌘K.",
       "**Don't** give a kind of post or a Network group its own layout; tell them apart with the context line, the thumbnail, the strip or the signal line. Don't put a card field for payment anywhere in the prototype.",
       "**Don't** make anything on a navy panel see-through, or let route silk run behind words.",
       "**Don't** set a label above a heading as a kicker or eyebrow, even where the reference does. Headings carry their own weight.",
-      "**Don't** set interface text in Charter, or use a synthesized italic of Space Grotesk.",
+      "**Don't** set interface text in Charter, or set anything in italic.",
       "**Don't** put a label in a bubble (a tinted pill with a ring or a wash). It reads as a template; PathedIn labels with marks.",
-      "**Don't** use Unicode glyphs or emoji as icons. Icons are drawn SVG in one stroke weight.",
-      "**Don't** loop animations, bounce, or add parallax. Motion arrives, then rests. The intro tour is the one place scrolling drives motion, and it still rests the moment you stop."
+      "**Don't** use Unicode glyphs or emoji as icons. Icons are drawn SVG in one stroke weight. No sparkles: Become a Path Guide is a signpost with a plus, and a first-place standing is the words \"No. 1\" on a square tile.",
+      "**Don't** use em dashes, Title Case headings, exclamation marks in interface copy, \"Learn more\", or sizes off the type ramp.",
+      "**Don't** use `100vh`, `z-index: 9999` or a scroll listener where CSS or an observer does the job.",
+      "**Don't** loop animations, bounce, or add parallax, or autoplay without a Pause. Motion arrives, then rests. The intro tour is the one place scrolling drives motion, and it still rests the moment you stop."
     ]
   }
 }

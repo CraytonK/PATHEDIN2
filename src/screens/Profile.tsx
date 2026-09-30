@@ -8,7 +8,7 @@ import { PathCover } from '../components/path/PathCover';
 import { ConnectButton, CredibilityLabel, DecisionItem, RequestButton, StoryItem } from '../components/content';
 import { RailFooter, RailPills, RailSection } from '../components/Rail';
 import { Button, GroupedList, PathChips, RelationTag, TextTabs } from '../components/ui';
-import { IconAlign, IconBell, IconBookmark, IconMoon, IconPencil, IconPeople, IconPin, IconSend, IconSparkle, IconSun, IconUser } from '../components/icons';
+import { IconAlign, IconBell, IconBookmark, IconMoon, IconPencil, IconPeople, IconPin, IconSend, IconGuidePlus, IconSun, IconUser } from '../components/icons';
 import { GuideRailCard, GuideTab } from '../components/GuideProfile';
 import { BannerArt, useBanner } from '../components/Banner';
 import { useGuide } from '../lib/guides';
@@ -92,7 +92,7 @@ export function Profile() {
       <Button variant="outline" size="medium" onClick={() => openEditProfile()}>
         Edit profile
       </Button>
-      <Button variant="tinted" size="medium" icon={<IconSparkle size={16} />} onClick={() => navigate('/guide/setup')}>
+      <Button variant="tinted" size="medium" icon={<IconGuidePlus size={16} />} onClick={() => navigate('/guide/setup')}>
         {myGuide?.live ? 'Edit Guide profile' : myGuide ? 'Finish your Guide profile' : 'Become a Path Guide'}
       </Button>
     </div>

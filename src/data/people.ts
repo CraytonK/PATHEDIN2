@@ -17,7 +17,7 @@ const list: Person[] = [
     photo: photo('maya'),
     location: 'Toronto, ON',
     headline: 'MSc Chemistry candidate, University of Toronto',
-    bio: 'Synthetic chemist finishing my MSc at U of T. I want to spend my career making molecules that become medicines — I’m still working out the route.',
+    bio: 'Synthetic chemist finishing my MSc at U of T. I want to spend my career making molecules that become medicines. I’m still working out the route.',
     path: [
       s('bsc-chem', 'McGill University', 2017, 2021, { note: 'Fell for synthesis in a second-year organic lab and never looked back.' }),
       s('research-asst', 'Organic Synthesis Lab, McGill', 2021, 2024, {
@@ -69,7 +69,7 @@ const list: Person[] = [
       },
     ],
     communities: ['chem-pharma', 'msc-industry', 'phd-question'],
-    why: 'You and Sarah are both pursuing pharmaceutical R&D from almost identical chemistry backgrounds — a BSc, three years of bench research, then an MSc.',
+    why: 'You and Sarah are both pursuing pharmaceutical R&D from almost identical chemistry backgrounds: a BSc, three years of bench research, then an MSc.',
     mutuals: 6,
   },
   {
@@ -81,7 +81,7 @@ const list: Person[] = [
     location: 'Mississauga, ON',
     headline: 'Analytical Chemist at Brightwater CRO',
     banner: 'silk',
-    bio: 'HPLC whisperer. I went into a CRO to learn how industry actually works — ask me anything about the first eighteen months.',
+    bio: 'HPLC whisperer. I went into a CRO to learn how industry actually works. Ask me anything about the first eighteen months.',
     path: [
       s('bsc-chem', 'University of Toronto', 2015, 2019),
       s('research-asst', 'Medicinal Chemistry Lab, U of T', 2019, 2021),
@@ -113,7 +113,7 @@ const list: Person[] = [
       { destination: 'data-sci', certainty: 'considering' },
     ],
     communities: ['chem-pharma', 'lab-data', 'msc-industry'],
-    why: 'At the same point as you — MSc Chemistry at U of T — and weighing the same next step.',
+    why: 'At the same point as you, MSc Chemistry at U of T, and weighing the same next step.',
     mutuals: 14,
   },
   {
@@ -140,7 +140,7 @@ const list: Person[] = [
       },
     ],
     communities: ['phd-question', 'chem-pharma'],
-    why: 'You overlapped at McGill Chemistry for three years — and he’s facing your exact decision: PhD or industry.',
+    why: 'You overlapped at McGill Chemistry for three years, and he’s facing your exact decision: PhD or industry.',
     mutuals: 9,
   },
   {
@@ -159,7 +159,7 @@ const list: Person[] = [
     ],
     futures: [{ destination: 'senior-scientist', certainty: 'considering' }],
     communities: ['chem-pharma', 'newcomers-science'],
-    why: 'Same BSc, same years at McGill. She reached R&D two years after graduating — through QC.',
+    why: 'Same BSc, same years at McGill. She reached R&D two years after graduating, through QC.',
     mutuals: 17,
   },
 
@@ -173,12 +173,12 @@ const list: Person[] = [
     location: 'Toronto, ON',
     headline: 'Scientist I, Pharmaceutical R&D at Northfield Pharmaceuticals',
     banner: 'paper',
-    bio: 'Five years of method validation at a CRO. This month I finally made the move into R&D. Happy to tell you what worked — and what didn’t.',
+    bio: 'Five years of method validation at a CRO. This month I finally made the move into R&D. Happy to tell you what worked and what didn’t.',
     path: [
       s('bsc-chem', 'University of Toronto', 2015, 2019),
       s('msc-chem', 'University of Toronto', 2019, 2021),
       s('cro-analytical', 'Brightwater CRO', 2021, 2026, {
-        note: 'Validated 30+ methods. Stayed a year too long — and it still paid off.',
+        note: 'Validated 30+ methods. Stayed a year too long, and it still paid off.',
         storyId: 'elena-cro',
       }),
       s('pharma-rnd', 'Northfield Pharmaceuticals', 2026, null, { title: 'Scientist I, Pharmaceutical R&D', note: 'Started three weeks ago.' }),
@@ -218,7 +218,7 @@ const list: Person[] = [
       replies: 'Usually replies within two days',
     },
     communities: ['chem-pharma', 'msc-industry', 'phd-question'],
-    why: 'Went straight from your MSc program into process chemistry — one of your three possible routes.',
+    why: 'Went straight from your MSc program into process chemistry, one of your three possible routes.',
     mutuals: 5,
   },
   {
@@ -265,7 +265,7 @@ const list: Person[] = [
       replies: 'Usually replies the same day',
     },
     communities: ['chem-pharma', 'newcomers-science'],
-    why: 'Reached Pharmaceutical R&D without a graduate degree — through QC.',
+    why: 'Reached Pharmaceutical R&D without a graduate degree, through QC.',
     mutuals: 4,
   },
   {
@@ -284,7 +284,7 @@ const list: Person[] = [
     ],
     futures: [{ destination: 'pharma-rnd', certainty: 'set' }],
     communities: ['cro-rnd', 'chem-pharma'],
-    why: 'One step ahead on your Path — at a CRO for three years, heading where you are.',
+    why: 'One step ahead on your Path: at a CRO for three years, heading where you are.',
     mutuals: 2,
   },
   {
@@ -303,7 +303,7 @@ const list: Person[] = [
     ],
     futures: [{ destination: 'pharma-rnd', certainty: 'set' }],
     communities: ['phd-question', 'chem-pharma'],
-    why: 'Living the PhD route you’re considering — six years in and applying to pharma now.',
+    why: 'Living the PhD route you’re considering: six years in and applying to pharma now.',
     mutuals: 7,
   },
   {
@@ -336,7 +336,7 @@ const list: Person[] = [
     location: 'Toronto, ON',
     headline: 'Senior Scientist, Formulation R&D at Meridian Pharma',
     banner: 'lines',
-    bio: 'I came to Canada with a chemistry degree and a lot of questions. Three years at a CRO taught me the rigour pharma wanted. Now I lead formulation work — and try to answer the questions I once had.',
+    bio: 'I came to Canada with a chemistry degree and a lot of questions. Three years at a CRO taught me the rigour pharma wanted. Now I lead formulation work and try to answer the questions I once had.',
     path: [
       s('bsc-chem', 'University of Lagos', 2006, 2010),
       s('msc-chem', 'Western University', 2011, 2013, { note: 'Arrived in London, Ontario in January. Learned about winter and about Canadian grad school at the same time.', storyId: 'amara-newcomer' }),
@@ -356,7 +356,7 @@ const list: Person[] = [
       replies: 'Usually replies within a day',
     },
     communities: ['chem-pharma', 'cro-rnd', 'newcomers-science'],
-    why: 'Reached Pharmaceutical R&D from an MSc via a CRO — the route 41% of people like you take.',
+    why: 'Reached Pharmaceutical R&D from an MSc via a CRO, the route 41% of people like you take.',
     mutuals: 12,
   },
   {
@@ -389,7 +389,7 @@ const list: Person[] = [
       replies: 'Usually replies within a week',
     },
     communities: ['phd-question', 'chem-pharma'],
-    why: 'Took the PhD route into pharma R&D — and did his MSc at McGill, where you did your BSc.',
+    why: 'Took the PhD route into pharma R&D, and did his MSc at McGill, where you did your BSc.',
     mutuals: 4,
   },
   {
@@ -417,7 +417,7 @@ const list: Person[] = [
       replies: 'Usually replies within a few days',
     },
     communities: ['chem-pharma', 'msc-industry', 'phd-question'],
-    why: 'Hires MSc chemists into the role you want — and did her BSc and PhD at U of T.',
+    why: 'Hires MSc chemists into the role you want, and did her BSc and PhD at U of T.',
     mutuals: 5,
   },
   {
@@ -447,7 +447,7 @@ const list: Person[] = [
       replies: 'Usually replies within a day',
     },
     communities: ['chem-pharma', 'msc-industry'],
-    why: 'Reached pharma R&D straight from an MSc, through an internship — a route you haven’t added yet.',
+    why: 'Reached pharma R&D straight from an MSc, through an internship: a route you haven’t added yet.',
     mutuals: 2,
   },
   {
@@ -478,7 +478,7 @@ const list: Person[] = [
       replies: 'Usually replies within a day',
     },
     communities: ['bench-regulatory', 'chem-pharma'],
-    why: 'Did your MSc program, then moved from the bench into Regulatory Affairs — the future you’re exploring.',
+    why: 'Did your MSc program, then moved from the bench into Regulatory Affairs, the future you’re exploring.',
     mutuals: 3,
   },
   {
@@ -497,7 +497,7 @@ const list: Person[] = [
     ],
     futures: [{ destination: 'reg-affairs', certainty: 'set' }],
     communities: ['bench-regulatory', 'msc-industry'],
-    why: 'Went from a U of T MSc straight into Regulatory Affairs — the branch you’re exploring.',
+    why: 'Went from a U of T MSc straight into Regulatory Affairs, the branch you’re exploring.',
     mutuals: 6,
   },
   {
@@ -561,7 +561,7 @@ const list: Person[] = [
     futures: [],
     hiring: 'Hires process chemists straight from MSc programs',
     communities: ['chem-pharma', 'msc-industry'],
-    why: 'Hires MSc graduates into process chemistry — one of your possible next steps.',
+    why: 'Hires MSc graduates into process chemistry, one of your possible next steps.',
   },
   {
     id: 'ruth',
@@ -588,7 +588,7 @@ const list: Person[] = [
       replies: 'Usually replies within a week',
     },
     communities: ['chem-pharma', 'phd-question'],
-    why: 'Reached the destination you’re heading for forty years ago — and led it.',
+    why: 'Reached the destination you’re heading for forty years ago, and led it.',
   },
 
   // ── Explorers ─────────────────────────────────────────────────
@@ -600,7 +600,7 @@ const list: Person[] = [
     photo: photo('lucas'),
     location: 'Ottawa, ON',
     headline: 'High school chemistry teacher',
-    bio: 'Nine years teaching chemistry to teenagers. I want to go back to the lab — quietly figuring out whether that’s realistic.',
+    bio: 'Nine years teaching chemistry to teenagers. I want to go back to the lab, and I’m quietly figuring out whether that’s realistic.',
     path: [
       s('bsc-chem', 'University of Ottawa', 2012, 2016),
       s('bed', 'University of Ottawa', 2016, 2017),
@@ -611,7 +611,7 @@ const list: Person[] = [
       { destination: 'reg-affairs', certainty: 'exploring' },
     ],
     communities: ['chem-pharma', 'bench-regulatory'],
-    why: 'Exploring the same two futures as you — from nine years of teaching chemistry.',
+    why: 'Exploring the same two futures as you, after nine years of teaching chemistry.',
     mutuals: 0,
   },
   {
@@ -630,7 +630,7 @@ const list: Person[] = [
     ],
     futures: [{ destination: 'pharma-rnd', certainty: 'set' }],
     communities: ['newcomers-science', 'chem-pharma'],
-    why: 'Heading to Pharmaceutical R&D too — rebuilding the path after moving to Canada.',
+    why: 'Heading to Pharmaceutical R&D too, rebuilding the path after moving to Canada.',
     mutuals: 1,
   },
   {
@@ -896,7 +896,7 @@ const list: Person[] = [
     path: [s('bsc-chem', 'Dalhousie University', 2018, 2022), s('qc-chemist', 'Maritime Biologics', 2022, null)],
     futures: [{ destination: 'pharma-rnd', certainty: 'set' }],
     communities: ['chem-pharma'],
-    why: 'Heading to Pharmaceutical R&D through QC — the route Grace and Chloé took.',
+    why: 'Heading to Pharmaceutical R&D through QC, the route Grace and Chloé took.',
   },
   {
     id: 'sam',
@@ -927,7 +927,7 @@ const list: Person[] = [
     path: [s('bsc-chem', 'University of Guelph', 2019, 2023), s('research-asst', 'University of Guelph', 2023, null)],
     futures: [{ destination: 'pharma-rnd', certainty: 'considering' }],
     communities: ['chem-pharma'],
-    why: 'One step behind you on the same Path — and asking the questions you asked in 2024.',
+    why: 'One step behind you on the same Path, and asking the questions you asked in 2024.',
   },
 ];
 
