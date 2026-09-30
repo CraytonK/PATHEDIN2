@@ -60,8 +60,6 @@ interface AppState {
   theme: Theme;
   /** Prototype auth: signed-out visitors see the intro page. */
   signedIn: boolean;
-  /** Desktop sidebar, remembered like Medium's. */
-  sidebar: boolean;
   /** Passages you highlighted, by story. */
   highlights: Record<string, string[]>;
   /** Your responses, by story. */
@@ -88,7 +86,6 @@ interface AppState {
   toggleRoute: (id: string) => void;
   signIn: () => void;
   signOut: () => void;
-  toggleSidebar: () => void;
   toggleHighlight: (story: string, text: string) => void;
   addResponse: (story: string, r: Omit<MyResponse, 'at'>) => void;
   dismissTip: (id: string) => void;
@@ -162,7 +159,6 @@ export const useApp = create<AppState>()(
       // Soft Cream by default; Midnight and Automatic are a choice away in Settings and ⌘K.
       theme: 'light',
       signedIn: false,
-      sidebar: true,
       highlights: {},
       myResponses: {},
       tips: {},
@@ -198,7 +194,6 @@ export const useApp = create<AppState>()(
       toggleRoute: (id) => set((s) => ({ addedRoutes: { ...s.addedRoutes, [id]: !s.addedRoutes[id] } })),
       signIn: () => set({ signedIn: true, returning: true }),
       signOut: () => set({ signedIn: false, returning: true }),
-      toggleSidebar: () => set((s) => ({ sidebar: !s.sidebar })),
       toggleHighlight: (story, text) =>
         set((s) => {
           const list = s.highlights[story] ?? [];
@@ -242,7 +237,6 @@ export const useApp = create<AppState>()(
         addedRoutes: s.addedRoutes,
         theme: s.theme,
         signedIn: s.signedIn,
-        sidebar: s.sidebar,
         highlights: s.highlights,
         myResponses: s.myResponses,
         tips: s.tips,

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-09-30T15:27:02Z",
+  "generatedAt": "2026-09-30T16:01:27Z",
   "title": "Design System: PathedIn",
   "extensions": {
     "colorMeta": {
@@ -719,11 +719,11 @@
       "css": ".ds-stat{display:flex;flex-direction:column;gap:4px;font-family:'Space Grotesk',Arial,sans-serif;color:var(--label,#0f172a)}.ds-stat span{font-size:44px;line-height:1;font-weight:400;letter-spacing:-.045em}.ds-stat i{font-style:normal;color:var(--tint,#2448c8)}.ds-stat small{font-size:14px;color:var(--label-2,#545a69)}"
     },
     {
-      "name": "Sidebar Row",
+      "name": "Menu Row",
       "kind": "nav",
-      "refersTo": "sidebar-item",
-      "description": "32px rows on cream; the active row sits on a sliding selected surface.",
-      "html": "<nav class=\"ds-nav\"><a class=\"is-active\">Home</a><a>My Path</a><a>Discover</a></nav>",
+      "refersTo": "menu-item",
+      "description": "32px rows in the account menu; the row under the pointer lights.",
+      "html": "<nav class=\"ds-nav\"><a class=\"is-active\">Path Requests</a><a>Connections</a><a>Saved</a></nav>",
       "css": ".ds-nav{display:flex;flex-direction:column;width:220px;font:400 14px 'Space Grotesk',Arial,sans-serif}.ds-nav a{height:32px;display:flex;align-items:center;padding:0 10px;border-radius:6px;color:var(--label-2,#545a69);cursor:pointer}.ds-nav a:hover{background:var(--bg-hover,rgba(15,23,42,.04));color:var(--label,#0f172a)}.ds-nav a.is-active{background:var(--bg-selected,rgba(15,23,42,.06));color:var(--label,#0f172a);font-weight:500}"
     }
   ],
@@ -797,7 +797,7 @@
       "**Don't** bring back the graphite world, Schibsted Grotesk or the Playfair wordmark.",
       "**Don't** use large areas of signal blue, gradient text, neon edges or coloured side stripes. The one exception is the schedule's 4px event bar, a calendar marker from the reference that says what kind of event it is.",
       "**Don't** nest a card in a card, or bring back rows between hairlines on the cream.",
-      "**Don't** dock the sidebar beside the content again; the drawer holds it.",
+      "**Don't** add a sidebar or drawer that repeats the top bar. One place for each way in: sections in the top bar, you in the account menu, everything by name in ⌘K.",
       "**Don't** give a kind of post or a Network group its own layout; tell them apart with the context line, the thumbnail, the strip or the signal line. Don't put a card field for payment anywhere in the prototype.",
       "**Don't** make anything on a navy panel see-through, or let route silk run behind words.",
       "**Don't** set a label above a heading as a kicker or eyebrow, even where the reference does. Headings carry their own weight.",

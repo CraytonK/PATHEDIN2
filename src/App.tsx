@@ -1,7 +1,7 @@
 import { AnimatePresence, motion, MotionConfig } from 'framer-motion';
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { BrowserRouter, HashRouter, Route, Routes, useLocation, useNavigationType } from 'react-router-dom';
-import { Sidebar, TabBar, TopBar, ToastLayer } from './components/chrome';
+import { TabBar, TopBar, ToastLayer } from './components/chrome';
 import { PeekLayer } from './components/Peek';
 import { PathSplash } from './components/PathSplash';
 import { CompareLayer } from './components/path/Compare';
@@ -119,7 +119,7 @@ function Shell() {
   const inThread = isMobile && (/^\/messages\/.+/.test(location.pathname) || (location.pathname === '/messages' && location.search.includes('to=')));
   // A story replaces the tab bar with its own reading dock.
   const inStory = isMobile && /^\/stories\/[^/]+/.test(location.pathname);
-  // Write is a page of its own, like Medium's editor: no top bar, sidebar or tab bar.
+  // Write is a page of its own, like Medium's editor: no top bar or tab bar.
   const inWrite = location.pathname === '/write';
   // Messages keeps its own split view on desktop, so thread changes shouldn't animate the whole page.
   const routeKey = location.pathname.startsWith('/messages') && !isMobile ? '/messages' : location.pathname;
@@ -140,7 +140,6 @@ function Shell() {
     <>
       <div className={`app ${inWrite ? 'app--write' : isMobile ? (inThread ? 'app--thread' : 'app--mobile') : 'app--desktop'}`}>
         {!isMobile && !inWrite && <TopBar />}
-        {!isMobile && !inWrite && <Sidebar />}
         <AnimatePresence mode="wait" initial={false} onExitComplete={restore}>
           <motion.main
             key={routeKey}

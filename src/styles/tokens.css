@@ -143,7 +143,6 @@
   --tabbar-h: 74px;
   --navbar-h: 44px;
   --topbar-h: 64px;
-  --sidebar-w: 236px;
   --safe-top: env(safe-area-inset-top, 0px);
   --safe-bottom: env(safe-area-inset-bottom, 0px);
 

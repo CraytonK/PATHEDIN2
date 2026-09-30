@@ -10,7 +10,7 @@ import { search, type Result } from '../lib/search';
 import { useApp } from '../lib/store';
 import { switchTheme } from '../lib/theme';
 import { useUI } from '../lib/ui';
-import { IconAlign, IconArrowUpRight, IconBook, IconCalendar, IconCompass, IconCompose, IconFlag, IconMoon, IconPath, IconPeople, IconQuestion, IconSearch, IconSend, IconSparkle, IconSun } from './icons';
+import { IconAlign, IconArrowUpRight, IconBook, IconBookmark, IconCalendar, IconCompass, IconCompose, IconDoc, IconFlag, IconMoon, IconPath, IconPeople, IconQuestion, IconSearch, IconSend, IconSparkle, IconSun } from './icons';
 import { AvatarStack } from './ui';
 import './palette.css';
 
@@ -97,6 +97,13 @@ export function CommandPalette() {
           switchTheme(dark ? 'light' : 'dark', from);
         },
       },
+      // Pages by name, one keystroke away.
+      { key: 'go-stories', group: 'Go to', title: 'Stories', sub: 'From the stretches of road around yours', lead: <IconDoc size={17} />, run: go('/stories') },
+      { key: 'go-questions', group: 'Go to', title: 'Questions', sub: 'About the steps on your Path', lead: <IconQuestion size={17} />, run: go('/questions') },
+      { key: 'go-decisions', group: 'Go to', title: 'Decision Points', sub: 'Forks people near your Path are facing', lead: <IconFlag size={17} />, run: go('/decisions') },
+      { key: 'go-saved', group: 'Go to', title: 'Saved', lead: <IconBookmark size={17} />, run: go('/saved') },
+      { key: 'go-requests', group: 'Go to', title: 'Path Requests', lead: <IconSend size={17} />, run: go('/requests') },
+      { key: 'go-connections', group: 'Go to', title: 'Connections', lead: <IconPeople size={17} />, run: go('/connections') },
     ];
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [theme]);

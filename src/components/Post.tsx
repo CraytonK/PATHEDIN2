@@ -9,7 +9,7 @@ import { IconAlign, IconCommunity, IconDoc, IconEllipsis, IconFlag, IconMileston
 import { Avatar, PersonName, RelationGlyph, SaveToggle } from './ui';
 import './post.css';
 
-/** What a post is. Each kind carries the same icon as its section in the sidebar. */
+/** What a post is. Each kind carries the same icon wherever it appears: its page, the feed filter and the profile card. */
 export type PostKind = 'story' | 'question' | 'community' | 'guide' | 'decision' | 'route' | 'milestone';
 
 export const postKinds: Record<PostKind, { label: string; plural: string; icon: (p: { size?: number; strokeWidth?: number }) => ReactNode }> = {

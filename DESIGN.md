@@ -162,7 +162,6 @@ spacing:
   gutter-phone: "16px"
   gutter-tablet: "24px"
   gutter-desktop: "40px"
-  drawer: "264px"
   topbar: "64px"
   tabbar: "64px"
   dashboard-left: "296px"
@@ -212,11 +211,11 @@ components:
   sheet:
     backgroundColor: "{colors.cream-floating}"
     rounded: "{rounded.xl}"
-  sidebar-item:
+  menu-item:
     textColor: "{colors.ink-secondary}"
-    rounded: "{rounded.md}"
-    height: "38px"
-    padding: "0 12px"
+    rounded: "{rounded.sm}"
+    height: "32px"
+    padding: "0 10px"
   tag:
     backgroundColor: "{colors.cream-fill-quiet}"
     textColor: "{colors.ink-secondary}"
@@ -303,8 +302,8 @@ The ramp follows Apple's text styles, each available as a `.t-` class, with disp
 ## Layout
 
 The pieces of the app are unchanged; they are laid out as a dashboard.
-- **Top bar (desktop):** 64px, white and frosted over the cream. Left: the drawer button, the bold wordmark and a cream ⌘K field. Centre: the five sections (Home, Discover, My Path, Network, Communities) as icons on a cream track, the current one in a sliding navy pill. Right: Write as a navy pill, messages and notifications in cream circles, a hairline, and you as a chip (photo, name, chevron) that opens the account menu.
-- **Drawer:** every destination (the sections, Saved, Profile, Path Requests, Guides, Stories, Questions, Decision Points, your communities) in a 264px card that slides over the page from the drawer button. There is no docked sidebar.
+- **Top bar (desktop):** 64px, white and frosted over the cream. Left: the bold wordmark and a cream ⌘K field. Centre: the five sections (Home, Discover, My Path, Network, Communities) as icons on a cream track, the current one in a sliding navy pill. Right: Write as a navy pill, messages and notifications in cream circles, a hairline, and you as a chip (photo, name, chevron) that opens the account menu.
+- **One navigation, no sidebar:** the five sections live only in the top bar (the tab bar on phones). Everything about you (your profile, Path Requests, Connections, Saved, Become a Path Guide) is in the account menu. Stories, Questions, Decision Points and Path Guides are one step away from Discover, the Home profile card and the feed, and every page is reachable by name in ⌘K. The drawer was removed at the user's request (September 30, 2026) because it repeated the top bar.
 - **Home, three columns from 1200px:** a 296px profile card (route-silk cover, your photo, name and headline, three counts, your Path as tags, shortcuts, Write), the feed (People worth knowing as faces in rings, then For you and Following with the kind filter on one card that stays in reach, then the posts as cards), and a 340px column of cards: Coming up as a week, Your Path this week on navy, Office Hours, your communities, the footer. From 768 to 1199px the profile card joins the right column under the week.
 - **Other pages:** the page title on the cream, the content as cards, and a 340px column beside it that is a stack of cards (300px under 1100px).
 - **Intro:** a Midnight Navy stage set into the cream page with 12px margins and 28px corners, the headline left and the product composition floating right. Below it, the tour: one line down the left edge with a station for each feature, 168px between stations (112px on phones), the feature's demo on a white card under its title.
@@ -400,7 +399,7 @@ A number set at 44px regular with tight tracking, an optional signal-blue unit a
 
 ### Navigation
 - **Top bar:** see Layout. The sections are 56×40px icon pills with tooltips; hovering one grows a cream surface under it, and the current one is the navy pill, which slides on a spring. Once content slides beneath it, the bar lifts with a soft shadow.
-- **Drawer:** 38px rows at 14px, 18px outline icons; the current row is a navy pill that slides between rows.
+- **Account menu:** your photo and name as a chip that opens a 32px-row menu: View your profile, Path Requests (with its count), Connections, Saved, Become a Path Guide (or Your Guide profile), the appearance switch, and Sign out.
 - **Tabs:** a white pill track (cream inside a card) with 36px tabs; the chosen tab is a navy pill that slides, and a cream surface follows the pointer.
 - **Phone:** a floating white tab bar with badges; the chosen tab is a navy pill that slides, and its icon settles into place.
 
@@ -451,7 +450,7 @@ A two-pane sheet: the Guide on a recessed cream panel, then three session tiles,
 - **Don't** bring back the graphite world, Schibsted Grotesk or the Playfair wordmark.
 - **Don't** use large areas of signal blue, gradient text, neon edges or coloured side stripes. The one exception is the schedule's 4px event bar, a calendar marker from the reference that says what kind of event it is.
 - **Don't** nest a card in a card, or bring back rows between hairlines on the cream.
-- **Don't** dock the sidebar beside the content again; the drawer holds it.
+- **Don't** add a sidebar or drawer that repeats the top bar. One place for each way in: sections in the top bar, you in the account menu, everything by name in ⌘K.
 - **Don't** give a kind of post or a Network group its own layout; tell them apart with the context line, the thumbnail, the strip or the signal line. Don't put a card field for payment anywhere in the prototype.
 - **Don't** make anything on a navy panel see-through, or let route silk run behind words.
 - **Don't** set a label above a heading as a kicker or eyebrow, even where the reference does. Headings carry their own weight.

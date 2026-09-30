@@ -40,7 +40,7 @@
   grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
   align-items: center;
   gap: 16px;
-  padding: 0 20px 0 14px;
+  padding: 0 20px;
   background: var(--topbar-bg);
   -webkit-backdrop-filter: var(--bar-blur);
   backdrop-filter: var(--bar-blur);
@@ -65,23 +65,6 @@
 .mbar__right {
   justify-self: end;
   gap: 8px;
-}
-.mbar__menu {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  flex: none;
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  color: var(--label-2);
-  transition:
-    color var(--dur-1) var(--ease-out),
-    background-color var(--dur-1) var(--ease-out);
-}
-.mbar__menu:hover {
-  color: var(--label);
-  background: var(--bg-hover);
 }
 .mbar .wordmark {
   flex: none;
@@ -280,7 +263,7 @@
 }
 @media (max-width: 899px) {
   .mbar {
-    padding-right: 14px;
+    padding: 0 14px;
     gap: 10px;
   }
   .mbar .wordmark__text {
@@ -289,183 +272,6 @@
   .mbar__tab {
     width: 42px;
   }
-}
-
-/* ── Desktop: every destination, in a drawer that slides out as a card ── */
-.sidebar {
-  position: fixed;
-  top: calc(var(--topbar-h) + 12px);
-  bottom: 12px;
-  left: 12px;
-  z-index: 35;
-  width: 264px;
-  padding: 16px 0 28px;
-  overflow-y: auto;
-  overscroll-behavior: contain;
-  scrollbar-width: none;
-  border-radius: var(--r-card);
-  background: var(--card);
-  transform: translateX(calc(-100% - 24px));
-  visibility: hidden;
-  transition:
-    transform 420ms var(--ease-drawer),
-    visibility 0s linear 420ms;
-}
-.sidebar::-webkit-scrollbar {
-  display: none;
-}
-.sidebar.is-open {
-  transform: none;
-  visibility: visible;
-  transition: transform 420ms var(--ease-drawer);
-}
-.sidebar.is-overlay.is-open {
-  box-shadow: var(--shadow-modal);
-  z-index: 45;
-}
-.sidebar-scrim {
-  position: fixed;
-  inset: var(--topbar-h) 0 0 0;
-  z-index: 44;
-  background: var(--scrim);
-}
-.sidebar__group {
-  padding: 0 10px;
-}
-.sidebar__group + .sidebar__group {
-  margin-top: 12px;
-  padding-top: 12px;
-  position: relative;
-}
-.sidebar__group + .sidebar__group::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 20px;
-  right: 20px;
-  border-top: 1px solid var(--separator);
-}
-/* Compact rows; the current page sits on a surface that slides between rows. */
-.sidebar__item {
-  position: relative;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  height: 38px;
-  padding: 0 12px;
-  border-radius: var(--r-md);
-  color: var(--label-2);
-  font-size: 14px;
-  font-weight: 450;
-  transition:
-    color var(--dur-1) var(--ease-out),
-    background-color var(--dur-1) var(--ease-out);
-}
-.sidebar__item:hover {
-  color: var(--label);
-  background: var(--bg-hover);
-}
-.sidebar__item.is-active {
-  color: var(--label);
-  font-weight: 500;
-}
-.sidebar__item.is-active:hover {
-  background: transparent;
-}
-.sidebar__active {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  border-radius: var(--r-md);
-  background: var(--primary);
-  box-shadow: var(--btn-highlight);
-}
-.sidebar__item.is-active {
-  --bg: var(--primary);
-  color: var(--on-primary);
-}
-.sidebar__item > :not(.sidebar__active) {
-  position: relative;
-  z-index: 1;
-}
-.sidebar__icon {
-  display: inline-flex;
-  flex: none;
-}
-.sidebar__icon svg {
-  width: 18px;
-  height: 18px;
-}
-.sidebar__label {
-  flex: 1;
-  min-width: 0;
-}
-.sidebar__badge {
-  min-width: 18px;
-  height: 18px;
-  padding: 0 5px;
-  border-radius: var(--r-pill);
-  background: var(--badge);
-  color: #fff;
-  font-size: 11px;
-  font-weight: 500;
-  line-height: 18px;
-  text-align: center;
-  font-variant-numeric: tabular-nums;
-}
-.sidebar__mine {
-  display: flex;
-  flex-direction: column;
-  margin: 2px 0 12px;
-}
-.sidebar__community {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  height: 30px;
-  padding: 0 10px;
-  border-radius: var(--r-sm);
-  color: var(--label-2);
-  font-size: 13px;
-  min-width: 0;
-  transition:
-    color var(--dur-1) var(--ease-out),
-    background-color var(--dur-1) var(--ease-out);
-}
-.sidebar__community:hover,
-.sidebar__community.is-active {
-  color: var(--label);
-  background: var(--bg-hover);
-}
-.sidebar__dot {
-  width: 16px;
-  height: 16px;
-  flex: none;
-  border-radius: 50%;
-  background: radial-gradient(circle, var(--tint) 0 2.6px, transparent 3.2px);
-  box-shadow: inset 0 0 0 2px var(--ink);
-}
-.sidebar__suggest {
-  display: flex;
-  gap: 10px;
-  color: var(--label-3);
-  font-size: 13px;
-  line-height: 19px;
-  padding: 4px 10px 0;
-}
-.sidebar__suggest svg {
-  flex: none;
-  margin-top: 1px;
-}
-.sidebar__suggest a {
-  display: block;
-  margin-top: 12px;
-  text-decoration: underline;
-  text-underline-offset: 3px;
-  color: var(--label-2);
-}
-.sidebar__suggest a:hover {
-  color: var(--label);
 }
 
 .account {

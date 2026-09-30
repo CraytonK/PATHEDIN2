@@ -3,7 +3,6 @@ import { useEffect, useLayoutEffect, useRef, useState, type ReactNode } from 're
 import { createPortal } from 'react-dom';
 import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { me } from '../data/people';
-import { communities } from '../data/communities';
 import { notificationList, conversationList } from '../data/social';
 import { easings, springs, useIsMobile, useScrolled, haptic } from '../lib/motion';
 import { useApp } from '../lib/store';
@@ -24,14 +23,7 @@ import {
   IconSend,
   IconMoon,
   IconSun,
-  IconMenu,
-  IconUser,
   IconCompose,
-  IconDoc,
-  IconSignpost,
-  IconQuestion,
-  IconFlag,
-  IconPlus,
   IconChevronDown,
   IconSparkle,
 } from './icons';
@@ -82,16 +74,11 @@ export function TopBar() {
   const unread = useUnread();
   const setSearch = useUI((s) => s.setSearch);
   const navigate = useNavigate();
-  const drawer = useUI((s) => s.drawer);
-  const setDrawer = useUI((s) => s.setDrawer);
   const current = useActiveSection(pathname);
   const scrolled = useScrolled();
   return (
     <header className={`mbar ${scrolled ? 'is-scrolled' : ''}`}>
       <div className="mbar__left">
-        <button className="mbar__menu" aria-label={drawer ? 'Hide sidebar' : 'Show sidebar'} aria-expanded={drawer} aria-controls="sidebar" onClick={() => setDrawer(!drawer)}>
-          <IconMenu size={20} strokeWidth={1.6} />
-        </button>
         <Link to="/" className="wordmark" aria-label="PathedIn home">
           <Wordmark />
         </Link>
@@ -139,114 +126,18 @@ export function TopBar() {
   );
 }
 
-type SideItem = { to: string; label: string; icon: (p: { size?: number; filled?: boolean; strokeWidth?: number }) => ReactNode; match: (p: string) => boolean; badge?: number };
-
-export function Sidebar() {
-  const { pathname } = useLocation();
-  const unread = useUnread();
-  const joined = useApp((s) => s.joined);
-  const myGuide = useApp((s) => s.myGuide);
-  const open = useUI((s) => s.drawer);
-  const setDrawer = useUI((s) => s.setDrawer);
-
-  useEffect(() => {
-    setDrawer(false);
-  }, [pathname, setDrawer]);
-  useEffect(() => {
-    if (!open) return;
-    const onKey = (e: KeyboardEvent) => e.key === 'Escape' && setDrawer(false);
-    window.addEventListener('keydown', onKey);
-    return () => window.removeEventListener('keydown', onKey);
-  }, [open, setDrawer]);
-
-  const groups: SideItem[][] = [
-    [
-      { to: '/', label: 'Home', icon: IconHome, match: (p) => p === '/' },
-      { to: '/path', label: 'My Path', icon: IconPath, match: (p) => p.startsWith('/path') },
-      { to: '/discover', label: 'Discover', icon: IconCompass, match: (p) => p.startsWith('/discover') },
-      { to: '/network', label: 'Network', icon: IconPeople, match: (p) => p.startsWith('/network') || p.startsWith('/connections') },
-      { to: '/communities', label: 'Communities', icon: IconCommunity, match: (p) => p.startsWith('/communities') },
-    ],
-    [
-      { to: '/saved', label: 'Saved', icon: IconBookmark, match: (p) => p.startsWith('/saved') },
-      { to: `/p/${me.id}`, label: 'Profile', icon: IconUser, match: (p) => p === `/p/${me.id}` },
-      { to: '/requests', label: 'Path Requests', icon: IconSend, match: (p) => p.startsWith('/requests'), badge: unread.incoming },
-    ],
-    [
-      { to: '/guides', label: 'Path Guides', icon: IconSignpost, match: (p) => p.startsWith('/guides') },
-      { to: '/stories', label: 'Stories', icon: IconDoc, match: (p) => p.startsWith('/stories') },
-      { to: '/questions', label: 'Questions', icon: IconQuestion, match: (p) => p.startsWith('/questions') },
-      { to: '/decisions', label: 'Decision Points', icon: IconFlag, match: (p) => p.startsWith('/decisions') },
-      { to: '/guide/setup', label: myGuide?.live ? 'Your Guide profile' : 'Become a Path Guide', icon: IconSparkle, match: (p) => p.startsWith('/guide/') },
-    ],
-  ];
-  const mine = Object.keys(joined)
-    .filter((k) => joined[k] && communities[k])
-    .map((k) => communities[k]);
-
-  return (
-    <>
-      <AnimatePresence>
-        {open && (
-          <motion.div className="sidebar-scrim" onClick={() => setDrawer(false)} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.2 }} />
-        )}
-      </AnimatePresence>
-      <nav id="sidebar" className={`sidebar is-overlay ${open ? 'is-open' : ''}`} aria-label="Primary" aria-hidden={!open} inert={!open}>
-        {groups.map((g, i) => (
-          <ul key={i} className="sidebar__group">
-            {g.map((item) => {
-              const active = item.match(pathname);
-              const Icon = item.icon;
-              return (
-                <li key={item.to}>
-                  <NavLink to={item.to} className={`sidebar__item ${active ? 'is-active' : ''}`} aria-current={active ? 'page' : undefined}>
-                    {active && <motion.span layoutId="sidebar-active" className="sidebar__active" transition={springs.snappy} />}
-                    <span className="sidebar__icon">
-                      <Icon size={18} filled={active} strokeWidth={1.7} />
-                    </span>
-                    <span className="sidebar__label">{item.label}</span>
-                    {!!item.badge && <span className="sidebar__badge"><Rolling value={item.badge} /></span>}
-                  </NavLink>
-                </li>
-              );
-            })}
-          </ul>
-        ))}
-        <div className="sidebar__group sidebar__following">
-          <Link to="/communities" className="sidebar__item">
-            <span className="sidebar__icon">
-              <IconCommunity size={24} strokeWidth={1.5} />
-            </span>
-            <span className="sidebar__label">Following</span>
-          </Link>
-          <ul className="sidebar__mine">
-            {mine.map((c) => (
-              <li key={c.id}>
-                <NavLink to={`/c/${c.id}`} className={`sidebar__community ${pathname === `/c/${c.id}` ? 'is-active' : ''}`}>
-                  <span className="sidebar__dot" aria-hidden="true" />
-                  <span className="truncate">{c.title}</span>
-                </NavLink>
-              </li>
-            ))}
-          </ul>
-          <div className="sidebar__suggest">
-            <IconPlus size={20} strokeWidth={1.5} />
-            <p>
-              Find people and communities on your Path.
-              <Link to="/network">See suggestions</Link>
-            </p>
-          </div>
-        </div>
-      </nav>
-    </>
-  );
-}
+/*
+  There is no sidebar. The five sections live in the top bar; everything about you (profile, requests,
+  connections, saved, your Guide profile) is in the account menu; Stories, Questions, Decision Points and
+  Path Guides are one step away from Discover, the Home profile card, the feed and ⌘K.
+*/
 
 function AccountMenu() {
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
   const theme = useApp((s) => s.theme);
   const signOut = useApp((s) => s.signOut);
+  const myGuide = useApp((s) => s.myGuide);
   const unread = useUnread();
   const ref = useRef<HTMLDivElement>(null);
   useEffect(() => {
@@ -293,6 +184,9 @@ function AccountMenu() {
               </button>
               <button className="menu__item" onClick={() => go('/saved')}>
                 <IconBookmark size={19} /> Saved
+              </button>
+              <button className="menu__item" onClick={() => go('/guide/setup')}>
+                <IconSparkle size={19} /> {myGuide?.live ? 'Your Guide profile' : 'Become a Path Guide'}
               </button>
             </div>
             <div className="menu__group">
