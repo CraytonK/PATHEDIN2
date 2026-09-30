@@ -109,6 +109,7 @@ export function TopBar() {
           const badge = s.to === '/network' ? unread.incoming : 0;
           return (
             <NavLink key={s.to} to={s.to} className={`mbar__tab ${active ? 'is-active' : ''}`} aria-label={s.label} aria-current={active ? 'page' : undefined} data-tip={s.label} data-tip-pos="below">
+              <span className="mbar__tab-hover" aria-hidden="true" />
               {active && <motion.span layoutId="mbar-active" className="mbar__tab-pill" transition={springs.snappy} />}
               <Icon size={20} filled={active} strokeWidth={active ? 1.9 : 1.6} />
               {badge > 0 && (

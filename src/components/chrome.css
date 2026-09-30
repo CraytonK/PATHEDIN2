@@ -144,8 +144,8 @@
   color: var(--label-3);
   transition: color 200ms var(--ease-out);
 }
-.mbar__tab::before {
-  content: '';
+/* The hover surface is its own element: a tab's ::before and ::after belong to its tooltip (base.css). */
+.mbar__tab-hover {
   position: absolute;
   inset: 0;
   border-radius: inherit;
@@ -160,7 +160,7 @@
   .mbar__tab:hover {
     color: var(--label);
   }
-  .mbar__tab:not(.is-active):hover::before {
+  .mbar__tab:not(.is-active):hover .mbar__tab-hover {
     opacity: 1;
     scale: 1;
   }

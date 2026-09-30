@@ -96,7 +96,9 @@ ol {
 
 /* ── Tooltips for icon-only buttons ──
    Medium's pattern: a small dark label with a centred caret, after a short hover.
-   Pointer devices only; touch users get the aria-label and the action itself. */
+   Pointer devices only; touch users get the aria-label and the action itself.
+   A tooltip owns its element's ::before (the caret) and ::after (the label), so anything with data-tip
+   draws its own decoration with a real child element, never with those pseudo-elements. */
 @media (hover: hover) {
   [data-tip] {
     position: relative;
