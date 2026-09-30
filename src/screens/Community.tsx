@@ -16,8 +16,9 @@ import { current } from '../lib/relations';
 import { springs } from '../lib/motion';
 import { useApp } from '../lib/store';
 import { useUI } from '../lib/ui';
-import { RailFooter, RailPeople, RailPills, RailSection } from '../components/Rail';
+import { RailFooter, RailPills, RailSection } from '../components/Rail';
 import { NotFound } from './NotFound';
+import { RankedGuides } from '../components/GuideProfile';
 import './community.css';
 
 type Tab = 'conversations' | 'questions' | 'decisions' | 'stories' | 'people';
@@ -111,8 +112,8 @@ export function CommunityScreen() {
       back="Communities"
       rail={
         <>
-          <RailSection title="Guides in this community" more={{ to: '/guides', label: 'See all Path Guides' }}>
-            <RailPeople ids={c.guideIds} action="request" />
+          <RailSection title="Top Guides in this community" more={{ to: '/guides', label: 'See all Path Guides' }}>
+            <RankedGuides community={c.id} ids={c.guideIds} />
           </RailSection>
           {related.length > 0 && (
             <RailSection title="Journeys that cross this one">

@@ -222,3 +222,171 @@
   white-space: normal;
   font-weight: 500;
 }
+
+/* ── The marketplace: filters, prices, standing ── */
+.guides__kinds {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: -8px 0 28px;
+}
+.gcard {
+  border-radius: var(--r-card);
+}
+.gcard__rep {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 10px;
+  margin-top: 2px;
+  font-size: 13px;
+  color: var(--label-2);
+}
+.gcard__stars {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+.gcard__stars svg {
+  color: var(--tint);
+}
+.gcard__stars strong {
+  font-weight: 500;
+  color: var(--label);
+}
+.gcard__top-badge {
+  padding: 2px 9px;
+  border-radius: var(--r-pill);
+  background: var(--primary);
+  color: var(--on-primary);
+  font-size: 11.5px;
+  font-weight: 500;
+}
+.gcard__svcs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 8px;
+}
+.gcard__svc {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 32px;
+  padding: 0 12px 0 10px;
+  border-radius: var(--r-pill);
+  background: var(--canvas);
+  box-shadow: inset 0 0 0 1px var(--separator);
+  font-size: 12.5px;
+  color: var(--label-2);
+  transition:
+    box-shadow var(--dur-2) var(--ease-out),
+    color var(--dur-2) var(--ease-out);
+}
+.gcard__svc strong {
+  font-weight: 500;
+  color: var(--label);
+  font-variant-numeric: tabular-nums;
+}
+.gcard__svc.is-free strong {
+  color: var(--tint-text);
+}
+.gcard__svc:hover {
+  color: var(--label);
+  box-shadow: inset 0 0 0 1px var(--ink);
+}
+
+/* Standing, community by community. */
+.lboard {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.lboard__community {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 12.5px;
+  font-weight: 500;
+  color: var(--label-2);
+}
+.lboard__community:hover {
+  color: var(--label);
+}
+.lboard__list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.lboard__list li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.lboard__rank {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--canvas);
+  font-size: 11px;
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+}
+.lboard__rank.is-top {
+  background: var(--primary);
+  color: var(--on-primary);
+}
+.lboard__who {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  font-size: 12px;
+  color: var(--label-2);
+}
+.lboard__who svg {
+  color: var(--tint);
+  vertical-align: -1px;
+}
+.lboard__name {
+  font-size: 13.5px;
+  font-weight: 500;
+}
+
+/* An invitation to guide, on navy. */
+.become {
+  padding: 20px;
+  border-radius: var(--r-card);
+  box-shadow: 0 24px 48px -28px rgba(15, 23, 42, 0.65);
+}
+.become__h {
+  font-size: 19px;
+  line-height: 24px;
+  font-weight: 400;
+  letter-spacing: -0.025em;
+}
+.become__p {
+  margin-top: 8px;
+  font-size: 13.5px;
+  line-height: 19px;
+  color: var(--label-2);
+}
+.become__cta {
+  display: inline-flex;
+  align-items: center;
+  height: 38px;
+  margin-top: 16px;
+  padding: 0 16px;
+  border-radius: var(--r-pill);
+  background: var(--primary);
+  color: var(--on-primary);
+  font-size: 13.5px;
+  font-weight: 500;
+  box-shadow: var(--btn-highlight);
+  transition: scale 160ms var(--ease-out);
+}
+.become__cta:active {
+  scale: 0.97;
+}

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-09-29T21:29:03Z",
+  "generatedAt": "2026-09-29T22:04:02Z",
   "title": "Design System: PathedIn",
   "extensions": {
     "colorMeta": {
@@ -707,7 +707,7 @@
       },
       {
         "name": "The Stage Rule",
-        "body": "Immersive navy panels are for the product showing itself: the intro, a Path cover, your week. They are never a decoration behind ordinary content, and never more than one or two on a screen.",
+        "body": "Immersive navy panels are for the product showing itself: the intro, a Path cover, your week, a Guide's card. They are never a decoration behind ordinary content. A full panel appears at most once or twice on a screen; Guide cards carry only a slim navy band (56–92px) across their top, so a list of Guides stays readable.",
         "section": "colors"
       },
       {
@@ -747,6 +747,7 @@
       "**Don't** use large areas of signal blue, gradient text, neon edges or coloured side stripes. The one exception is the schedule's 4px event bar, a calendar marker from the reference that says what kind of event it is.",
       "**Don't** nest a card in a card, or bring back rows between hairlines on the cream.",
       "**Don't** dock the sidebar beside the content again; the drawer holds it.",
+      "**Don't** let two kinds of post share one shape, or put a card field for payment anywhere in the prototype.",
       "**Don't** put glass on cream. Glass lives only on navy.",
       "**Don't** set a label above a heading as a kicker or eyebrow, even where the reference does. Headings carry their own weight.",
       "**Don't** set interface text in Charter, or use a synthesized italic of Space Grotesk.",

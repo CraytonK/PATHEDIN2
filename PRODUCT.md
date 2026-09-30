@@ -51,7 +51,7 @@ The Path is the unit of everything. People are placed on your Path (Path Twins, 
 ## Product Principles
 - Every relationship is explained. The app always says why someone or something is shown, in terms of Paths.
 - Specific over general. Requests, posts and bookings point at a step or a stretch, not at a person in the abstract.
-- Guides are people, not a marketplace. They're never paid, ranked or rated.
+- **Path Guides are a creator economy built on credibility** (the user's direction, September 29, 2026). Anyone can become a Guide for moves on their own Path, and their profile leads with that Path so people see at once why they're credible. Guides offer free community guidance (answers and Office Hours) and can charge for 1:1 calls, mentorship, résumé and portfolio reviews, interview prep, small-group sessions and workshops. PathedIn keeps a share of each paid booking (15% in this prototype, a placeholder until pricing is decided). Reviews, answers and people helped build a Guide's standing inside each Path Community. The prototype takes no payment and collects no card details.
 - Calm, fast, precise. The tool gets out of the way of a big decision.
 
 ## Accessibility & Inclusion

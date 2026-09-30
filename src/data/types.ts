@@ -47,6 +47,52 @@ export interface GuideProfile {
   replies: string; // "Usually replies within a day"
 }
 
+/* ── The Guide economy: what a Guide offers, what it costs, and what people said ── */
+
+export type ServiceKind = 'office-hours' | 'call' | 'mentorship' | 'resume' | 'interview' | 'portfolio' | 'group' | 'workshop' | 'other';
+
+export interface GuideService {
+  id: string;
+  kind: ServiceKind;
+  title: string;
+  blurb: string;
+  /** Minutes on a call; written reviews have none. */
+  minutes?: number;
+  /** In Canadian dollars. 0 is free. */
+  price: number;
+  per: 'session' | 'month' | 'seat' | 'review';
+  /** Group sessions and workshops. */
+  seats?: number;
+  /** For written reviews: what you get back, and when. */
+  delivery?: string;
+}
+
+export interface GuideReview {
+  id: string;
+  author: string;
+  rating: number;
+  body: string;
+  service: ServiceKind;
+  ago: string;
+}
+
+export interface GuideEconomy {
+  /** The year they became a Guide. */
+  since: number;
+  /** Their experience, in a sentence. */
+  experience: string;
+  expertise: string[];
+  services: GuideService[];
+  rating: number;
+  reviewCount: number;
+  followers: number;
+  reviews: GuideReview[];
+  /** Where they're known: their rank among a Path Community's Guides. */
+  standing: { community: string; rank: number }[];
+  /** When paid sessions happen: weekdays (0 = Sunday) and start hours, and how to say it. */
+  paid: { days: number[]; hours: number[]; label: string };
+}
+
 export interface Person {
   id: string;
   name: string;

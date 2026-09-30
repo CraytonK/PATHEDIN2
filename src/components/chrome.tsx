@@ -33,6 +33,7 @@ import {
   IconFlag,
   IconPlus,
   IconChevronDown,
+  IconSparkle,
 } from './icons';
 import { IconButton, Rolling } from './ui';
 import './chrome.css';
@@ -143,6 +144,7 @@ export function Sidebar() {
   const { pathname } = useLocation();
   const unread = useUnread();
   const joined = useApp((s) => s.joined);
+  const myGuide = useApp((s) => s.myGuide);
   const open = useUI((s) => s.drawer);
   const setDrawer = useUI((s) => s.setDrawer);
 
@@ -174,6 +176,7 @@ export function Sidebar() {
       { to: '/stories', label: 'Stories', icon: IconDoc, match: (p) => p.startsWith('/stories') },
       { to: '/questions', label: 'Questions', icon: IconQuestion, match: (p) => p.startsWith('/questions') },
       { to: '/decisions', label: 'Decision Points', icon: IconFlag, match: (p) => p.startsWith('/decisions') },
+      { to: '/guide/setup', label: myGuide?.live ? 'Your Guide profile' : 'Become a Path Guide', icon: IconSparkle, match: (p) => p.startsWith('/guide/') },
     ],
   ];
   const mine = Object.keys(joined)

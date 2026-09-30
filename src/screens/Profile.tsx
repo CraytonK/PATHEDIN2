@@ -8,7 +8,9 @@ import { PathCover } from '../components/path/PathCover';
 import { ConnectButton, CredibilityLabel, DecisionItem, RequestButton, StoryItem } from '../components/content';
 import { RailFooter, RailPills, RailSection } from '../components/Rail';
 import { Button, GroupedList, PathChips, RelationTag, TextTabs } from '../components/ui';
-import { IconAlign, IconBell, IconBookmark, IconCalendar, IconClock, IconMoon, IconPeople, IconPin, IconSend, IconSun, IconUser } from '../components/icons';
+import { IconAlign, IconBell, IconBookmark, IconMoon, IconPeople, IconPin, IconSend, IconSparkle, IconSun, IconUser } from '../components/icons';
+import { GuideRailCard, GuideTab } from '../components/GuideProfile';
+import { useGuide } from '../lib/guides';
 import { people, ME } from '../data/people';
 import { wp } from '../data/waypoints';
 import { storyList } from '../data/stories';
@@ -21,8 +23,6 @@ import { useApp } from '../lib/store';
 import { useUI } from '../lib/ui';
 import { switchTheme } from '../lib/theme';
 import { NotFound } from './NotFound';
-import { BookButton } from '../components/Booking';
-import { useOpenSpots } from '../lib/booking';
 import './profile.css';
 
 function YourSpace() {
@@ -65,8 +65,9 @@ export function Profile() {
   const saved = useApp((s) => !!s.saved[`person:${id}`]);
   const toggleSave = useApp((s) => s.toggleSave);
   const toggleFollow = useApp((s) => s.toggleFollow);
-  const [tab, setTab] = useState<'path' | 'stories' | 'answers' | 'decisions'>('path');
-  const spots = useOpenSpots(id);
+  const [tab, setTab] = useState<'guide' | 'path' | 'stories' | 'answers' | 'decisions' | null>(null);
+  const guide = useGuide(id);
+  const myGuide = useApp((s) => s.myGuide);
   if (!p) return <NotFound />;
   const self = id === ME;
   const rel = relationTo(id);
@@ -85,6 +86,9 @@ export function Profile() {
       </Button>
       <Button variant="outline" size="medium">
         Edit profile
+      </Button>
+      <Button variant="tinted" size="medium" icon={<IconSparkle size={16} />} onClick={() => navigate('/guide/setup')}>
+        {myGuide?.live ? 'Edit Guide profile' : myGuide ? 'Finish your Guide profile' : 'Become a Path Guide'}
       </Button>
     </div>
   ) : (
@@ -154,30 +158,7 @@ export function Profile() {
     <>
       {facts}
       {self && <YourSpace />}
-      {p.guide && (
-        <RailSection title="Path Guide" card>
-          <p className="profile__guide-move">
-            Has made the move {p.guide.transitions.map(([a, b]) => `${wp(a).short} → ${wp(b).short}`).join(' and ')}.
-          </p>
-          <ul className="guide-card__helps">
-            {p.guide.helpsWith.map((h) => (
-              <li key={h}>{h}</li>
-            ))}
-          </ul>
-          <p className="profile__guide-line">
-            <IconCalendar size={15} /> {spots.when} · {spots.open ? `${spots.open} of ${spots.total} spots open` : 'full this time'}
-          </p>
-          <p className="profile__guide-line">
-            <IconClock size={15} /> {p.guide.replies} · has helped {p.guide.helped} people
-          </p>
-          {!self && (
-            <div className="profile__guide-cta">
-              <BookButton id={id} label="Book a spot" />
-              <RequestButton id={id} size="small" variant="gray" label="Ask" />
-            </div>
-          )}
-        </RailSection>
-      )}
+      {guide && <GuideRailCard id={id} />}
       {!self && summary && (
         <RailSection title="Where your Paths meet">
           <div className="profile__meet-map">
@@ -201,13 +182,15 @@ export function Profile() {
   );
 
   const tabs = [
+    ...(guide ? [{ value: 'guide' as const, label: 'Guide' }] : []),
     { value: 'path' as const, label: 'Path' },
     ...(stories.length ? [{ value: 'stories' as const, label: 'Stories', count: stories.length }] : []),
     ...(answers.length ? [{ value: 'answers' as const, label: 'Answers', count: answers.length }] : []),
     ...(decisions.length ? [{ value: 'decisions' as const, label: 'Decisions', count: decisions.length }] : []),
   ];
   // Moving between profiles keeps the tab only if this person has something in it.
-  const active = tabs.some((t) => t.value === tab) ? tab : 'path';
+  // A Guide's profile opens on what they offer; everyone else's on their Path.
+  const active = tab && tabs.some((t) => t.value === tab) ? tab : guide ? 'guide' : 'path';
 
   return (
     <Page title={p.name} large={false} back rail={isMobile ? rest : <>{identity}{rest}</>}>
@@ -225,6 +208,7 @@ export function Profile() {
           <TextTabs value={active} onChange={setTab} options={tabs} />
         </div>
       )}
+      {active === 'guide' && <GuideTab id={id} />}
       {active === 'path' && (
         <section className="profile__path">
           <TransitMap

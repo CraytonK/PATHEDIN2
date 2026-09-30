@@ -364,3 +364,37 @@ export const IconBreak = (p: P) => (
     <path d="M8 7.5h8M8 16.5h8" opacity=".45" />
   </Svg>
 );
+
+export const IconVideo = (p: P) => (
+  <Svg {...p}>
+    <rect x="3.5" y="6.5" width="12" height="11" rx="2.5" />
+    <path d="m15.5 10.5 5-3v9l-5-3" />
+  </Svg>
+);
+
+export const IconStar = ({ filled, ...p }: P & { filled?: boolean }) => (
+  <Svg {...p}>
+    <path d="m12 4.2 2.3 4.8 5.2.7-3.8 3.6.9 5.2L12 16l-4.6 2.5.9-5.2-3.8-3.6 5.2-.7z" fill={filled ? 'currentColor' : 'none'} />
+  </Svg>
+);
+
+export const IconTarget = (p: P) => (
+  <Svg {...p}>
+    <circle cx="12" cy="12" r="8" />
+    <circle cx="12" cy="12" r="4.2" />
+    <circle cx="12" cy="12" r="0.9" fill="currentColor" />
+  </Svg>
+);
+
+export const IconSparkle = (p: P) => (
+  <Svg {...p}>
+    <path d="M12 4.5c.6 3.8 1.9 5.2 5.7 5.8-3.8.6-5.1 2-5.7 5.8-.6-3.8-1.9-5.2-5.7-5.8 3.8-.6 5.1-2 5.7-5.8z" />
+    <path d="M18.5 15.5c.2 1.3.7 1.8 2 2-1.3.2-1.8.7-2 2-.2-1.3-.7-1.8-2-2 1.3-.2 1.8-.7 2-2z" />
+  </Svg>
+);
+
+export const IconMinus = (p: P) => (
+  <Svg {...p}>
+    <path d="M6 12h12" />
+  </Svg>
+);

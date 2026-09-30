@@ -24,6 +24,8 @@ import type { Community } from '../data/types';
 import { peopleAt, peopleThrough, relationCopy, relationTo, type RelationKind } from '../lib/relations';
 import { rise, springs, useIsMobile } from '../lib/motion';
 import { useApp } from '../lib/store';
+import { GuideByline } from '../components/GuideProfile';
+import { fromPrice, priceLabel } from '../lib/guides';
 import './discover.css';
 
 const MotionLink = motion.create(Link);
@@ -223,6 +225,7 @@ function GuideCard({ id, i = 0 }: { id: string; i?: number }) {
   const move = guide.transitions[0];
   const navigate = useNavigate();
   const spots = useOpenSpots(id);
+  const from = fromPrice(id);
   return (
     <motion.article className="dcard dcard--person dcard--guide" {...rise(i)} onClick={(e) => {
         flyFrom(id, e.currentTarget);
@@ -243,7 +246,15 @@ function GuideCard({ id, i = 0 }: { id: string; i?: number }) {
           </p>
         )}
         <p className="dcard__headline">{g.headline}</p>
+        <p className="dcard__rep">
+          <GuideByline id={id} />
+        </p>
         <p className="dcard__why clamp-2">Helps with {guide.helpsWith[0][0].toLowerCase() + guide.helpsWith[0].slice(1)}</p>
+        {from && (
+          <p className="dcard__price">
+            Free Office Hours · paid help from <strong>{priceLabel(from)}</strong>
+          </p>
+        )}
         <div className="dcard__hours">
           <IconCalendar size={15} />
           <span>
@@ -374,7 +385,7 @@ function GuidesTab() {
   return (
     <>
       <p className="discover__lede t-subhead c-2">
-        Path Guides are never paid, ranked or rated. They’re people who were once where you are.{' '}
+        Path Guides have walked the moves they help with. Office Hours are free; calls, reviews and mentorship are priced by each Guide.{' '}
         <Link to="/guides">Browse Guides by the move they made</Link>
       </p>
       <Section title="On your route" sub="Guides who made the moves between you and Pharmaceutical R&D.">

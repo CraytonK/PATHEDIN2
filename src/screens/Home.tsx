@@ -8,10 +8,11 @@ import { DecisionPost, GuidePost, KindFeed, KindFilter, MilestonePost, MyPostIte
 import { useWriting } from '../lib/writing';
 import { RouteSilk } from '../components/path/RouteSilk';
 import { dayLabel, fmtTime, useOpenSpots } from '../lib/booking';
+import { bookingTitle } from '../lib/guides';
 import { RailFooter } from '../components/Rail';
 import { PersonTile } from '../components/content';
 import { Avatar, AvatarStack, CountUp, IconButton, PersonName, Rolling, SectionHeader, TextTabs } from '../components/ui';
-import { IconArrowRight, IconBell, IconCheck, IconChevronLeft, IconChevronRight, IconCompose, IconDoc, IconFlag, IconMessage, IconPlus, IconQuestion, IconSend, IconSignpost } from '../components/icons';
+import { IconArrowRight, IconBell, IconCheck, IconChevronLeft, IconChevronRight, IconCompose, IconDoc, IconFlag, IconMessage, IconPlus, IconQuestion, IconSend, IconSignpost, IconSparkle } from '../components/icons';
 import { people, me, ME } from '../data/people';
 import { stories } from '../data/stories';
 import { questions, questionList } from '../data/questions';
@@ -105,10 +106,8 @@ function UpNext({ variant = 'cards', hot, onHot }: { variant?: 'cards' | 'list' 
             {tile(at)}
             {schedule && <span className="upnext__bar" aria-hidden="true" />}
             <span className="upnext__text">
-              <span className="upnext__title truncate">Office hours with {people[b.guide].first}</span>
-              <span className="upnext__sub truncate">
-                {dayLabel(at)} · {fmtTime(at)} · {b.minutes} min
-              </span>
+              <span className="upnext__title truncate">{bookingTitle(b)}</span>
+              <span className="upnext__sub truncate">{b.minutes ? `${dayLabel(at)} · ${fmtTime(at)} · ${b.minutes} min` : `Notes back ${dayLabel(at).toLowerCase() === 'today' ? 'today' : `by ${dayLabel(at)}`}`}</span>
             </span>
             {schedule ? <Avatar id={b.guide} size={28} peek={false} /> : <IconChevronRight size={16} className="c-3" />}
           </motion.button>
@@ -226,6 +225,7 @@ function MeCard() {
   const connections = useApp((s) => s.connections);
   const joined = useApp((s) => s.joined);
   const saved = useApp((s) => s.saved);
+  const myGuide = useApp((s) => s.myGuide);
   const unread = useUnread();
   const stats = [
     { to: '/connections', value: Object.values(connections).filter((c) => c === 'connected').length, label: 'Connections' },
@@ -238,6 +238,7 @@ function MeCard() {
     { to: '/stories', label: 'Stories', icon: IconDoc },
     { to: '/questions', label: 'Questions', icon: IconQuestion },
     { to: '/decisions', label: 'Decision Points', icon: IconFlag },
+    myGuide?.live ? { to: `/p/${ME}`, label: 'Your Guide profile', icon: IconSparkle } : { to: '/guide/setup', label: 'Become a Path Guide', icon: IconSparkle },
   ];
   return (
     <section className="me-card" aria-label="Your profile">

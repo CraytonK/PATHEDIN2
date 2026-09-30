@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import { persist, createJSONStorage, type StateStorage } from 'zustand/middleware';
 import { requestList, conversationList } from '../data/social';
-import type { Message, PathRequest } from '../data/types';
+import type { Message, PathRequest, ServiceKind } from '../data/types';
 import { ME } from '../data/people';
 
 export type ConnectionState = 'pending' | 'connected';
@@ -21,6 +21,28 @@ export interface Booking {
   minutes: number;
   topic: string;
   note: string;
+  /** What was booked, when it isn't free Office Hours. */
+  service?: ServiceKind;
+  title?: string;
+  /** Canadian dollars paid (in this prototype no payment is taken). */
+  price?: number;
+}
+
+/** Your own Guide profile, once you set one up. */
+export interface MyGuide {
+  /** The moves on your own Path you'll guide. */
+  transitions: [string, string][];
+  pitch: string;
+  experience: string;
+  expertise: string[];
+  /** Free guidance: answering questions in your communities, and Office Hours. */
+  free: { answers: boolean; officeHours: boolean };
+  officeHours: { day: number; hour: number; spots: number };
+  services: { kind: ServiceKind; on: boolean; price: number; minutes?: number; seats?: number }[];
+  /** When you're open for paid sessions, as "day-part" keys (e.g. "2-evening"). */
+  availability: string[];
+  live: boolean;
+  since: number;
 }
 
 interface AppState {
@@ -49,6 +71,7 @@ interface AppState {
   /** This device has signed in before, so sign-in says "Welcome back." with the account. */
   returning: boolean;
   bookings: Booking[];
+  myGuide: MyGuide | null;
 
   connect: (id: string) => void;
   toggleFollow: (id: string) => void;
@@ -72,6 +95,8 @@ interface AppState {
   forgetAccount: () => void;
   book: (b: Omit<Booking, 'id'>) => string;
   cancelBooking: (id: string) => void;
+  saveGuide: (g: MyGuide) => void;
+  setGuideLive: (live: boolean) => void;
 }
 
 /** localStorage can throw (private mode, blocked storage). Never let that break the app. */
@@ -105,6 +130,7 @@ export const useApp = create<AppState>()(
   persist(
     (set) => ({
       bookings: [],
+      myGuide: null,
       connections: {
         sarah: 'connected',
         daniel: 'connected',
@@ -189,6 +215,8 @@ export const useApp = create<AppState>()(
         return id;
       },
       cancelBooking: (id) => set((s) => ({ bookings: s.bookings.filter((b) => b.id !== id) })),
+      saveGuide: (myGuide) => set({ myGuide }),
+      setGuideLive: (live) => set((s) => (s.myGuide ? { myGuide: { ...s.myGuide, live } } : {})),
     }),
     {
       name: 'pathedin:v1',
@@ -220,6 +248,7 @@ export const useApp = create<AppState>()(
         tips: s.tips,
         returning: s.returning,
         bookings: s.bookings,
+        myGuide: s.myGuide,
       }),
     },
   ),

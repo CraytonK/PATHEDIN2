@@ -38,6 +38,7 @@ import { NotFound } from './screens/NotFound';
 import { Landing } from './screens/Landing';
 import { WriteScreen } from './screens/Write';
 import { MyPostScreen } from './screens/MyPost';
+import { GuideSetup } from './screens/GuideSetup';
 
 const Router = __HASH_ROUTER__ ? HashRouter : BrowserRouter;
 
@@ -156,6 +157,7 @@ function Shell() {
               <Route path="/discover" element={<Discover />} />
               <Route path="/network" element={<Network />} />
               <Route path="/guides" element={<Guides />} />
+              <Route path="/guide/setup" element={<GuideSetup />} />
               <Route path="/communities" element={<Communities />} />
               <Route path="/c/:id" element={<CommunityScreen />} />
               <Route path="/p/:id" element={<Profile />} />

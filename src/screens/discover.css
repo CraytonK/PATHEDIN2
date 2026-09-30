@@ -448,3 +448,19 @@
 }
 
 
+.dcard__rep {
+  margin-top: 2px;
+}
+.dcard__rep .gbyline__top {
+  display: block;
+  margin: 2px 0 0;
+  font-size: 12px;
+}
+.dcard__price {
+  font-size: 12.5px;
+  color: var(--label-2);
+}
+.dcard__price strong {
+  font-weight: 500;
+  color: var(--label);
+}

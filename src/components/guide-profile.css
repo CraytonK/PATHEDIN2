@@ -1,0 +1,638 @@
+/* ── A Guide's profile ─────────────────────────────────────────
+   Each section is a card; the Path the Guide walked opens it, with the moves they guide drawn heavier. */
+
+.gp {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.gp__section {
+  --bg: var(--card);
+  padding: 20px 22px 22px;
+  border-radius: var(--r-card);
+  background: var(--card);
+  box-shadow: var(--card-shadow);
+}
+.gp__head {
+  margin-bottom: 16px;
+}
+.gp__h {
+  font-size: 17px;
+  line-height: 22px;
+  font-weight: 500;
+  letter-spacing: -0.016em;
+}
+.gp__sub {
+  margin-top: 4px;
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--label-2);
+}
+.gp__empty {
+  font-size: 14px;
+  color: var(--label-2);
+}
+
+/* The Path they walked, left to right, with the guided moves in heavy navy. */
+.gpath {
+  display: flex;
+  align-items: flex-start;
+  overflow-x: auto;
+  scrollbar-width: none;
+  padding: 26px 2px 4px;
+}
+.gpath::-webkit-scrollbar {
+  display: none;
+}
+.gpath__stop {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: none;
+  width: 84px;
+  text-align: center;
+}
+.gpath__node {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--ink);
+  box-shadow: 0 0 0 4px var(--card);
+}
+.gpath__stop.is-now .gpath__node {
+  background: radial-gradient(circle, var(--tint) 0 2.6px, var(--card) 3.2px);
+  box-shadow:
+    inset 0 0 0 2.5px var(--ink),
+    0 0 0 4px var(--card);
+}
+.gpath__label {
+  margin-top: 10px;
+  font-size: 13px;
+  line-height: 17px;
+  font-weight: 500;
+  color: var(--label);
+}
+.gpath__years {
+  margin-top: 2px;
+  font-size: 11.5px;
+  line-height: 15px;
+  color: var(--label-3);
+  font-variant-numeric: tabular-nums;
+}
+.gpath__link {
+  position: relative;
+  flex: 1 0 76px;
+  height: 14px;
+  margin: 0 -36px;
+  display: flex;
+  align-items: center;
+}
+.gpath__bar {
+  display: block;
+  width: 100%;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--label-4);
+  transform-origin: left;
+}
+.gpath__link.is-guided .gpath__bar {
+  height: 5px;
+  background: var(--ink);
+}
+.gpath__tag {
+  position: absolute;
+  left: 50%;
+  bottom: calc(100% + 8px);
+  translate: -50% 0;
+  padding: 3px 9px;
+  border-radius: var(--r-pill);
+  background: var(--tint-soft);
+  color: var(--tint-text);
+  font-size: 11px;
+  line-height: 15px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+/* Their numbers, as the reference sets stats. */
+.gp__stats {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  padding: 18px 8px;
+  border-radius: var(--r-card);
+  background: var(--card);
+  box-shadow: var(--card-shadow);
+}
+.gp__stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  min-width: 0;
+}
+.gp__stat + .gp__stat {
+  box-shadow: -1px 0 0 var(--separator);
+}
+.gp__num {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 28px;
+  line-height: 34px;
+  font-weight: 400;
+  letter-spacing: -0.035em;
+  font-variant-numeric: tabular-nums;
+}
+.gp__star {
+  color: var(--tint);
+}
+.gp__label {
+  font-size: 12.5px;
+  color: var(--label-2);
+}
+
+/* Standing in the communities. */
+.gstand {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.gstand__item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px 10px 10px;
+  border-radius: 14px;
+  background: var(--canvas);
+  color: var(--label);
+  transition: box-shadow var(--dur-2) var(--ease-out);
+}
+.gstand__item:hover {
+  box-shadow: inset 0 0 0 1px var(--border-strong);
+}
+.gstand__rank {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  min-width: 40px;
+  height: 32px;
+  padding: 0 8px;
+  border-radius: 10px;
+  background: var(--card);
+  box-shadow: inset 0 0 0 1px var(--separator);
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--label-2);
+}
+.gstand__item.is-top .gstand__rank {
+  background: var(--primary);
+  box-shadow: var(--btn-highlight);
+  color: var(--on-primary);
+}
+.gstand__text {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+  font-size: 13px;
+  color: var(--label-2);
+}
+.gstand__text strong {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--label);
+}
+.gstand__chev {
+  color: var(--label-3);
+}
+
+.gexp {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.gexp li {
+  display: inline-flex;
+  align-items: center;
+  height: 32px;
+  padding: 0 14px;
+  border-radius: var(--r-pill);
+  background: var(--canvas);
+  box-shadow: inset 0 0 0 1px var(--separator);
+  font-size: 13px;
+  font-weight: 500;
+}
+
+/* Services, each with its price and its own way to book. */
+.gsvcs {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.gsvc {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 14px 14px 14px 12px;
+  border-radius: 16px;
+  background: var(--canvas);
+}
+.gsvc__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  background: var(--primary);
+  color: var(--on-primary);
+}
+.gsvc.is-free .gsvc__icon {
+  background: var(--tint-soft);
+  color: var(--tint-text);
+}
+.gsvc__text {
+  flex: 1;
+  min-width: 0;
+}
+.gsvc__title {
+  font-size: 15px;
+  line-height: 20px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+}
+.gsvc__blurb {
+  margin-top: 2px;
+  font-size: 13.5px;
+  line-height: 19px;
+  color: var(--label-2);
+}
+.gsvc__meta {
+  margin-top: 6px;
+  font-size: 12px;
+  color: var(--label-3);
+}
+.gsvc__buy {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px;
+  flex: none;
+}
+.gsvc__price {
+  font-size: 17px;
+  line-height: 22px;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+}
+.gsvc.is-free .gsvc__price {
+  color: var(--tint-text);
+}
+.gp__earn {
+  margin-top: 12px;
+  font-size: 13px;
+  color: var(--label-2);
+}
+
+/* Availability. */
+.gavail {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.gavail__row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: 14px;
+}
+.gavail__kind {
+  font-weight: 500;
+}
+.gavail__when {
+  color: var(--label-2);
+  text-align: right;
+}
+.gavail__days {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+}
+.gavail__days li {
+  display: flex;
+  flex-direction: column;
+  padding: 10px 12px;
+  border-radius: 14px;
+  background: var(--canvas);
+  font-size: 12.5px;
+  color: var(--label-2);
+}
+.gavail__days strong {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--label);
+}
+.gavail__days li.is-full {
+  opacity: 0.55;
+}
+
+/* Reviews. */
+.grev__sum {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 16px;
+}
+.grev__big {
+  font-size: 44px;
+  line-height: 1;
+  font-weight: 400;
+  letter-spacing: -0.045em;
+}
+.grev__of {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 13px;
+  color: var(--label-2);
+}
+.grev {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.grev__item {
+  padding: 14px 16px;
+  border-radius: 16px;
+  background: var(--canvas);
+}
+.grev__who {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.grev__name {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+  font-size: 12px;
+  color: var(--label-2);
+}
+.grev__name a {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--label);
+}
+.grev__body {
+  margin-top: 10px;
+  font-family: var(--font-serif);
+  font-size: 16px;
+  line-height: 24px;
+}
+.grev__svc {
+  display: inline-block;
+  margin-top: 10px;
+  padding: 3px 9px;
+  border-radius: var(--r-pill);
+  background: var(--card);
+  font-size: 11.5px;
+  color: var(--label-2);
+}
+
+/* Contributions. */
+.gcontrib {
+  display: flex;
+  gap: 24px;
+  margin-bottom: 12px;
+  font-size: 14px;
+  color: var(--label-2);
+}
+.gcontrib strong {
+  font-size: 20px;
+  font-weight: 500;
+  color: var(--label);
+  margin-right: 2px;
+}
+.gcontrib__answer {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-top: 8px;
+  padding: 12px 14px;
+  border-radius: 14px;
+  background: var(--canvas);
+  color: var(--label);
+}
+.gcontrib__q {
+  font-size: 14px;
+  font-weight: 500;
+}
+.gcontrib__a {
+  font-size: 13.5px;
+  line-height: 19px;
+  color: var(--label-2);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.gp__ask {
+  margin-top: 14px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--tint-text);
+}
+.gp__ask:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* ── The Guide card in the side column: navy, because it's the product showing itself ── */
+.grail {
+  padding: 18px 20px 20px;
+  border-radius: var(--r-card);
+  box-shadow: 0 24px 48px -28px rgba(15, 23, 42, 0.65);
+}
+.grail__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.grail__badge {
+  padding: 4px 10px;
+  border-radius: var(--r-pill);
+  background: var(--tint-soft);
+  color: var(--tint-text);
+  font-size: 12px;
+  font-weight: 500;
+}
+.grail__rating {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 14px;
+  font-weight: 500;
+}
+.grail__rating svg {
+  color: var(--tint);
+}
+.grail__rating span {
+  font-weight: 400;
+  color: var(--label-2);
+}
+.grail__top {
+  margin-top: 12px;
+  font-size: 15px;
+  line-height: 20px;
+  font-weight: 500;
+}
+.grail__nums {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  margin-top: 14px;
+  padding: 12px 0;
+  border-top: 1px solid var(--separator);
+  border-bottom: 1px solid var(--separator);
+}
+.grail__nums dt {
+  font-size: 11.5px;
+  color: var(--label-3);
+}
+.grail__nums dd {
+  font-size: 18px;
+  line-height: 24px;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+}
+.grail__line {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 12px;
+  font-size: 13px;
+  color: var(--label-2);
+}
+.grail__cta {
+  display: flex;
+  gap: 8px;
+  margin-top: 16px;
+}
+.grail__cta > * {
+  flex: 1;
+}
+.grail__cta .btn {
+  width: 100%;
+}
+.grail__edit {
+  display: inline-block;
+  margin-top: 14px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--tint-text);
+}
+
+.gbyline {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12.5px;
+  font-weight: 500;
+  color: var(--label);
+}
+.gbyline svg {
+  color: var(--tint);
+}
+.gbyline__top {
+  margin-left: 6px;
+  font-weight: 400;
+  color: var(--label-2);
+}
+
+@media (max-width: 767px) {
+  .gp__section {
+    padding: 16px;
+  }
+  .gp__stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    row-gap: 14px;
+  }
+  .gp__stat:nth-child(3) {
+    box-shadow: none;
+  }
+  .gavail__days {
+    grid-template-columns: 1fr;
+  }
+  .gsvc {
+    flex-wrap: wrap;
+  }
+  .gsvc__buy {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding-left: 54px;
+  }
+}
+
+/* A community's Guides, ranked. */
+.rguides {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.rguides li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.rguides__rank {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--canvas);
+  font-size: 11px;
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+  color: var(--label-2);
+}
+.rguides__rank.is-top {
+  background: var(--primary);
+  color: var(--on-primary);
+}
+.rguides__who {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+  font-size: 12px;
+  color: var(--label-2);
+}
+.rguides__who svg {
+  color: var(--tint);
+  vertical-align: -1px;
+}
+.rguides__name {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--label);
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.gpath__legend {
+  margin-top: 10px;
+  font-size: 12.5px;
+  color: var(--label-3);
+}

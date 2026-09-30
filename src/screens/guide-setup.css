@@ -1,0 +1,628 @@
+/* ── Becoming a Path Guide ────────────────────────────────────
+   A step track, one card per step that slides between them, and a live preview beside it. */
+
+.gs-steps {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 16px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.gs-steps::-webkit-scrollbar {
+  display: none;
+}
+.gs-steps button {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 38px;
+  padding: 0 14px 0 6px;
+  border-radius: var(--r-pill);
+  background: var(--card);
+  box-shadow: var(--card-shadow);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--label-2);
+  white-space: nowrap;
+  transition:
+    background-color 240ms var(--ease-out),
+    color 240ms var(--ease-out);
+}
+.gs-steps button:disabled {
+  color: var(--label-3);
+  box-shadow: inset 0 0 0 1px var(--separator);
+  background: transparent;
+}
+.gs-steps__dot {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: var(--canvas);
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+}
+.gs-steps .is-now button {
+  background: var(--primary);
+  box-shadow: var(--btn-highlight);
+  color: var(--on-primary);
+}
+.gs-steps .is-now .gs-steps__dot {
+  background: rgba(255, 247, 237, 0.14);
+}
+.gs-steps .is-done .gs-steps__dot {
+  background: var(--tint);
+  color: var(--on-tint);
+}
+
+.gs-card {
+  --bg: var(--card);
+  border-radius: var(--r-card);
+  background: var(--card);
+  box-shadow: var(--card-shadow);
+  overflow: hidden;
+}
+.gs-step {
+  padding: 26px 28px 8px;
+}
+.gs-h {
+  font-size: 26px;
+  line-height: 32px;
+  font-weight: 400;
+  letter-spacing: -0.03em;
+}
+.gs-sub {
+  margin-top: 6px;
+  max-width: 560px;
+  font-size: 15px;
+  line-height: 22px;
+  color: var(--label-2);
+}
+.gs-h3 {
+  margin: 24px 0 10px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--label-2);
+}
+.gs-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 24px;
+  padding: 14px 28px;
+  border-top: 1px solid var(--separator);
+}
+.gs-foot__quiet {
+  font-size: 14px;
+  color: var(--label-2);
+}
+.gs-foot__quiet:hover {
+  color: var(--label);
+}
+.gs-pause {
+  display: block;
+  margin: 16px auto 0;
+  font-size: 13px;
+  color: var(--label-2);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* Step 1: moves from your own Path. */
+.gs-moves {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 20px;
+}
+.gs-move {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+  padding: 16px;
+  border-radius: 16px;
+  background: var(--canvas);
+  box-shadow: inset 0 0 0 1px transparent;
+  text-align: left;
+  color: var(--label);
+  transition: box-shadow 220ms var(--ease-out);
+}
+.gs-move:hover {
+  box-shadow: inset 0 0 0 1px var(--border-strong);
+}
+.gs-move.is-on {
+  box-shadow: inset 0 0 0 1.5px var(--ink);
+}
+.gs-check {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  width: 22px;
+  height: 22px;
+  border-radius: 7px;
+  box-shadow: inset 0 0 0 1.5px var(--border-strong);
+  color: var(--on-primary);
+  transition: background-color 180ms var(--ease-out);
+}
+.gs-move.is-on .gs-check {
+  background: var(--primary);
+  box-shadow: none;
+}
+.gs-move__line {
+  display: flex;
+  align-items: center;
+  flex: none;
+  width: 64px;
+}
+.gs-move__line i {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  flex: none;
+}
+.gs-move__line .is-from {
+  background: var(--ink);
+}
+.gs-move__line .is-to {
+  box-shadow: inset 0 0 0 2.5px var(--ink);
+}
+.gs-move__line b {
+  flex: 1;
+  height: 3px;
+  background: var(--label-4);
+  transition: background-color 220ms var(--ease-out);
+}
+.gs-move.is-on .gs-move__line b {
+  background: var(--ink);
+}
+.gs-move__text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+  font-size: 13px;
+  color: var(--label-2);
+}
+.gs-move__text strong {
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--label);
+}
+
+/* Step 2: fields and tags. */
+.gs-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 20px;
+}
+.gs-field > span {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--label-2);
+}
+.gs-field input,
+.gs-field textarea {
+  width: 100%;
+  padding: 12px 14px;
+  border: 0;
+  border-radius: 12px;
+  background: var(--canvas);
+  box-shadow: inset 0 0 0 1px var(--separator);
+  font: inherit;
+  font-size: 15px;
+  line-height: 22px;
+  color: var(--label);
+  resize: vertical;
+  transition: box-shadow var(--dur-2) var(--ease-out);
+}
+.gs-field input:focus,
+.gs-field textarea:focus {
+  outline: none;
+  box-shadow:
+    inset 0 0 0 1.5px var(--tint),
+    0 0 0 4px var(--tint-softer);
+}
+.gs-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.gs-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 34px;
+  padding: 0 14px;
+  border-radius: var(--r-pill);
+  background: var(--canvas);
+  box-shadow: inset 0 0 0 1px var(--separator);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--label-2);
+  transition:
+    background-color 180ms var(--ease-out),
+    color 180ms var(--ease-out);
+}
+.gs-tag.is-on {
+  background: var(--primary);
+  box-shadow: var(--btn-highlight);
+  color: var(--on-primary);
+}
+.gs-tag--add {
+  padding-right: 6px;
+  color: var(--label-3);
+}
+.gs-tag--add input {
+  width: 120px;
+  border: 0;
+  background: none;
+  outline: none;
+  font: inherit;
+  color: var(--label);
+}
+
+/* Step 3: rows with switches and prices. */
+.gs-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.gs-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 14px;
+  border-radius: 14px;
+  background: var(--canvas);
+}
+.gs-row__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  background: var(--card);
+  color: var(--label-2);
+  transition:
+    background-color 220ms var(--ease-out),
+    color 220ms var(--ease-out);
+}
+.gs-row--svc.is-on .gs-row__icon {
+  background: var(--primary);
+  color: var(--on-primary);
+}
+.gs-row__text {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+  font-size: 13px;
+  line-height: 18px;
+  color: var(--label-2);
+}
+.gs-row__text strong {
+  font-size: 14.5px;
+  line-height: 20px;
+  font-weight: 500;
+  color: var(--label);
+}
+.gs-row select {
+  appearance: none;
+  padding: 2px 8px;
+  border: 0;
+  border-radius: 8px;
+  background: var(--card);
+  box-shadow: inset 0 0 0 1px var(--separator);
+  font: inherit;
+  font-size: 13px;
+  color: var(--label);
+}
+.gs-switch {
+  position: relative;
+  flex: none;
+  display: flex;
+  align-items: center;
+  width: 46px;
+  height: 28px;
+  padding: 3px;
+  border-radius: var(--r-pill);
+  background: var(--label-4);
+  transition: background-color 200ms var(--ease-out);
+}
+.gs-switch.is-on {
+  justify-content: flex-end;
+  background: var(--primary);
+}
+.gs-switch__knob {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 2px 4px rgba(15, 23, 42, 0.25);
+}
+.gs-price {
+  display: flex;
+  align-items: center;
+  flex: none;
+  height: 34px;
+  border-radius: var(--r-pill);
+  background: var(--card);
+  box-shadow: inset 0 0 0 1px var(--separator);
+}
+.gs-price button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 34px;
+  color: var(--label-2);
+}
+.gs-price button:hover {
+  color: var(--label);
+}
+.gs-price__val {
+  min-width: 44px;
+  text-align: center;
+  font-size: 14px;
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Step 4: the week, as a grid you tap. */
+.gs-grid {
+  display: grid;
+  grid-template-columns: 120px repeat(3, minmax(0, 1fr));
+  gap: 6px;
+  margin-top: 20px;
+}
+.gs-grid__row {
+  display: contents;
+}
+.gs-grid__part {
+  padding-bottom: 4px;
+  font-size: 12.5px;
+  font-weight: 500;
+  color: var(--label-2);
+  text-align: center;
+}
+.gs-grid__day {
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+}
+.gs-cell {
+  position: relative;
+  height: 44px;
+  border-radius: 12px;
+  background: var(--canvas);
+  box-shadow: inset 0 0 0 1px var(--separator);
+  transition: box-shadow 180ms var(--ease-out);
+}
+.gs-cell:hover {
+  box-shadow: inset 0 0 0 1px var(--border-strong);
+}
+.gs-cell__fill {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: inherit;
+  background: var(--primary);
+  color: var(--on-primary);
+}
+
+/* Step 5: the review. */
+.gs-review {
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
+  border-radius: 16px;
+  background: var(--canvas);
+}
+.gs-review > div {
+  display: grid;
+  grid-template-columns: 110px minmax(0, 1fr);
+  gap: 12px;
+  padding: 12px 16px;
+}
+.gs-review > div + div {
+  border-top: 1px solid var(--separator);
+}
+.gs-review dt {
+  font-size: 13px;
+  color: var(--label-2);
+}
+.gs-review dd {
+  font-size: 14px;
+  line-height: 20px;
+}
+.gs-terms {
+  margin-top: 14px;
+  font-size: 12.5px;
+  line-height: 18px;
+  color: var(--label-3);
+}
+
+/* The live preview, on navy. */
+.gs-preview {
+  position: relative;
+  padding: 18px 20px 20px;
+  border-radius: var(--r-card);
+  box-shadow: 0 24px 48px -28px rgba(15, 23, 42, 0.65);
+}
+.gs-preview__badge {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  padding: 3px 9px;
+  border-radius: var(--r-pill);
+  background: var(--tint-soft);
+  color: var(--tint-text);
+  font-size: 11px;
+  font-weight: 500;
+}
+.gs-preview__who {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.gs-preview__who img {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: 0 0 0 2px var(--immersive-bg), 0 0 0 3.5px var(--tint);
+}
+.gs-preview__who > span {
+  display: flex;
+  flex-direction: column;
+  font-size: 12.5px;
+  color: var(--label-2);
+}
+.gs-preview__who strong {
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--label);
+}
+.gs-preview__pitch {
+  margin-top: 14px;
+  font-family: var(--font-serif);
+  font-size: 16px;
+  line-height: 23px;
+}
+.gs-preview__moves {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 12px;
+}
+.gs-preview__moves li {
+  padding: 4px 10px;
+  border-radius: var(--r-pill);
+  background: var(--bg-grouped);
+  box-shadow: inset 0 0 0 1px var(--border);
+  font-size: 12px;
+  color: var(--label-2);
+}
+.gs-preview__moves strong {
+  font-weight: 500;
+  color: var(--label);
+}
+.gs-preview__svcs {
+  margin-top: 14px;
+  border-top: 1px solid var(--separator);
+}
+.gs-preview__svcs li {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 0;
+  font-size: 13px;
+  color: var(--label-2);
+}
+.gs-preview__svcs li + li {
+  border-top: 1px solid var(--separator);
+}
+.gs-preview__svcs strong {
+  font-weight: 500;
+  color: var(--label);
+  font-variant-numeric: tabular-nums;
+}
+.gs-how {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  font-size: 13.5px;
+  line-height: 19px;
+  color: var(--label-2);
+  counter-reset: how;
+}
+.gs-how li {
+  position: relative;
+  padding-left: 30px;
+}
+.gs-how li::before {
+  counter-increment: how;
+  content: counter(how);
+  position: absolute;
+  left: 0;
+  top: -1px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--canvas);
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--label);
+}
+
+/* Done. */
+.gs-done {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 560px;
+  margin: 48px auto 0;
+  padding: 36px 28px;
+  border-radius: var(--r-card);
+  background: var(--card);
+  box-shadow: var(--card-shadow);
+  text-align: center;
+}
+.gs-done__title {
+  margin-top: 16px;
+  font-size: 32px;
+  line-height: 38px;
+  font-weight: 400;
+  letter-spacing: -0.035em;
+}
+.gs-done__sub {
+  margin-top: 10px;
+  font-size: 15px;
+  line-height: 22px;
+  color: var(--label-2);
+}
+.gs-done__actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 24px;
+}
+
+@media (max-width: 767px) {
+  .gs-step {
+    padding: 20px 16px 4px;
+  }
+  .gs-foot {
+    padding: 12px 16px;
+  }
+  .gs-h {
+    font-size: 22px;
+    line-height: 28px;
+  }
+  .gs-row--svc {
+    flex-wrap: wrap;
+  }
+  .gs-row--svc .gs-price {
+    margin-left: 48px;
+  }
+  .gs-grid {
+    grid-template-columns: 52px repeat(3, minmax(0, 1fr));
+  }
+  .gs-review > div {
+    grid-template-columns: 1fr;
+    gap: 2px;
+  }
+}

@@ -5,11 +5,15 @@ import { Page } from '../components/chrome';
 import { RailFooter, RailPosts, RailSection } from '../components/Rail';
 import { PathHint } from '../components/path/PathHint';
 import { RequestButton } from '../components/content';
-import { BookButton } from '../components/Booking';
 import { openSpots, useOpenSpots } from '../lib/booking';
 import { useApp } from '../lib/store';
-import { PersonName, Segmented } from '../components/ui';
-import { IconCalendar } from '../components/icons';
+import { Avatar, PersonName, Segmented } from '../components/ui';
+import { IconStar } from '../components/icons';
+import { RouteSilk } from '../components/path/RouteSilk';
+import { communities } from '../data/communities';
+import type { ServiceKind } from '../data/types';
+import { communityGuides, economyOf, priceLabel, serviceKinds, servicesOf, topStanding } from '../lib/guides';
+import { useUI } from '../lib/ui';
 import { peopleList, people, ME } from '../data/people';
 import { wp } from '../data/waypoints';
 import { compactSteps, relationTo } from '../lib/relations';
@@ -28,12 +32,17 @@ const transitions: { from: string; to: string; title: string; dest: 'pharma-rnd'
   { from: 'pharma-rnd', to: 'rnd-lead', title: 'The long view', dest: 'pharma-rnd', note: 'What happens after you arrive.' },
 ];
 
-function GuideCard({ id, from, to, i = 0 }: { id: string; from: string; to: string; i?: number }) {
+function GuideCard({ id, from, to, i = 0, kind }: { id: string; from: string; to: string; i?: number; kind: ServiceKind | 'all' }) {
   const g = people[id];
   const rel = relationTo(id);
   const handlers = usePeek(id);
   const step = compactSteps(g.path).find((s) => s.wp === to);
   const spots = useOpenSpots(id);
+  const openBooking = useUI((s) => s.openBooking);
+  const econ = economyOf(id);
+  const top = topStanding(id);
+  const services = servicesOf(id);
+  const shown = kind === 'all' ? services.slice(0, 4) : services.filter((s) => s.kind === kind || s.kind === 'office-hours');
   return (
     <motion.article className="gcard" {...rise(i)}>
       <Link to={`/p/${id}`} className="gcard__photo" data-portrait={id} {...handlers}>
@@ -47,28 +56,87 @@ function GuideCard({ id, from, to, i = 0 }: { id: string; from: string; to: stri
           </div>
           <RequestButton id={id} segment={[from, to]} label="Ask" variant="gray" />
         </div>
+        <p className="gcard__rep">
+          {econ && (
+            <span className="gcard__stars">
+              <IconStar size={13} filled /> <strong>{econ.rating.toFixed(1)}</strong> ({econ.reviewCount})
+            </span>
+          )}
+          {top && <span className="gcard__top-badge">{top}</span>}
+        </p>
         <p className="gcard__made t-footnote">
           Made this move {step?.start ? `in ${step.start}` : ''}
           {rel.kind !== 'other' && rel.kind !== 'guide' ? ` · ${rel.label}` : ''}
+          {g.guide ? ` · Helped ${g.guide.helped}` : ''}
         </p>
         <PathHint id={id} segment={[from, to]} className="gcard__path" />
-        {g.guide && (
-          <>
-            <p className="gcard__helps t-subhead">{g.guide.helpsWith.slice(0, 2).join(' · ')}</p>
-            <div className="gcard__hours">
-              <IconCalendar size={16} className="gcard__cal" />
-              <span className="gcard__when">
-                <span className="gcard__slot">{spots.when}</span>
-                <span className="gcard__open">
-                  {spots.open ? `${spots.open} of ${spots.total} spots open` : 'Full this time'} · Helped {g.guide.helped}
-                </span>
-              </span>
-              <BookButton id={id} label="Book a spot" />
-            </div>
-          </>
-        )}
+        <ul className="gcard__svcs">
+          {shown.map((sv) => {
+            const Icon = serviceKinds[sv.kind].icon;
+            return (
+              <li key={sv.id}>
+                <button type="button" className={`gcard__svc ${sv.price === 0 ? 'is-free' : ''}`} onClick={() => openBooking(id, { service: sv.id })}>
+                  <Icon size={14} strokeWidth={1.9} />
+                  <span>{sv.kind === 'office-hours' ? `Office Hours · ${spots.open ? `${spots.open} open` : 'full'}` : sv.title}</span>
+                  <strong>{priceLabel(sv)}</strong>
+                </button>
+              </li>
+            );
+          })}
+        </ul>
       </div>
     </motion.article>
+  );
+}
+
+/** The Guides who've earned the most standing in each of your communities. */
+function Leaderboard() {
+  const joined = useApp((s) => s.joined);
+  const list = Object.keys(joined).filter((k) => joined[k] && communities[k]);
+  return (
+    <div className="lboard">
+      {list.slice(0, 3).map((c) => (
+        <div key={c} className="lboard__group">
+          <Link to={`/c/${c}`} className="lboard__community">
+            {communities[c].title}
+          </Link>
+          <ol className="lboard__list">
+            {communityGuides(c)
+              .slice(0, 3)
+              .map((x) => {
+                const e = economyOf(x.id)!;
+                return (
+                  <li key={x.id}>
+                    <span className={`lboard__rank ${x.rank === 1 ? 'is-top' : ''}`}>{x.rank}</span>
+                    <Avatar id={x.id} size={28} />
+                    <span className="lboard__who">
+                      <PersonName id={x.id} className="lboard__name" />
+                      <span>
+                        <IconStar size={11} filled /> {e.rating.toFixed(1)} · {people[x.id].guide?.helped} helped
+                      </span>
+                    </span>
+                  </li>
+                );
+              })}
+          </ol>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+/** An invitation to guide: the product asking you to give back what you've learned. */
+function BecomeGuide() {
+  const mine = useApp((s) => s.myGuide);
+  return (
+    <section className="become immersive">
+      <RouteSilk lines={12} />
+      <h2 className="become__h">{mine?.live ? 'You’re a Path Guide' : 'You’ve made moves others are weighing'}</h2>
+      <p className="become__p">{mine?.live ? 'Your Guide profile is live. Keep it current as your Path grows.' : 'Lucas already asked you about BSc Chem → Research. Guide the moves you’ve made, for free or for a fee.'}</p>
+      <Link to="/guide/setup" className="become__cta">
+        {mine?.live ? 'Edit your Guide profile' : 'Become a Path Guide'}
+      </Link>
+    </section>
   );
 }
 
@@ -105,8 +173,11 @@ function RouteWalk({ count, children }: { count: number; children: React.ReactNo
   );
 }
 
+const kinds: (ServiceKind | 'all')[] = ['all', 'office-hours', 'call', 'mentorship', 'resume', 'interview', 'portfolio', 'group', 'workshop'];
+
 export function Guides() {
   const [dest, setDest] = useState<'pharma-rnd' | 'reg-affairs'>('pharma-rnd');
+  const [kind, setKind] = useState<ServiceKind | 'all'>('all');
   const bookings = useApp((s) => s.bookings);
   const isMobile = useIsMobile();
   const sections = transitions
@@ -115,6 +186,7 @@ export function Guides() {
       ...t,
       guides: peopleList.filter((p) => p.id !== ME && p.guide && (p.guide.transitions.some(([a, b]) => a === t.from && b === t.to) || (compactSteps(p.path).some((s, i, arr) => i > 0 && arr[i - 1].wp === t.from && s.wp === t.to) && p.guide))),
     }))
+    .map((t) => ({ ...t, guides: t.guides.filter((g) => kind === 'all' || servicesOf(g.id).some((sv) => sv.kind === kind)) }))
     .filter((t) => t.guides.length);
 
   return (
@@ -124,7 +196,8 @@ export function Guides() {
       back="Network"
       rail={
         <>
-          <RailSection title="Office Hours this week">
+          <BecomeGuide />
+          <RailSection title="Free Office Hours this week">
             <RailPosts
               items={['amara', 'tomas', 'priya', 'rafael'].map((g) => ({
                 author: g,
@@ -134,7 +207,9 @@ export function Guides() {
               }))}
             />
           </RailSection>
-          <p className="guides__note">Guides are never paid, ranked or rated. They’re people who were once where you are.</p>
+          <RailSection title="Top Guides in your communities">
+            <Leaderboard />
+          </RailSection>
           <RailFooter />
         </>
       }
@@ -153,6 +228,19 @@ export function Guides() {
         <Link to="/discover" className="t-subhead c-tint">
           Somewhere else?
         </Link>
+      </div>
+
+      <div className="guides__kinds" role="tablist" aria-label="Type of help">
+        {kinds.map((k) => {
+          const on = k === kind;
+          const Icon = k === 'all' ? null : serviceKinds[k].icon;
+          return (
+            <button key={k} type="button" role="tab" aria-selected={on} className={`kind-filter__pill ${on ? 'is-on' : ''}`} onClick={() => setKind(k)}>
+              {Icon && <Icon size={15} strokeWidth={1.9} />}
+              {k === 'all' ? 'Any kind of help' : k === 'office-hours' ? 'Free Office Hours' : serviceKinds[k].plural}
+            </button>
+          );
+        })}
       </div>
 
       <RouteWalk count={sections.length}>
@@ -180,7 +268,7 @@ export function Guides() {
             </header>
             <div className="guides__cards">
               {s.guides.map((g, gi) => (
-                <GuideCard key={g.id} id={g.id} from={s.from} to={s.to} i={gi} />
+                <GuideCard key={g.id} id={g.id} from={s.from} to={s.to} i={gi} kind={kind} />
               ))}
             </div>
           </section>

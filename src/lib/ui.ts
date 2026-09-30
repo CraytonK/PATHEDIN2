@@ -12,7 +12,7 @@ interface UIState {
   request: { to: string; segment?: [string, string]; quote?: string } | null;
   search: boolean;
   /** Booking a Guide's office hours; `booking` reopens one you already hold. */
-  book: { guide: string; booking?: string; topic?: string } | null;
+  book: { guide: string; booking?: string; topic?: string; service?: string } | null;
   /** The sidebar drawer on desktop widths too narrow to dock it. */
   drawer: boolean;
   toast: { text: string; id: number } | null;
@@ -24,7 +24,7 @@ interface UIState {
   openRequest: (to: string, segment?: [string, string], quote?: string) => void;
   closeRequest: () => void;
   setSearch: (open: boolean) => void;
-  openBooking: (guide: string, opts?: { booking?: string; topic?: string }) => void;
+  openBooking: (guide: string, opts?: { booking?: string; topic?: string; service?: string }) => void;
   closeBooking: () => void;
   setDrawer: (open: boolean) => void;
   showToast: (text: string) => void;

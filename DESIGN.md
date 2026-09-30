@@ -267,7 +267,7 @@ A warm cream ground with navy ink, one Midnight Navy accent for anything with we
 
 **The Navy Pill Rule.** Whatever is current or chosen sits in a navy pill with cream type, and the pill slides from the old choice to the new one. Nothing else on a screen is a navy pill except the primary action.
 
-**The Stage Rule.** Immersive navy panels are for the product showing itself: the intro, a Path cover, your week. They are never a decoration behind ordinary content, and never more than one or two on a screen.
+**The Stage Rule.** Immersive navy panels are for the product showing itself: the intro, a Path cover, your week, a Guide's card. They are never a decoration behind ordinary content. A full panel appears at most once or twice on a screen; Guide cards carry only a slim navy band (56–92px) across their top, so a list of Guides stays readable.
 
 ## Typography
 
@@ -351,8 +351,25 @@ Gently rounded rectangles. The radii are 2px for thin bars, 6px for rows in list
 - **Hover:** the Card hover shadow and a 2px rise, for cards that open something, with the edge catching light where the cursor is. The rise uses the `translate` property so it composes with entrance motion.
 - **Internal Padding:** 18px 20px (16px on phones).
 
-### Post Card
-The author across the top (a 40px face, the name, what they are to you and when) with the "…" menu; the kind as a small cream tag with its note beside it; the title and the post's own body (a quoted answer, a reply bubble, the fork, the route line, the Guide's hours); the photo or Path art on the right; and a footer over a hairline that says why it's here, with its numbers and Save.
+### Post Cards (one shape per kind)
+Every post is a white card with the same entrance, the same kind tag (a cream pill with the kind's icon) and the same footer over a hairline (why it's here, its numbers, Save). Beyond that each kind has its own anatomy, so a feed can be read at a glance:
+- **Story:** editorial. A cream cover across the top with the author's Path and the stretch the story covers, then a Charter Bold headline (26/32px) and a Charter dek, and the byline at the bottom with the read time.
+- **Question:** the answer count in a navy tile beside the question (21px), the asker below, the best answer quoted in a cream well with its credibility in blue, and an outline *Add your answer* pill.
+- **Community:** led by the community (a four-face mosaic, its name, who's here now beside a live dot), then the author, title and body, the latest two replies as chat bubbles in a cream well, and a reply field.
+- **Path Guide:** a creator card. A slim navy band with the Guide badge, rating and their Path drawn in cream with the move they made lit in signal blue; their portrait knocked out of the band on a white ring; their standing as a navy pill; their services as price pills that open booking; the next free Office Hours.
+- **Decision Point:** a poll. Each road is a cream bar lettered A, B…, filled in blue by the share who took it or weighed in, with their faces and a count.
+- **Route:** a map. The route's numbers as stat numerals (people, years, on it now), the route line on a cream well, and *Add to my Path*.
+- **Milestone:** centred. A portrait in a navy-to-blue ring with a blue arrival check, the arrival in large regular type, their words in Charter italic, and *Congratulate* as a navy pill.
+
+### Path Guides (signature)
+- **Guide profile:** a Guide's profile opens on its Guide tab. First *why they know this road*: their walked Path as a line with the moves they guide drawn heavy in navy and tagged, their experience in a sentence. Then four stats (rating with a blue star, people helped, followers, Guide since), *Known in* (their rank in each Path Community; a navy tile marks Top Guide), expertise tags, services, availability (the next three free Office Hours and when paid sessions run), reviews (a 44px rating, then each review in Charter on a cream well with the service it was for), and contributions (answers, stories, conversations). The side column carries a navy Guide card: badge, rating, top standing, helped, followers and the lowest price, and Book.
+- **Services:** each is a cream row with a navy icon tile (blue for free), title, what you get, length or delivery, and the price at 17px with its own action (Book, Request, Reserve). Prices are Canadian dollars, with /month or /seat where it applies.
+- **Booking a service:** the booking sheet starts with the Guide's services as tiles (the chosen one fills navy and slides). Timed services pick a day and time; group sessions and workshops show one date and their seats filling as dots; written reviews ask for a link and say when notes come back. The footer names the price and what the Guide receives after PathedIn's share, and says no payment is taken in the prototype. There is never a card field.
+- **Become a Path Guide:** a five-step page (Your moves, Experience, How you'll help, Availability, Go live) with a pill step track, one card per step that slides between them, and a live navy preview beside it. Moves come only from your own Path. Services are switches with price steppers and what you keep. Availability is a week grid of mornings, afternoons and evenings that fill navy.
+- **Standing:** communities rank their Guides (a navy disc for first); the Guides page lists the top three in each of your communities, and the Guides marketplace filters by kind of help.
+
+### Network groups
+Each relation has its own card: a Path Twin shows both Paths one above the other on a cream well with the match as a 34px blue numeral; Path Peers are tiles two across with a blue "at your step" line; People Ahead lead with a blue tile saying how far ahead (+1 step, arrived, hires); Guides are creator tiles three across with a slim navy band; Explorers run as a carousel; people following your Path are compact rows with Reply or *Guide this move*.
 
 ### Dashboard Home (signature)
 - **Profile card:** a navy cover lit by route silk, your photo knocked out of it on a white ring, name and headline, three counts that count up (Connections, Communities, Saved), Your Path as tags (walked in cream, now in navy, the destination outlined in blue), the shortcuts with navy-on-hover icon tiles, and Write as an outline pill.
@@ -413,6 +430,7 @@ A two-pane sheet: the Guide on a recessed cream panel, then three session tiles,
 - **Don't** use large areas of signal blue, gradient text, neon edges or coloured side stripes. The one exception is the schedule's 4px event bar, a calendar marker from the reference that says what kind of event it is.
 - **Don't** nest a card in a card, or bring back rows between hairlines on the cream.
 - **Don't** dock the sidebar beside the content again; the drawer holds it.
+- **Don't** let two kinds of post share one shape, or put a card field for payment anywhere in the prototype.
 - **Don't** put glass on cream. Glass lives only on navy.
 - **Don't** set a label above a heading as a kicker or eyebrow, even where the reference does. Headings carry their own weight.
 - **Don't** set interface text in Charter, or use a synthesized italic of Space Grotesk.

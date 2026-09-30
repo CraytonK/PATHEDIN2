@@ -198,8 +198,9 @@ function fold(line: string) {
 export function downloadIcs(b: Booking) {
   const g = people[b.guide];
   const start = new Date(b.at);
-  const end = new Date(start.getTime() + b.minutes * 60_000);
-  const description = [`Path Office Hours with ${g.name}.`, `About: ${b.topic}`, b.note ? `Your note: ${b.note}` : ''].filter(Boolean).join('\n');
+  const end = new Date(start.getTime() + Math.max(b.minutes, 15) * 60_000);
+  const what = b.title ?? 'Office hours';
+  const description = [`${b.title ?? 'Path Office Hours'} with ${g.name}.`, `About: ${b.topic}`, b.note ? `Your note: ${b.note}` : ''].filter(Boolean).join('\n');
   const lines = [
     'BEGIN:VCALENDAR',
     'VERSION:2.0',
@@ -211,12 +212,12 @@ export function downloadIcs(b: Booking) {
     `DTSTAMP:${icsDate(new Date())}`,
     `DTSTART:${icsDate(start)}`,
     `DTEND:${icsDate(end)}`,
-    `SUMMARY:${icsText(`Office hours with ${g.name}`)}`,
+    `SUMMARY:${icsText(`${what} with ${g.name}`)}`,
     `DESCRIPTION:${icsText(description)}`,
     'LOCATION:PathedIn video call',
     'BEGIN:VALARM',
     'ACTION:DISPLAY',
-    'DESCRIPTION:Office hours in 15 minutes',
+    `DESCRIPTION:${icsText(`${what} in 15 minutes`)}`,
     'TRIGGER:-PT15M',
     'END:VALARM',
     'END:VEVENT',
@@ -226,7 +227,7 @@ export function downloadIcs(b: Booking) {
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
   a.href = url;
-  a.download = `office-hours-${g.first.toLowerCase()}-${start.toISOString().slice(0, 10)}.ics`;
+  a.download = `${what.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')}-${g.first.toLowerCase()}-${start.toISOString().slice(0, 10)}.ics`;
   document.body.appendChild(a);
   a.click();
   a.remove();

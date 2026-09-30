@@ -10,7 +10,7 @@ import { search, type Result } from '../lib/search';
 import { useApp } from '../lib/store';
 import { switchTheme } from '../lib/theme';
 import { useUI } from '../lib/ui';
-import { IconAlign, IconArrowUpRight, IconBook, IconCalendar, IconCompass, IconCompose, IconFlag, IconMoon, IconPath, IconPeople, IconQuestion, IconSearch, IconSend, IconSun } from './icons';
+import { IconAlign, IconArrowUpRight, IconBook, IconCalendar, IconCompass, IconCompose, IconFlag, IconMoon, IconPath, IconPeople, IconQuestion, IconSearch, IconSend, IconSparkle, IconSun } from './icons';
 import { AvatarStack } from './ui';
 import './palette.css';
 
@@ -84,7 +84,8 @@ export function CommandPalette() {
         },
       },
       { key: 'discover', group: 'Actions', title: 'Discover people on your route', lead: <IconCompass size={17} />, run: go('/discover?tab=people') },
-      { key: 'guides', group: 'Actions', title: 'Browse Path Guides', sub: 'Office hours with people who made your moves', lead: <IconSend size={17} />, run: go('/guides') },
+      { key: 'guides', group: 'Actions', title: 'Browse Path Guides', sub: 'Free Office Hours, calls, reviews and mentorship', lead: <IconSend size={17} />, run: go('/guides') },
+      { key: 'become-guide', group: 'Actions', title: 'Become a Path Guide', sub: 'Guide the moves you’ve made, for free or for a fee', lead: <IconSparkle size={17} />, run: go('/guide/setup') },
       {
         key: 'theme',
         group: 'Actions',
