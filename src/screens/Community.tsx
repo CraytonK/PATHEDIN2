@@ -166,7 +166,7 @@ export function CommunityScreen() {
           <AnimatePresence mode="wait">
             <motion.div key={tab + (stage ?? '')} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, transition: { duration: 0.1 } }} transition={springs.smooth}>
               {tab === 'conversations' && (
-                <>
+                <div className="card-stack">
                   {joined ? (
                     <Composer communityId={c.id} onPost={(t) => setPosted((p) => [t, ...p])} />
                   ) : (
@@ -179,7 +179,7 @@ export function CommunityScreen() {
                     </div>
                   ))}
                   {!shownThreads.length && <p className="cm__empty t-subhead c-2">No conversations from this stop yet.</p>}
-                </>
+                </div>
               )}
               {tab === 'questions' && qs.map((q) => <QuestionItem key={q.id} q={q} />)}
               {tab === 'decisions' && (

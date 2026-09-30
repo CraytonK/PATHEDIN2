@@ -1,6 +1,6 @@
 /* ── Lists of posts, as on Medium's list pages ── */
 .list-tabs {
-  margin-bottom: 4px;
+  margin-bottom: 16px;
 }
 
 .list-h {
@@ -338,6 +338,9 @@
   }
   .post + .post {
     margin-top: 12px;
+  }
+  .list-tabs {
+    margin-bottom: 12px;
   }
   .post__by {
     margin-bottom: 12px;

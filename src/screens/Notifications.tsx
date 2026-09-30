@@ -42,21 +42,23 @@ export function Notifications() {
           return (
             <section key={g} className="list-group">
               <h2 className="list-group__h">{g}</h2>
-              {items.map((n, i) => (
-                <motion.div key={n.id} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ ...springs.smooth, delay: i * 0.03 }}>
-                  <Link to={n.href} className={`notif ${n.unread && !readAll ? 'is-unread' : ''}`}>
-                    <Lead n={n} />
-                    <div className="notif__body">
-                      <p className="t-subhead">
-                        <Rich text={n.text} />
-                      </p>
-                      {n.context && <p className="notif__context t-footnote">{n.context}</p>}
-                      <p className="t-caption1 c-3">{n.ago}</p>
-                    </div>
-                    {n.unread && !readAll && <span className="notif__dot" aria-label="Unread" />}
-                  </Link>
-                </motion.div>
-              ))}
+              <div className="card-stack card-stack--rows">
+                {items.map((n, i) => (
+                  <motion.div key={n.id} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ ...springs.smooth, delay: i * 0.03 }}>
+                    <Link to={n.href} className={`notif ${n.unread && !readAll ? 'is-unread' : ''}`}>
+                      <Lead n={n} />
+                      <div className="notif__body">
+                        <p className="t-subhead">
+                          <Rich text={n.text} />
+                        </p>
+                        {n.context && <p className="notif__context t-footnote">{n.context}</p>}
+                        <p className="t-caption1 c-3">{n.ago}</p>
+                      </div>
+                      {n.unread && !readAll && <span className="notif__dot" aria-label="Unread" />}
+                    </Link>
+                  </motion.div>
+                ))}
+              </div>
             </section>
           );
         })}

@@ -117,7 +117,7 @@
   top: var(--topbar-h);
   background: var(--bg);
   z-index: 5;
-  margin-bottom: 8px;
+  margin-bottom: 16px;
 }
 @media (max-width: 767px) {
   .cm__tabs {
@@ -148,15 +148,14 @@
 .cm__filter {
   color: var(--tint-text);
   font-weight: 500;
-  padding-top: 16px;
 }
 .cm__empty,
 .cm__join-note {
-  padding: 20px 0;
+  padding: 4px 0;
 }
 
 .composer {
-  margin: 16px 0 4px;
+  margin: 0;
   padding: 12px 14px;
   border-radius: 16px;
   background: var(--bg-grouped);

@@ -7,6 +7,24 @@
   set into a card (a quoted note, a day tile, a tag) is a cream well, never a second card.
 */
 
+/* ── The rhythm between cards ──
+   Cards in a list sit 16px apart (12px on phones) whether they are siblings in the markup or each in a wrapper
+   of its own (an anchor, an animation). A list whose items are wrapped is a .card-stack; rows that are cards
+   use --stack-gap 8px. Nothing in a list ever touches the card above it. */
+.card-stack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--stack-gap, 16px);
+}
+.card-stack--rows {
+  --stack-gap: 8px;
+}
+@media (max-width: 767px) {
+  .card-stack {
+    gap: var(--stack-gap, 12px);
+  }
+}
+
 /* ── Rows that are cards ── */
 :root .person-row,
 :root .community-row,
@@ -204,6 +222,7 @@
 }
 :root .story-lead {
   --bg: var(--card);
+  margin-bottom: 16px;
   padding: 20px;
   border-bottom: 0;
   border-radius: var(--r-card);
@@ -250,6 +269,7 @@
     padding: 18px 16px 20px;
   }
   :root .story-lead {
+    margin-bottom: 12px;
     padding: 14px;
   }
 }

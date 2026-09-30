@@ -309,7 +309,7 @@ The pieces of the app are unchanged; they are laid out as a dashboard.
 - **Intro:** a Midnight Navy stage set into the cream page with 12px margins and 28px corners, the headline left and the product composition floating right. Below it, the tour: one line down the left edge with a station for each feature, 168px between stations (112px on phones), the feature's demo on a white card under its title.
 - **Gutters:** 16px on phones, 24px from 768px and 40px from 1100px; Home keeps 24px.
 - **Phones:** large title, Coming up cards, your week as a navy panel, posts and rows as cards, and a floating tab bar: a white pill 12px from the edges and 10px off the bottom, the current tab in a sliding navy pill. Sheets rise from the bottom with a grabber.
-- **Rhythm:** 4px steps inside components, 16px between feed cards (12px on phones), 12px between row cards, 20px between cards in a side column.
+- **Rhythm:** 4px steps inside components, 16px between feed cards (12px on phones), 12px between row cards, 20px between cards in a side column. A tab row sits one card gap above the list it switches. A list whose items are each wrapped (for an anchor or an entrance) is a `.card-stack`, so the gap holds however the markup nests; nothing in a list ever touches the card above it.
 - **Grids:** card grids run three columns, two under 760px of container width and one under 480px.
 
 ## Elevation & Depth
