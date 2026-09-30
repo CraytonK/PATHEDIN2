@@ -51,7 +51,7 @@ export interface PostProps {
   why?: { kind: RelationKind; text: ReactNode };
   stats?: ReactNode;
   thumb?: ReactNode;
-  thumbKind?: 'art' | 'photo';
+  thumbKind?: 'art' | 'photo' | 'count' | 'mosaic' | 'portrait';
   /** Extra line under the subtitle, e.g. the author's Path. */
   extra?: ReactNode;
   saveKey?: string;

@@ -351,15 +351,12 @@ Gently rounded rectangles. The radii are 2px for thin bars, 6px for rows in list
 - **Hover:** the Card hover shadow and a 2px rise, for cards that open something, with the edge catching light where the cursor is. The rise uses the `translate` property so it composes with entrance motion.
 - **Internal Padding:** 18px 20px (16px on phones).
 
-### Post Cards (one shape per kind)
-Every post is a white card with the same entrance, the same kind tag (a cream pill with the kind's icon) and the same footer over a hairline (why it's here, its numbers, Save). Beyond that each kind has its own anatomy, so a feed can be read at a glance:
-- **Story:** editorial. A cream cover across the top with the author's Path and the stretch the story covers, then a Charter Bold headline (26/32px) and a Charter dek, and the byline at the bottom with the read time.
-- **Question:** the answer count in a navy tile beside the question (21px), the asker below, the best answer quoted in a cream well with its credibility in blue, and an outline *Add your answer* pill.
-- **Community:** led by the community (a four-face mosaic, its name, who's here now beside a live dot), then the author, title and body, the latest two replies as chat bubbles in a cream well, and a reply field.
-- **Path Guide:** a creator card. A slim navy band with the Guide badge, rating and their Path drawn in cream with the move they made lit in signal blue; their portrait knocked out of the band on a white ring; their standing as a navy pill; their services as price pills that open booking; the next free Office Hours.
-- **Decision Point:** a poll. Each road is a cream bar lettered A, B…, filled in blue by the share who took it or weighed in, with their faces and a count.
-- **Route:** a map. The route's numbers as stat numerals (people, years, on it now), the route line on a cream well, and *Add to my Path*.
-- **Milestone:** centred. A portrait in a navy-to-blue ring with a blue arrival check, the arrival in large regular type, their words in Charter italic, and *Congratulate* as a navy pill.
+### Post Cards (one card, clear differences)
+Every post is the same white card: the author across the top with the "…" menu, a kind tag, the title and text, a thumbnail on the right, one detail strip under the text, and the footer over a hairline (why it's here, its numbers, Save). Kinds are told apart in three fixed places, never by a different layout:
+- **The tag:** a blue-washed pill with the kind's icon and name (Story, Question, Community, Path Guide, Decision Point, Route, Milestone), with its note beside it in grey.
+- **The thumbnail** (168×120, 88×66 in a narrow column): a Story shows the stretch of Path it covers; a Question its answer count; a Community post its members and who's here now; a Guide their photo with a navy rating badge; a Decision the fork; a Route how many took it; a Milestone their photo with an arrival check.
+- **The strip,** always a cream well of the same shape: the best answer quoted, the latest reply, the Guide's prices and Book, the roads lettered A and B with Weigh in, the route line with Add to my Path, or Congratulate.
+Stories alone set their title in Charter Bold.
 
 ### Path Guides (signature)
 - **Guide profile:** a Guide's profile opens on its Guide tab. First *why they know this road*: their walked Path as a line with the moves they guide drawn heavy in navy and tagged, their experience in a sentence. Then four stats (rating with a blue star, people helped, followers, Guide since), *Known in* (their rank in each Path Community; a navy tile marks Top Guide), expertise tags, services, availability (the next three free Office Hours and when paid sessions run), reviews (a 44px rating, then each review in Charter on a cream well with the service it was for), and contributions (answers, stories, conversations). The side column carries a navy Guide card: badge, rating, top standing, helped, followers and the lowest price, and Book.
@@ -369,7 +366,7 @@ Every post is a white card with the same entrance, the same kind tag (a cream pi
 - **Standing:** communities rank their Guides (a navy disc for first); the Guides page lists the top three in each of your communities, and the Guides marketplace filters by kind of help.
 
 ### Network groups
-Each relation has its own card: a Path Twin shows both Paths one above the other on a cream well with the match as a 34px blue numeral; Path Peers are tiles two across with a blue "at your step" line; People Ahead lead with a blue tile saying how far ahead (+1 step, arrived, hires); Guides are creator tiles three across with a slim navy band; Explorers run as a carousel; people following your Path are compact rows with Reply or *Guide this move*.
+Every group uses the same person card (face, name and relation tag, headline, why, their Path in one line). One blue-washed line under the headline says what they are to you, in the same place on every card: your match with a Path Twin, the step you share with a Peer, the step someone ahead took, a Guide's rating and prices, where an Explorer is heading, or a request from someone behind you. The action fits the relation: Align Paths, Message or Connect, Book, Reply, or Guide this move.
 
 ### Dashboard Home (signature)
 - **Profile card:** a navy cover lit by route silk, your photo knocked out of it on a white ring, name and headline, three counts that count up (Connections, Communities, Saved), Your Path as tags (walked in cream, now in navy, the destination outlined in blue), the shortcuts with navy-on-hover icon tiles, and Write as an outline pill.
@@ -430,7 +427,7 @@ A two-pane sheet: the Guide on a recessed cream panel, then three session tiles,
 - **Don't** use large areas of signal blue, gradient text, neon edges or coloured side stripes. The one exception is the schedule's 4px event bar, a calendar marker from the reference that says what kind of event it is.
 - **Don't** nest a card in a card, or bring back rows between hairlines on the cream.
 - **Don't** dock the sidebar beside the content again; the drawer holds it.
-- **Don't** let two kinds of post share one shape, or put a card field for payment anywhere in the prototype.
+- **Don't** give a kind of post or a Network group its own layout; tell them apart with the tag, the thumbnail, the strip or the signal line. Don't put a card field for payment anywhere in the prototype.
 - **Don't** put glass on cream. Glass lives only on navy.
 - **Don't** set a label above a heading as a kicker or eyebrow, even where the reference does. Headings carry their own weight.
 - **Don't** set interface text in Charter, or use a synthesized italic of Space Grotesk.

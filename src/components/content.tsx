@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+import type { ReactNode } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { people, ME } from '../data/people';
 import { wp } from '../data/waypoints';
@@ -73,7 +74,25 @@ export function RequestButton({ id, segment, size = 'small', variant = 'filled',
 
 /* ── People ─────────────────────────────────────────────────── */
 
-export function PersonRow({ id, why, action = 'connect', compact, i }: { id: string; why?: string; action?: 'connect' | 'request' | 'none'; compact?: boolean; i?: number }) {
+export function PersonRow({
+  id,
+  why,
+  action = 'connect',
+  compact,
+  i,
+  signal,
+  actionNode,
+}: {
+  id: string;
+  why?: string;
+  action?: 'connect' | 'request' | 'none';
+  compact?: boolean;
+  i?: number;
+  /** One line that says what this person is to you, in the same place on every row (a match, a rating, a step). */
+  signal?: ReactNode;
+  /** Replaces the default action, e.g. Align Paths or Book. */
+  actionNode?: ReactNode;
+}) {
   const p = people[id];
   const rel = relationTo(id);
   const navigate = useNavigate();
@@ -93,11 +112,16 @@ export function PersonRow({ id, why, action = 'connect', compact, i }: { id: str
             <PersonName id={id} className="t-headline" />
             {rel.kind !== 'self' && rel.kind !== 'other' && <RelationTag kind={rel.kind} label={rel.label} />}
           </div>
-          {action !== 'none' && (
-            <div className="person-row__action">{action === 'request' ? <RequestButton id={id} /> : <ConnectButton id={id} />}</div>
+          {actionNode ? (
+            <div className="person-row__action" onClick={(e) => e.stopPropagation()}>
+              {actionNode}
+            </div>
+          ) : (
+            action !== 'none' && <div className="person-row__action">{action === 'request' ? <RequestButton id={id} /> : <ConnectButton id={id} />}</div>
           )}
         </div>
         <p className="person-row__headline t-subhead c-2">{p.headline}</p>
+        {signal && <p className="person-row__signal">{signal}</p>}
         {!compact && <p className="person-row__why t-callout">{why ?? rel.why}</p>}
         <PathHint id={id} className="person-row__path" />
       </div>

@@ -590,3 +590,26 @@
 .person-tile__chips {
   margin-top: 8px;
 }
+
+/* The one line that says what someone is to you: a match, a step, a rating, a request. */
+.person-row__signal {
+  margin-top: 8px;
+}
+.nw-signal {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  min-height: 26px;
+  padding: 3px 10px;
+  border-radius: var(--r-pill);
+  background: var(--tint-softer);
+  box-shadow: inset 0 0 0 1px var(--tint-border);
+  color: var(--tint-text);
+  font-size: 12.5px;
+  line-height: 18px;
+  font-weight: 500;
+}
+.nw-signal svg {
+  flex: none;
+  color: var(--tint-strong);
+}

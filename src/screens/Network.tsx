@@ -1,21 +1,19 @@
 import { AnimatePresence, motion } from 'framer-motion';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, type ReactNode } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { Page, useUnread } from '../components/chrome';
 import { PathLens } from '../components/path/PathLens';
-import { ConnectButton, PersonTile, RequestButton } from '../components/content';
+import { PersonRow } from '../components/content';
 import { BookButton } from '../components/Booking';
-import { PathHint } from '../components/path/PathHint';
-import { PathStrip } from '../components/path/PathStrip';
 import { people, ME } from '../data/people';
 import { wp } from '../data/waypoints';
-import { economyOf, fromPrice, priceLabel, topStanding } from '../lib/guides';
+import { economyOf, fromPrice, priceLabel } from '../lib/guides';
 import { useApp } from '../lib/store';
 import { useUI } from '../lib/ui';
-import { Avatar, Button, PersonName, RelationGlyph, RelationTag, TextTabs } from '../components/ui';
+import { Button, RelationGlyph, TextTabs } from '../components/ui';
 import { IconAlign, IconPeople, IconSend, IconStar } from '../components/icons';
-import { compactSteps, current, pathMatch, peopleByRelation, relationCopy, relationTo, stepTitle, type RelationKind } from '../lib/relations';
-import { edgeClass, rise, springs, useIsMobile, useScrollEdges } from '../lib/motion';
+import { compactSteps, current, pathMatch, peopleByRelation, relationCopy, relationTo, type RelationKind } from '../lib/relations';
+import { edgeClass, springs, useIsMobile, useScrollEdges } from '../lib/motion';
 import './network.css';
 
 type Kind = Exclude<RelationKind, 'self' | 'other'>;
@@ -34,171 +32,108 @@ function useWidth() {
   return [ref, w] as const;
 }
 
-/* Each kind of relation has its own card, so the page reads as groups of people, not one long list. */
+/*
+  Every group uses the same person card. What differs is one line under the headline, in the same place on
+  every card (a match, a step, a rating, a request), and the action that fits the relation.
+*/
 
-/** A Path Twin: your two Paths, one above the other, and how closely they match. */
-function TwinCard({ id, i }: { id: string; i: number }) {
-  const p = people[id];
-  const rel = relationTo(id);
+function Signal({ children }: { children: ReactNode }) {
+  return <span className="nw-signal">{children}</span>;
+}
+
+function AlignButton({ id }: { id: string }) {
   const openCompare = useUI((s) => s.openCompare);
   return (
-    <motion.article className="nw-twin" {...rise(i, 12)}>
-      <Link to={`/p/${id}`} className="nw-twin__photo" data-portrait={id}>
-        <img src={p.photo} alt="" loading="lazy" />
-      </Link>
-      <div className="nw-twin__body">
-        <div className="nw-twin__top">
-          <div>
-            <PersonName id={id} className="nw-twin__name" />
-            <p className="nw-twin__head">{p.headline}</p>
-          </div>
-          <span className="nw-twin__match">
-            <strong>{pathMatch(id)}%</strong>
-            <span>Path match</span>
-          </span>
-        </div>
-        <div className="nw-twin__paths">
-          <span className="nw-twin__who">You</span>
-          <PathStrip id={ME} highlight="shared" wrap />
-          <span className="nw-twin__who">{p.first}</span>
-          <PathStrip id={id} highlight="shared" wrap />
-        </div>
-        <p className="nw-twin__why">{rel.why}</p>
-        <div className="nw-twin__act">
-          <Button variant="filled" size="small" icon={<IconAlign size={16} />} onClick={() => openCompare(id)}>
-            Align Paths
-          </Button>
-          <ConnectButton id={id} />
-        </div>
-      </div>
-    </motion.article>
+    <Button variant="tinted" size="small" icon={<IconAlign size={16} />} onClick={() => openCompare(id)}>
+      Align Paths
+    </Button>
   );
 }
 
-/** A Path Peer: someone at your step right now, as a tile. */
-function PeerTile({ id, i }: { id: string; i: number }) {
-  const p = people[id];
-  const now = current(p);
-  const dests = p.futures.map((f) => wp(f.destination).short);
-  return (
-    <motion.article className="nw-peer" {...rise(i, 12)}>
-      <Link to={`/p/${id}`} className="nw-peer__photo" data-portrait={id}>
-        <img src={p.photo} alt="" loading="lazy" />
-      </Link>
-      <PersonName id={id} className="nw-peer__name" />
-      <p className="nw-peer__head">{p.headline}</p>
-      <p className="nw-peer__at">
-        <span className="nw-peer__dot" aria-hidden="true" />
-        At {wp(now.wp).short} with you since {now.start}
-      </p>
-      {dests.length > 0 && <p className="nw-peer__weigh">Weighing {dests.join(' or ')}</p>}
-      <ConnectButton id={id} />
-    </motion.article>
-  );
-}
-
-/** Someone ahead: how far ahead, and where they are now. */
-function AheadCard({ id, i }: { id: string; i: number }) {
-  const p = people[id];
-  const rel = relationTo(id);
-  const n = rel.stepsAhead ?? 1;
-  return (
-    <motion.article className="nw-ahead" {...rise(i, 12)}>
-      <span className="nw-ahead__n" aria-hidden="true">
-        <strong>{rel.reached || p.hiring ? '' : `+${n}`}</strong>
-        <span>{rel.reached ? 'arrived' : p.hiring ? 'hires' : n === 1 ? 'step' : 'steps'}</span>
-      </span>
-      <Avatar id={id} size={48} />
-      <div className="nw-ahead__body">
-        <div className="nw-ahead__top">
-          <PersonName id={id} className="nw-ahead__name" />
-          <RelationTag kind={rel.kind} label={rel.label} />
-        </div>
-        <p className="nw-ahead__now">Now {stepTitle(current(p))}{current(p).org ? ` · ${current(p).org}` : ''}</p>
-        <PathHint id={id} className="nw-ahead__path" />
-      </div>
-      <ConnectButton id={id} />
-    </motion.article>
-  );
-}
-
-/** A Guide: rating, standing, price, and a way to book. */
-function GuideTile({ id, i }: { id: string; i: number }) {
-  const p = people[id];
-  const econ = economyOf(id);
-  const from = fromPrice(id);
-  const top = topStanding(id);
-  return (
-    <motion.article className="nw-guide" {...rise(i, 12)}>
-      <div className="nw-guide__band immersive" aria-hidden="true">
-        <span className="nw-guide__badge">Path Guide</span>
-      </div>
-      <Link to={`/p/${id}`} className="nw-guide__photo" data-portrait={id}>
-        <img src={p.photo} alt="" loading="lazy" />
-      </Link>
-      <PersonName id={id} className="nw-guide__name" />
-      <p className="nw-guide__head">{p.headline}</p>
-      {econ && (
-        <p className="nw-guide__rating">
-          <IconStar size={13} filled /> <strong>{econ.rating.toFixed(1)}</strong> · {econ.reviewCount} reviews · helped {p.guide?.helped}
-        </p>
-      )}
-      {top && <p className="nw-guide__top">{top}</p>}
-      <p className="nw-guide__price">Free Office Hours{from ? ` · from ${priceLabel(from)}` : ''}</p>
-      <div className="nw-guide__act">
-        <BookButton id={id} label="Book" />
-        <RequestButton id={id} variant="gray" label="Ask" />
-      </div>
-    </motion.article>
-  );
-}
-
-/** Someone behind you: where they are, when you were there, and how you could help. */
-function BehindRow({ id, i }: { id: string; i: number }) {
-  const p = people[id];
-  const now = current(p);
-  const mine = compactSteps(people[ME].path).find((s) => s.wp === now.wp);
+function BehindAction({ id }: { id: string }) {
   const requests = useApp((s) => s.requests);
   const myGuide = useApp((s) => s.myGuide);
   const asked = requests.find((r) => r.from === id && r.to === ME && r.status === 'pending');
-  return (
-    <motion.article className="nw-behind" {...rise(i, 12)}>
-      <Avatar id={id} size={44} />
-      <div className="nw-behind__body">
-        <PersonName id={id} className="nw-behind__name" />
-        <p>
-          At {wp(now.wp).short}
-          {mine ? `, where you were in ${mine.start}` : ''}
-        </p>
-        {asked && <p className="nw-behind__asked">Asked you about {wp(asked.segment[0]).short} → {wp(asked.segment[1]).short}</p>}
-      </div>
-      {asked ? (
-        <Link to="/requests" className="nw-behind__cta">
+  if (asked)
+    return (
+      <Link to="/requests">
+        <Button variant="filled" size="small">
           Reply
-        </Link>
-      ) : (
-        <Link to={myGuide?.live ? `/p/${ME}` : '/guide/setup'} className="nw-behind__cta nw-behind__cta--quiet">
-          {myGuide?.live ? 'You guide this move' : 'Guide this move'}
-        </Link>
-      )}
-    </motion.article>
+        </Button>
+      </Link>
+    );
+  return (
+    <Link to={myGuide?.live ? `/p/${ME}` : '/guide/setup'}>
+      <Button variant="gray" size="small">
+        {myGuide?.live ? 'You guide this move' : 'Guide this move'}
+      </Button>
+    </Link>
   );
 }
 
+function BehindSignal({ id }: { id: string }) {
+  const requests = useApp((s) => s.requests);
+  const asked = requests.find((r) => r.from === id && r.to === ME && r.status === 'pending');
+  const now = current(people[id]);
+  const mine = compactSteps(people[ME].path).find((s) => s.wp === now.wp);
+  return (
+    <Signal>
+      {asked ? `Asked you about ${wp(asked.segment[0]).short} → ${wp(asked.segment[1]).short}` : `At ${wp(now.wp).short}${mine ? `, where you were in ${mine.start}` : ''}`}
+    </Signal>
+  );
+}
+
+function signalFor(kind: Kind, id: string): ReactNode {
+  const p = people[id];
+  const now = current(p);
+  switch (kind) {
+    case 'twin':
+      return <Signal>{pathMatch(id)}% Path match · the same {relationTo(id).shared.length} steps as you</Signal>;
+    case 'peer':
+      return <Signal>At {wp(now.wp).short} with you since {now.start}</Signal>;
+    case 'ahead': {
+      if (p.hiring) return <Signal>{p.hiring}</Signal>;
+      const theirs = compactSteps(p.path);
+      const at = theirs.findIndex((st) => st.wp === current(people[ME]).wp);
+      const next = at >= 0 ? theirs[at + 1] : undefined;
+      return <Signal>{next ? `Went ${wp(theirs[at].wp).short} → ${wp(next.wp).short}, now ${wp(now.wp).short}` : `Reached ${wp(now.wp).short}`}</Signal>;
+    }
+    case 'guide': {
+      const e = economyOf(id);
+      const from = fromPrice(id);
+      return (
+        <Signal>
+          {e && (
+            <>
+              <IconStar size={12} filled /> {e.rating.toFixed(1)} · {e.reviewCount} reviews ·{' '}
+            </>
+          )}
+          Free Office Hours{from ? `, paid from ${priceLabel(from)}` : ''}
+        </Signal>
+      );
+    }
+    case 'explorer':
+      return <Signal>Exploring {p.futures.map((f) => wp(f.destination).short).join(' and ')} from {wp(now.wp).short}</Signal>;
+    case 'behind':
+      return <BehindSignal id={id} />;
+  }
+}
+
+function actionFor(kind: Kind, id: string): ReactNode | undefined {
+  if (kind === 'twin') return <AlignButton id={id} />;
+  if (kind === 'guide') return <BookButton id={id} label="Book" />;
+  if (kind === 'behind') return <BehindAction id={id} />;
+  return undefined;
+}
+
 function Group({ kind, ids }: { kind: Kind; ids: string[] }) {
-  if (kind === 'twin') return <div className="nw-list">{ids.map((id, i) => <TwinCard key={id} id={id} i={i} />)}</div>;
-  if (kind === 'peer') return <div className="nw-grid">{ids.map((id, i) => <PeerTile key={id} id={id} i={i} />)}</div>;
-  if (kind === 'ahead') return <div className="nw-list">{ids.map((id, i) => <AheadCard key={id} id={id} i={i} />)}</div>;
-  if (kind === 'guide') return <div className="nw-grid nw-grid--3">{ids.map((id, i) => <GuideTile key={id} id={id} i={i} />)}</div>;
-  if (kind === 'explorer')
-    return (
-      <div className="carousel nw-carousel">
-        {ids.map((id) => (
-          <PersonTile key={id} id={id} />
-        ))}
-      </div>
-    );
-  return <div className="nw-list">{ids.map((id, i) => <BehindRow key={id} id={id} i={i} />)}</div>;
+  return (
+    <div className="nw-list">
+      {ids.map((id, i) => (
+        <PersonRow key={id} id={id} i={i} signal={signalFor(kind, id)} actionNode={actionFor(kind, id)} />
+      ))}
+    </div>
+  );
 }
 
 export function Network() {

@@ -11,7 +11,7 @@ Scope: the whole signed-in app and the intro page. Visitor mode: Operate (readin
 
 Audience and job: people weighing a career move, finding who is one step ahead and asking them something specific.
 
-Kept by the user: the Path as a transit line, the logo mark, every layout, feature and piece of content. Chosen by the user (September 29, 2026): Soft Cream #FFF7ED ground, Midnight Navy #0F172A as the main accent, and the styling and type of a reference site (Space Grotesk). Asked for: more of the intro's assembling motion. Then (September 29, 2026): the look and feel of a social dashboard the user shared, across the whole app, with every piece of content, action and feature kept. Then: a distinct card for each kind of post and each Network group, and Path Guides as a creator economy (Guide profiles led by their Path, services and prices, reviews, community standing, and a Become a Guide flow).
+Kept by the user: the Path as a transit line, the logo mark, every layout, feature and piece of content. Chosen by the user (September 29, 2026): Soft Cream #FFF7ED ground, Midnight Navy #0F172A as the main accent, and the styling and type of a reference site (Space Grotesk). Asked for: more of the intro's assembling motion. Then (September 29, 2026): the look and feel of a social dashboard the user shared, across the whole app, with every piece of content, action and feature kept. Then: posts and Network groups told apart at a glance while keeping one shared card (the user asked for clear differentiators, not different layouts), and Path Guides as a creator economy (Guide profiles led by their Path, services and prices, reviews, community standing, and a Become a Guide flow).
 
 ## Direction contract
 

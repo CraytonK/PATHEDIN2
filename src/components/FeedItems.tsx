@@ -1,4 +1,3 @@
-import { motion } from 'framer-motion';
 import { useEffect, useLayoutEffect, useRef, useState, type ReactNode } from 'react';
 import { Link } from 'react-router-dom';
 import { communities, alongMyRoute, threads } from '../data/communities';
@@ -11,31 +10,30 @@ import { storyList } from '../data/stories';
 import type { Answer, Decision, DestinationRoute, Question, Story, Thread } from '../data/types';
 import { wp } from '../data/waypoints';
 import { compactSteps, current, futureWaypoints, pathMatch, relationTo, walked, type RelationKind } from '../lib/relations';
-import { springs } from '../lib/motion';
 import { useApp } from '../lib/store';
 import { agoLabel, useWriting, type MyPost } from '../lib/writing';
-import { RequestButton, SegmentArt } from './content';
+import { DecisionFork, SegmentArt } from './content';
 import { RouteLine } from './Ecosystem';
-import { IconCalendar, IconCheck, IconChevronLeft, IconChevronRight, IconPlus, IconStar } from './icons';
+import { IconCheck, IconChevronLeft, IconChevronRight, IconPlus, IconStar } from './icons';
 import { economyOf, priceLabel, serviceKinds, servicesOf, topStanding } from '../lib/guides';
 import { useUI } from '../lib/ui';
 import { PathHint } from './path/PathHint';
 import { BookButton } from './Booking';
 import { useOpenSpots } from '../lib/booking';
-import { KindLabel, Post, PostByline, PostFoot, PostMore, postKinds, type PostKind } from './Post';
-import { Avatar, AvatarStack, Button, PersonName, formatCount } from './ui';
+import { Post, postKinds, type PostKind } from './Post';
+import { Avatar, AvatarStack, Button, formatCount } from './ui';
 import './feed.css';
 
 /*
-  The For you feed mixes seven kinds of post. Each one opens with the same small label as its
-  section in the sidebar, and each has a shape of its own, so you can tell them apart at a glance:
-  - Story: a serif title and the Path art of the stretch it covers.
-  - Question: the best answer so far, quoted, with who it's from.
-  - Community: the latest reply as a speech bubble, with the faces in the conversation.
-  - Path Guide: a card on a quiet panel, with the move they made and this week's Office Hours.
-  - Decision Point: the fork, and an invitation to weigh in.
-  - Route: the route drawn as a line, with Add to my Path.
-  - Milestone: someone arriving, in their own words.
+  The For you feed mixes seven kinds of post, all on the same card. Each is told apart in the same three
+  places: its kind tag, what its thumbnail shows, and what its detail strip holds.
+  - Story: a serif title; the thumbnail is the stretch of Path it covers.
+  - Question: the thumbnail is the answer count; the strip quotes the best answer.
+  - Community: the thumbnail is the members and who's here now; the strip is the latest reply.
+  - Path Guide: the thumbnail is their photo and rating; the strip is their prices and Book.
+  - Decision Point: the thumbnail is the fork; the strip lists the roads and Weigh in.
+  - Route: the thumbnail is how many took it; the strip is the route line and Add to my Path.
+  - Milestone: the thumbnail is their photo with an arrival check; the strip is Congratulate.
 */
 
 type Why = { kind: RelationKind; text: string };
@@ -48,64 +46,47 @@ function relationNote(id: string) {
 const short = (w: string) => wp(w).short;
 const lower = (s: string) => s.charAt(0).toLowerCase() + s.slice(1);
 
-/* A card in the feed. Every kind shares the card, the entrance and the footer; each has its own anatomy. */
-function FeedCard({ kind, i = 0, className = '', children }: { kind: PostKind; i?: number; className?: string; children: ReactNode }) {
-  return (
-    <motion.article
-      className={`post fc fc--${kind} post--is-${kind} ${className}`}
-      initial={{ opacity: 0, y: 18 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: '-40px' }}
-      transition={{ ...springs.smooth, delay: Math.min(i, 3) * 0.05 }}
-    >
-      {children}
-    </motion.article>
-  );
-}
+/*
+  Every post is the same card: who it's from, a kind tag, the title and text, a thumbnail on the right, one
+  compact detail strip, and the footer. What tells the kinds apart sits in the same places on every card:
+  the tag, what the thumbnail shows, and what the strip holds.
+*/
 
-/* ── Stories: an editorial card, led by the stretch of road it covers ── */
+/* ── Stories: serif title, the stretch of Path as the thumbnail ── */
 
 export function StoryPost({ s, why, i }: { s: Story; why: Why; i?: number }) {
-  const to = `/stories/${s.id}`;
-  const note = relationNote(s.author);
   return (
-    <FeedCard kind="story" i={i}>
-      <Link to={to} className="fc-story__cover" tabIndex={-1} aria-hidden="true">
-        <SegmentArt story={s} height={132} labels />
-      </Link>
-      <div className="fc-story__head">
-        <KindLabel kind="story" note={`${short(s.segment[0])} → ${short(s.segment[1])}`} />
-        <PostMore person={s.author} />
-      </div>
-      <Link to={to} className="fc-story__link">
-        <h2 className="fc-story__title">{s.title}</h2>
-        <p className="fc-story__dek">{s.dek}</p>
-      </Link>
-      <div className="fc-story__by">
-        <Avatar id={s.author} size={28} />
-        <span className="fc-story__who">
-          <PersonName id={s.author} className="fc-story__name" />
-          <span>
-            {note ? `${note} · ` : ''}
-            {s.published}
-          </span>
-        </span>
-        <span className="fc-story__read">
-          {s.minutes} min read · {formatCount(s.reads)} reads
-        </span>
-      </div>
-      <PostFoot why={why} saveKey={`story:${s.id}`} />
-    </FeedCard>
+    <Post
+      i={i}
+      kind="story"
+      kindNote={`${short(s.segment[0])} → ${short(s.segment[1])}`}
+      author={s.author}
+      note={relationNote(s.author)}
+      ago={s.published}
+      to={`/stories/${s.id}`}
+      title={s.title}
+      subtitle={s.dek}
+      why={why}
+      stats={
+        <>
+          <span>{s.minutes} min read</span>
+          <span>{formatCount(s.reads)} reads</span>
+        </>
+      }
+      thumb={<SegmentArt story={s} height={120} labels={false} />}
+      saveKey={`story:${s.id}`}
+      variant="story"
+    />
   );
 }
 
-/* ── Questions: the question large, the best answer quoted, and a way to answer ── */
+/* ── Questions: the answer count as the thumbnail, the best answer in the strip ── */
 
 function TopAnswer({ a, to, more }: { a: Answer; to: string; more: number }) {
   return (
     <Link to={to} className="qa">
       <span className="qa__who">
-        <Avatar id={a.author} size={24} peek={false} />
+        <Avatar id={a.author} size={22} peek={false} />
         <strong>{people[a.author].first}</strong>
         <span className="qa__cred">{lower(a.credibilityText)}</span>
       </span>
@@ -120,125 +101,119 @@ function TopAnswer({ a, to, more }: { a: Answer; to: string; more: number }) {
   );
 }
 
+function CountThumb({ n, label }: { n: number; label: string }) {
+  return (
+    <span className="thumb-count">
+      <strong>{n}</strong>
+      <span>{label}</span>
+    </span>
+  );
+}
+
 export function QuestionPost({ q, why, i }: { q: Question; why: Why; i?: number }) {
   const top = q.answers[0];
   const c = communities[q.community];
   const to = `/questions/${q.id}`;
-  const mine = q.asker === ME;
   return (
-    <FeedCard kind="question" i={i}>
-      <div className="fc-q__head">
-        <KindLabel kind="question" note={c ? <Link to={`/c/${c.id}`}>{c.title}</Link> : undefined} />
-        <PostMore person={q.asker} />
-      </div>
-      <div className="fc-q__main">
-        <Link to={to} className="fc-q__count" aria-label={`${q.answers.length} answers`}>
-          <strong>{q.answers.length}</strong>
-          <span>{q.answers.length === 1 ? 'answer' : 'answers'}</span>
-        </Link>
-        <div className="fc-q__text">
-          <Link to={to} className="fc-q__title">
-            {q.title}
-          </Link>
-          <p className="fc-q__asker">
-            <Avatar id={q.asker} size={20} />
-            <span>
-              {mine ? 'You asked' : `Asked by ${people[q.asker].first}`}
-              {!mine && relationNote(q.asker) ? `, your ${lower(relationNote(q.asker)!)}` : ''} · {q.ago}
-            </span>
-          </p>
-        </div>
-      </div>
-      {top ? <TopAnswer a={top} to={to} more={q.answers.length - 1} /> : <p className="fc-q__body">{q.body}</p>}
-      <div className="fc-q__act">
-        <Link to={to} className="fc-q__answer">
-          {mine ? 'Read the answers' : top ? 'Add your answer' : 'Be the first to answer'}
-        </Link>
-        <span className="fc-q__follow">{q.followers} following</span>
-      </div>
-      <PostFoot why={why} saveKey={`question:${q.id}`} />
-    </FeedCard>
+    <Post
+      i={i}
+      kind="question"
+      kindNote={c ? <Link to={`/c/${c.id}`}>{c.title}</Link> : undefined}
+      author={q.asker}
+      note={q.asker === ME ? 'You asked' : relationNote(q.asker)}
+      ago={q.ago}
+      to={to}
+      title={q.title}
+      subtitle={top ? undefined : q.body}
+      extra={top ? <TopAnswer a={top} to={to} more={q.answers.length - 1} /> : undefined}
+      why={why}
+      stats={<span>{q.followers} following</span>}
+      thumb={<CountThumb n={q.answers.length} label={q.answers.length === 1 ? 'answer' : 'answers'} />}
+      thumbKind="count"
+      saveKey={`question:${q.id}`}
+    />
   );
 }
 
-/* ── Community: a live conversation, led by the community, with a place to reply ── */
+/* ── Community: the members as the thumbnail, the latest reply in the strip ── */
+
+function MosaicThumb({ ids, live }: { ids: string[]; live: number }) {
+  return (
+    <span className="thumb-mosaic">
+      <span className="thumb-mosaic__faces">
+        {ids.slice(0, 4).map((m) => (
+          <img key={m} src={people[m].photo} alt="" loading="lazy" />
+        ))}
+      </span>
+      <span className="thumb-mosaic__live">
+        <i aria-hidden="true" />
+        {live} here now
+      </span>
+    </span>
+  );
+}
 
 export function ThreadPost({ t, why, i }: { t: Thread; why: Why; i?: number }) {
   const c = communities[t.community];
+  const last = t.replies[t.replies.length - 1];
+  const repliers = [...new Set(t.replies.map((r) => r.author))];
   const to = `/c/${c.id}#${t.id}`;
-  const recent = t.replies.slice(-2);
-  const faces = c.memberIds.filter((m) => m !== ME).slice(0, 4);
   return (
-    <FeedCard kind="community" i={i}>
-      <div className="fc-t__head">
-        <Link to={`/c/${c.id}`} className="fc-t__community">
-          <span className="fc-t__mosaic" aria-hidden="true">
-            {faces.map((m) => (
-              <img key={m} src={people[m].photo} alt="" loading="lazy" />
-            ))}
-          </span>
-          <span className="fc-t__ctext">
-            <strong>{c.title}</strong>
-            <span>
-              <span className="fc-t__live" aria-hidden="true" />
-              {c.activeNow} here now · {formatCount(c.members)} members
+    <Post
+      i={i}
+      kind="community"
+      kindNote={<Link to={`/c/${c.id}`}>{c.title}</Link>}
+      author={t.author}
+      note={`at ${short(current(people[t.author]).wp)}`}
+      ago={t.pinned ? `${t.ago} · Pinned` : t.ago}
+      to={to}
+      title={t.title}
+      subtitle={t.body}
+      extra={
+        last ? (
+          <Link to={to} className="thread-peek">
+            <AvatarStack ids={repliers} size={22} max={3} />
+            <span className="thread-peek__bubble">
+              <strong>{people[last.author].first}</strong> {last.body}
             </span>
-          </span>
-        </Link>
-        <PostMore person={t.author} />
-      </div>
-      <p className="fc-t__by">
-        <Avatar id={t.author} size={22} />
-        <PersonName id={t.author} className="fc-t__author" />
-        <span>
-          at {short(current(people[t.author]).wp)} · {t.pinned ? `${t.ago} · Pinned` : t.ago}
-        </span>
-      </p>
-      <Link to={to} className="fc-t__link">
-        <h2 className="fc-t__title">{t.title}</h2>
-        <p className="fc-t__body">{t.body}</p>
-      </Link>
-      {recent.length > 0 && (
-        <Link to={to} className="fc-t__chat" aria-label={`${t.replyCount} replies`}>
-          {recent.map((r, j) => (
-            <span key={j} className="fc-t__msg">
-              <Avatar id={r.author} size={24} peek={false} />
-              <span className="fc-t__bubble">
-                <strong>{people[r.author].first}</strong> {r.body}
-              </span>
-            </span>
-          ))}
-          <span className="fc-t__more">
-            {t.replyCount} replies
-            <IconChevronRight size={13} strokeWidth={2.4} />
-          </span>
-        </Link>
-      )}
-      <Link to={to} className="fc-t__reply">
-        <img src={me.photo} alt="" />
-        <span>Reply in {c.title}…</span>
-      </Link>
-      <PostFoot why={why} saveKey={`thread:${t.id}`} />
-    </FeedCard>
+          </Link>
+        ) : undefined
+      }
+      why={why}
+      stats={<span>{t.replyCount} replies</span>}
+      thumb={<MosaicThumb ids={c.memberIds.filter((m) => m !== ME)} live={c.activeNow} />}
+      thumbKind="mosaic"
+      saveKey={`thread:${t.id}`}
+    />
   );
 }
 
-/* ── Path Guides: a creator card — their Path on navy, their standing, their prices ── */
+/* ── Path Guides: their photo with their rating as the thumbnail, their prices in the strip ── */
 
-function BandPath({ id, move }: { id: string; move: [string, string] }) {
-  const steps = compactSteps(people[id].path);
-  const n = steps.length;
-  const x = (k: number) => 24 + (k * (312 - 48)) / Math.max(1, n - 1);
-  const a = steps.findIndex((st) => st.wp === move[0]);
-  const b = steps.findIndex((st) => st.wp === move[1]);
+function PortraitThumb({ id, badge }: { id: string; badge: ReactNode }) {
   return (
-    <svg className="fc-g__path" viewBox="0 0 312 40" preserveAspectRatio="xMaxYMid meet" aria-hidden="true">
-      <line x1={x(0)} y1="20" x2={x(n - 1)} y2="20" stroke="rgba(255,247,237,0.3)" strokeWidth="2" strokeLinecap="round" />
-      {a >= 0 && b > a && <line x1={x(a)} y1="20" x2={x(b)} y2="20" stroke="#8fa8ff" strokeWidth="4" strokeLinecap="round" />}
-      {steps.map((st, k) => (
-        <circle key={`${st.wp}-${k}`} cx={x(k)} cy="20" r={k === a || k === b ? 5.5 : 4} fill={k === b ? '#0f172a' : k === a ? '#8fa8ff' : '#fff7ed'} stroke={k === b ? '#8fa8ff' : 'none'} strokeWidth="2.5" />
+    <span className="thumb-portrait" data-portrait={id}>
+      <img src={people[id].photo} alt="" loading="lazy" />
+      <span className="thumb-portrait__badge">{badge}</span>
+    </span>
+  );
+}
+
+function GuideStrip({ id }: { id: string }) {
+  const openBooking = useUI((s) => s.openBooking);
+  const services = servicesOf(id).slice(0, 3);
+  return (
+    <div className="guide-strip">
+      {services.map((sv) => (
+        <button key={sv.id} type="button" className={`guide-strip__svc ${sv.price === 0 ? 'is-free' : ''}`} onClick={() => openBooking(id, { service: sv.id })}>
+          <span>{sv.kind === 'office-hours' ? 'Office Hours' : serviceKinds[sv.kind].label}</span>
+          <strong>{priceLabel(sv)}</strong>
+        </button>
       ))}
-    </svg>
+      <span className="guide-strip__book">
+        <BookButton id={id} label="Book" />
+      </span>
+    </div>
   );
 }
 
@@ -246,135 +221,83 @@ export function GuidePost({ id, move, why, i = 0 }: { id: string; move?: [string
   const g = people[id];
   const guide = g.guide;
   const spots = useOpenSpots(id);
-  const openBooking = useUI((s) => s.openBooking);
   const econ = economyOf(id);
   if (!guide) return null;
   const [from, to] = move ?? guide.transitions[0];
   const step = compactSteps(g.path).find((s) => s.wp === to);
-  const top = topStanding(id);
-  const services = servicesOf(id).slice(0, 4);
   return (
-    <FeedCard kind="guide" i={i} className="post--guide">
-      <div className="fc-g__band immersive">
-        <span className="fc-g__badge">Path Guide</span>
-        {econ && (
-          <span className="fc-g__rating">
-            <IconStar size={13} filled /> {econ.rating.toFixed(1)} <span>({econ.reviewCount})</span>
-          </span>
-        )}
-        <BandPath id={id} move={[from, to]} />
-      </div>
-      <div className="fguide">
-        <div className="fc-g__who">
-          <Link to={`/p/${id}`} className="fc-g__photo" data-portrait={id} tabIndex={-1} aria-hidden="true">
-            <img src={g.photo} alt="" loading="lazy" />
-          </Link>
-          <div className="fc-g__id">
-            <Link to={`/p/${id}`} className="fguide__name">
-              {g.name}
-            </Link>
-            <p className="fguide__headline">{g.headline}</p>
-          </div>
-          <PostMore person={id} />
-        </div>
-        {top && <p className="fc-g__top">{top}</p>}
-        <p className="fguide__move">
-          <MoveGlyph />
-          <span>
-            Made the move <strong>{short(from)} → {short(to)}</strong>
-            {step?.start ? ` in ${step.start}` : ''} · helped {guide.helped}
-          </span>
-        </p>
-        <ul className="fc-g__svcs">
-          {services.map((sv) => {
-            const Icon = serviceKinds[sv.kind].icon;
-            return (
-              <li key={sv.id}>
-                <button type="button" className={`fc-g__svc ${sv.price === 0 ? 'is-free' : ''}`} onClick={() => openBooking(id, { service: sv.id })}>
-                  <Icon size={15} strokeWidth={1.9} />
-                  <span>{sv.kind === 'office-hours' ? 'Office Hours' : serviceKinds[sv.kind].label}</span>
-                  <strong>{priceLabel(sv)}</strong>
-                </button>
-              </li>
-            );
-          })}
-        </ul>
-        <div className="fguide__hours">
-          <span className="fguide__slot">
-            <IconCalendar size={15} />
-            <span>
-              {spots.when} · <strong>{spots.open ? `${spots.open} of ${spots.total} free spots open` : 'Full this time'}</strong>
-            </span>
-          </span>
-          <span className="fguide__cta">
-            <RequestButton id={id} segment={[from, to]} label="Ask" variant="gray" />
-            <BookButton id={id} label="Book" />
-          </span>
-        </div>
-        <PostFoot why={why} saveKey={`person:${id}`} />
-      </div>
-    </FeedCard>
+    <Post
+      i={i}
+      kind="guide"
+      kindNote={topStanding(id) ?? (spots.open > 0 ? 'Office Hours this week' : undefined)}
+      author={id}
+      note={g.headline}
+      to={`/p/${id}`}
+      title={`Made the move ${short(from)} → ${short(to)}${step?.start ? ` in ${step.start}` : ''}`}
+      subtitle={`Helps with ${lower(guide.helpsWith[0])}, and ${lower(guide.helpsWith[1] ?? guide.helpsWith[0])}.`}
+      extra={<GuideStrip id={id} />}
+      why={why}
+      stats={<span>Helped {guide.helped}</span>}
+      thumb={
+        <PortraitThumb
+          id={id}
+          badge={
+            econ ? (
+              <>
+                <IconStar size={11} filled /> {econ.rating.toFixed(1)}
+              </>
+            ) : (
+              'Guide'
+            )
+          }
+        />
+      }
+      thumbKind="portrait"
+      saveKey={`person:${id}`}
+    />
   );
 }
 
-function MoveGlyph() {
-  return (
-    <svg width="30" height="10" viewBox="0 0 30 10" aria-hidden="true" className="move-glyph">
-      <path d="M8 5h14" stroke="var(--tint)" strokeWidth="2" strokeLinecap="round" strokeDasharray="2.5 3.5" />
-      <circle cx="4.5" cy="5" r="3.2" fill="var(--ink)" />
-      <circle cx="25.5" cy="5" r="3" fill="none" stroke="var(--tint)" strokeWidth="1.8" />
-    </svg>
-  );
-}
-
-/* ── Decision Points: a poll of the roads, with who took each one ── */
+/* ── Decision Points: the fork as the thumbnail, the roads in the strip ── */
 
 export function DecisionPost({ d, why, i }: { d: Decision; why: Why; i?: number }) {
   const mine = useApp((s) => s.weighIns[d.id]);
   const to = `/decisions/${d.id}`;
-  const counts = d.options.map((o) => o.chose.length + d.weighIns.filter((w) => w.option === o.id).length + (mine?.option === o.id ? 1 : 0));
-  const total = Math.max(1, counts.reduce((x, y) => x + y, 0));
   return (
-    <FeedCard kind="decision" i={i}>
-      <PostByline author={d.owner} note={d.owner === ME ? 'Your decision' : relationNote(d.owner)} ago={d.ago} />
-      <KindLabel kind="decision" note={d.status === 'open' ? `Deciding now at ${short(d.at)}` : `Decided at ${short(d.at)}`} />
-      <Link to={to} className="fc-d__link">
-        <h2 className="fc-d__title">{d.title}</h2>
-        <p className="fc-d__ctx">{d.context}</p>
-      </Link>
-      <Link to={to} className="fc-d__poll" aria-label="See where each road led">
-        {d.options.map((o, k) => {
-          const faces = [...o.chose.map((c) => c.person), ...d.weighIns.filter((w) => w.option === o.id).map((w) => w.person)];
-          const share = counts[k] / total;
-          return (
-            <span key={o.id} className={`fc-d__opt ${mine?.option === o.id ? 'is-mine' : ''} ${d.chosen === o.id ? 'is-chosen' : ''}`}>
-              <motion.span className="fc-d__fill" initial={{ scaleX: 0 }} whileInView={{ scaleX: share }} viewport={{ once: true }} transition={{ duration: 0.8, delay: 0.15 + k * 0.1, ease: [0.16, 1, 0.3, 1] }} />
-              <span className="fc-d__label">
-                <span className="fc-d__letter">{String.fromCharCode(65 + k)}</span>
-                {o.label}
+    <Post
+      i={i}
+      kind="decision"
+      kindNote={d.status === 'open' ? `Deciding now at ${short(d.at)}` : `Decided at ${short(d.at)}`}
+      author={d.owner}
+      note={d.owner === ME ? 'Your decision' : relationNote(d.owner)}
+      ago={d.ago}
+      to={to}
+      title={d.title}
+      subtitle={d.context}
+      extra={
+        <Link to={to} className="roads">
+          {d.options.map((o, k) => {
+            const n = o.chose.length + d.weighIns.filter((w) => w.option === o.id).length + (mine?.option === o.id ? 1 : 0);
+            return (
+              <span key={o.id} className={`roads__opt ${mine?.option === o.id ? 'is-mine' : ''}`}>
+                <span className="roads__letter">{String.fromCharCode(65 + k)}</span>
+                <span className="roads__label">{o.label}</span>
+                <span className="roads__n">{n}</span>
               </span>
-              {faces.length > 0 && <AvatarStack ids={faces} size={20} max={3} />}
-              <span className="fc-d__n">{counts[k]}</span>
-            </span>
-          );
-        })}
-      </Link>
-      <div className="fc-d__act">
-        <span className="fc-d__note">
-          {d.options.reduce((n, o) => n + o.chose.length, 0)} took one of these roads · {d.weighIns.length} weighed in
-        </span>
-        {d.status === 'open' && d.owner !== ME && (
-          <Link to={to} className={`fweigh__cta ${mine ? 'is-done' : ''}`}>
-            {mine ? 'You weighed in' : 'Weigh in'}
-          </Link>
-        )}
-      </div>
-      <PostFoot why={why} saveKey={`decision:${d.id}`} />
-    </FeedCard>
+            );
+          })}
+          {d.status === 'open' && d.owner !== ME && <span className={`roads__cta ${mine ? 'is-done' : ''}`}>{mine ? 'You weighed in' : 'Weigh in'}</span>}
+        </Link>
+      }
+      why={why}
+      stats={<span>{d.weighIns.length} weighed in</span>}
+      thumb={<DecisionFork d={d} />}
+      saveKey={`decision:${d.id}`}
+    />
   );
 }
 
-/* ── Routes: a map — the line, and how many walked it ── */
+/* ── Routes: the route line in the strip, with Add to my Path ── */
 
 function AddRoute({ id, dest }: { id: string; dest: string }) {
   const added = useApp((s) => !!s.addedRoutes[id]);
@@ -384,7 +307,7 @@ function AddRoute({ id, dest }: { id: string; dest: string }) {
   if (primary.routes?.some((r) => r.id === id)) return <span className="route-post__on">On your Path</span>;
   return (
     <Button
-      variant={added ? 'gray' : 'filled'}
+      variant={added ? 'gray' : 'tinted'}
       size="small"
       icon={added ? <IconCheck size={15} /> : <IconPlus size={15} />}
       onClick={(e) => {
@@ -401,82 +324,65 @@ export function RoutePost({ dest, route, why, i }: { dest: string; route: Destin
   const author = route.guides[0] ?? route.travellers[0] ?? route.onRoute[0];
   const to = `/discover?to=${dest}&route=${route.id}`;
   return (
-    <FeedCard kind="route" i={i}>
-      <div className="fc-r__head">
-        <KindLabel kind="route" note={`To ${wp(dest).mid ?? wp(dest).label}`} />
-        <PostMore person={author} />
-      </div>
-      <Link to={to} className="fc-r__link">
-        <h2 className="fc-r__title">
-          {route.label} to {wp(dest).mid ?? wp(dest).label}
-        </h2>
-      </Link>
-      <dl className="fc-r__stats">
-        <div>
-          <dt>people took it</dt>
-          <dd>{formatCount(route.people)}</dd>
+    <Post
+      i={i}
+      kind="route"
+      kindNote={`To ${wp(dest).mid ?? wp(dest).label}`}
+      author={author}
+      note={route.onRoute.includes(author) ? 'on this route now' : 'took this route'}
+      to={to}
+      title={`${route.label} to ${wp(dest).mid ?? wp(dest).label}`}
+      subtitle={route.note}
+      extra={
+        <div className="route-post">
+          <RouteLine route={route} dest={dest} />
+          <div className="route-post__foot">
+            <span>
+              {formatCount(route.people)} people · about {route.medianYears} {route.medianYears === 1 ? 'year' : 'years'}
+            </span>
+            <AddRoute id={route.id} dest={dest} />
+          </div>
         </div>
-        <div>
-          <dt>{route.medianYears === 1 ? 'year, typically' : 'years, typically'}</dt>
-          <dd>{route.medianYears}</dd>
-        </div>
-        <div>
-          <dt>on it right now</dt>
-          <dd>{route.onRoute.length}</dd>
-        </div>
-      </dl>
-      <div className="route-post">
-        <RouteLine route={route} dest={dest} />
-      </div>
-      {route.note && <p className="fc-r__note">{route.note}</p>}
-      <div className="fc-r__act">
-        <span className="fc-r__who">
-          <AvatarStack ids={[...route.guides, ...route.travellers].slice(0, 4)} size={22} max={4} />
-          {people[author].first} {route.onRoute.includes(author) ? 'is on this route now' : 'took this route'}
-        </span>
-        <AddRoute id={route.id} dest={dest} />
-      </div>
-      <PostFoot why={why} saveKey={`route:${dest}/${route.id}`} />
-    </FeedCard>
+      }
+      why={why}
+      thumb={<CountThumb n={route.people} label="took it" />}
+      thumbKind="count"
+      saveKey={`route:${dest}/${route.id}`}
+    />
   );
 }
 
-/* ── Milestones: someone arriving, celebrated ── */
+/* ── Milestones: their photo with an arrival check, their words, and Congratulate ── */
 
 export function MilestonePost({ id, reached, words, ago, why, i, coach }: { id: string; reached: string; words: string; ago?: string; why: Why; i?: number; coach?: boolean }) {
   const p = people[id];
   const convo = conversationList.find((c) => c.with === id);
   const steps = compactSteps(p.path);
   const from = steps[steps.findIndex((st) => st.wp === reached) - 1];
-  const note = relationNote(id);
   return (
-    <FeedCard kind="milestone" i={i}>
-      <div className="fc-m__corner">
-        <PostMore person={id} />
-      </div>
-      <div className="fc-m">
-        <Link to={`/p/${id}`} className="fc-m__photo" data-portrait={id} tabIndex={-1} aria-hidden="true">
-          <img src={p.photo} alt="" loading="lazy" />
-          <span className="fc-m__arrived" aria-hidden="true">
-            <IconCheck size={14} strokeWidth={3} />
-          </span>
-        </Link>
-        <KindLabel kind="milestone" note={from ? `${short(from.wp)} → ${short(reached)}` : undefined} />
-        <Link to={`/p/${id}`} className="fc-m__title">
-          {p.first} reached {wp(reached).mid ?? wp(reached).label}
-        </Link>
-        <p className="fc-m__meta">
-          {note ? `${note} · ` : ''}
-          {ago} ago
-        </p>
-        <p className="fc-m__words">“{words}”</p>
-        <PathHint id={id} coach={coach ? 'path-hint' : undefined} />
-        <Link to={convo ? `/messages/${convo.id}` : `/messages?to=${id}`} className="fc-m__cta">
-          Congratulate {p.first}
-        </Link>
-      </div>
-      <PostFoot why={why} saveKey={`person:${id}`} />
-    </FeedCard>
+    <Post
+      i={i}
+      kind="milestone"
+      kindNote={from ? `${short(from.wp)} → ${short(reached)}` : undefined}
+      author={id}
+      note={relationNote(id)}
+      ago={ago}
+      to={`/p/${id}`}
+      title={`${p.first} reached ${wp(reached).mid ?? wp(reached).label}`}
+      subtitle={<span className="milestone-words">“{words}”</span>}
+      extra={
+        <div className="milestone-foot">
+          <PathHint id={id} coach={coach ? 'path-hint' : undefined} />
+          <Link to={convo ? `/messages/${convo.id}` : `/messages?to=${id}`} className="milestone-foot__cta">
+            Congratulate {p.first}
+          </Link>
+        </div>
+      }
+      why={why}
+      thumb={<PortraitThumb id={id} badge={<IconCheck size={11} strokeWidth={3} />} />}
+      thumbKind="portrait"
+      saveKey={`person:${id}`}
+    />
   );
 }
 
