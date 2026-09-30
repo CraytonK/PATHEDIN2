@@ -93,6 +93,14 @@ export interface GuideEconomy {
   paid: { days: number[]; hours: number[]; label: string };
 }
 
+/** The PathedIn-made backgrounds anyone can put behind their photo. */
+export type BannerPreset = 'silk' | 'lines' | 'paper' | 'dawn';
+
+/** The background behind someone's photo: one of PathedIn's, or their own photo, framed by a focal point and zoom. */
+export type Banner =
+  | { kind: 'preset'; id: BannerPreset }
+  | { kind: 'photo'; src: string; w: number; h: number; x: number; y: number; zoom: number };
+
 export interface Person {
   id: string;
   name: string;
@@ -109,6 +117,8 @@ export interface Person {
   communities: string[];
   why?: string; // hand-written reason this person matters to the viewer
   mutuals?: number;
+  /** The background they chose; people who haven't chosen one show none. */
+  banner?: BannerPreset;
 }
 
 export interface Community {

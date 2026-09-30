@@ -313,6 +313,23 @@ export const IconMilestone = (p: P) => (
   </Svg>
 );
 
+/** Edit: a pencil. */
+export const IconPencil = (p: P) => (
+  <Svg {...p}>
+    <path d="M15.8 4.7a1.9 1.9 0 0 1 2.7 0l.8.8a1.9 1.9 0 0 1 0 2.7L9 18.5l-4 1 1-4z" />
+    <path d="m14 6.5 3.5 3.5" />
+  </Svg>
+);
+
+/** Upload: an arrow rising out of a tray. */
+export const IconUpload = (p: P) => (
+  <Svg {...p}>
+    <path d="M12 15V4.5" />
+    <path d="m7.5 9 4.5-4.5L16.5 9" />
+    <path d="M4.5 14.5v3A2 2 0 0 0 6.5 19.5h11a2 2 0 0 0 2-2v-3" />
+  </Svg>
+);
+
 /** A photo: a frame with a hill and the sun. */
 export const IconImage = (p: P) => (
   <Svg {...p}>

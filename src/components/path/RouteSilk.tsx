@@ -8,23 +8,22 @@ import './silk.css';
   in once when the panel arrives, and then hold still.
 */
 
+/** One route of the silk: the i-th of n curves, all flowing toward the same destination on the right. */
+export function silkPath(i: number, n: number) {
+  const t = i / (n - 1);
+  const y0 = 90 + t * 620;
+  const c1x = 240 + t * 120;
+  const c1y = y0 - 70 - t * 90;
+  const c2x = 640 - t * 160;
+  const c2y = 150 + t * 250;
+  const y3 = 120 + t * 90;
+  return `M -60 ${y0.toFixed(1)} C ${c1x.toFixed(1)} ${c1y.toFixed(1)}, ${c2x.toFixed(1)} ${c2y.toFixed(1)}, 1060 ${y3.toFixed(1)}`;
+}
+
 export function RouteSilk({ lines = 26, className = '', delay = 0 }: { lines?: number; className?: string; delay?: number }) {
   const reduce = useReducedMotion();
   const id = useId().replace(/:/g, '');
-  const paths = useMemo(
-    () =>
-      Array.from({ length: lines }, (_, i) => {
-        const t = i / (lines - 1);
-        const y0 = 90 + t * 620;
-        const c1x = 240 + t * 120;
-        const c1y = y0 - 70 - t * 90;
-        const c2x = 640 - t * 160;
-        const c2y = 150 + t * 250;
-        const y3 = 120 + t * 90;
-        return `M -60 ${y0.toFixed(1)} C ${c1x.toFixed(1)} ${c1y.toFixed(1)}, ${c2x.toFixed(1)} ${c2y.toFixed(1)}, 1060 ${y3.toFixed(1)}`;
-      }),
-    [lines],
-  );
+  const paths = useMemo(() => Array.from({ length: lines }, (_, i) => silkPath(i, lines)), [lines]);
   const yours = Math.round(lines * 0.62);
   return (
     <svg className={`silk ${className}`} viewBox="0 0 1000 700" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false">

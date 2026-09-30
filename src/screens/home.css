@@ -69,7 +69,8 @@
 .home .feed .kind-intro {
   padding: 4px 4px 16px;
 }
-.home__me img {
+/* The phone's avatar link, not the column that holds your card. */
+.home__me > img {
   width: 36px;
   height: 36px;
   border-radius: 50%;
@@ -490,8 +491,30 @@
   text-align: center;
 }
 .me-card__cover {
+  position: relative;
   height: 92px;
   border-radius: var(--r-card) var(--r-card) 0 0;
+  overflow: hidden;
+}
+/* The pencil waits until you're over the card, then offers to change the banner. */
+.me-card__edit {
+  top: 8px;
+  right: 8px;
+  width: 30px;
+  height: 30px;
+  opacity: 0;
+  transition:
+    opacity var(--dur-2) var(--ease-out),
+    scale 160ms var(--ease-out);
+}
+.me-card:hover .me-card__edit,
+.me-card__edit:focus-visible {
+  opacity: 1;
+}
+@media (hover: none) {
+  .me-card__edit {
+    opacity: 1;
+  }
 }
 .me-card__who {
   display: flex;

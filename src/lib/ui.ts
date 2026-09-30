@@ -14,6 +14,8 @@ interface UIState {
   /** Booking a Guide's office hours; `booking` reopens one you already hold. */
   book: { guide: string; booking?: string; topic?: string; service?: string } | null;
   toast: { text: string; id: number } | null;
+  /** Editing your profile; 'banner' opens it at the banner. */
+  editProfile: 'intro' | 'banner' | null;
   openPeek: (p: PeekState) => void;
   closePeek: () => void;
   openCompare: (id: string) => void;
@@ -25,6 +27,8 @@ interface UIState {
   openBooking: (guide: string, opts?: { booking?: string; topic?: string; service?: string }) => void;
   closeBooking: () => void;
   showToast: (text: string) => void;
+  openEditProfile: (at?: 'intro' | 'banner') => void;
+  closeEditProfile: () => void;
 }
 
 let toastTimer: ReturnType<typeof setTimeout> | undefined;
@@ -36,6 +40,7 @@ export const useUI = create<UIState>()((set) => ({
   search: false,
   book: null,
   toast: null,
+  editProfile: null,
   openPeek: (peek) => set({ peek }),
   closePeek: () => set({ peek: null }),
   openCompare: (compare) => set({ compare, peek: null }),
@@ -45,6 +50,8 @@ export const useUI = create<UIState>()((set) => ({
   setSearch: (search) => set({ search }),
   openBooking: (guide, opts) => set({ book: { guide, ...opts }, peek: null, search: false, request: null }),
   closeBooking: () => set({ book: null }),
+  openEditProfile: (at = 'intro') => set({ editProfile: at, peek: null, search: false }),
+  closeEditProfile: () => set({ editProfile: null }),
   showToast: (text) => {
     clearTimeout(toastTimer);
     set({ toast: { text, id: Date.now() } });

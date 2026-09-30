@@ -8,8 +8,9 @@ import { PathCover } from '../components/path/PathCover';
 import { ConnectButton, CredibilityLabel, DecisionItem, RequestButton, StoryItem } from '../components/content';
 import { RailFooter, RailPills, RailSection } from '../components/Rail';
 import { Button, GroupedList, PathChips, RelationTag, TextTabs } from '../components/ui';
-import { IconAlign, IconBell, IconBookmark, IconMoon, IconPeople, IconPin, IconSend, IconSparkle, IconSun, IconUser } from '../components/icons';
+import { IconAlign, IconBell, IconBookmark, IconMoon, IconPencil, IconPeople, IconPin, IconSend, IconSparkle, IconSun, IconUser } from '../components/icons';
 import { GuideRailCard, GuideTab } from '../components/GuideProfile';
+import { BannerArt, useBanner } from '../components/Banner';
 import { useGuide } from '../lib/guides';
 import { people, ME } from '../data/people';
 import { wp } from '../data/waypoints';
@@ -68,6 +69,10 @@ export function Profile() {
   const [tab, setTab] = useState<'guide' | 'path' | 'stories' | 'answers' | 'decisions' | null>(null);
   const guide = useGuide(id);
   const myGuide = useApp((s) => s.myGuide);
+  const openEditProfile = useUI((s) => s.openEditProfile);
+  // Your edits are laid over your record; subscribing re-renders this page when you save them.
+  useApp((s) => s.profile);
+  const banner = useBanner(id);
   if (!p) return <NotFound />;
   const self = id === ME;
   const rel = relationTo(id);
@@ -84,7 +89,7 @@ export function Profile() {
       <Button variant="filled" size="medium" onClick={() => navigate('/path')}>
         Open My Path
       </Button>
-      <Button variant="outline" size="medium">
+      <Button variant="outline" size="medium" onClick={() => openEditProfile()}>
         Edit profile
       </Button>
       <Button variant="tinted" size="medium" icon={<IconSparkle size={16} />} onClick={() => navigate('/guide/setup')}>
@@ -114,9 +119,20 @@ export function Profile() {
 
   /* Medium's profile column: photo, name, a short bio, the buttons. */
   const identity = (
-    <motion.section className="profile__card" initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={springs.smooth}>
+    <motion.section className={`profile__card ${banner ? 'has-banner' : ''}`} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={springs.smooth}>
+      {banner && (
+        <div className="profile__banner">
+          <BannerArt banner={banner} />
+          {self && (
+            <button type="button" className="banner-edit" aria-label="Edit your banner" data-tip="Edit banner" data-tip-pos="below" onClick={() => openEditProfile('banner')}>
+              <IconPencil size={16} strokeWidth={1.9} />
+            </button>
+          )}
+        </div>
+      )}
       <img className="profile__photo" src={p.photo} alt={p.name} />
       <p className="profile__card-name">{p.name}</p>
+      <p className="profile__headline">{p.headline}</p>
       {!self && rel.kind !== 'other' && <RelationTag kind={rel.kind} label={rel.label} className="profile__rel" />}
       <p className="profile__meta">
         {p.pronouns && <span>{p.pronouns}</span>}

@@ -8,6 +8,7 @@ import { CompareLayer } from './components/path/Compare';
 import { RequestLayer } from './components/RequestComposer';
 import { CommandPalette } from './components/CommandPalette';
 import { BookingLayer } from './components/Booking';
+import { EditProfileLayer } from './components/EditProfile';
 import { FlightLayer } from './components/FlightLayer';
 import { installProfileFlights } from './lib/flight';
 import { installPointerDetails } from './lib/pointer';
@@ -184,6 +185,7 @@ function Shell() {
         <CompareLayer />
         <RequestLayer />
         <BookingLayer />
+        <EditProfileLayer />
         <CommandPalette />
         <ToastLayer />
         <FlightLayer />

@@ -1,0 +1,63 @@
+/* ── Banners: the background behind someone's photo ─────────────────
+   A banner fills whatever frame holds it (the profile card, the Home card, the editor) and never carries
+   words, so nothing needs to be legible across it. */
+.banner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  isolation: isolate;
+}
+.banner__art {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+.banner--photo {
+  background: var(--canvas);
+}
+.banner--photo img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+.banner--paper {
+  background: var(--canvas);
+  color: var(--ink);
+}
+.banner--dawn {
+  background:
+    radial-gradient(55% 130% at 85% 50%, #2446c4 0%, rgba(36, 70, 196, 0) 70%),
+    linear-gradient(90deg, #0a1020, #111b3c);
+}
+
+/* The pencil on your own banner: a solid cream disc, so it reads on any photo. */
+.banner-edit {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: #fff7ed;
+  color: #0f172a;
+  box-shadow: 0 4px 12px -4px rgba(10, 16, 32, 0.45);
+  transition:
+    scale 160ms var(--ease-out),
+    background-color var(--dur-2) var(--ease-out);
+}
+.banner-edit:hover {
+  background: #ffffff;
+}
+.banner-edit:active {
+  scale: 0.94;
+}

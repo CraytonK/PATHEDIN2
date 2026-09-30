@@ -1,8 +1,8 @@
 import { create } from 'zustand';
 import { persist, createJSONStorage, type StateStorage } from 'zustand/middleware';
 import { requestList, conversationList } from '../data/social';
-import type { Message, PathRequest, ServiceKind } from '../data/types';
-import { ME } from '../data/people';
+import type { Banner, Message, PathRequest, Person, ServiceKind } from '../data/types';
+import { ME, people } from '../data/people';
 
 export type ConnectionState = 'pending' | 'connected';
 export interface MyResponse {
@@ -12,6 +12,25 @@ export interface MyResponse {
   at: number;
 }
 export type Theme = 'system' | 'light' | 'dark';
+/** What you've changed about how you introduce yourself. */
+export type ProfileEdits = Partial<Pick<Person, 'name' | 'headline' | 'pronouns' | 'location' | 'bio'>>;
+
+/*
+  Your record lives with everyone else's in the data, so your edits are laid over it: once when the app
+  loads what this device saved, and again each time you save. Clearing a field returns it to what it was.
+*/
+const yourOriginal = (({ name, first, headline, pronouns, location, bio }) => ({ name, first, headline, pronouns, location, bio }))(people[ME]);
+export function applyProfile(edits: ProfileEdits) {
+  const you = people[ME];
+  Object.assign(you, yourOriginal);
+  for (const [k, v] of Object.entries(edits) as [keyof ProfileEdits, string | undefined][]) {
+    if (v === undefined) continue;
+    const t = v.trim();
+    // Name, headline and location are needed everywhere you appear; pronouns and About can be left empty.
+    if (t || k === 'pronouns' || k === 'bio') you[k] = t;
+  }
+  you.first = you.name.split(/\s+/)[0] || yourOriginal.first;
+}
 /** A spot in a Path Guide's office hours. */
 export interface Booking {
   id: string;
@@ -70,6 +89,10 @@ interface AppState {
   returning: boolean;
   bookings: Booking[];
   myGuide: MyGuide | null;
+  /** Your name, headline, pronouns, location and About, as you've edited them. */
+  profile: ProfileEdits;
+  /** The background behind your photo; none chosen shows PathedIn's route silk. */
+  banner: Banner | null;
 
   connect: (id: string) => void;
   toggleFollow: (id: string) => void;
@@ -94,6 +117,7 @@ interface AppState {
   cancelBooking: (id: string) => void;
   saveGuide: (g: MyGuide) => void;
   setGuideLive: (live: boolean) => void;
+  saveProfile: (profile: ProfileEdits, banner: Banner | null) => void;
 }
 
 /** localStorage can throw (private mode, blocked storage). Never let that break the app. */
@@ -128,6 +152,8 @@ export const useApp = create<AppState>()(
     (set) => ({
       bookings: [],
       myGuide: null,
+      profile: {},
+      banner: null,
       connections: {
         sarah: 'connected',
         daniel: 'connected',
@@ -212,6 +238,10 @@ export const useApp = create<AppState>()(
       cancelBooking: (id) => set((s) => ({ bookings: s.bookings.filter((b) => b.id !== id) })),
       saveGuide: (myGuide) => set({ myGuide }),
       setGuideLive: (live) => set((s) => (s.myGuide ? { myGuide: { ...s.myGuide, live } } : {})),
+      saveProfile: (profile, banner) => {
+        applyProfile(profile);
+        set({ profile, banner });
+      },
     }),
     {
       name: 'pathedin:v1',
@@ -243,7 +273,12 @@ export const useApp = create<AppState>()(
         returning: s.returning,
         bookings: s.bookings,
         myGuide: s.myGuide,
+        profile: s.profile,
+        banner: s.banner,
       }),
+      onRehydrateStorage: () => (state) => {
+        if (state?.profile) applyProfile(state.profile);
+      },
     },
   ),
 );

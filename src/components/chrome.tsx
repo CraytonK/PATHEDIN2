@@ -138,6 +138,8 @@ function AccountMenu() {
   const theme = useApp((s) => s.theme);
   const signOut = useApp((s) => s.signOut);
   const myGuide = useApp((s) => s.myGuide);
+  // Your name in the chip follows your edits.
+  useApp((s) => s.profile);
   const unread = useUnread();
   const ref = useRef<HTMLDivElement>(null);
   useEffect(() => {

@@ -1,0 +1,336 @@
+/* ── Edit profile: the banner first, then how you introduce yourself ─────── */
+.ep {
+  display: flex;
+  flex-direction: column;
+}
+.ep__section {
+  padding: 22px 24px 4px;
+}
+.ep__section + .ep__section {
+  margin-top: 18px;
+  border-top: 1px solid var(--separator);
+}
+.ep__h {
+  font-size: 19px;
+  line-height: 25px;
+  font-weight: 500;
+  letter-spacing: -0.018em;
+}
+.ep__sub {
+  margin-top: 4px;
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--label-2);
+}
+
+/* The banner as it will look: 3:1, like the cards it sits on, with your photo over its corner. */
+.ep__preview {
+  position: relative;
+  margin-top: 16px;
+  padding-bottom: 34px;
+}
+.ep__frame {
+  aspect-ratio: 3 / 1;
+  border-radius: var(--r-card);
+  overflow: hidden;
+  box-shadow: inset 0 0 0 1px var(--separator);
+  touch-action: none;
+}
+.ep__frame.is-photo {
+  cursor: grab;
+}
+.ep__frame.is-dragging {
+  cursor: grabbing;
+}
+.ep__frame:focus-visible {
+  outline: 2px solid var(--tint);
+  outline-offset: 3px;
+}
+.ep__you {
+  position: absolute;
+  left: 22px;
+  bottom: 0;
+  width: 76px;
+  height: 76px;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: 0 0 0 4px var(--bg-elevated);
+  pointer-events: none;
+}
+
+.ep__banner-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px 18px;
+  margin-top: 14px;
+}
+/* The upload control is a label around the file input, styled as an outline button. */
+.ep__upload {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 40px;
+  padding: 0 16px 0 14px;
+  border-radius: var(--r-md);
+  box-shadow: inset 0 0 0 1px var(--border-strong);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--label);
+  cursor: pointer;
+  transition:
+    background-color var(--dur-2) var(--ease-out),
+    box-shadow var(--dur-2) var(--ease-out);
+}
+.ep__upload:hover {
+  background: var(--bg-hover);
+}
+.ep__upload:focus-within {
+  box-shadow:
+    inset 0 0 0 1.5px var(--tint),
+    0 0 0 4px var(--tint-softer);
+}
+.ep__upload.is-busy {
+  color: var(--label-2);
+  cursor: progress;
+}
+.ep__zoom {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  flex: 1;
+  min-width: 180px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--label-2);
+}
+.ep__zoom input {
+  flex: 1;
+  appearance: none;
+  height: 4px;
+  border-radius: 4px;
+  background: linear-gradient(to right, var(--ink) var(--p), var(--fill) var(--p));
+  cursor: pointer;
+}
+.ep__zoom input::-webkit-slider-thumb {
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--bg-elevated);
+  box-shadow:
+    0 0 0 1px var(--border-strong),
+    0 2px 6px rgba(15, 23, 42, 0.2);
+}
+.ep__zoom input::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  border: 0;
+  border-radius: 50%;
+  background: var(--bg-elevated);
+  box-shadow:
+    0 0 0 1px var(--border-strong),
+    0 2px 6px rgba(15, 23, 42, 0.2);
+}
+.ep__zoom input:focus-visible {
+  outline: 2px solid var(--tint);
+  outline-offset: 6px;
+}
+.ep__remove {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--label-2);
+}
+.ep__remove:hover {
+  color: var(--label);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.ep__hint {
+  margin-top: 10px;
+  font-size: 13px;
+  line-height: 18px;
+  color: var(--label-2);
+}
+.ep__error {
+  margin-top: 10px;
+  font-size: 13px;
+  line-height: 18px;
+  color: var(--danger);
+}
+
+/* PathedIn's backgrounds, each a small banner with its name under it. */
+.ep__presets {
+  margin-top: 20px;
+  border: 0;
+  padding: 0;
+}
+.ep__label {
+  padding: 0;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--label-2);
+}
+.ep__swatches {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(104px, 1fr));
+  gap: 12px;
+  margin-top: 10px;
+}
+.ep__swatch {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  text-align: left;
+}
+.ep__swatch-art {
+  position: relative;
+  display: block;
+  aspect-ratio: 3 / 1;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: inset 0 0 0 1px var(--separator);
+  transition: box-shadow var(--dur-2) var(--ease-out);
+}
+.ep__swatch:hover .ep__swatch-art {
+  box-shadow: 0 0 0 1.5px var(--border-strong);
+}
+.ep__swatch.is-on .ep__swatch-art {
+  box-shadow:
+    0 0 0 2px var(--bg-elevated),
+    0 0 0 4px var(--ink);
+}
+.ep__swatch:focus-visible {
+  outline: none;
+}
+.ep__swatch:focus-visible .ep__swatch-art {
+  box-shadow:
+    0 0 0 2px var(--bg-elevated),
+    0 0 0 4px var(--tint);
+}
+.ep__swatch-check {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #fff7ed;
+  color: #0f172a;
+}
+.ep__swatch-label {
+  font-size: 13px;
+  line-height: 18px;
+  color: var(--label-2);
+}
+.ep__swatch.is-on .ep__swatch-label {
+  color: var(--label);
+  font-weight: 500;
+}
+.ep__fine {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  margin-top: 16px;
+  font-size: 12.5px;
+  line-height: 18px;
+  color: var(--label-3);
+}
+.ep__fine svg {
+  flex: none;
+  margin-top: 1px;
+}
+
+/* Intro fields, as in Become a Path Guide. */
+.ep__field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 16px;
+}
+.ep__field > span {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--label-2);
+}
+.ep__field em {
+  font-style: normal;
+  font-weight: 400;
+  color: var(--label-3);
+  font-variant-numeric: tabular-nums;
+}
+.ep__field input,
+.ep__field textarea {
+  width: 100%;
+  padding: 11px 14px;
+  border: 0;
+  border-radius: 12px;
+  background: var(--canvas);
+  box-shadow: inset 0 0 0 1px var(--separator);
+  font: inherit;
+  font-size: 15px;
+  line-height: 22px;
+  color: var(--label);
+  resize: vertical;
+  transition: box-shadow var(--dur-2) var(--ease-out);
+}
+.ep__field input::placeholder {
+  color: var(--label-3);
+}
+.ep__field input:focus,
+.ep__field textarea:focus {
+  outline: none;
+  box-shadow:
+    inset 0 0 0 1.5px var(--tint),
+    0 0 0 4px var(--tint-softer);
+}
+.ep__pair {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 0 14px;
+}
+
+.ep__foot {
+  position: sticky;
+  bottom: 0;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 24px;
+  padding: 14px 24px;
+  background: var(--bg-elevated);
+  border-top: 1px solid var(--separator);
+}
+.ep__missing {
+  margin-right: auto;
+  font-size: 13px;
+  color: var(--label-2);
+}
+
+@media (max-width: 767px) {
+  .ep__section {
+    padding: 18px 16px 4px;
+  }
+  .ep__you {
+    left: 16px;
+    width: 64px;
+    height: 64px;
+  }
+  .ep__preview {
+    padding-bottom: 28px;
+  }
+  .ep__pair {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .ep__foot {
+    padding: 12px 16px calc(12px + var(--safe-bottom));
+  }
+}

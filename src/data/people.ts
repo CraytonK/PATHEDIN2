@@ -80,6 +80,7 @@ const list: Person[] = [
     photo: photo('daniel'),
     location: 'Mississauga, ON',
     headline: 'Analytical Chemist at Brightwater CRO',
+    banner: 'silk',
     bio: 'HPLC whisperer. I went into a CRO to learn how industry actually works — ask me anything about the first eighteen months.',
     path: [
       s('bsc-chem', 'University of Toronto', 2015, 2019),
@@ -171,6 +172,7 @@ const list: Person[] = [
     photo: photo('elena'),
     location: 'Toronto, ON',
     headline: 'Scientist I, Pharmaceutical R&D at Northfield Pharmaceuticals',
+    banner: 'paper',
     bio: 'Five years of method validation at a CRO. This month I finally made the move into R&D. Happy to tell you what worked — and what didn’t.',
     path: [
       s('bsc-chem', 'University of Toronto', 2015, 2019),
@@ -333,6 +335,7 @@ const list: Person[] = [
     photo: photo('amara'),
     location: 'Toronto, ON',
     headline: 'Senior Scientist, Formulation R&D at Meridian Pharma',
+    banner: 'lines',
     bio: 'I came to Canada with a chemistry degree and a lot of questions. Three years at a CRO taught me the rigour pharma wanted. Now I lead formulation work — and try to answer the questions I once had.',
     path: [
       s('bsc-chem', 'University of Lagos', 2006, 2010),
@@ -364,6 +367,7 @@ const list: Person[] = [
     photo: photo('tomas'),
     location: 'Montréal, QC',
     headline: 'Principal Scientist, Medicinal Chemistry at Kestrel Biosciences',
+    banner: 'dawn',
     bio: 'Twelve years in synthesis, eight in drug discovery. I’m honest about the PhD: it was right for me, and it isn’t right for everyone.',
     path: [
       s('bsc-chem', 'Universidad de Chile', 2004, 2008),

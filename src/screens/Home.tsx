@@ -6,13 +6,13 @@ import { PathPulse, type PulseStop } from '../components/PathPulse';
 import { type PostKind } from '../components/Post';
 import { DecisionPost, GuidePost, KindFeed, KindFilter, MilestonePost, MyPostItem, QuestionPost, RoutePost, StoryPost, ThreadPost, feedKinds } from '../components/FeedItems';
 import { useWriting } from '../lib/writing';
-import { RouteSilk } from '../components/path/RouteSilk';
+import { BannerArt, useBanner } from '../components/Banner';
 import { dayLabel, fmtTime, useOpenSpots } from '../lib/booking';
 import { bookingTitle } from '../lib/guides';
 import { RailFooter } from '../components/Rail';
 import { PersonTile } from '../components/content';
 import { Avatar, AvatarStack, CountUp, IconButton, PersonName, Rolling, SectionHeader, TextTabs } from '../components/ui';
-import { IconBell, IconCheck, IconChevronLeft, IconChevronRight, IconCompose, IconDoc, IconFlag, IconMessage, IconPlus, IconQuestion, IconSend, IconSignpost, IconSparkle } from '../components/icons';
+import { IconBell, IconCheck, IconPencil, IconChevronLeft, IconChevronRight, IconCompose, IconDoc, IconFlag, IconMessage, IconPlus, IconQuestion, IconSend, IconSignpost, IconSparkle } from '../components/icons';
 import { people, me, ME } from '../data/people';
 import { stories } from '../data/stories';
 import { questions, questionList } from '../data/questions';
@@ -227,6 +227,10 @@ function MeCard() {
   const saved = useApp((s) => s.saved);
   const myGuide = useApp((s) => s.myGuide);
   const unread = useUnread();
+  const banner = useBanner(ME)!;
+  const openEditProfile = useUI((s) => s.openEditProfile);
+  // Re-render with your name and headline when you save them.
+  useApp((s) => s.profile);
   const stats = [
     { to: '/connections', value: Object.values(connections).filter((c) => c === 'connected').length, label: 'Connections' },
     { to: '/communities', value: Object.keys(joined).filter((k) => joined[k] && communities[k]).length, label: 'Communities' },
@@ -242,8 +246,11 @@ function MeCard() {
   ];
   return (
     <section className="me-card" aria-label="Your profile">
-      <div className="me-card__cover immersive" aria-hidden="true">
-        <RouteSilk lines={14} delay={0.15} />
+      <div className="me-card__cover">
+        <BannerArt banner={banner} />
+        <button type="button" className="banner-edit me-card__edit" aria-label="Edit your banner" data-tip="Edit banner" data-tip-pos="below" onClick={() => openEditProfile('banner')}>
+          <IconPencil size={15} strokeWidth={1.9} />
+        </button>
       </div>
       <motion.div className="me-card__who" {...rise(1, 10)}>
         <Link to={`/p/${ME}`} className="me-card__photo" data-portrait={ME} tabIndex={-1} aria-hidden="true">
