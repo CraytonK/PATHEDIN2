@@ -26,7 +26,7 @@ import './feed.css';
 
 /*
   The For you feed mixes seven kinds of post, all on the same card. Each is told apart in the same three
-  places: its kind tag, what its thumbnail shows, and what its detail strip holds.
+  places: its context line, what its thumbnail shows, and what its detail strip holds.
   - Story: a serif title; the thumbnail is the stretch of Path it covers.
   - Question: the thumbnail is the answer count; the strip quotes the best answer.
   - Community: the thumbnail is the members and who's here now; the strip is the latest reply.
@@ -47,9 +47,9 @@ const short = (w: string) => wp(w).short;
 const lower = (s: string) => s.charAt(0).toLowerCase() + s.slice(1);
 
 /*
-  Every post is the same card: who it's from, a kind tag, the title and text, a thumbnail on the right, one
-  compact detail strip, and the footer. What tells the kinds apart sits in the same places on every card:
-  the tag, what the thumbnail shows, and what the strip holds.
+  Every post is the same card: a context line naming its kind, who it's from, the title and text, a
+  thumbnail on the right, one compact detail strip, and the footer. What tells the kinds apart sits in the
+  same places on every card: the context line, what the thumbnail shows, and what the strip holds.
 */
 
 /* ── Stories: serif title, the stretch of Path as the thumbnail ── */
@@ -204,12 +204,14 @@ function GuideStrip({ id }: { id: string }) {
   const services = servicesOf(id).slice(0, 3);
   return (
     <div className="guide-strip">
-      {services.map((sv) => (
-        <button key={sv.id} type="button" className={`guide-strip__svc ${sv.price === 0 ? 'is-free' : ''}`} onClick={() => openBooking(id, { service: sv.id })}>
-          <span>{sv.kind === 'office-hours' ? 'Office Hours' : serviceKinds[sv.kind].label}</span>
-          <strong>{priceLabel(sv)}</strong>
-        </button>
-      ))}
+      <div className="guide-strip__svcs">
+        {services.map((sv) => (
+          <button key={sv.id} type="button" className={`guide-strip__svc ${sv.price === 0 ? 'is-free' : ''}`} onClick={() => openBooking(id, { service: sv.id })}>
+            <span>{sv.kind === 'office-hours' ? 'Office Hours' : serviceKinds[sv.kind].label}</span>
+            <strong>{priceLabel(sv)}</strong>
+          </button>
+        ))}
+      </div>
       <span className="guide-strip__book">
         <BookButton id={id} label="Book" />
       </span>

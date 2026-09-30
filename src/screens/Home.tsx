@@ -12,7 +12,7 @@ import { bookingTitle } from '../lib/guides';
 import { RailFooter } from '../components/Rail';
 import { PersonTile } from '../components/content';
 import { Avatar, AvatarStack, CountUp, IconButton, PersonName, Rolling, SectionHeader, TextTabs } from '../components/ui';
-import { IconArrowRight, IconBell, IconCheck, IconChevronLeft, IconChevronRight, IconCompose, IconDoc, IconFlag, IconMessage, IconPlus, IconQuestion, IconSend, IconSignpost, IconSparkle } from '../components/icons';
+import { IconBell, IconCheck, IconChevronLeft, IconChevronRight, IconCompose, IconDoc, IconFlag, IconMessage, IconPlus, IconQuestion, IconSend, IconSignpost, IconSparkle } from '../components/icons';
 import { people, me, ME } from '../data/people';
 import { stories } from '../data/stories';
 import { questions, questionList } from '../data/questions';
@@ -279,9 +279,9 @@ function MeCard() {
             .map((st, i) => (
               <motion.li key={st.key} initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} transition={{ ...springs.smooth, delay: 0.35 + i * 0.07 }}>
                 <Link to={st.href} className={`me-step is-${st.kind}`}>
-                  {st.kind === 'destination' && <IconArrowRight size={13} strokeWidth={2.2} />}
-                  {st.label}
-                  {st.kind === 'present' && <span className="me-step__you">You</span>}
+                  {st.label.replace(/ Chemistry$/, ' Chem')}
+                  {st.kind === 'present' && <span className="visually-hidden">, where you are</span>}
+                  {st.kind === 'destination' && <span className="visually-hidden">, where you’re going</span>}
                 </Link>
               </motion.li>
             ))}

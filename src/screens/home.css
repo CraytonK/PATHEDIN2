@@ -599,46 +599,62 @@
   text-decoration: underline;
   text-underline-offset: 3px;
 }
+/* Your Path written the way PathedIn writes Paths, with arrows: walked steps quiet, where you are in ink with
+   the ringed dot, where you're going in signal blue with the open ring. */
 .me-card__steps {
   display: flex;
   flex-wrap: wrap;
-  gap: 6px;
+  align-items: center;
+  row-gap: 6px;
+  font-size: 14px;
+  line-height: 20px;
 }
-/* Your steps as tags: walked in cream, where you are in navy, where you're going outlined in signal blue. */
+.me-card__steps li {
+  display: inline-flex;
+  align-items: center;
+}
+.me-card__steps li + li::before {
+  content: '→';
+  margin: 0 8px;
+  color: var(--label-3);
+}
 .me-step {
   display: inline-flex;
   align-items: center;
-  gap: 5px;
-  height: 28px;
-  padding: 0 11px;
-  border-radius: var(--r-pill);
-  background: var(--canvas);
-  box-shadow: inset 0 0 0 1px var(--separator);
-  font-size: 12.5px;
-  font-weight: 500;
+  gap: 6px;
   color: var(--label-2);
-  transition:
-    box-shadow var(--dur-2) var(--ease-out),
-    color var(--dur-2) var(--ease-out);
+  transition: color var(--dur-2) var(--ease-out);
 }
 .me-step:hover {
   color: var(--label);
-  box-shadow: inset 0 0 0 1px var(--border-strong);
+  text-decoration: underline;
+  text-decoration-color: var(--label-4);
+  text-underline-offset: 3px;
 }
 .me-step.is-present {
-  background: var(--primary);
-  box-shadow: var(--btn-highlight);
-  color: var(--on-primary);
-}
-.me-step__you {
-  font-size: 11px;
   font-weight: 500;
-  opacity: 0.66;
+  color: var(--label);
 }
 .me-step.is-destination {
-  background: var(--tint-softer);
-  box-shadow: inset 0 0 0 1px var(--tint-border);
+  font-weight: 500;
   color: var(--tint-text);
+}
+.me-step.is-present::before,
+.me-step.is-destination::before {
+  content: '';
+  flex: none;
+  box-sizing: border-box;
+  width: 10px;
+  height: 10px;
+  padding: 1.5px;
+  border: 1.5px solid var(--tint);
+  border-radius: 50%;
+  background: var(--tint);
+  background-clip: content-box;
+}
+.me-step.is-destination::before {
+  border-width: 2px;
+  background: none;
 }
 .me-card__links {
   margin: 12px 10px 0;

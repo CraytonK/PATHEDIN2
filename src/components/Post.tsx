@@ -22,7 +22,7 @@ export const postKinds: Record<PostKind, { label: string; plural: string; icon: 
   milestone: { label: 'Milestone', plural: 'Milestones', icon: IconMilestone },
 };
 
-/** The small label that opens every feed post: icon, kind, and a note ("4 answers", the community). */
+/** The context line that opens every feed post: the kind's icon over the portrait, the kind, and its context ("4 answers", the community). */
 export function KindLabel({ kind, note }: { kind: PostKind; note?: ReactNode }) {
   const k = postKinds[kind];
   const Icon = k.icon;
@@ -77,8 +77,8 @@ export function Post({ author, where, note, ago, to, title, subtitle, why, stats
       transition={{ ...springs.smooth, delay: Math.min(i, 3) * 0.05 }}
     >
       <div className="post__in">
-        <PostByline author={author} note={note} where={where} ago={ago} />
         {kind && <KindLabel kind={kind} note={kindNote} />}
+        <PostByline author={author} note={note} where={where} ago={ago} />
         <div className="post__main">
           <Link to={to} className="post__link">
             <h2 className="post__title">{title}</h2>

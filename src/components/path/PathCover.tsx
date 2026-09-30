@@ -86,7 +86,7 @@ export function PathCover({ id }: { id: string }) {
               </div>
               <p className="pcover__name">{wp(s.wp).short}</p>
               <p className="pcover__when">{kind === 'present' ? (self ? 'You are here' : 'Now') : kind === 'dest' ? 'Heading' : kind === 'future' ? 'Next' : years}</p>
-              {yours && <p className="pcover__mark">On your route</p>}
+              {yours && <p className="pcover__mark mark mark--ahead">On your route</p>}
             </li>
           );
         })}

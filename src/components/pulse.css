@@ -129,7 +129,7 @@
 }
 /* In the narrow columns of the week's line, the tag sits under the name rather than wrapping beside it. */
 .pulse__name .here-tag {
-  display: block;
+  display: flex;
   width: fit-content;
   margin: 4px 0 0;
 }

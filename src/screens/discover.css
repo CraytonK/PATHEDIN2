@@ -333,16 +333,7 @@
   text-underline-offset: 4px;
 }
 .door__mine {
-  display: inline-flex;
-  align-items: center;
-  height: 22px;
-  padding: 0 8px;
-  border-radius: var(--r-pill);
-  background: var(--tint-soft);
-  color: var(--tint-text);
-  font-weight: 500;
-  font-size: 12px;
-  line-height: 16px;
+  font-size: 12.5px;
 }
 .door__title {
   font-family: var(--font-display);

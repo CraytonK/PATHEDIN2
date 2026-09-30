@@ -55,7 +55,7 @@ function DestinationDoor({ id, i }: { id: string; i: number }) {
       <Link to={`/discover?to=${id}`} className={`door ${mine ? 'is-mine' : ''}`}>
         <div className="door__top">
           <RouteFan n={d.routes.length} />
-          {mine && <span className="door__mine t-caption1">On your Path</span>}
+          {mine && <span className="door__mine mark mark--dest">On your Path</span>}
         </div>
         <h3 className="door__title">{w.label}</h3>
         <p className="t-subhead c-2 clamp-2">{d.blurb}</p>

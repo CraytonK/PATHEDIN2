@@ -164,7 +164,12 @@ export function AlignMap({ otherId, autoAlign = true }: { otherId: string; autoA
             <div className="align__title">
               <span className="align__name">{wp(r.wp).label}</span>
               {r.kind === 'shared' && aligned && (
-                <motion.span className="align__both t-caption1" initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: 0.3 + i * 0.06 }}>
+                <motion.span
+                  className={`align__both mark ${r.a?.status === 'future' && r.b?.status !== 'future' ? 'mark--ahead' : 'mark--both'}`}
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ delay: 0.3 + i * 0.06 }}
+                >
                   {r.a?.status === 'future' && r.b?.status !== 'future' ? 'Your future' : 'Both'}
                 </motion.span>
               )}

@@ -126,12 +126,6 @@
 }
 .align__both {
   flex: none;
-  white-space: nowrap;
-  color: var(--tint-text);
-  font-weight: 500;
-  background: var(--tint-softer);
-  padding: 1px 7px;
-  border-radius: 6px;
 }
 .align__sub {
   color: var(--label-2);

@@ -254,34 +254,44 @@
   font-weight: 500;
   color: var(--label);
 }
+/* Their standing gets its own line under the rating, in ink. */
 .gcard__top-badge {
-  padding: 2px 9px;
-  border-radius: var(--r-pill);
-  background: var(--primary);
-  color: var(--on-primary);
-  font-size: 11.5px;
+  flex-basis: 100%;
   font-weight: 500;
+  color: var(--label);
 }
+/* Services read like a menu: one row each, the price on the right, hairlines between. */
 .gcard__svcs {
   display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-  margin-top: 8px;
+  flex-direction: column;
+  margin-top: 12px;
+  border-top: 1px solid var(--separator);
+}
+.gcard__svcs li + li {
+  border-top: 1px solid var(--separator);
 }
 .gcard__svc {
-  display: inline-flex;
+  display: flex;
   align-items: center;
-  gap: 6px;
-  height: 32px;
-  padding: 0 12px 0 10px;
-  border-radius: var(--r-pill);
-  background: var(--canvas);
-  box-shadow: inset 0 0 0 1px var(--separator);
-  font-size: 12.5px;
+  gap: 10px;
+  width: 100%;
+  min-height: 40px;
+  font-size: 14px;
+  line-height: 20px;
   color: var(--label-2);
-  transition:
-    box-shadow var(--dur-2) var(--ease-out),
-    color var(--dur-2) var(--ease-out);
+  text-align: left;
+  transition: color var(--dur-2) var(--ease-out);
+}
+.gcard__svc svg {
+  flex: none;
+  color: var(--label-3);
+}
+.gcard__svc span {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 .gcard__svc strong {
   font-weight: 500;
@@ -293,7 +303,11 @@
 }
 .gcard__svc:hover {
   color: var(--label);
-  box-shadow: inset 0 0 0 1px var(--ink);
+}
+.gcard__svc:hover span {
+  text-decoration: underline;
+  text-decoration-color: var(--label-4);
+  text-underline-offset: 3px;
 }
 
 /* Standing, community by community. */

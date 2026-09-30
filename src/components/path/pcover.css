@@ -154,15 +154,8 @@
   font-weight: 500;
 }
 .pcover__mark {
+  justify-content: center;
   margin-top: 6px;
-  padding: 1px 8px;
-  border-radius: var(--r-pill);
-  background: var(--tint-softer);
-  color: var(--tint-text);
-  font-size: 12px;
-  line-height: 16px;
-  font-weight: 500;
-  white-space: nowrap;
 }
 .pcover__caption {
   display: flex;

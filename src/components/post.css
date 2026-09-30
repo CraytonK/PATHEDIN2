@@ -61,8 +61,8 @@
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
   grid-template-areas:
-    'by by'
     'kind kind'
+    'by by'
     'main thumb'
     'meta meta';
   column-gap: 28px;
@@ -72,8 +72,8 @@
 .post:not(.has-thumb) .post__in {
   grid-template-columns: minmax(0, 1fr);
   grid-template-areas:
-    'by'
     'kind'
+    'by'
     'main'
     'meta';
 }

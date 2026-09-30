@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-09-30T15:00:31Z",
+  "generatedAt": "2026-09-30T15:27:02Z",
   "title": "Design System: PathedIn",
   "extensions": {
     "colorMeta": {
@@ -789,7 +789,8 @@
       "**Do** draw every Path with the transit vocabulary: solid walked track, ringed present, dashed future, open destination.",
       "**Do** put content on white cards on the cream, 20px corners, and keep what's inside a card as cream wells.",
       "**Do** mark what's current with the sliding navy pill.",
-      "**Do** use 8px corners for small pressed controls and pills for tags, counts, tab tracks and the top bar.",
+      "**Do** use 8px corners for small pressed controls and pills for filter chips, counts, tab tracks and the top bar.",
+      "**Do** label with marks: words led by the Path's own glyphs.",
       "**Do** respect Reduce Motion with an intentional quieter path."
     ],
     "donts": [
@@ -797,10 +798,11 @@
       "**Don't** use large areas of signal blue, gradient text, neon edges or coloured side stripes. The one exception is the schedule's 4px event bar, a calendar marker from the reference that says what kind of event it is.",
       "**Don't** nest a card in a card, or bring back rows between hairlines on the cream.",
       "**Don't** dock the sidebar beside the content again; the drawer holds it.",
-      "**Don't** give a kind of post or a Network group its own layout; tell them apart with the tag, the thumbnail, the strip or the signal line. Don't put a card field for payment anywhere in the prototype.",
+      "**Don't** give a kind of post or a Network group its own layout; tell them apart with the context line, the thumbnail, the strip or the signal line. Don't put a card field for payment anywhere in the prototype.",
       "**Don't** make anything on a navy panel see-through, or let route silk run behind words.",
       "**Don't** set a label above a heading as a kicker or eyebrow, even where the reference does. Headings carry their own weight.",
       "**Don't** set interface text in Charter, or use a synthesized italic of Space Grotesk.",
+      "**Don't** put a label in a bubble (a tinted pill with a ring or a wash). It reads as a template; PathedIn labels with marks.",
       "**Don't** use Unicode glyphs or emoji as icons. Icons are drawn SVG in one stroke weight.",
       "**Don't** loop animations, bounce, or add parallax. Motion arrives, then rests. The intro tour is the one place scrolling drives motion, and it still rests the moment you stop."
     ]

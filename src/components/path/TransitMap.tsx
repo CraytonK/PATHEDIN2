@@ -545,7 +545,7 @@ export function TransitMap({
                     <div className="tmap__title">
                       {n.title}
                       {n.kind === 'present' && <span className="here-tag tmap__here">{personId === ME ? 'You are here' : 'Now'}</span>}
-                      {n.kind === 'destination' && personId === ME && <span className="here-tag tmap__here">Destination</span>}
+                      {n.kind === 'destination' && personId === ME && <span className="here-tag tmap__here is-dest">Destination</span>}
                     </div>
                     {n.sub && <div className="tmap__sub t-subhead">{n.sub}</div>}
                     {showNotes && n.note && <p className="tmap__note t-footnote">{n.note}</p>}

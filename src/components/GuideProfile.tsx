@@ -14,7 +14,7 @@ import { useUI } from '../lib/ui';
 import { BookButton, Stars } from './Booking';
 import { RequestButton } from './content';
 import { Avatar, CountUp } from './ui';
-import { IconCalendar, IconChevronRight, IconSparkle, IconStar } from './icons';
+import { IconCalendar, IconChevronRight, IconSignpost, IconSparkle, IconStar } from './icons';
 import './guide-profile.css';
 
 /*
@@ -291,7 +291,10 @@ export function GuideRailCard({ id }: { id: string }) {
   return (
     <section className="grail immersive">
       <div className="grail__head">
-        <span className="grail__badge">Path Guide</span>
+        <span className="grail__badge">
+          <IconSignpost size={15} strokeWidth={1.9} />
+          Path Guide
+        </span>
         {econ.rating > 0 && (
           <span className="grail__rating">
             <IconStar size={14} filled /> {econ.rating.toFixed(1)} <span>({econ.reviewCount})</span>

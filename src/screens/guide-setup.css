@@ -461,13 +461,11 @@
 }
 .gs-preview__badge {
   position: absolute;
-  top: 14px;
-  right: 14px;
-  padding: 3px 9px;
-  border-radius: var(--r-pill);
-  background: var(--tint-soft);
-  color: var(--tint-text);
-  font-size: 11px;
+  top: 18px;
+  right: 20px;
+  color: var(--label-3);
+  font-size: 12px;
+  line-height: 16px;
   font-weight: 500;
 }
 .gs-preview__who {
@@ -501,16 +499,13 @@
 }
 .gs-preview__moves {
   display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
+  flex-direction: column;
+  gap: 2px;
   margin-top: 12px;
 }
 .gs-preview__moves li {
-  padding: 4px 10px;
-  border-radius: var(--r-pill);
-  background: var(--bg-grouped);
-  box-shadow: inset 0 0 0 1px var(--border);
-  font-size: 12px;
+  font-size: 13px;
+  line-height: 18px;
   color: var(--label-2);
 }
 .gs-preview__moves strong {

@@ -334,7 +334,7 @@ Cards are white on the cream with a faint navy hairline and a long, soft fall-of
 
 ## Shapes
 
-Gently rounded rectangles. The radii are 2px for thin bars, 6px for rows in lists and menus, 8px for buttons, fields, slots and icon buttons, 12px for popovers and tooltips, 14px for wells in a card (day tiles, schedule items), 16px for menus, 20px for cards, sheets and immersive panels (14px for a phone sheet's top corners), and 28px for the intro stage. The tour's phone preview keeps a device's corners (44px outside, 34px on the screen). Pills are kept for tags, counts, badges, tab tracks, the top bar's field and buttons, and the navy pill that marks what is current. Portraits are circles with a hairline, knocked out with a ring in the colour of the surface they sit on. The Path's geometry is fixed: solid track for walked steps, a ringed present, a dashed future and an open destination ring.
+Gently rounded rectangles. The radii are 2px for thin bars, 6px for rows in lists and menus, 8px for buttons, fields, slots and icon buttons, 12px for popovers and tooltips, 14px for wells in a card (day tiles, schedule items), 16px for menus, 20px for cards, sheets and immersive panels (14px for a phone sheet's top corners), and 28px for the intro stage. The tour's phone preview keeps a device's corners (44px outside, 34px on the screen). Pills are kept for controls (filter chips, tab tracks, the top bar's field and buttons), counts, and the navy pill that marks what is current. A label is never a pill: see Marks. Portraits are circles with a hairline, knocked out with a ring in the colour of the surface they sit on. The Path's geometry is fixed: solid track for walked steps, a ringed present, a dashed future and an open destination ring.
 
 ## Components
 
@@ -345,6 +345,14 @@ Gently rounded rectangles. The radii are 2px for thin bars, 6px for rows in list
 - **Tinted:** a signal-blue wash with blue text, for Connect and for held states like "Booked · Thu".
 - **Outline:** a white raised button with an edge (Add to calendar).
 - **Focus:** a 2px signal-blue ring offset by 2px, following the control's corners.
+
+### Marks (labels)
+A label is words, sometimes led by a glyph from the Path itself, never a tinted bubble with a ring (the user's call, September 30, 2026: the bubble read as AI-built). The glyphs are the Path's own nodes at 10px: a ringed dot is where someone is now ("You", "You are here", "Now"), an open ring is a destination ("Destination", "On your Path"), a dashed ring is a step still ahead ("On your route", "Your future"), and a solid dot is a step two Paths share ("Both"). Marks are 12.5px, weight 500, in the text colour of signal blue (`.mark`, `.here-tag`).
+- **Post kind:** a context line above the author, the way a feed says "reposted": the kind's icon sits over the portrait in signal blue, then the kind in ink and its context in grey after a middle dot.
+- **Data:** a Path match, steps ahead, a Network signal or a standing ("Top Guide in …") is a line of words: ink or signal blue at weight 500, split by middle dots.
+- **Prices:** a menu, not chips. In a post's strip the services sit in a line with their prices in ink and room between them, Book on the right; on a Guide card they are rows with the price on the right and hairlines between.
+- **Your Path in a line:** written with arrows, as PathedIn writes Paths: walked steps in grey, where you are in ink with the ringed dot, where you're going in signal blue with the open ring.
+- **Lists of words** (a Guide's expertise) are split by small grey dots.
 
 ### Tags (filter chips)
 - **Style:** 30px pills on the quiet cream fill with a hairline, in secondary ink.
@@ -358,8 +366,8 @@ Gently rounded rectangles. The radii are 2px for thin bars, 6px for rows in list
 - **Internal Padding:** 18px 20px (16px on phones).
 
 ### Post Cards (one card, clear differences)
-Every post is the same white card: the author across the top with the "…" menu, a kind tag, the title and text, a thumbnail on the right, one detail strip under the text, and the footer over a hairline (why it's here, its numbers, Save). Kinds are told apart in three fixed places, never by a different layout:
-- **The tag:** a blue-washed pill with the kind's icon and name (Story, Question, Community, Path Guide, Decision Point, Route, Milestone), with its note beside it in grey.
+Every post is the same white card: a context line naming its kind, the author with the "…" menu, the title and text, a thumbnail on the right, one detail strip under the text, and the footer over a hairline (why it's here, its numbers, Save). Kinds are told apart in three fixed places, never by a different layout:
+- **The context line:** the kind's icon over the author's portrait, then its name (Story, Question, Community, Path Guide, Decision Point, Route, Milestone) in ink and its note in grey. No bubble.
 - **The thumbnail** (168×120, 88×66 in a narrow column): a Story shows the stretch of Path it covers; a Question its answer count; a Community post its members and who's here now; a Guide their photo with a navy rating badge; a Decision the fork; a Route how many took it; a Milestone their photo with an arrival check.
 - **The strip,** always a cream well of the same shape: the best answer quoted, the latest reply, the Guide's prices and Book, the roads lettered A and B with Weigh in, the route line with Add to my Path, or Congratulate.
 Stories alone set their title in Charter Bold.
@@ -372,10 +380,10 @@ Stories alone set their title in Charter Bold.
 - **Standing:** communities rank their Guides (a navy disc for first); the Guides page lists the top three in each of your communities, and the Guides marketplace filters by kind of help.
 
 ### Network groups
-Every group uses the same person card (face, name and relation tag, headline, why, their Path in one line). One blue-washed line under the headline says what they are to you, in the same place on every card: your match with a Path Twin, the step you share with a Peer, the step someone ahead took, a Guide's rating and prices, where an Explorer is heading, or a request from someone behind you. The action fits the relation: Align Paths, Message or Connect, Book, Reply, or Guide this move.
+Every group uses the same person card (face, name and relation tag, headline, why, their Path in one line). One line of signal-blue words under the headline says what they are to you, in the same place on every card: your match with a Path Twin, the step you share with a Peer, the step someone ahead took, a Guide's rating and prices, where an Explorer is heading, or a request from someone behind you. The action fits the relation: Align Paths, Message or Connect, Book, Reply, or Guide this move.
 
 ### Dashboard Home (signature)
-- **Profile card:** a navy cover lit by route silk, your photo knocked out of it on a white ring, name and headline, three counts that count up (Connections, Communities, Saved), Your Path as tags (walked in cream, now in navy, the destination outlined in blue), the shortcuts with navy-on-hover icon tiles, and Write as an outline pill.
+- **Profile card:** a navy cover lit by route silk, your photo knocked out of it on a white ring, name and headline, three counts that count up (Connections, Communities, Saved), Your Path written with arrows (walked in grey, now in ink with the ringed dot, the destination in blue with the open ring), the shortcuts with navy-on-hover icon tiles, and Write as an outline pill.
 - **People worth knowing:** faces in rings that shade from navy to signal blue and draw themselves one after another; the name and relation beneath; Connect as a small navy disc on the ring (a check once requested, a message bubble once connected).
 - **Coming up:** a week strip (today in navy, a blue dot on days with something booked, earlier days faded) that slides between weeks, then the schedule: each item a cream well with a 4px bar for its kind (blue for Office Hours, navy for a call, pale blue for requests) and the face it's with. Pointing at a day lights its items and fades the rest; pointing at an item lights its day.
 - **Your communities:** a four-face mosaic, the name, and who's here now beside a live dot.
@@ -416,7 +424,7 @@ Across the top of a person's card, their Path is drawn on a sunken cream band: w
 A two-pane sheet: the Guide on a recessed cream panel, then three session tiles, a grid of time slots (the chosen one fills navy, taken ones recede with a strike), topic tags, a note, and a sticky footer with the summary and the primary action. It confirms on a ticket with a perforated date stub and a check that draws itself.
 
 ### Motion
-- **Dashboard:** the profile card rises in, its Path tags pop in turn and its counts count up; the rings around People worth knowing draw one after another (90 ms apart); the week slides between weeks; schedule items and communities rise a beat apart; the navy pill slides wherever the current thing changes.
+- **Dashboard:** the profile card rises in, its Path steps pop in turn and its counts count up; the rings around People worth knowing draw one after another (90 ms apart); the week slides between weeks; schedule items and communities rise a beat apart; the navy pill slides wherever the current thing changes.
 - **Assembling (the intro's language, used across the app):** the intro headline rises line by line out of an 8px blur, then the sentence, then the action. Page titles and subtitles arrive 80 ms apart. Cards and rows rise 16px as they come into view, 55 ms apart, capped at eight. Route silk, Path covers and Your Path this week draw themselves. Stat numerals count up over 1.2 s. The Guides route fills in solid as you read down the page.
 - **Portrait flight:** opening someone carries their portrait on a shallow arc to the "now" station of their Path cover (420–680 ms), which answers with one ring ripple.
 - **Pointer:** card edges catch signal-blue light where the cursor is; a surface follows across tabs; forward arrows lean 2px; tooltips answer at once after the first; feed photos lean in.
@@ -435,7 +443,8 @@ A two-pane sheet: the Guide on a recessed cream panel, then three session tiles,
 - **Do** draw every Path with the transit vocabulary: solid walked track, ringed present, dashed future, open destination.
 - **Do** put content on white cards on the cream, 20px corners, and keep what's inside a card as cream wells.
 - **Do** mark what's current with the sliding navy pill.
-- **Do** use 8px corners for small pressed controls and pills for tags, counts, tab tracks and the top bar.
+- **Do** use 8px corners for small pressed controls and pills for filter chips, counts, tab tracks and the top bar.
+- **Do** label with marks: words led by the Path's own glyphs.
 - **Do** respect Reduce Motion with an intentional quieter path.
 
 ### Don't:
@@ -443,9 +452,10 @@ A two-pane sheet: the Guide on a recessed cream panel, then three session tiles,
 - **Don't** use large areas of signal blue, gradient text, neon edges or coloured side stripes. The one exception is the schedule's 4px event bar, a calendar marker from the reference that says what kind of event it is.
 - **Don't** nest a card in a card, or bring back rows between hairlines on the cream.
 - **Don't** dock the sidebar beside the content again; the drawer holds it.
-- **Don't** give a kind of post or a Network group its own layout; tell them apart with the tag, the thumbnail, the strip or the signal line. Don't put a card field for payment anywhere in the prototype.
+- **Don't** give a kind of post or a Network group its own layout; tell them apart with the context line, the thumbnail, the strip or the signal line. Don't put a card field for payment anywhere in the prototype.
 - **Don't** make anything on a navy panel see-through, or let route silk run behind words.
 - **Don't** set a label above a heading as a kicker or eyebrow, even where the reference does. Headings carry their own weight.
 - **Don't** set interface text in Charter, or use a synthesized italic of Space Grotesk.
+- **Don't** put a label in a bubble (a tinted pill with a ring or a wash). It reads as a template; PathedIn labels with marks.
 - **Don't** use Unicode glyphs or emoji as icons. Icons are drawn SVG in one stroke weight.
 - **Don't** loop animations, bounce, or add parallax. Motion arrives, then rests. The intro tour is the one place scrolling drives motion, and it still rests the moment you stop.

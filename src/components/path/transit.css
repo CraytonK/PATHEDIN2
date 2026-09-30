@@ -216,9 +216,8 @@
 }
 /* "You are here" rides beside the step's name, like the marker on a line map. */
 .tmap__here {
-  margin-left: 10px;
-  padding-block: 2px;
-  vertical-align: 3px;
+  margin-left: 12px;
+  vertical-align: 2px;
 }
 /* A step's note is a reflection in the person's own words: set in italic. */
 .tmap__note {

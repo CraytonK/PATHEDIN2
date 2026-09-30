@@ -1,12 +1,13 @@
 /* ── The kind label that opens every feed post ─────────── */
 /* A small cream chip names the kind; the note runs on beside it in grey. */
+/* What the post is, above who posted it: the kind's icon sits over the author's portrait, and the kind and
+   its context line up with the name, the way a feed says "reposted" or "pinned". No bubble. */
 .post__kind {
   grid-area: kind;
   display: flex;
   align-items: center;
-  gap: 8px;
   min-width: 0;
-  margin-bottom: 12px;
+  margin-bottom: 10px;
   font-size: 13px;
   line-height: 18px;
   color: var(--label-2);
@@ -14,24 +15,29 @@
 .post__kind-label {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
   flex: none;
-  height: 26px;
-  padding: 0 10px 0 8px;
-  border-radius: var(--r-pill);
-  background: var(--canvas);
-  box-shadow: inset 0 0 0 1px var(--separator);
   font-weight: 500;
   color: var(--label);
 }
 .post__kind-label svg {
   flex: none;
+  box-sizing: content-box;
+  width: 15px;
+  height: 15px;
+  padding: 0 12.5px;
+  margin-right: 12px;
+  color: var(--tint-strong);
 }
 .post__kind-note {
   min-width: 0;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
+}
+.post__kind-note::before {
+  content: '·';
+  margin: 0 7px;
+  color: var(--label-3);
 }
 .post__kind-note a {
   color: var(--label);
@@ -299,26 +305,17 @@
   .post:has(.post__thumb > .fork) .post__in {
     grid-template-columns: minmax(0, 1fr);
     grid-template-areas:
-      'by'
       'kind'
+      'by'
       'main'
       'meta';
   }
 }
 
 /* ══ One card, clear differences ══════════════════════════════
-   Every post shares the card. Kinds differ in three fixed places: the tag at the top (blue, with the
-   kind's icon), what the thumbnail on the right shows, and the detail strip under the text, which is
-   always a cream well of the same shape. */
-
-.post__kind-label {
-  background: var(--tint-softer);
-  box-shadow: inset 0 0 0 1px var(--tint-border);
-  color: var(--tint-text);
-}
-.post__kind-label svg {
-  color: var(--tint-strong);
-}
+   Every post shares the card. Kinds differ in three fixed places: the context line at the top (the kind's
+   icon over the portrait, then the kind and its context), what the thumbnail on the right shows, and the
+   detail strip under the text, which is always a cream well of the same shape. */
 
 /* The strip: one cream well, whatever it holds. */
 .post__extra > .qa,
@@ -438,21 +435,25 @@
 .guide-strip {
   display: flex;
   align-items: center;
-  flex-wrap: wrap;
-  gap: 6px;
+  gap: 16px;
 }
+.guide-strip__svcs {
+  display: flex;
+  flex: 1;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 6px 22px;
+  min-width: 0;
+}
+/* Prices read like a menu: the service, then its price in ink, with room between them. */
 .guide-strip__svc {
   display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  height: 30px;
-  padding: 0 11px;
-  border-radius: var(--r-pill);
-  background: var(--card);
-  box-shadow: inset 0 0 0 1px var(--separator);
-  font-size: 12.5px;
+  align-items: baseline;
+  gap: 7px;
+  font-size: 13.5px;
+  line-height: 20px;
   color: var(--label-2);
-  transition: box-shadow var(--dur-2) var(--ease-out);
+  white-space: nowrap;
 }
 .guide-strip__svc strong {
   font-weight: 500;
@@ -462,11 +463,14 @@
 .guide-strip__svc.is-free strong {
   color: var(--tint-text);
 }
-.guide-strip__svc:hover {
-  box-shadow: inset 0 0 0 1px var(--border-strong);
+.guide-strip__svc:hover span {
+  color: var(--label);
+  text-decoration: underline;
+  text-decoration-color: var(--label-4);
+  text-underline-offset: 3px;
 }
 .guide-strip__book {
-  margin-left: auto;
+  flex: none;
 }
 
 /* Decision strip: the roads, lettered, with how many took each. */

@@ -542,12 +542,10 @@
 }
 .tour-book__top {
   align-self: flex-start;
-  margin-top: 14px;
-  padding: 4px 11px;
-  border-radius: var(--r-pill);
-  background: var(--primary);
-  color: var(--on-primary);
-  font-size: 12px;
+  margin-top: 12px;
+  color: var(--label);
+  font-size: 13px;
+  line-height: 18px;
   font-weight: 500;
 }
 .tour-book__svcs {
