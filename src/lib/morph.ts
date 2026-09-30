@@ -14,8 +14,11 @@ type VTDocument = Document & {
   startViewTransition?: (cb: () => Promise<void> | void) => { finished: Promise<void>; ready: Promise<void> };
 };
 
-/** Read by the shell while a morph swaps the page, so the page skips its own entrance and the swap is instant. */
-export const morphState = { active: false };
+/**
+ * Read by the shell while a morph swaps the page, so the page skips its own entrance and the swap is instant.
+ * `fromY` is where the page you left was scrolled, kept for Back, since the new page starts at the top.
+ */
+export const morphState: { active: boolean; fromY: number | null } = { active: false, fromY: null };
 
 let go: ((to: string) => void) | null = null;
 export function setMorphNavigator(fn: (to: string) => void) {
@@ -65,12 +68,16 @@ function morphTo(path: string, parts: [HTMLElement, string][]) {
     // The landing places take their names only now, after the old page has been captured.
     root.classList.add('vt-landing');
     morphState.active = true;
+    // Start the new page at the top before it renders, so everything that measures itself (the sliding pill in
+    // the top bar) measures before and after at the same scroll.
+    morphState.fromY = window.scrollY;
+    window.scrollTo(0, 0);
     go!(path);
     await shown(path);
-    window.scrollTo(0, 0);
   });
   t.finished.finally(() => {
     morphState.active = false;
+    morphState.fromY = null;
     root.classList.remove('vt-landing');
     delete root.dataset.vt;
   });

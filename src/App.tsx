@@ -84,7 +84,10 @@ function useScrollMemory() {
   const positions = useRef(new Map<string, number>());
   const lastKey = useRef(location.key);
   useLayoutEffect(() => {
-    positions.current.set(lastKey.current, window.scrollY);
+    const moved = lastKey.current !== location.key;
+    // A card morphing into its page has already taken the page to the top, so remember where it was.
+    positions.current.set(lastKey.current, moved && morphState.fromY !== null ? morphState.fromY : window.scrollY);
+    if (moved) morphState.fromY = null;
     lastKey.current = location.key;
   });
   useEffect(() => {
