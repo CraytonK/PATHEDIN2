@@ -71,6 +71,7 @@ export function Post({ author, where, note, ago, to, title, subtitle, why, stats
   return (
     <motion.article
       className={`post ${variant ? `post--${variant}` : ''} ${kind ? `post--is-${kind}` : ''} ${thumb ? 'has-thumb' : ''}`}
+      data-morph-card={to}
       initial={{ opacity: 0, y: 18 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: '-40px' }}
@@ -81,13 +82,15 @@ export function Post({ author, where, note, ago, to, title, subtitle, why, stats
         <PostByline author={author} note={note} where={where} ago={ago} />
         <div className="post__main">
           <Link to={to} className="post__link">
-            <h2 className="post__title">{title}</h2>
+            <h2 className="post__title" data-morph="title">
+              {title}
+            </h2>
             {subtitle && <p className="post__sub">{subtitle}</p>}
           </Link>
           {extra && <div className="post__extra">{extra}</div>}
         </div>
         {thumb && (
-          <Link to={to} className={`post__thumb post__thumb--${thumbKind}`} tabIndex={-1} aria-hidden="true">
+          <Link to={to} className={`post__thumb post__thumb--${thumbKind}`} tabIndex={-1} aria-hidden="true" data-morph="art">
             {thumb}
           </Link>
         )}

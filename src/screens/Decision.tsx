@@ -1,7 +1,7 @@
 import { AnimatePresence, motion } from 'framer-motion';
 import { useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { Page } from '../components/chrome';
+import { DockTitle, Page } from '../components/chrome';
 import { PathHint } from '../components/path/PathHint';
 import { RequestButton } from '../components/content';
 import { Avatar, Button, PersonName, RelationTag, SaveToggle } from '../components/ui';
@@ -167,9 +167,12 @@ export function DecisionScreen() {
         </>
       }
     >
+      <DockTitle title={d.title} />
       <div className="dd">
         <div className="dd__main">
-          <h1 className="dd__title">{d.title}</h1>
+          <h1 className="dd__title" data-morph-to="title">
+            {d.title}
+          </h1>
           <div className="dd__owner">
             <Avatar id={d.owner} size={40} />
             <div>
@@ -192,7 +195,7 @@ export function DecisionScreen() {
           </div>
           <p className="dd__context t-body">{d.context}</p>
 
-          <section className="dd__fork">
+          <section className="dd__fork" data-morph-to="art">
             <p className="dd__fork-h t-footnote">Where each road led the people who took it</p>
             <ForkMap d={d} focus={focus} setFocus={setFocus} />
           </section>

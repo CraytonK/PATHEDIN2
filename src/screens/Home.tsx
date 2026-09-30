@@ -546,7 +546,7 @@ function RailCommunityList() {
     <ul className="cm-list">
       {list.map((c, i) => (
         <motion.li key={c.id} {...rise(i, 8)}>
-          <Link to={`/c/${c.id}`} className="cm-list__row">
+          <Link to={`/c/${c.id}`} className="cm-list__row" data-morph-card={`/c/${c.id}`}>
             <span className="cm-list__mosaic" aria-hidden="true">
               {c.memberIds
                 .filter((m) => m !== ME)
@@ -556,7 +556,9 @@ function RailCommunityList() {
                 ))}
             </span>
             <span className="cm-list__text">
-              <span className="cm-list__title">{c.title}</span>
+              <span className="cm-list__title" data-morph="title">
+                {c.title}
+              </span>
               <span className="cm-list__live">
                 <span className="cm-list__dot" aria-hidden="true" />
                 {c.activeNow} here now

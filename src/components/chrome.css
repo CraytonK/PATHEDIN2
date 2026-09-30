@@ -53,6 +53,47 @@
     0 1px 0 var(--separator),
     0 14px 30px -24px rgba(15, 23, 42, 0.4);
 }
+/* With a docked title beneath it, the lift moves down to the dock's edge. */
+:root[data-dock] .mbar.is-scrolled {
+  box-shadow: 0 1px 0 var(--separator);
+}
+
+/* ── The docked title (chrome.tsx DockTitle): a detail page's title, pinned under the top bar once it scrolls away ── */
+.dock {
+  position: fixed;
+  top: var(--topbar-h);
+  left: 0;
+  right: 0;
+  z-index: 39;
+  height: 48px;
+  background: var(--topbar-bg);
+  -webkit-backdrop-filter: var(--bar-blur);
+  backdrop-filter: var(--bar-blur);
+  box-shadow:
+    0 1px 0 var(--separator),
+    0 14px 30px -24px rgba(15, 23, 42, 0.4);
+}
+.dock__in {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  height: 100%;
+}
+.dock__title {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  font-size: 15px;
+  line-height: 22px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  color: var(--label);
+}
+.dock__end {
+  flex: none;
+}
 .mbar__left,
 .mbar__right {
   display: flex;

@@ -1,7 +1,7 @@
 import { AnimatePresence, motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
-import { Page } from '../components/chrome';
+import { DockTitle, Page } from '../components/chrome';
 import { CommunityRoute, membersAt } from '../components/CommunityRoute';
 import { CommunityTitle, DecisionItem, JoinButton, PersonRow, QuestionItem, StoryItem, ThreadItem } from '../components/content';
 import { Avatar, Button, PersonName, TextTabs, Stat } from '../components/ui';
@@ -127,8 +127,11 @@ export function CommunityScreen() {
         </>
       }
     >
+      <DockTitle title={c.title}>
+        <JoinButton id={c.id} />
+      </DockTitle>
       <header className="cm__head">
-        <h1 className="cm__title">
+        <h1 className="cm__title" data-morph-to="title">
           <CommunityTitle c={c} size="lg" />
         </h1>
         <p className="cm__desc t-body c-2">{c.description}</p>

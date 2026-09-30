@@ -17,12 +17,17 @@
 .story__progress {
   position: fixed;
   top: calc(var(--topbar-h) - 4px);
+  transition: top 380ms cubic-bezier(0.16, 1, 0.3, 1);
   left: 0;
   right: 0;
   height: 10px;
   z-index: 41;
   overflow-x: clip;
   pointer-events: none;
+}
+/* When the title docks, the walked line rides the dock's lower edge. */
+:root[data-dock] .story__progress {
+  top: calc(var(--topbar-h) + 48px - 4px);
 }
 .story__progress::before {
   content: '';

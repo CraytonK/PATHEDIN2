@@ -16,7 +16,7 @@ html {
 
 body {
   margin: 0;
-  background: var(--grain) 0 0 / 180px 180px, var(--bg);
+  background: var(--bg);
   color: var(--label);
   font-family: var(--font-sans);
   font-size: 16px;
@@ -490,6 +490,80 @@ ol {
   }
 }
 
+/* ── The card becomes the page (lib/morph.ts) ──────────────────────────────────────────
+   The card's title and picture grow into the page's while the page you left falls back and fades; once they
+   have nearly landed, the rest of the new page rises in around them. The bars stay put. */
+.vt-landing [data-morph-to='title'] {
+  view-transition-name: morph-title;
+}
+.vt-landing [data-morph-to='art'] {
+  view-transition-name: morph-art;
+}
+:root[data-vt='morph'] .mbar {
+  view-transition-name: topbar;
+}
+:root[data-vt='morph'] .tabbar {
+  view-transition-name: tabbar;
+}
+:root[data-vt='morph']::view-transition {
+  background: var(--bg);
+}
+:root[data-vt='morph']::view-transition-old(root) {
+  animation: 200ms var(--ease-out) both vt-recede;
+}
+:root[data-vt='morph']::view-transition-new(root) {
+  animation: 440ms 240ms var(--ease-out) both vt-arrive;
+}
+:root[data-vt='morph']::view-transition-group(morph-title),
+:root[data-vt='morph']::view-transition-group(morph-art) {
+  animation-duration: 540ms;
+  animation-timing-function: var(--ease-out);
+}
+:root[data-vt='morph']::view-transition-old(morph-title) {
+  animation: 180ms var(--ease-out) both vt-out;
+}
+:root[data-vt='morph']::view-transition-new(morph-title) {
+  animation: 300ms 60ms var(--ease-out) both vt-in;
+}
+/* Both pictures fill the frame as it grows, so it reads as one picture getting larger. */
+:root[data-vt='morph']::view-transition-image-pair(morph-art) {
+  overflow: hidden;
+  border-radius: var(--r-card);
+}
+:root[data-vt='morph']::view-transition-old(morph-art),
+:root[data-vt='morph']::view-transition-new(morph-art) {
+  height: 100%;
+  object-fit: cover;
+}
+:root[data-vt='morph']::view-transition-old(morph-art) {
+  animation: 300ms var(--ease-out) both vt-out;
+}
+:root[data-vt='morph']::view-transition-new(morph-art) {
+  animation: 420ms 80ms var(--ease-out) both vt-in;
+}
+@keyframes vt-recede {
+  to {
+    opacity: 0;
+    scale: 0.985;
+  }
+}
+@keyframes vt-arrive {
+  from {
+    opacity: 0;
+    translate: 0 14px;
+  }
+}
+@keyframes vt-out {
+  to {
+    opacity: 0;
+  }
+}
+@keyframes vt-in {
+  from {
+    opacity: 0;
+  }
+}
+
 /* ── Rolling numbers: a count that changes rolls to its new value (ui.tsx Rolling) ── */
 .roll {
   position: relative;
@@ -499,6 +573,12 @@ ol {
   font-variant-numeric: tabular-nums;
 }
 .roll > span {
+  display: inline-block;
+}
+.roll__slot {
+  position: relative;
+}
+.roll__slot > span {
   display: inline-block;
 }
 

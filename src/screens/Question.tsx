@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
 import { useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { Page } from '../components/chrome';
+import { DockTitle, Page } from '../components/chrome';
 import { PathHint } from '../components/path/PathHint';
 import { CredibilityLabel, RequestButton } from '../components/content';
 import { Avatar, AvatarStack, Button, Helpful, PersonName, RelationTag } from '../components/ui';
@@ -45,12 +45,15 @@ export function QuestionScreen() {
         </>
       }
     >
+      <DockTitle title={q.title} />
       <div className="qd">
         <article className="qd__main">
           <p className="qd__about t-subhead">
             About {wp(q.about[0]).label} → {wp(q.about[1]).label} · in <Link to={`/c/${c.id}`}>{c.title}</Link>
           </p>
-          <h1 className="qd__title">{q.title}</h1>
+          <h1 className="qd__title" data-morph-to="title">
+            {q.title}
+          </h1>
           <p className="qd__body t-body">{q.body}</p>
           <div className="qd__asker">
             <Avatar id={q.asker} size={36} />

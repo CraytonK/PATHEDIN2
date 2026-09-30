@@ -1,6 +1,6 @@
 import { AnimatePresence, motion, MotionConfig } from 'framer-motion';
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
-import { BrowserRouter, HashRouter, Route, Routes, useLocation, useNavigationType } from 'react-router-dom';
+import { BrowserRouter, HashRouter, Route, Routes, useLocation, useNavigate, useNavigationType } from 'react-router-dom';
 import { TabBar, TopBar, ToastLayer } from './components/chrome';
 import { PeekLayer } from './components/Peek';
 import { PathSplash } from './components/PathSplash';
@@ -12,6 +12,7 @@ import { EditProfileLayer } from './components/EditProfile';
 import { SkipLink } from './components/SkipLink';
 import { FlightLayer } from './components/FlightLayer';
 import { installProfileFlights } from './lib/flight';
+import { installMorphs, morphState, setMorphNavigator } from './lib/morph';
 import { installPointerDetails } from './lib/pointer';
 import { useIsMobile } from './lib/motion';
 import { useApp } from './lib/store';
@@ -103,7 +104,10 @@ function Shell() {
   const endSplash = useCallback(() => setSplash(false), []);
   useTheme();
 
+  const navigate = useNavigate();
+  useEffect(() => setMorphNavigator((to) => navigate(to)), [navigate]);
   useEffect(() => installProfileFlights(), []);
+  useEffect(() => installMorphs(), []);
   useEffect(() => installPointerDetails(), []);
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
@@ -125,6 +129,14 @@ function Shell() {
   const inWrite = location.pathname === '/write';
   // Messages keeps its own split view on desktop, so thread changes shouldn't animate the whole page.
   const routeKey = location.pathname.startsWith('/messages') && !isMobile ? '/messages' : location.pathname;
+  // While a card morphs into its page (lib/morph.ts), the page swaps in place: the transition is the entrance.
+  const shownKey = useRef(routeKey);
+  const lastRoute = useRef(routeKey);
+  if (routeKey !== lastRoute.current) {
+    lastRoute.current = routeKey;
+    // After a morph the key is the page before it, so returning there still needs a key of its own.
+    if (!morphState.active) shownKey.current = routeKey === shownKey.current ? `${routeKey} ` : routeKey;
+  }
 
   // Signing in plays the Path splash; the app appears underneath it once it has covered the page.
   const splashLayer = splash && <PathSplash onCovered={signIn} onDone={endSplash} />;
@@ -145,8 +157,9 @@ function Shell() {
         {!isMobile && !inWrite && <TopBar />}
         <AnimatePresence mode="wait" initial={false} onExitComplete={restore}>
           <motion.main
-            key={routeKey}
+            key={shownKey.current}
             id="main"
+            data-path={location.pathname}
             tabIndex={-1}
             // Desktop screens arrive with a short rise out of a 3px blur; iPhone keeps the push from the side.
             initial={isMobile ? { opacity: 0, x: back ? -28 : 36 } : { opacity: 0, y: 8, filter: 'blur(3px)' }}

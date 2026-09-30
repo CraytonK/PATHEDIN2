@@ -31,7 +31,7 @@
   color: var(--ink);
 }
 .banner--dawn {
-  background: var(--grain-dark) 0 0 / 180px 180px, #101b3d;
+  background: #101b3d;
 }
 
 /* The pencil on your own banner: a solid cream disc, so it reads on any photo. */

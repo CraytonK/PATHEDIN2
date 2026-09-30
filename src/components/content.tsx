@@ -235,8 +235,8 @@ export function SegmentArt({ story, height = 150, labels = true }: { story: Stor
 /** A featured story, like the lead on a Medium topic page: the Path art large, then the preview. */
 export function StoryLead({ story }: { story: Story }) {
   return (
-    <Link to={`/stories/${story.id}`} className="story-lead">
-      <div className="story-lead__art">
+    <Link to={`/stories/${story.id}`} className="story-lead" data-morph-card={`/stories/${story.id}`}>
+      <div className="story-lead__art" data-morph="art">
         <SegmentArt story={story} height={170} />
       </div>
       <div className="story-lead__text">
@@ -245,7 +245,9 @@ export function StoryLead({ story }: { story: Story }) {
           <span>{people[story.author].name}</span>
           <span className="c-2">· {story.published}</span>
         </p>
-        <h3 className="story-lead__title">{story.title}</h3>
+        <h3 className="story-lead__title" data-morph="title">
+          {story.title}
+        </h3>
         <p className="story-lead__dek">{story.dek}</p>
         <p className="story-lead__meta">
           {wp(story.segment[0]).short} → {wp(story.segment[1]).short} · {story.minutes} min read
@@ -491,10 +493,10 @@ export function JoinButton({ id, size = 'small' }: { id: string; size?: 'small' 
 
 export function CommunityRow({ c, reason, i }: { c: Community; reason?: string; i?: number }) {
   return (
-    <MotionLink to={`/c/${c.id}`} className="community-row" {...(i !== undefined ? rise(i, 12) : {})}>
+    <MotionLink to={`/c/${c.id}`} className="community-row" data-morph-card={`/c/${c.id}`} {...(i !== undefined ? rise(i, 12) : {})}>
       <div className="community-row__main">
         {reason && <p className="community-row__reason t-caption1">{reason}</p>}
-        <h3 className="community-row__title">
+        <h3 className="community-row__title" data-morph="title">
           <CommunityTitle c={c} />
         </h3>
         <p className="t-subhead c-2 clamp-2">{c.description}</p>

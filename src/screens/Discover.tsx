@@ -274,8 +274,8 @@ function GuideCard({ id, i = 0 }: { id: string; i?: number }) {
 /** A community, as a journey: who's on it and how alive it is. */
 function CommunityCard({ c, reason, i = 0 }: { c: Community; reason?: string; i?: number }) {
   return (
-    <MotionLink to={`/c/${c.id}`} className="dcard dcard--community" {...rise(i)}>
-      <h3 className="dcard__title">
+    <MotionLink to={`/c/${c.id}`} className="dcard dcard--community" data-morph-card={`/c/${c.id}`} {...rise(i)}>
+      <h3 className="dcard__title" data-morph="title">
         <CommunityTitle c={c} />
       </h3>
       <p className="dcard__why clamp-3">{c.description}</p>

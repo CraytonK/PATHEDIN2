@@ -55,7 +55,7 @@ export function RailPosts({ items }: { items: { author: string; where?: string; 
   return (
     <ul className="rail-posts">
       {items.map((it) => (
-        <li key={it.to}>
+        <li key={it.to} data-morph-card={it.to}>
           <p className="rail-posts__by">
             <Avatar id={it.author} size={20} />
             <span>
@@ -67,7 +67,7 @@ export function RailPosts({ items }: { items: { author: string; where?: string; 
               <span className="rail-posts__strong">{people[it.author].name}</span>
             </span>
           </p>
-          <Link to={it.to} className="rail-posts__title">
+          <Link to={it.to} className="rail-posts__title" data-morph="title">
             {it.title}
           </Link>
           {it.meta && <p className="rail-posts__meta">{it.meta}</p>}

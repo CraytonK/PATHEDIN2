@@ -1,8 +1,8 @@
 import { AnimatePresence, motion } from 'framer-motion';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Page } from '../components/chrome';
-import { Button } from '../components/ui';
+import { Button, Rolling } from '../components/ui';
 import { IconCheck, IconMinus, IconPlus, IconGuidePlus } from '../components/icons';
 import { people, peopleList, me, ME } from '../data/people';
 import { wp } from '../data/waypoints';
@@ -70,12 +70,24 @@ function PriceStepper({ value, onChange, step = 5, label }: { value: number; onC
       <button type="button" aria-label={`Lower ${label}`} onClick={() => onChange(Math.max(5, value - step))}>
         <IconMinus size={14} strokeWidth={2.2} />
       </button>
-      <span className="gs-price__val">${value}</span>
+      <span className="gs-price__val">
+        <Rolling value={value} format={(n) => `$${n}`} />
+      </span>
       <button type="button" aria-label={`Raise ${label}`} onClick={() => onChange(Math.min(1000, value + step))}>
         <IconPlus size={14} strokeWidth={2.2} />
       </button>
     </div>
   );
+}
+
+/** What you keep from a paid service: it rolls up from $0 a beat after the service is switched on, then follows the price. */
+function Keep({ price }: { price: number }) {
+  const [armed, setArmed] = useState(false);
+  useEffect(() => {
+    const t = setTimeout(() => setArmed(true), 180);
+    return () => clearTimeout(t);
+  }, []);
+  return <Rolling value={armed ? payout(price) : 0} format={fmtMoney} />;
 }
 
 /** Your Guide card as people will see it, updating as you go. */
@@ -109,7 +121,9 @@ function Preview({ d }: { d: MyGuide }) {
         {on.map((s) => (
           <li key={s.kind}>
             <span>{serviceKinds[s.kind].label}</span>
-            <strong>{priceLabel({ price: s.price, per: serviceKinds[s.kind].per })}</strong>
+            <strong>
+              <Rolling value={s.price} format={(n) => priceLabel({ price: n, per: serviceKinds[s.kind].per })} />
+            </strong>
           </li>
         ))}
       </ul>
@@ -330,10 +344,31 @@ export function GuideSetup() {
                       <span>
                         {k.timed ? `${s.minutes ?? k.minutes} min` : 'Written notes'}
                         {k.per === 'month' ? ' · monthly' : k.per === 'seat' ? ` · ${s.seats} seats` : ''}
-                        {s.on && ` · you keep ${fmtMoney(payout(s.price))}`}
+                        <AnimatePresence initial={false}>
+                          {s.on && (
+                            <motion.span key="keep" className="gs-keep" initial={{ opacity: 0, x: -4 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, transition: { duration: 0.12 } }} transition={{ duration: 0.3, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}>
+                              {' · you keep '}
+                              <Keep price={s.price} />
+                            </motion.span>
+                          )}
+                        </AnimatePresence>
                       </span>
                     </span>
-                    {s.on && <PriceStepper label={`${k.label} price`} value={s.price} step={k.per === 'month' ? 20 : 5} onChange={(v) => setService(s.kind, { price: v })} />}
+                    {/* Switching a service on is a cascade, like a thermostat waking: the switch, then its price, then what you keep. */}
+                    <AnimatePresence initial={false}>
+                      {s.on && (
+                        <motion.div
+                          key="price"
+                          className="gs-price-wrap"
+                          initial={{ opacity: 0, x: 10, filter: 'blur(3px)' }}
+                          animate={{ opacity: 1, x: 0, filter: 'blur(0px)' }}
+                          exit={{ opacity: 0, x: 6, filter: 'blur(2px)', transition: { duration: 0.14 } }}
+                          transition={{ duration: 0.34, delay: 0.06, ease: [0.16, 1, 0.3, 1] }}
+                        >
+                          <PriceStepper label={`${k.label} price`} value={s.price} step={k.per === 'month' ? 20 : 5} onChange={(v) => setService(s.kind, { price: v })} />
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
                     <Toggle label={`Offer ${k.label}`} on={s.on} onChange={(v) => setService(s.kind, { on: v })} />
                   </li>
                 );

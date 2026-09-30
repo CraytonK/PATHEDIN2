@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-09-30T19:30:38Z",
+  "generatedAt": "2026-09-30T20:03:39Z",
   "title": "Design System: PathedIn",
   "extensions": {
     "colorMeta": {
@@ -624,6 +624,26 @@
         "name": "theme-reveal",
         "value": "clip-path circle from the switch point, 620ms",
         "purpose": "Switching appearance."
+      },
+      {
+        "name": "card-to-page",
+        "value": "View Transition: title and picture groups 540ms ease-out; old page to 98.5% and 0 opacity in 200ms; new page rises 14px over 440ms after 240ms",
+        "purpose": "Opening a story, question, decision or community from its card."
+      },
+      {
+        "name": "digit-roll",
+        "value": "each changed digit slides a full line with a 1.5px blur, spring (response 0.32, damping 0.86)",
+        "purpose": "Any number that changes: prices, payouts, counts."
+      },
+      {
+        "name": "switch-cascade",
+        "value": "knob, then stepper in from 10px and 3px blur after 60ms, then the payout rolls up from $0 after 180ms",
+        "purpose": "Switching a Guide service on."
+      },
+      {
+        "name": "dock",
+        "value": "48px bar slides from under the top bar, 380ms ease-out; title rises 10px",
+        "purpose": "A detail page's title once it scrolls away."
       }
     ],
     "breakpoints": [
@@ -757,7 +777,7 @@
       },
       {
         "name": "The Clear Words Rule",
-        "body": "Route silk lives only where a panel has no words: behind the intro's composition, along the top of a Path cover above the step names, to the right of the destination's words, and on the profile card's cover. Each panel masks the silk away from its text (`--silk-mask`); panels that are all text (Your Path this week, the earnings card, Become a Guide) are plain grained navy with no silk.",
+        "body": "Route silk lives only where a panel has no words: behind the intro's composition, along the top of a Path cover above the step names, to the right of the destination's words, and on the profile card's cover. Each panel masks the silk away from its text (`--silk-mask`); panels that are all text (Your Path this week, the earnings card, Become a Guide) are plain navy with no silk.",
         "section": "elevation"
       },
       {
@@ -782,7 +802,7 @@
     ],
     "donts": [
       "**Don't** bring back the graphite world, Schibsted Grotesk or the Playfair wordmark.",
-      "**Don't** use gradients on surfaces (a glow, a mesh, a sheen) or gradient text; surfaces are flat, with grain for texture. Don't use large areas of signal blue, neon edges, lit edges that follow the cursor, or coloured side stripes. The one exception is the schedule's 4px event bar, a calendar marker from the reference that says what kind of event it is.",
+      "**Don't** use gradients on surfaces (a glow, a mesh, a sheen) or gradient text; surfaces are flat, with no grain or noise texture either. Don't use large areas of signal blue, neon edges, lit edges that follow the cursor, or coloured side stripes. The one exception is the schedule's 4px event bar, a calendar marker from the reference that says what kind of event it is.",
       "**Don't** nest a card in a card, or bring back rows between hairlines on the cream.",
       "**Don't** add a sidebar or drawer that repeats the top bar. One place for each way in: sections in the top bar, you in the account menu, everything by name in ⌘K.",
       "**Don't** give a kind of post or a Network group its own layout; tell them apart with the context line, the thumbnail, the strip or the signal line. Don't put a card field for payment anywhere in the prototype.",

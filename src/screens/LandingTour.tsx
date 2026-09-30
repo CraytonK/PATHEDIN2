@@ -552,13 +552,19 @@ function Guides({ onJoin }: { onJoin: () => void }) {
           <p className="tour-earn__p">Answer for free, hold free Office Hours, and charge for the rest. PathedIn keeps {Math.round(PLATFORM_FEE * 100)}%.</p>
           <label className="tour-range">
             <span>
-              Price per session <strong>${price}</strong>
+              Price per session{' '}
+              <strong>
+                <Rolling value={price} format={(n) => `$${n}`} />
+              </strong>
             </span>
             <input type="range" min={20} max={200} step={5} value={price} onChange={(e) => setPrice(+e.target.value)} style={{ '--p': `${((price - 20) / 180) * 100}%` } as CSSProperties} />
           </label>
           <label className="tour-range">
             <span>
-              Sessions a month <strong>{count}</strong>
+              Sessions a month{' '}
+              <strong>
+                <Rolling value={count} />
+              </strong>
             </span>
             <input type="range" min={1} max={30} step={1} value={count} onChange={(e) => setCount(+e.target.value)} style={{ '--p': `${((count - 1) / 29) * 100}%` } as CSSProperties} />
           </label>
@@ -567,7 +573,9 @@ function Guides({ onJoin }: { onJoin: () => void }) {
             <strong>
               <Rolling value={keep} format={(n) => `$${n.toLocaleString('en-CA')}`} />
             </strong>
-            <span>a month, after PathedIn’s {fmtMoney(Math.round(gross * PLATFORM_FEE))}</span>
+            <span>
+              a month, after PathedIn’s <Rolling value={Math.round(gross * PLATFORM_FEE)} format={fmtMoney} />
+            </span>
           </div>
           <button type="button" className="tour-earn__cta" onClick={onJoin}>
             Become a Path Guide

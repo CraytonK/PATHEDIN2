@@ -1,6 +1,6 @@
 /* ── Signed-out intro page ───────────────────────────────────── */
 .landing {
-  --landing-bg: var(--grain) 0 0 / 180px 180px, var(--bg-intro);
+  --landing-bg: var(--bg-intro);
   min-height: 100dvh;
   display: flex;
   flex-direction: column;

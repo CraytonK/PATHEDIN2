@@ -1,7 +1,7 @@
 import { motion, useScroll, useSpring, useTransform } from 'framer-motion';
 import { useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { Page } from '../components/chrome';
+import { DockTitle, Page } from '../components/chrome';
 import { TransitMap } from '../components/path/TransitMap';
 import { RequestButton, SegmentArt, StoryItem } from '../components/content';
 import { RespondButton, ResponsesSheet, StoryText, TopicPills, responseCount } from '../components/Reading';
@@ -81,10 +81,13 @@ export function StoryScreen() {
         <motion.span className="story__progress-walked" style={{ scaleX: progress }} />
         <motion.span className="story__progress-walker" style={{ x: walker, opacity: walkerShown }} />
       </div>
+      <DockTitle title={s.title} />
       <article className="story">
         <header className="story__head">
           <TopicPills ids={s.communities} />
-          <h1 className="story__title">{s.title}</h1>
+          <h1 className="story__title" data-morph-to="title">
+            {s.title}
+          </h1>
           <p className="story__dek">{s.dek}</p>
           <div className="story__byline">
             <Avatar id={s.author} size={44} />
@@ -106,7 +109,7 @@ export function StoryScreen() {
           {bar}
         </header>
 
-        <figure className="story__art">
+        <figure className="story__art" data-morph-to="art">
           <SegmentArt story={s} height={140} />
           <figcaption>{a.first}’s Path. This story happens on the stretch in navy.</figcaption>
         </figure>

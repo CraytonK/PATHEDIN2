@@ -107,12 +107,7 @@
   --highlight: rgba(36, 72, 200, 0.12);
   --highlight-mine: rgba(36, 72, 200, 0.22);
 
-  /* Film grain, as a tiling SVG noise: dark specks on the cream paper, light specks on navy. */
-  --grain-light: url("data:image/svg+xml,%3Csvg%20xmlns=%27http://www.w3.org/2000/svg%27%20width=%27180%27%20height=%27180%27%3E%3Cfilter%20id=%27g%27%3E%3CfeTurbulence%20type=%27fractalNoise%27%20baseFrequency=%270.9%27%20numOctaves=%273%27%20stitchTiles=%27stitch%27/%3E%3CfeColorMatrix%20values=%270%200%200%200%200%200%200%200%200%200%200%200%200%200%200%200%200%200%201.6%20-0.62%27/%3E%3C/filter%3E%3Crect%20width=%27100%25%27%20height=%27100%25%27%20filter=%27url%28%23g%29%27%20opacity=%270.22%27/%3E%3C/svg%3E");
-  --grain-dark: url("data:image/svg+xml,%3Csvg%20xmlns=%27http://www.w3.org/2000/svg%27%20width=%27180%27%20height=%27180%27%3E%3Cfilter%20id=%27g%27%3E%3CfeTurbulence%20type=%27fractalNoise%27%20baseFrequency=%270.9%27%20numOctaves=%273%27%20stitchTiles=%27stitch%27/%3E%3CfeColorMatrix%20values=%270%200%200%200%201%200%200%200%200%201%200%200%200%200%201%200%200%200%201.6%20-0.62%27/%3E%3C/filter%3E%3Crect%20width=%27100%25%27%20height=%27100%25%27%20filter=%27url%28%23g%29%27%20opacity=%270.2%27/%3E%3C/svg%3E");
-  --grain: var(--grain-light);
-
-  /* Immersive panels: flat Midnight Navy with grain, lit by the route silk. Same in both appearances. */
+  /* Immersive panels: flat Midnight Navy, lit by the route silk. Same in both appearances. */
   --immersive-bg: #0f172a;
   --immersive-deep: #0a1020;
   --immersive-ink: #fff7ed;
@@ -123,8 +118,8 @@
   --immersive-well: #1d2848;
   --immersive-fill: #26335a;
   --immersive-card-border: rgba(255, 247, 237, 0.14);
-  /* Flat navy with a fine film grain: depth from texture and the route silk, never from a gradient. */
-  --immersive-surface: var(--grain-dark) 0 0 / 180px 180px, var(--immersive-bg);
+  /* Flat navy: depth from the route silk and the solid cards on it, never from a gradient. */
+  --immersive-surface: var(--immersive-bg);
 
   /* ── Geometry ─────────────────────────────────────────────── */
   --gutter: 16px;
@@ -162,7 +157,6 @@
   and primary actions fill with cream.
 */
 :root[data-theme='dark'] {
-  --grain: var(--grain-dark);
   color-scheme: dark;
   --bg: #0f172a;
   --bg-grouped: #141e35;
@@ -226,7 +220,6 @@
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme]) {
     color-scheme: dark;
-    --grain: var(--grain-dark);
     --bg: #0f172a;
     --bg-grouped: #141e35;
     --bg-elevated: #1a2540;

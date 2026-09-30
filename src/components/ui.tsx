@@ -184,29 +184,43 @@ export function SaveToggle({ saveKey, label = 'Save', compact }: { saveKey: stri
 }
 
 /* ── Rolling number ─────────────────────────────────────────────
-   A count that changes rolls to its new value: up when it grows, down when it shrinks, so the change is
-   seen rather than just noticed later. */
+   A count that changes rolls to its new value, one digit at a time like a counter wheel: only the digits
+   that change move, up when it grows and down when it shrinks, so "24" to "23" keeps the 2 and turns the 4. */
+
+const rollVariants = {
+  enter: (dir: number) => ({ y: `${dir * 100}%`, opacity: 0, filter: 'blur(1.5px)' }),
+  center: { y: '0%', opacity: 1, filter: 'blur(0px)' },
+  exit: (dir: number) => ({ y: `${-dir * 100}%`, opacity: 0, filter: 'blur(1.5px)' }),
+};
+
+function RollDigit({ ch, dir, appear }: { ch: string; dir: number; appear: boolean }) {
+  return (
+    <span className="roll__slot">
+      <AnimatePresence initial={appear} mode="popLayout" custom={dir}>
+        <motion.span key={ch} custom={dir} variants={rollVariants} initial="enter" animate="center" exit="exit" transition={springs.snappy}>
+          {ch}
+        </motion.span>
+      </AnimatePresence>
+    </span>
+  );
+}
 
 export function Rolling({ value, format = (n: number) => n.toLocaleString('en-CA'), className = '' }: { value: number; format?: (n: number) => string; className?: string }) {
   const prev = useRef(value);
+  const mounted = useRef(false);
   const dir = value >= prev.current ? 1 : -1;
   useLayoutEffect(() => {
     prev.current = value;
+    mounted.current = true;
   }, [value]);
-  const text = format(value);
+  const chars = Array.from(format(value));
   return (
     <span className={`roll ${className}`}>
-      <AnimatePresence initial={false} mode="popLayout">
-        <motion.span
-          key={text}
-          initial={{ y: `${dir * 80}%`, opacity: 0 }}
-          animate={{ y: '0%', opacity: 1 }}
-          exit={{ y: `${-dir * 80}%`, opacity: 0 }}
-          transition={springs.snappy}
-        >
-          {text}
-        </motion.span>
-      </AnimatePresence>
+      {chars.map((ch, i) => {
+        // Each character keeps its place counted from the right, so the units stay the units as a number grows.
+        const place = chars.length - i;
+        return /\d/.test(ch) ? <RollDigit key={place} ch={ch} dir={dir} appear={mounted.current} /> : <span key={place}>{ch}</span>;
+      })}
     </span>
   );
 }
@@ -220,17 +234,18 @@ export function CountUp({ value, format = (n: number) => n.toLocaleString('en-CA
   const inView = useInView(ref, { once: true, margin: '-40px' });
   const reduce = useReducedMotion();
   const [shown, setShown] = useState(reduce ? value : 0);
+  const [counted, setCounted] = useState(!!reduce);
+  const target = useRef(value);
+  target.current = value;
   useEffect(() => {
-    if (!inView || reduce) {
-      if (reduce) setShown(value);
-      return;
-    }
-    const controls = animate(0, value, { duration: 1.2, ease: [0.16, 1, 0.3, 1], onUpdate: (v) => setShown(Math.round(v)) });
+    if (!inView || counted) return;
+    const controls = animate(0, target.current, { duration: 1.2, ease: [0.16, 1, 0.3, 1], onUpdate: (v) => setShown(Math.round(v)), onComplete: () => setCounted(true) });
     return () => controls.stop();
-  }, [inView, reduce, value]);
+  }, [inView, counted]);
+  // Once it has counted up, a change (saving a post, a new connection) rolls instead of counting again.
   return (
     <span ref={ref} className="t-num">
-      {format(shown)}
+      {counted ? <Rolling value={value} format={format} /> : format(shown)}
     </span>
   );
 }

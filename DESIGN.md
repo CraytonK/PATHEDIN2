@@ -253,7 +253,7 @@ A warm cream ground with navy ink, one Midnight Navy accent for anything with we
 - **Signal Blue**: links and text actions, the dashed future, focus rings, "you", selected tags, and the unit beside a numeral. It is bright on purpose, so it stays small.
 
 ### Neutral
-- **Soft Cream**: the page, with a fine film grain over it so the cream reads as paper rather than a flat fill.
+- **Soft Cream**: the page, a flat fill (no grain: the user tried it and didn't like it, September 30, 2026).
 - **Cream Card**: cards and panels, white on the cream (the dashboard's cards).
 - **Cream Floating**: sheets, menus and the palette, pure white.
 - **Cream Sunken / Fill**: recessed wells, the route band, quiet buttons, fields, slots and tags.
@@ -317,7 +317,7 @@ The pieces of the app are unchanged; they are laid out as a dashboard.
 
 ## Elevation & Depth
 
-Cards are white on the cream with a faint navy hairline and a long, soft fall-off; under the pointer the fall-off deepens and the card rises 2px. Things that float add a longer shadow. Immersive panels are the deepest surface: flat Midnight Navy with a fine light grain (no gradient, no glow), route silk drawn across it, and solid navy cards (a lifted navy with a cream hairline) on top. Nothing on a navy panel is see-through: cards, wells, chips, buttons, knockouts and a cover's caption strip are all solid (the user's call, September 30, 2026), so the silk never shows through words. The dark appearance keeps the same structure with cream hairlines and darker shadows.
+Cards are white on the cream with a faint navy hairline and a long, soft fall-off; under the pointer the fall-off deepens and the card rises 2px. Things that float add a longer shadow. Immersive panels are the deepest surface: flat Midnight Navy (no gradient, no glow, no grain), route silk drawn across it, and solid navy cards (a lifted navy with a cream hairline) on top. Nothing on a navy panel is see-through: cards, wells, chips, buttons, knockouts and a cover's caption strip are all solid (the user's call, September 30, 2026), so the silk never shows through words. The dark appearance keeps the same structure with cream hairlines and darker shadows.
 
 ### Shadow Vocabulary
 - **Card** (`box-shadow: 0 0 0 1px rgba(15,23,42,0.055), 0 1px 2px rgba(15,23,42,0.035), 0 16px 36px -26px rgba(15,23,42,0.22)`): every card at rest (`--card-shadow`, also `--surface-edge`).
@@ -330,7 +330,7 @@ Cards are white on the cream with a faint navy hairline and a long, soft fall-of
 ### Named Rules
 **The Solid on Navy Rule.** Surfaces on an immersive panel are solid navy lifts (#172140 for cards and knockouts, #1d2848 for wells and hovers, #26335a for chips and quiet buttons), never translucent, so nothing behind them shows through their words. On cream, cards are solid white.
 
-**The Clear Words Rule.** Route silk lives only where a panel has no words: behind the intro's composition, along the top of a Path cover above the step names, to the right of the destination's words, and on the profile card's cover. Each panel masks the silk away from its text (`--silk-mask`); panels that are all text (Your Path this week, the earnings card, Become a Guide) are plain grained navy with no silk.
+**The Clear Words Rule.** Route silk lives only where a panel has no words: behind the intro's composition, along the top of a Path cover above the step names, to the right of the destination's words, and on the profile card's cover. Each panel masks the silk away from its text (`--silk-mask`); panels that are all text (Your Path this week, the earnings card, Become a Guide) are plain navy with no silk.
 
 **The One Card Deep Rule.** Cards never nest. Something set into a card (a quoted request, a day tile, a tag, a route line, a reply bubble) is a cream well with no shadow.
 
@@ -378,7 +378,7 @@ Stories alone set their title in Charter Bold.
 - **Guide profile:** a Guide's profile opens on its Guide tab. First *why they know this road*: their walked Path as a line with the moves they guide drawn heavy in navy and tagged, their experience in a sentence. Then four stats (rating with a blue star, people helped, followers, Guide since), *Known in* (their rank in each Path Community; a navy tile marks Top Guide), expertise tags, services, availability (the next three free Office Hours and when paid sessions run), reviews (a 44px rating, then each review in Charter on a cream well with the service it was for), and contributions (answers, stories, conversations). The side column carries a navy Guide card: badge, rating, top standing, helped, followers and the lowest price, and Book.
 - **Services:** each is a cream row with a navy icon tile (blue for free), title, what you get, length or delivery, and the price at 17px with its own action (Book, Request, Reserve). Prices are Canadian dollars, with /month or /seat where it applies.
 - **Booking a service:** the booking sheet starts with the Guide's services as tiles (the chosen one fills navy and slides). Timed services pick a day and time; group sessions and workshops show one date and their seats filling as dots; written reviews ask for a link and say when notes come back. The footer names the price and what the Guide receives after PathedIn's share, and says no payment is taken in the prototype. There is never a card field.
-- **Become a Path Guide:** a five-step page (Your moves, Experience, How you'll help, Availability, Go live) with a pill step track, one card per step that slides between them, and a live navy preview beside it. Moves come only from your own Path. Services are switches with price steppers and what you keep. Availability is a week grid of mornings, afternoons and evenings that fill navy.
+- **Become a Path Guide:** a five-step page (Your moves, Experience, How you'll help, Availability, Go live) with a pill step track, one card per step that slides between them, and a live navy preview beside it. Moves come only from your own Path. Services are switches with price steppers and what you keep. Switching a service on is a cascade, like a thermostat waking: the knob slides, the icon tile fills navy, the price stepper slides in out of a slight blur, then what you keep rolls up from $0. The stepper's − and + are discs that fill navy while held and let go of the colour a moment after. Every price and payout rolls digit by digit. Availability is a week grid of mornings, afternoons and evenings that fill navy.
 - **Standing:** communities rank their Guides (a navy disc for first); the Guides page lists the top three in each of your communities, and the Guides marketplace filters by kind of help.
 
 ### Network groups
@@ -391,7 +391,7 @@ Every group uses the same person card (face, name and relation tag, headline, wh
 - **Your communities:** a four-face mosaic, the name, and who's here now beside a live dot.
 
 ### Immersive Panel (signature)
-A Midnight Navy surface in either appearance: flat navy with a fine light grain (the cream page has the same grain, dark) and route silk (26 thin routes flowing to one destination, yours brighter, drawn in once on arrival). Anything inside takes the midnight palette automatically (the `.immersive` class), so Paths, buttons and cards need no special cases. Used for the intro stage, a profile's Path cover and Your Path this week. The silk is drawn only where there are no words (see The Clear Words Rule).
+A Midnight Navy surface in either appearance: flat navy and route silk (26 thin routes flowing to one destination, yours brighter, drawn in once on arrival). Anything inside takes the midnight palette automatically (the `.immersive` class), so Paths, buttons and cards need no special cases. Used for the intro stage, a profile's Path cover and Your Path this week. The silk is drawn only where there are no words (see The Clear Words Rule).
 
 ### Stat Numerals
 A number set at 44px regular with tight tracking, an optional signal-blue unit and a live dot for things happening now, with its meaning beneath in secondary ink. It counts up once, the first time it comes into view.
@@ -402,6 +402,7 @@ A number set at 44px regular with tight tracking, an optional signal-blue unit a
 
 ### Navigation
 - **Top bar:** see Layout. The sections are 56×40px icon pills with tooltips; hovering one grows a cream surface under it, and the current one is the navy pill, which slides on a spring. Once content slides beneath it, the bar lifts with a soft shadow.
+- **Docked title (desktop):** on a story, question, decision or community, once the page's title scrolls up under the top bar a 48px frosted bar slides out beneath it with the title (and Join, on a community); the top bar's lift moves down to the dock's edge, and a story's walked line rides the dock's lower edge. It slides away when the title comes back. Phones already show the title in the navigation bar.
 - **Account menu:** your photo and name as a chip that opens a 32px-row menu: View your profile, Path Requests (with its count), Connections, Saved, Become a Path Guide (or Your Guide profile), the appearance switch, and Sign out.
 - **Tabs:** a white pill track (cream inside a card) with 36px tabs; the chosen tab is a navy pill that slides, and a cream surface follows the pointer.
 - **Phone:** a floating white tab bar with badges; the chosen tab is a navy pill that slides, and its icon settles into place.
@@ -433,11 +434,12 @@ A two-pane sheet: the Guide on a recessed cream panel, then three session tiles,
 ### Motion
 - **Dashboard:** the profile card rises in, its Path steps pop in turn and its counts count up; the rings around People worth knowing draw one after another (90 ms apart); the week slides between weeks; schedule items and communities rise a beat apart; the navy pill slides wherever the current thing changes.
 - **Assembling (the intro's language, used across the app):** the intro headline rises line by line out of an 8px blur, then the sentence, then the action. Page titles and subtitles arrive 80 ms apart. Cards and rows rise 16px as they come into view, 55 ms apart, capped at eight. Route silk, Path covers and Your Path this week draw themselves. Stat numerals count up over 1.2 s. The Guides route fills in solid as you read down the page.
+- **The card becomes the page (focal):** opening a story, question, decision or community from its card carries the parts you were looking at into the page. The card's title grows into the page title and its picture (a story's stretch of Path, a decision's fork) grows into the page's figure, over 540 ms; the page you left falls back to 98.5% and fades in 200 ms; once they've nearly landed, the rest of the new page rises 14px into place. The bars stay put. It uses the View Transitions API (`lib/morph.ts`): cards carry `data-morph-card` and `data-morph` parts, pages mark `data-morph-to` landing spots, and names are handed out only for the one transition. Going back is the ordinary fade, as in the reference. Without View Transitions, or with Reduce Motion, the page changes the ordinary way.
 - **Portrait flight:** opening someone carries their portrait on a shallow arc to the "now" station of their Path cover (420–680 ms), which answers with one ring ripple.
 - **Pointer:** a surface follows across tabs; forward arrows lean 2px; tooltips answer at once after the first; feed photos lean in.
 - **Scroll:** the top bar frosts only once content passes beneath it (watched by an IntersectionObserver on a 1px marker, not a scroll listener); reading a story walks you along a Path. On the intro tour, scrolling walks the tour's line, tilts the Home preview flat and plays the Path story (spring-smoothed, so it glides rather than jumps).
 - **Touch:** cards give to 0.975 under a finger and spring back; rows light at once.
-- **State:** counts roll; switching appearance opens the new theme in a circle from where you switched.
+- **State:** numbers roll digit by digit like a counter wheel: only the digits that change move (24 to 23 keeps the 2), upward when a number grows and downward when it shrinks, each through a 1.5px blur. Counts that counted up on arrival roll from then on (save a post and Saved rolls). Switches cascade into what they control (see Become a Path Guide). Switching appearance opens the new theme in a circle from where you switched.
 - **Finite:** nothing loops. A live dot or the station you're at breathes three times and rests; the typing caret on the welcome blinks four times. Anything that moves on its own for more than five seconds (the tour's post tabs) has a Pause.
 - **Reduce Motion:** the flight, the reveal, the assembling rises and the drawing are dropped. Fades and colour changes that confirm an action stay. The intro tour shows the preview flat, the Path story fully drawn and unpinned, and the post tabs without the timer.
 
@@ -459,7 +461,7 @@ A two-pane sheet: the Guide on a recessed cream panel, then three session tiles,
 
 ### Don't:
 - **Don't** bring back the graphite world, Schibsted Grotesk or the Playfair wordmark.
-- **Don't** use gradients on surfaces (a glow, a mesh, a sheen) or gradient text; surfaces are flat, with grain for texture. Don't use large areas of signal blue, neon edges, lit edges that follow the cursor, or coloured side stripes. The one exception is the schedule's 4px event bar, a calendar marker from the reference that says what kind of event it is.
+- **Don't** use gradients on surfaces (a glow, a mesh, a sheen) or gradient text; surfaces are flat, with no grain or noise texture either. Don't use large areas of signal blue, neon edges, lit edges that follow the cursor, or coloured side stripes. The one exception is the schedule's 4px event bar, a calendar marker from the reference that says what kind of event it is.
 - **Don't** nest a card in a card, or bring back rows between hairlines on the cream.
 - **Don't** add a sidebar or drawer that repeats the top bar. One place for each way in: sections in the top bar, you in the account menu, everything by name in ⌘K.
 - **Don't** give a kind of post or a Network group its own layout; tell them apart with the context line, the thumbnail, the strip or the signal line. Don't put a card field for payment anywhere in the prototype.

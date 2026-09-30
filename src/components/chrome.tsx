@@ -77,7 +77,8 @@ export function TopBar() {
   const current = useActiveSection(pathname);
   const scrolled = useScrolled();
   return (
-    <header className={`mbar ${scrolled ? 'is-scrolled' : ''}`}>
+    // A layout root, so the sliding pill measures itself against the fixed bar and not the page's scroll.
+    <motion.header layoutRoot className={`mbar ${scrolled ? 'is-scrolled' : ''}`}>
       <div className="mbar__left">
         <Link to="/" className="wordmark" aria-label="PathedIn home">
           <Wordmark />
@@ -122,7 +123,7 @@ export function TopBar() {
         <span className="mbar__rule" aria-hidden="true" />
         <AccountMenu />
       </div>
-    </header>
+    </motion.header>
   );
 }
 
@@ -250,7 +251,7 @@ export function TabBar() {
     settled.current = true;
   }, []);
   return (
-    <nav className="tabbar" aria-label="Primary">
+    <motion.nav layoutRoot className="tabbar" aria-label="Primary">
       {sections.map((s) => {
         const active = s.to === current;
         const Icon = s.icon;
@@ -284,11 +285,81 @@ export function TabBar() {
           </NavLink>
         );
       })}
-    </nav>
+    </motion.nav>
   );
 }
 
 /* ── Page with an iOS navigation bar and large title ────────── */
+
+/**
+ * The page title, docked. On a desktop detail page (a story, question, decision or community), once the title
+ * scrolls up under the top bar a slim bar slides out beneath it holding the title, and the page's one action if
+ * it has one, the way the summary in a long settings screen stays pinned while the rest scrolls under it.
+ * It watches the page's own title (the element marked `data-morph-to="title"`), so it needs no ref.
+ */
+const DOCK_EASE: [number, number, number, number] = [0.16, 1, 0.3, 1];
+
+export function DockTitle({ title, children }: { title: ReactNode; children?: ReactNode }) {
+  const isMobile = useIsMobile();
+  const [shown, setShown] = useState(false);
+  const [edge, setEdge] = useState({ left: 40, right: 40 });
+  useEffect(() => {
+    if (isMobile) return;
+    const el = document.querySelector<HTMLElement>('#main [data-morph-to="title"]');
+    if (!el) return;
+    const measure = () => {
+      const r = el.getBoundingClientRect();
+      const col = el.parentElement?.getBoundingClientRect() ?? r;
+      setEdge({ left: Math.round(r.left), right: Math.max(16, Math.round(window.innerWidth - col.right)) });
+    };
+    const io = new IntersectionObserver(
+      ([e]) => {
+        const under = !e.isIntersecting && e.boundingClientRect.top < 64;
+        if (under) measure();
+        setShown(under);
+      },
+      { rootMargin: '-64px 0px 0px 0px' },
+    );
+    io.observe(el);
+    window.addEventListener('resize', measure);
+    return () => {
+      io.disconnect();
+      window.removeEventListener('resize', measure);
+    };
+  }, [isMobile]);
+  useEffect(() => {
+    const root = document.documentElement;
+    if (shown) root.setAttribute('data-dock', '');
+    else root.removeAttribute('data-dock');
+    return () => root.removeAttribute('data-dock');
+  }, [shown]);
+  if (isMobile) return null;
+  return createPortal(
+    <AnimatePresence>
+      {shown && (
+        <motion.div
+          className="dock"
+          initial={{ y: '-100%', opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          exit={{ y: '-100%', opacity: 0, transition: { duration: 0.2, ease: DOCK_EASE } }}
+          transition={{ duration: 0.38, ease: DOCK_EASE }}
+        >
+          <div className="dock__in" style={{ paddingLeft: edge.left, paddingRight: edge.right }}>
+            <motion.p className="dock__title" initial={{ y: 10, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: 0.42, delay: 0.06, ease: DOCK_EASE }}>
+              {title}
+            </motion.p>
+            {children && (
+              <motion.div className="dock__end" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.3, delay: 0.14 }}>
+                {children}
+              </motion.div>
+            )}
+          </div>
+        </motion.div>
+      )}
+    </AnimatePresence>,
+    document.body,
+  );
+}
 
 export function Page({
   title,
