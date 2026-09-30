@@ -30,6 +30,7 @@ Requires Node 20+.
 | Interaction | Where |
 | --- | --- |
 | **The intro page.** One line and one sentence explain PathedIn, beside the product itself: your Path, a Path Twin and a Guide's office hours, assembling in order. *Get started* or *Sign in* opens the "Join PathedIn." card. | First visit, or after signing out |
+| **The intro tour.** Scroll down the intro and you walk a Path: a line fills down the page and each feature is a station on it. Home tilts up into view; your Path draws itself as you scroll, then branches into the real routes to your destination; chips filter the people on your Path; pick someone to align Paths with; tabs play through each kind of post; and a Guide's prices sit beside sliders that work out what a Guide keeps. It ends at the destination: *Start your path*. | Scroll the intro page |
 | **Your Path draws itself.** After you sign in, your steps pop in one by one, each name types out, the future dashes on to your destination, and "Welcome, Maya." is written. Tap to skip. | Sign in |
 | **Home.** The For you feed, where every post says why it's there, next to a right-hand column. The column shows Coming up (your call with Amara and your Path Requests), Your Path this week, People worth knowing, Office Hours and your communities. | Home |
 | **Sidebar.** The menu button docks or hides it on wide screens and slides it over the content on narrower ones. The active row's surface slides between items. | Desktop and iPad |

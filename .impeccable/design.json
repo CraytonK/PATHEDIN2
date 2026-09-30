@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-09-30T14:15:16Z",
+  "generatedAt": "2026-09-30T14:40:47Z",
   "title": "Design System: PathedIn",
   "extensions": {
     "colorMeta": {
@@ -752,7 +752,7 @@
       "**Don't** set a label above a heading as a kicker or eyebrow, even where the reference does. Headings carry their own weight.",
       "**Don't** set interface text in Charter, or use a synthesized italic of Space Grotesk.",
       "**Don't** use Unicode glyphs or emoji as icons. Icons are drawn SVG in one stroke weight.",
-      "**Don't** loop animations, bounce, or add parallax. Motion arrives, then rests."
+      "**Don't** loop animations, bounce, or add parallax. Motion arrives, then rests. The intro tour is the one place scrolling drives motion, and it still rests the moment you stop."
     ]
   }
 }

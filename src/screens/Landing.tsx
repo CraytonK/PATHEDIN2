@@ -8,6 +8,7 @@ import { useApp } from '../lib/store';
 import { me, people } from '../data/people';
 import { sessionsFor } from '../lib/booking';
 import { RouteSilk } from '../components/path/RouteSilk';
+import { Tour } from './LandingTour';
 import './landing.css';
 
 type AuthMode = 'join' | 'signin';
@@ -32,7 +33,7 @@ export function Landing({ onAuthed }: { onAuthed: () => void }) {
             <Wordmark size={30} />
           </a>
           <nav className="landing__nav" aria-label="PathedIn">
-            <a href="#how" className="landing__link landing__link--wide">
+            <a href="#tour" className="landing__link landing__link--wide">
               How it works
             </a>
             <a href="#guides" className="landing__link landing__link--wide">
@@ -84,25 +85,7 @@ export function Landing({ onAuthed }: { onAuthed: () => void }) {
         </main>
       </div>
 
-      <section className="landing__how" id="how" aria-label="How PathedIn works">
-        <div className="landing__how-inner">
-          <div>
-            <span className="landing__node landing__node--been" aria-hidden="true" />
-            <h2>Where you’ve been</h2>
-            <p>Your steps so far, drawn as a line — study, first jobs, the turns you took.</p>
-          </div>
-          <div>
-            <span className="landing__node landing__node--now" aria-hidden="true" />
-            <h2>Where you are</h2>
-            <p>Find the people standing at the same step, deciding the same things.</p>
-          </div>
-          <div id="guides">
-            <span className="landing__node landing__node--going" aria-hidden="true" />
-            <h2>Where you want to go</h2>
-            <p>See the real routes there, and ask the Path Guides who already made the move.</p>
-          </div>
-        </div>
-      </section>
+      <Tour onJoin={() => setAuth('join')} onSignIn={() => setAuth('signin')} />
 
       <footer className="landing__foot">
         <nav aria-label="Footer">

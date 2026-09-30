@@ -211,48 +211,6 @@
 }
 
 /* Three nodes, three sentences: the whole idea in one row. */
-.landing__how {
-  border-top: 1px solid var(--separator);
-}
-.landing__how-inner {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 48px;
-  max-width: 1192px;
-  margin: 0 auto;
-  padding: 64px 24px 72px;
-}
-.landing__how h2 {
-  margin: 18px 0 8px;
-  font-size: 20px;
-  line-height: 26px;
-  font-weight: 500;
-  font-stretch: var(--display-stretch);
-  letter-spacing: -0.02em;
-}
-.landing__how p {
-  font-size: 16px;
-  line-height: 25px;
-  color: var(--label-2);
-  max-width: 330px;
-}
-.landing__node {
-  display: block;
-  width: 22px;
-  height: 22px;
-  border-radius: 50%;
-}
-.landing__node--been {
-  background: var(--ink);
-}
-.landing__node--now {
-  background: radial-gradient(circle, var(--tint) 0 3.8px, var(--landing-bg) 4.4px);
-  box-shadow: inset 0 0 0 4px var(--ink);
-}
-.landing__node--going {
-  box-shadow: inset 0 0 0 4px var(--tint);
-}
-
 .landing__foot {
   border-top: 1px solid var(--separator);
   background: var(--landing-bg);
@@ -328,11 +286,6 @@
   .landing__cta {
     margin-top: 36px;
     font-size: 18px;
-  }
-  .landing__how-inner {
-    grid-template-columns: minmax(0, 1fr);
-    gap: 36px;
-    padding: 44px 20px 52px;
   }
 }
 

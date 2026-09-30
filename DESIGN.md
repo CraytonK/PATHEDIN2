@@ -280,6 +280,7 @@ A warm cream ground with navy ink, one Midnight Navy accent for anything with we
 ### Hierarchy
 The ramp follows Apple's text styles, each available as a `.t-` class, with display roles above it.
 - **Display** (500, clamp 56–100px, 0.96, -0.045em): the intro's headline, which assembles line by line.
+- **Station title** (400, clamp 34–60px, -0.035em): each stop on the intro tour, rising word by word out of a blur.
 - **Stat** (400, 44px, -0.045em): numerals such as a community's members, with an optional signal-blue unit.
 - **Page title** (400, 40/44px, -0.035em; 34/40 on phones): page titles. Profiles take 36/42px.
 - **Title 1–3** (500, 28/34, 22/28 and 19/25px): section headings and card titles. Rail headings drop to 16/20px.
@@ -303,7 +304,7 @@ The pieces of the app are unchanged; they are laid out as a dashboard.
 - **Drawer:** every destination (the sections, Saved, Profile, Path Requests, Guides, Stories, Questions, Decision Points, your communities) in a 264px card that slides over the page from the drawer button. There is no docked sidebar.
 - **Home, three columns from 1200px:** a 296px profile card (route-silk cover, your photo, name and headline, three counts, your Path as tags, shortcuts, Write), the feed (People worth knowing as faces in rings, then For you and Following with the kind filter on one card that stays in reach, then the posts as cards), and a 340px column of cards: Coming up as a week, Your Path this week on navy, Office Hours, your communities, the footer. From 768 to 1199px the profile card joins the right column under the week.
 - **Other pages:** the page title on the cream, the content as cards, and a 340px column beside it that is a stack of cards (300px under 1100px).
-- **Intro:** a Midnight Navy stage set into the cream page with 12px margins and 28px corners, the headline left and the product composition floating right.
+- **Intro:** a Midnight Navy stage set into the cream page with 12px margins and 28px corners, the headline left and the product composition floating right. Below it, the tour: one line down the left edge with a station for each feature, 168px between stations (112px on phones), the feature's demo on a white card under its title.
 - **Gutters:** 16px on phones, 24px from 768px and 40px from 1100px; Home keeps 24px.
 - **Phones:** large title, Coming up cards, your week as a navy panel, posts and rows as cards, and a floating tab bar: a white pill 12px from the edges and 10px off the bottom, the current tab in a sliding navy pill. Sheets rise from the bottom with a grabber.
 - **Rhythm:** 4px steps inside components, 16px between feed cards (12px on phones), 12px between row cards, 20px between cards in a side column.
@@ -328,7 +329,7 @@ Cards are white on the cream with a faint navy hairline and a long, soft fall-of
 
 ## Shapes
 
-Gently rounded rectangles. The radii are 2px for thin bars, 6px for rows in lists and menus, 8px for buttons, fields, slots and icon buttons, 12px for popovers and tooltips, 14px for wells in a card (day tiles, schedule items), 16px for menus, 20px for cards, sheets and immersive panels (14px for a phone sheet's top corners), and 28px for the intro stage. Pills are kept for tags, counts, badges, tab tracks, the top bar's field and buttons, and the navy pill that marks what is current. Portraits are circles with a hairline, knocked out with a ring in the colour of the surface they sit on. The Path's geometry is fixed: solid track for walked steps, a ringed present, a dashed future and an open destination ring.
+Gently rounded rectangles. The radii are 2px for thin bars, 6px for rows in lists and menus, 8px for buttons, fields, slots and icon buttons, 12px for popovers and tooltips, 14px for wells in a card (day tiles, schedule items), 16px for menus, 20px for cards, sheets and immersive panels (14px for a phone sheet's top corners), and 28px for the intro stage. The tour's phone preview keeps a device's corners (44px outside, 34px on the screen). Pills are kept for tags, counts, badges, tab tracks, the top bar's field and buttons, and the navy pill that marks what is current. Portraits are circles with a hairline, knocked out with a ring in the colour of the surface they sit on. The Path's geometry is fixed: solid track for walked steps, a ringed present, a dashed future and an open destination ring.
 
 ## Components
 
@@ -393,6 +394,16 @@ A number set at 44px regular with tight tracking, an optional signal-blue unit a
 ### Command Palette (signature)
 "Go anywhere on your Path." A 640px white sheet (16px corners, the Modal shadow) with grouped results (people, destinations, communities, stories, questions) and actions (write, open My Path, book office hours, align Paths, switch appearance). The highlighted row slides between results. Keyboard-first: ↑ ↓, ↵, esc.
 
+### Intro Tour (signature)
+Scrolling the intro is walking a Path. A line runs down the left edge: dashed where you haven't been, navy where you have, filling as you scroll. Each feature is a station on it: the node fills and the title rises word by word as you arrive, and the last one is an open destination ring. The demos are the real app, not pictures of it:
+- **Everything in one place:** Home itself, in a browser frame (a phone frame on phones) that tilts up flat as it arrives. It is inert; it only shows.
+- **Your career, drawn as a line:** a pinned stage that plays as you scroll: where you've been draws in, you appear at the step you're on, then the real routes to Pharmaceutical R&D branch off with how many people took each. It runs left to right on desktop and top to bottom on phones.
+- **Meet the people:** the real Path lens, filtered by chips (Path Twins, Peers, People Ahead, Guides, Explorers). Choosing a face opens the Join card.
+- **Where your Paths meet:** pick Sarah, Jonah, Daniel or Amara and the real Align view redraws, with what you share in one line.
+- **Every post says why:** tabs for each kind of post, each showing the real card; they advance every 4.2 seconds while you watch, until you choose one.
+- **Learn from people who made the move:** a Guide's services with prices and a ticket that updates, beside a navy card where two sliders work out what a Guide would keep after PathedIn's share.
+- **Your path is waiting:** the destination, a navy panel with Start your path and Sign in.
+
 ### Route Band (signature)
 Across the top of a person's card, their Path is drawn on a sunken cream band: walked steps grey, steps you share lit, the present ringed and the future dashed toward an open ring. On hover the dashes flow toward the destination.
 
@@ -404,10 +415,10 @@ A two-pane sheet: the Guide on a recessed cream panel, then three session tiles,
 - **Assembling (the intro's language, used across the app):** the intro headline rises line by line out of an 8px blur, then the sentence, then the action. Page titles and subtitles arrive 80 ms apart. Cards and rows rise 16px as they come into view, 55 ms apart, capped at eight. Route silk, Path covers and Your Path this week draw themselves. Stat numerals count up over 1.2 s. The Guides route fills in solid as you read down the page.
 - **Portrait flight:** opening someone carries their portrait on a shallow arc to the "now" station of their Path cover (420–680 ms), which answers with one ring ripple.
 - **Pointer:** card edges catch signal-blue light where the cursor is; a surface follows across tabs; forward arrows lean 2px; tooltips answer at once after the first; feed photos lean in.
-- **Scroll:** the top bar frosts only once content passes beneath it; reading a story walks you along a Path.
+- **Scroll:** the top bar frosts only once content passes beneath it; reading a story walks you along a Path. On the intro tour, scrolling walks the tour's line, tilts the Home preview flat and plays the Path story (spring-smoothed, so it glides rather than jumps).
 - **Touch:** cards give to 0.975 under a finger and spring back; rows light at once.
 - **State:** counts roll; switching appearance opens the new theme in a circle from where you switched.
-- **Reduce Motion:** the flight, the reveal, the assembling rises and the drawing are dropped. Fades and colour changes that confirm an action stay.
+- **Reduce Motion:** the flight, the reveal, the assembling rises and the drawing are dropped. Fades and colour changes that confirm an action stay. The intro tour shows the preview flat, the Path story fully drawn and unpinned, and the post tabs without the timer.
 
 ## Do's and Don'ts
 
@@ -432,4 +443,4 @@ A two-pane sheet: the Guide on a recessed cream panel, then three session tiles,
 - **Don't** set a label above a heading as a kicker or eyebrow, even where the reference does. Headings carry their own weight.
 - **Don't** set interface text in Charter, or use a synthesized italic of Space Grotesk.
 - **Don't** use Unicode glyphs or emoji as icons. Icons are drawn SVG in one stroke weight.
-- **Don't** loop animations, bounce, or add parallax. Motion arrives, then rests.
+- **Don't** loop animations, bounce, or add parallax. Motion arrives, then rests. The intro tour is the one place scrolling drives motion, and it still rests the moment you stop.
