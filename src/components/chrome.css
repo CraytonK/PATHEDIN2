@@ -1,6 +1,8 @@
 /* ── App frame ─────────────────────────────────────────── */
 .app {
   min-height: 100dvh;
+  /* Nothing pushes the page sideways: a hidden tooltip or a wide drawing near the edge stays inside the screen. */
+  overflow-x: clip;
 }
 .app--desktop {
   padding-top: var(--topbar-h);
