@@ -12,7 +12,7 @@ interface UIState {
   request: { to: string; segment?: [string, string]; quote?: string } | null;
   search: boolean;
   /** Booking a Guide's office hours; `booking` reopens one you already hold. */
-  book: { guide: string; booking?: string; topic?: string; service?: string } | null;
+  book: { guide: string; booking?: string; topic?: string; service?: string; reschedule?: boolean } | null;
   toast: { text: string; id: number } | null;
   /** Editing your profile; 'banner' opens it at the banner. */
   editProfile: 'intro' | 'banner' | null;
@@ -24,7 +24,7 @@ interface UIState {
   openRequest: (to: string, segment?: [string, string], quote?: string) => void;
   closeRequest: () => void;
   setSearch: (open: boolean) => void;
-  openBooking: (guide: string, opts?: { booking?: string; topic?: string; service?: string }) => void;
+  openBooking: (guide: string, opts?: { booking?: string; topic?: string; service?: string; reschedule?: boolean }) => void;
   closeBooking: () => void;
   showToast: (text: string) => void;
   openEditProfile: (at?: 'intro' | 'banner') => void;

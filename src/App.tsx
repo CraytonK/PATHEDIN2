@@ -25,6 +25,10 @@ import { Guides } from './screens/Guides';
 import { Communities } from './screens/Communities';
 import { CommunityScreen } from './screens/Community';
 import { ThreadScreen } from './screens/Thread';
+import { Sessions } from './screens/Sessions';
+import { Settings } from './screens/Settings';
+import { GuideHub } from './screens/GuideHub';
+import { InfoScreen, isInfoKey } from './screens/Info';
 import { Profile } from './screens/Profile';
 import { Stories } from './screens/Stories';
 import { StoryScreen } from './screens/Story';
@@ -149,7 +153,7 @@ function Shell() {
   if (!signedIn) {
     return (
       <>
-        <Landing onAuthed={() => setSplash(true)} />
+        <Landing onAuthed={() => setSplash(true)} info={isInfoKey(location.pathname.slice(1)) ? (location.pathname.slice(1) as 'help') : undefined} />
         {splashLayer}
       </>
     );
@@ -180,6 +184,13 @@ function Shell() {
               <Route path="/network" element={<Network />} />
               <Route path="/guides" element={<Guides />} />
               <Route path="/guide/setup" element={<GuideSetup />} />
+              <Route path="/guide" element={<GuideHub />} />
+              <Route path="/sessions" element={<Sessions />} />
+              <Route path="/settings" element={<Settings />} />
+              <Route path="/help" element={<InfoScreen k="help" />} />
+              <Route path="/about" element={<InfoScreen k="about" />} />
+              <Route path="/privacy" element={<InfoScreen k="privacy" />} />
+              <Route path="/terms" element={<InfoScreen k="terms" />} />
               <Route path="/communities" element={<Communities />} />
               <Route path="/c/:id" element={<CommunityScreen />} />
               <Route path="/c/:id/t/:tid" element={<ThreadScreen />} />

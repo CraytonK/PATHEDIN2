@@ -12,6 +12,7 @@ import { rise } from '../lib/motion';
 import { useApp } from '../lib/store';
 import { useUI } from '../lib/ui';
 import { BookButton, Stars } from './Booking';
+import { pastSessions } from '../data/sessions';
 import { RequestButton } from './content';
 import { Avatar, CountUp } from './ui';
 import { IconCalendar, IconChevronRight, IconSignpost, IconStar } from './icons';
@@ -69,8 +70,18 @@ function ServiceCard({ id, s, i, bookable }: { id: string; s: GuideService; i: n
   );
 }
 
-function Reviews({ econ }: { econ: GuideEconomy }) {
-  if (!econ.reviews.length) return <p className="gp__empty">No reviews yet. They appear here after someone’s first paid session.</p>;
+/** Reviews you wrote for this Guide, from Your sessions: they lead the list, marked as yours. */
+function useMyReviews(guide: string) {
+  const reviews = useApp((s) => s.reviews);
+  const bookings = useApp((s) => s.bookings);
+  return [...bookings, ...pastSessions]
+    .filter((b) => b.guide === guide && reviews[b.id])
+    .map((b) => ({ id: `mine-${b.id}`, rating: reviews[b.id].stars, body: reviews[b.id].body, label: b.title ?? 'Office Hours', at: reviews[b.id].at }));
+}
+
+function Reviews({ econ, guide }: { econ: GuideEconomy; guide: string }) {
+  const mine = useMyReviews(guide);
+  if (!econ.reviews.length && !mine.length) return <p className="gp__empty">No reviews yet. They appear here after someone’s first paid session.</p>;
   return (
     <>
       <div className="grev__sum">
@@ -81,6 +92,20 @@ function Reviews({ econ }: { econ: GuideEconomy }) {
         </span>
       </div>
       <ul className="grev">
+        {mine.map((r) => (
+          <li key={r.id} className="grev__item grev__item--mine">
+            <div className="grev__who">
+              <Avatar id={ME} size={32} />
+              <span className="grev__name">
+                <Link to={`/p/${ME}`}>You</Link>
+                <span>Your review · just now</span>
+              </span>
+              <Stars value={r.rating} />
+            </div>
+            {r.body && <p className="grev__body">{r.body}</p>}
+            <span className="grev__svc">{r.label}</span>
+          </li>
+        ))}
         {econ.reviews.map((r, i) => (
           <motion.li key={r.id} className="grev__item" {...rise(i, 10)}>
             <div className="grev__who">
@@ -243,7 +268,7 @@ export function GuideTab({ id }: { id: string }) {
         <header className="gp__head">
           <h2 className="gp__h">Reviews</h2>
         </header>
-        <Reviews econ={econ} />
+        <Reviews econ={econ} guide={id} />
       </section>
 
       <section className="gp__section">

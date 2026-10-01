@@ -169,7 +169,7 @@ export function RequestLayer() {
         {p.guide && (
           <div className="req__meta t-footnote c-2">
             <span>
-              <IconCalendar size={15} /> Office hours · {p.guide.officeHours.when}
+              <IconCalendar size={15} /> Office Hours · {p.guide.officeHours.when}
               <button type="button" className="req__book" onClick={() => openBooking(p.id, { topic: undefined })}>
                 Book a spot instead
               </button>

@@ -26,6 +26,9 @@ import {
   IconCompose,
   IconChevronDown,
   IconGuidePlus,
+  IconCalendar,
+  IconGear,
+  IconQuestion,
 } from './icons';
 import { IconButton, Rolling } from './ui';
 import './chrome.css';
@@ -139,6 +142,7 @@ function AccountMenu() {
   const theme = useApp((s) => s.theme);
   const signOut = useApp((s) => s.signOut);
   const myGuide = useApp((s) => s.myGuide);
+  const upcoming = useApp((s) => s.bookings.filter((b) => new Date(b.at).getTime() + b.minutes * 60_000 > Date.now()).length);
   // Your name in the chip follows your edits.
   useApp((s) => s.profile);
   const unread = useUnread();
@@ -185,16 +189,25 @@ function AccountMenu() {
               <button className="menu__item" onClick={() => go('/connections')}>
                 <IconPeople size={19} /> Connections
               </button>
+              <button className="menu__item" onClick={() => go('/sessions')}>
+                <IconCalendar size={19} /> Your sessions {upcoming > 0 && <span className="menu__count">{upcoming}</span>}
+              </button>
               <button className="menu__item" onClick={() => go('/saved')}>
                 <IconBookmark size={19} /> Saved
               </button>
-              <button className="menu__item" onClick={() => go('/guide/setup')}>
-                <IconGuidePlus size={19} /> {myGuide?.live ? 'Your Guide profile' : 'Become a Path Guide'}
+              <button className="menu__item" onClick={() => go(myGuide ? '/guide' : '/guide/setup')}>
+                <IconGuidePlus size={19} /> {myGuide ? 'Your Guide hub' : 'Become a Path Guide'}
               </button>
             </div>
             <div className="menu__group">
+              <button className="menu__item" onClick={() => go('/settings')}>
+                <IconGear size={19} /> Settings
+              </button>
               <button className="menu__item" onClick={(e) => switchTheme(isDark ? 'light' : 'dark', e)}>
                 {isDark ? <IconSun size={19} /> : <IconMoon size={19} />} {isDark ? 'Light appearance' : 'Dark appearance'}
+              </button>
+              <button className="menu__item" onClick={() => go('/help')}>
+                <IconQuestion size={19} /> Help
               </button>
             </div>
             <div className="menu__group">

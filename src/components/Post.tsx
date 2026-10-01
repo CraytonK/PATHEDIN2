@@ -1,8 +1,9 @@
 import { AnimatePresence, motion } from 'framer-motion';
 import { useEffect, useRef, useState, type ReactNode } from 'react';
 import { Link } from 'react-router-dom';
-import { people } from '../data/people';
+import { people, ME } from '../data/people';
 import { springs } from '../lib/motion';
+import { useApp } from '../lib/store';
 import type { RelationKind } from '../lib/relations';
 import { useUI } from '../lib/ui';
 import { IconAlign, IconCommunity, IconDoc, IconEllipsis, IconFlag, IconMilestone, IconPath, IconQuestion, IconSend, IconSignpost } from './icons';
@@ -12,7 +13,14 @@ import './post.css';
 /** What a post is. Each kind carries the same icon wherever it appears: its page, the feed filter and the profile card. */
 export type PostKind = 'story' | 'question' | 'community' | 'guide' | 'decision' | 'route' | 'milestone';
 
-export const postKinds: Record<PostKind, { label: string; plural: string; icon: (p: { size?: number; strokeWidth?: number }) => ReactNode }> = {
+export const postKinds: Record<
+  PostKind,
+  {
+    label: string;
+    plural: string;
+    icon: (p: { size?: number; strokeWidth?: number }) => ReactNode;
+  }
+> = {
   story: { label: 'Story', plural: 'Stories', icon: IconDoc },
   question: { label: 'Question', plural: 'Questions', icon: IconQuestion },
   community: { label: 'Community', plural: 'Communities', icon: IconCommunity },
@@ -68,6 +76,10 @@ export interface PostProps {
  * the title and the post's own body, and a footer that says why it's here, with its numbers and Save.
  */
 export function Post({ author, where, note, ago, to, title, subtitle, why, stats, thumb, thumbKind = 'art', extra, saveKey, i = 0, variant, kind, kindNote }: PostProps) {
+  const key = saveKey ?? to;
+  const reported = useApp((s) => s.reported[key]);
+  const blocked = useApp((s) => !!s.blocked[author]);
+  if (reported || blocked) return <PostHidden postKey={key} author={author} blocked={blocked} />;
   return (
     <motion.article
       className={`post ${variant ? `post--${variant}` : ''} ${kind ? `post--is-${kind}` : ''} ${thumb ? 'has-thumb' : ''}`}
@@ -79,7 +91,7 @@ export function Post({ author, where, note, ago, to, title, subtitle, why, stats
     >
       <div className="post__in">
         {kind && <KindLabel kind={kind} note={kindNote} />}
-        <PostByline author={author} note={note} where={where} ago={ago} />
+        <PostByline author={author} note={note} where={where} ago={ago} postKey={key} />
         <div className="post__main">
           <Link to={to} className="post__link">
             <h2 className="post__title" data-morph="title">
@@ -101,7 +113,7 @@ export function Post({ author, where, note, ago, to, title, subtitle, why, stats
 }
 
 /** The top of every post card: the author's face and name, what they are to you, and the "…" menu. */
-export function PostByline({ author, note, where, ago }: { author: string; note?: ReactNode; where?: ReactNode; ago?: string }) {
+export function PostByline({ author, note, where, ago, postKey }: { author: string; note?: ReactNode; where?: ReactNode; ago?: string; postKey?: string }) {
   return (
     <div className="post__by">
       <Avatar id={author} size={40} />
@@ -115,10 +127,27 @@ export function PostByline({ author, note, where, ago }: { author: string; note?
           </span>
         )}
       </p>
-      <PostMore person={author} />
+      <PostMore person={author} postKey={postKey} />
     </div>
   );
 }
+
+/** What's left of a post you reported, or of anything by someone you blocked: one quiet line with the way back. */
+function PostHidden({ postKey, author, blocked }: { postKey: string; author: string; blocked: boolean }) {
+  const unreport = useApp((s) => s.unreport);
+  const toggleBlock = useApp((s) => s.toggleBlock);
+  const p = people[author];
+  return (
+    <motion.div className="post-hidden" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={springs.smooth}>
+      <p>{blocked ? `You blocked ${p.first}. Their posts are hidden.` : 'You reported this post. It’s hidden from your feed.'}</p>
+      <button className="post-hidden__undo" onClick={() => (blocked ? toggleBlock(author) : unreport(postKey))}>
+        {blocked ? `Unblock ${p.first}` : 'Undo'}
+      </button>
+    </motion.div>
+  );
+}
+
+const reportReasons = ['Spam or selling something', 'Misrepresents their Path', 'Harassment or hate', 'Something else'];
 
 /** The footer of every post card: why it's in your feed, its numbers, and Save. */
 export function PostFoot({ why, stats, saveKey }: { why?: PostProps['why']; stats?: ReactNode; saveKey?: string }) {
@@ -141,15 +170,18 @@ export function PostFoot({ why, stats, saveKey }: { why?: PostProps['why']; stat
 }
 
 /** Medium's "…" menu, with PathedIn's actions on the author. */
-export function PostMore({ person }: { person: string }) {
+export function PostMore({ person, postKey }: { person: string; postKey?: string }) {
   const [open, setOpen] = useState(false);
+  const [reporting, setReporting] = useState(false);
+  const report = useApp((s) => s.report);
+  const toggleBlock = useApp((s) => s.toggleBlock);
   const ref = useRef<HTMLDivElement>(null);
   const openCompare = useUI((s) => s.openCompare);
   const openRequest = useUI((s) => s.openRequest);
   const toast = useUI((s) => s.showToast);
   const p = people[person];
   useEffect(() => {
-    if (!open) return;
+    if (!open) return setReporting(false);
     const on = (e: PointerEvent) => !ref.current?.contains(e.target as Node) && setOpen(false);
     const key = (e: KeyboardEvent) => e.key === 'Escape' && setOpen(false);
     window.addEventListener('pointerdown', on);
@@ -178,19 +210,58 @@ export function PostMore({ person }: { person: string }) {
             exit={{ opacity: 0, transition: { duration: 0.1 } }}
             transition={springs.snappy}
           >
-            {p.id !== 'maya' && (
+            {reporting && postKey ? (
               <>
-                <button role="menuitem" onClick={act(() => openCompare(person))}>
-                  <IconAlign size={18} /> Align Paths with {p.first}
+                <p className="post-more__h">Why are you reporting this?</p>
+                {reportReasons.map((r) => (
+                  <button
+                    key={r}
+                    role="menuitem"
+                    onClick={act(() => {
+                      report(postKey, r);
+                      toast('Thanks. It’s hidden, and PathedIn will look at it');
+                    })}
+                  >
+                    {r}
+                  </button>
+                ))}
+              </>
+            ) : (
+              <>
+                {person !== ME && (
+                  <>
+                    <button role="menuitem" onClick={act(() => openCompare(person))}>
+                      <IconAlign size={18} /> Align Paths with {p.first}
+                    </button>
+                    <button role="menuitem" onClick={act(() => openRequest(person))}>
+                      <IconSend size={18} /> Send {p.first} a Path Request
+                    </button>
+                  </>
+                )}
+                <button role="menuitem" className="is-quiet" onClick={act(() => toast('You’ll see fewer posts like this'))}>
+                  Show fewer like this
                 </button>
-                <button role="menuitem" onClick={act(() => openRequest(person))}>
-                  <IconSend size={18} /> Send {p.first} a Path Request
-                </button>
+                {person !== ME && (
+                  <>
+                    {postKey && (
+                      <button role="menuitem" className="is-quiet" onClick={() => setReporting(true)}>
+                        Report this post
+                      </button>
+                    )}
+                    <button
+                      role="menuitem"
+                      className="is-quiet"
+                      onClick={act(() => {
+                        toggleBlock(person);
+                        toast(`${p.first} is blocked`);
+                      })}
+                    >
+                      Block {p.first}
+                    </button>
+                  </>
+                )}
               </>
             )}
-            <button role="menuitem" className="is-quiet" onClick={act(() => toast('You’ll see fewer posts like this'))}>
-              Show fewer like this
-            </button>
           </motion.div>
         )}
       </AnimatePresence>

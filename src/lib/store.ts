@@ -12,6 +12,31 @@ export interface MyResponse {
   at: number;
 }
 export type Theme = 'system' | 'light' | 'dark';
+
+/** How you'd like PathedIn to reach you, and who sees what. Kept on this device. */
+export interface Settings {
+  notify: { requests: boolean; replies: boolean; sessions: boolean; milestones: boolean; digest: boolean };
+  /** Who can see your whole Path; everyone always sees your current step. */
+  pathVisibility: 'everyone' | 'connections' | 'only-me';
+  /** Whether you show up in "here now" counts and as someone at your step. */
+  showPresence: boolean;
+  /** Whether people can send you Path Requests: anyone, or only people on or near your Path. */
+  requestsFrom: 'anyone' | 'near';
+}
+
+export const defaultSettings: Settings = {
+  notify: { requests: true, replies: true, sessions: true, milestones: true, digest: false },
+  pathVisibility: 'everyone',
+  showPresence: true,
+  requestsFrom: 'anyone',
+};
+
+/** Your review of a session, by booking. */
+export interface Review {
+  stars: number;
+  body: string;
+  at: string;
+}
 /** What you've changed about how you introduce yourself. */
 export type ProfileEdits = Partial<Pick<Person, 'name' | 'headline' | 'pronouns' | 'location' | 'bio'>>;
 
@@ -97,6 +122,13 @@ interface AppState {
   myThreads: Thread[];
   /** Your replies to community conversations, by conversation. */
   threadReplies: Record<string, { body: string; ago: string }[]>;
+  /** Your reviews of past sessions, by booking. */
+  reviews: Record<string, Review>;
+  settings: Settings;
+  /** Posts you reported, by their key, with the reason. Hidden from your feeds. */
+  reported: Record<string, string>;
+  /** People you blocked. Their posts are hidden and they can't send you requests. */
+  blocked: Record<string, boolean>;
 
   connect: (id: string) => void;
   toggleFollow: (id: string) => void;
@@ -106,7 +138,7 @@ interface AppState {
   markNotificationsRead: () => void;
   markThreadRead: (id: string) => void;
   sendRequest: (r: Omit<PathRequest, 'id' | 'status' | 'ago' | 'from'>) => void;
-  respondRequest: (id: string, status: PathRequest['status']) => void;
+  respondRequest: (id: string, status: PathRequest['status'], proposed?: string) => void;
   sendMessage: (conversation: string, body: string, segment?: Message['segment']) => void;
   weighIn: (decision: string, option: string, body: string) => void;
   setTheme: (t: Theme) => void;
@@ -124,6 +156,12 @@ interface AppState {
   saveProfile: (profile: ProfileEdits, banner: Banner | null) => void;
   postThread: (t: Thread) => void;
   replyToThread: (id: string, body: string) => void;
+  rescheduleBooking: (id: string, at: string) => void;
+  reviewBooking: (id: string, r: Omit<Review, 'at'>) => void;
+  setSettings: (s: Partial<Settings>) => void;
+  report: (key: string, reason: string) => void;
+  unreport: (key: string) => void;
+  toggleBlock: (id: string) => void;
 }
 
 /** localStorage can throw (private mode, blocked storage). Never let that break the app. */
@@ -162,6 +200,10 @@ export const useApp = create<AppState>()(
       banner: null,
       myThreads: [],
       threadReplies: {},
+      reviews: {},
+      settings: defaultSettings,
+      reported: {},
+      blocked: {},
       connections: {
         sarah: 'connected',
         daniel: 'connected',
@@ -215,7 +257,7 @@ export const useApp = create<AppState>()(
         set((s) => ({
           requests: [{ ...r, id: `r-${Date.now()}`, from: ME, status: 'pending', ago: 'Just now' }, ...s.requests],
         })),
-      respondRequest: (id, status) => set((s) => ({ requests: s.requests.map((r) => (r.id === id ? { ...r, status } : r)) })),
+      respondRequest: (id, status, proposed) => set((s) => ({ requests: s.requests.map((r) => (r.id === id ? { ...r, status, ...(proposed ? { proposed } : {}) } : r)) })),
       sendMessage: (conversation, body, segment) =>
         set((s) => ({
           extraMessages: {
@@ -251,6 +293,17 @@ export const useApp = create<AppState>()(
         set({ profile, banner });
       },
       postThread: (t) => set((s) => ({ myThreads: [t, ...s.myThreads] })),
+      rescheduleBooking: (id, at) => set((s) => ({ bookings: s.bookings.map((b) => (b.id === id ? { ...b, at } : b)) })),
+      reviewBooking: (id, r) => set((s) => ({ reviews: { ...s.reviews, [id]: { ...r, at: new Date().toISOString() } } })),
+      setSettings: (next) => set((s) => ({ settings: { ...s.settings, ...next, notify: { ...s.settings.notify, ...(next.notify ?? {}) } } })),
+      report: (key, reason) => set((s) => ({ reported: { ...s.reported, [key]: reason } })),
+      unreport: (key) =>
+        set((s) => {
+          const next = { ...s.reported };
+          delete next[key];
+          return { reported: next };
+        }),
+      toggleBlock: (id) => set((s) => ({ blocked: { ...s.blocked, [id]: !s.blocked[id] } })),
       replyToThread: (id, body) => set((s) => ({ threadReplies: { ...s.threadReplies, [id]: [...(s.threadReplies[id] ?? []), { body, ago: 'now' }] } })),
     }),
     {
@@ -287,6 +340,10 @@ export const useApp = create<AppState>()(
         banner: s.banner,
         myThreads: s.myThreads,
         threadReplies: s.threadReplies,
+        reviews: s.reviews,
+        settings: s.settings,
+        reported: s.reported,
+        blocked: s.blocked,
       }),
       onRehydrateStorage: () => (state) => {
         if (state?.profile) applyProfile(state.profile);

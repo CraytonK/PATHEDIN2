@@ -320,6 +320,15 @@ export function Helpful({ helpKey, count, compact }: { helpKey: string; count: n
 
 /* ── Segmented control (HIG) ────────────────────────────────── */
 
+/** An on/off switch: navy when on, its knob sliding across. */
+export function Switch({ on, onChange, label, id }: { on: boolean; onChange: (v: boolean) => void; label: string; id?: string }) {
+  return (
+    <button type="button" id={id} role="switch" aria-checked={on} aria-label={label} className={`switch ${on ? 'is-on' : ''}`} onClick={() => onChange(!on)}>
+      <motion.span className="switch__knob" layout transition={springs.snappy} />
+    </button>
+  );
+}
+
 export function Segmented<T extends string>({
   value,
   options,

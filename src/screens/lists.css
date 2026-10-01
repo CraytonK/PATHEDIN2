@@ -156,3 +156,50 @@
 .empty .btn {
   margin-top: 16px;
 }
+
+/* Suggesting a time on a Path Request (Requests.tsx). */
+.req-times {
+  overflow: hidden;
+}
+.req-times__h {
+  margin-top: 14px;
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--label-2);
+}
+.req-times__opts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 10px;
+}
+.req-time {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 34px;
+  padding: 0 14px;
+  border-radius: var(--r-pill);
+  background: var(--canvas);
+  box-shadow: inset 0 0 0 1px var(--separator);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--label);
+  font-variant-numeric: tabular-nums;
+  transition:
+    background-color var(--dur-2) var(--ease-out),
+    box-shadow var(--dur-2) var(--ease-out);
+}
+.req-time:hover {
+  box-shadow: inset 0 0 0 1px var(--border-strong);
+}
+.req-time.is-on {
+  background: var(--primary);
+  color: var(--on-primary);
+  box-shadow: none;
+}
+.req-times__foot {
+  display: flex;
+  gap: 8px;
+  margin-top: 12px;
+}

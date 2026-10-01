@@ -139,7 +139,7 @@ function DoneMark() {
   );
 }
 
-function Ticket({ b, onCancel, onDone, fresh }: { b: Booking; onCancel: () => void; onDone: () => void; fresh: boolean }) {
+function Ticket({ b, onCancel, onDone, onMove, fresh, moved }: { b: Booking; onCancel: () => void; onDone: () => void; onMove?: () => void; fresh: boolean; moved?: boolean }) {
   const g = people[b.guide];
   const start = new Date(b.at);
   const end = new Date(start.getTime() + b.minutes * 60_000);
@@ -147,7 +147,7 @@ function Ticket({ b, onCancel, onDone, fresh }: { b: Booking; onCancel: () => vo
   return (
     <motion.div className="bk-done" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={springs.smooth}>
       <DoneMark />
-      <h2 className="bk-done__title">{fresh ? `You’re booked with ${g.first}` : bookingTitle(b)}</h2>
+      <h2 className="bk-done__title">{moved ? `Moved. ${g.first} has the new time` : fresh ? `You’re booked with ${g.first}` : bookingTitle(b)}</h2>
       <p className="bk-done__sub">{async ? `${g.first} will see your Path and your note, and send notes back by the date below.` : `${g.first} will see your Path and your note before you meet.`}</p>
       <div className="bk-ticket">
         <div className="bk-ticket__stub" aria-hidden="true">
@@ -194,6 +194,11 @@ function Ticket({ b, onCancel, onDone, fresh }: { b: Booking; onCancel: () => vo
         {!async && (
           <Button variant="outline" size="medium" icon={<IconCalendar size={16} />} onClick={() => downloadIcs(b)}>
             Add to calendar
+          </Button>
+        )}
+        {onMove && (
+          <Button variant="gray" size="medium" icon={<IconClock size={16} />} onClick={onMove}>
+            Change time
           </Button>
         )}
         <Button variant="filled" size="medium" onClick={onDone}>
@@ -256,6 +261,10 @@ export function BookingLayer() {
   const bookings = useApp((s) => s.bookings);
   const book = useApp((s) => s.book);
   const cancel = useApp((s) => s.cancelBooking);
+  const reschedule = useApp((s) => s.rescheduleBooking);
+  /** The booking being moved to a new time, if you chose Change time. */
+  const [moving, setMoving] = useState<string | null>(null);
+  const [moved, setMoved] = useState(false);
   const isMobile = useIsMobile();
   const [shown, setShown] = useState(req);
   const [serviceId, setServiceId] = useState('');
@@ -274,9 +283,21 @@ export function BookingLayer() {
     setSlot(null);
     setNote('');
     setLink('');
-    setDone(req.booking ? { id: req.booking, fresh: false } : null);
-    const g = people[req.guide].guide;
-    setTopic(req.topic ?? g?.helpsWith[0] ?? '');
+    setMoved(false);
+    const existing = req.booking ? useApp.getState().bookings.find((x) => x.id === req.booking) : undefined;
+    if (req.reschedule && existing) {
+      // Moving a booking: the same service, topic and note, a new time.
+      setMoving(existing.id);
+      setDone(null);
+      setServiceId(servicesOf(req.guide).find((sv) => sv.kind === (existing.service ?? 'office-hours'))?.id ?? '');
+      setTopic(existing.topic);
+      setNote(existing.note);
+    } else {
+      setMoving(null);
+      setDone(req.booking ? { id: req.booking, fresh: false } : null);
+      const g = people[req.guide].guide;
+      setTopic(req.topic ?? g?.helpsWith[0] ?? '');
+    }
     // Only when a different request opens; the booking list changing underneath shouldn't reset the form.
   }, [req]);
 
@@ -322,22 +343,39 @@ export function BookingLayer() {
     if (!ready) return;
     haptic([10, 40, 12]);
     const at = picked?.start ?? seat?.start ?? due!;
+    if (moving) {
+      reschedule(moving, at.toISOString());
+      setDone({ id: moving, fresh: false });
+      setMoved(true);
+      setMoving(null);
+      return;
+    }
     const extra = kind === 'office-hours' ? {} : { service: kind, title: service.title, price: service.price };
     const withLink = link.trim() ? `${note.trim() ? `${note.trim()}\n` : ''}Link: ${link.trim()}` : note.trim();
     const id = book({ guide: g.id, at: at.toISOString(), minutes: timed || kind === 'office-hours' ? minutes : cohort ? (service.minutes ?? 60) : 0, topic, note: withLink, ...extra });
     setDone({ id, fresh: true });
   };
 
-  const action = kind === 'office-hours' ? `Book ${minutes} minutes` : cohort ? `Reserve a seat · ${priceLabel(service).replace('/seat', '')}` : paid ? `Book and pay ${fmtMoney(service.price)}` : 'Book';
+  const action = moving ? 'Move to this time' : kind === 'office-hours' ? `Book ${minutes} minutes` : cohort ? `Reserve a seat · ${priceLabel(service).replace('/seat', '')}` : paid ? `Book and pay ${fmtMoney(service.price)}` : 'Book';
 
   return (
-    <Sheet open={!!req} onClose={close} title={held && !done?.fresh ? 'Your booking' : `Book time with ${g.first}`} width={shown.booking ? 560 : 820} label={`Book time with ${g.name}`}>
+    <Sheet open={!!req} onClose={close} title={moving ? `Change your time with ${g.first}` : held && !done?.fresh ? 'Your booking' : `Book time with ${g.first}`} width={shown.booking ? 560 : 820} label={`Book time with ${g.name}`}>
       <AnimatePresence mode="wait" initial={false}>
         {held ? (
           <Ticket
             key="done"
             b={held}
             fresh={!!done?.fresh}
+            moved={moved}
+            onMove={held.minutes > 0 && (!held.service || serviceKinds[held.service].timed) && held.service !== 'group' && held.service !== 'workshop' ? () => {
+              setMoving(held.id);
+              setDone(null);
+              setMoved(false);
+              setServiceId(servicesOf(held.guide).find((sv) => sv.kind === (held.service ?? 'office-hours'))?.id ?? serviceId);
+              setTopic(held.topic);
+              setNote(held.note);
+              setSlot(null);
+            } : undefined}
             onDone={close}
             onCancel={() => {
               cancel(held.id);
@@ -362,7 +400,7 @@ export function BookingLayer() {
             )}
 
             <div className="bk__main">
-              {services.length > 1 && (
+              {services.length > 1 && !moving && (
                 <section className="bk__step">
                   <header className="bk__head">
                     <h3>How {g.first} can help</h3>

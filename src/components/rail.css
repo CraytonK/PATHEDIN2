@@ -54,6 +54,15 @@
   font-size: 13px;
   color: var(--label-2);
 }
+.rail-foot a {
+  color: var(--label-2);
+  transition: color var(--dur-2) var(--ease-out);
+}
+.rail-foot a:hover {
+  color: var(--label);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
 
 /* "Staff Picks"-style list */
 .rail-posts {

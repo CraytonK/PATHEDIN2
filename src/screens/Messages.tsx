@@ -1,16 +1,17 @@
 import { AnimatePresence, motion } from 'framer-motion';
 import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { Link, useNavigate, useParams, useSearchParams } from 'react-router-dom';
-import { Page } from '../components/chrome';
+import { Page, Sheet } from '../components/chrome';
+import { SearchField } from '../components/SearchLayer';
 import { PathStrip } from '../components/path/PathStrip';
 import { PathHint } from '../components/path/PathHint';
-import { Avatar, Button, PersonName, RelationTag } from '../components/ui';
-import { IconAlign, IconArrowUp, IconPlus, IconChevronLeft } from '../components/icons';
+import { Avatar, Button, IconButton, PersonName, RelationTag } from '../components/ui';
+import { IconAlign, IconArrowUp, IconPlus, IconChevronLeft, IconCompose } from '../components/icons';
 import { conversationList } from '../data/social';
 import { people, ME } from '../data/people';
 import { wp } from '../data/waypoints';
 import type { Conversation, Message } from '../data/types';
-import { relationTo } from '../lib/relations';
+import { current, relationTo } from '../lib/relations';
 import { conversationMessages, useApp } from '../lib/store';
 import { springs, useIsMobile, haptic } from '../lib/motion';
 import { useUI } from '../lib/ui';
@@ -28,7 +29,14 @@ function useConversation(id?: string, to?: string | null): Conversation | undefi
 function draft(personId: string): Conversation | undefined {
   if (!people[personId]) return undefined;
   const seg = bestSegment(personId) ?? ['msc-chem', 'pharma-rnd'];
-  return { id: `new-${personId}`, with: personId, about: seg, aboutPerson: personId, messages: [], unread: 0 };
+  return {
+    id: `new-${personId}`,
+    with: personId,
+    about: seg,
+    aboutPerson: personId,
+    messages: [],
+    unread: 0,
+  };
 }
 
 function ThreadRow({ c, active }: { c: Conversation; active: boolean }) {
@@ -76,6 +84,8 @@ function Thread({ c, onBack }: { c: Conversation; onBack?: () => void }) {
   const extra = useApp((s) => s.extraMessages);
   const send = useApp((s) => s.sendMessage);
   const markRead = useApp((s) => s.markThreadRead);
+  const blocked = useApp((s) => !!s.blocked[c.with]);
+  const toggleBlock = useApp((s) => s.toggleBlock);
   const openCompare = useUI((s) => s.openCompare);
   const [text, setText] = useState('');
   const [attach, setAttach] = useState(false);
@@ -123,7 +133,11 @@ function Thread({ c, onBack }: { c: Conversation; onBack?: () => void }) {
       </header>
       <div className="thread__context">
         <p className="t-footnote c-2">
-          You’re talking about <strong>{wp(c.about[0]).label} → {wp(c.about[1]).label}</strong> on {c.aboutPerson === ME ? 'your' : `${people[c.aboutPerson].first}’s`} Path
+          You’re talking about{' '}
+          <strong>
+            {wp(c.about[0]).label} → {wp(c.about[1]).label}
+          </strong>{' '}
+          on {c.aboutPerson === ME ? 'your' : `${people[c.aboutPerson].first}’s`} Path
         </p>
         <PathHint id={c.aboutPerson} segment={c.about} />
       </div>
@@ -166,68 +180,157 @@ function Thread({ c, onBack }: { c: Conversation; onBack?: () => void }) {
         </ol>
       </div>
 
-      <div className="composer-bar">
-        <AnimatePresence>
-          {attach && (
-            <motion.div className="attach" initial={{ opacity: 0, y: 8, scale: 0.97 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: 6 }} transition={springs.snappy}>
-              <p className="attach__h t-footnote">Share a step</p>
-              <button
-                className="attach__item"
-                onClick={() => {
-                  setPending({ person: ME, from: 'research-asst', to: 'msc-chem' });
-                  setAttach(false);
-                }}
-              >
-                <span className="t-subhead w-600">From your Path</span>
-                <span className="t-footnote c-2">Research → MSc Chemistry</span>
-              </button>
-              <button
-                className="attach__item"
-                onClick={() => {
-                  setPending({ person: c.aboutPerson, from: c.about[0], to: c.about[1] });
-                  setAttach(false);
-                }}
-              >
-                <span className="t-subhead w-600">From {c.aboutPerson === ME ? 'your' : `${people[c.aboutPerson].first}’s`} Path</span>
-                <span className="t-footnote c-2">
-                  {wp(c.about[0]).short} → {wp(c.about[1]).short}
-                </span>
-              </button>
-            </motion.div>
-          )}
-        </AnimatePresence>
-        {pending && (
-          <div className="composer-bar__pending">
-            <SegmentCard seg={pending} mine />
-            <button className="t-footnote c-tint" onClick={() => setPending(undefined)}>
-              Remove
-            </button>
-          </div>
-        )}
-        <div className="composer-bar__row">
-          <motion.button className="composer-bar__plus" aria-label="Share a step from a Path" onClick={() => setAttach((a) => !a)} animate={{ rotate: attach ? 45 : 0 }} transition={springs.snappy}>
-            <IconPlus size={20} />
-          </motion.button>
-          <label className="composer-bar__field">
-            <span className="visually-hidden">Message</span>
-            <input
-              value={text}
-              onChange={(e) => setText(e.target.value)}
-              onKeyDown={(e) => e.key === 'Enter' && submit()}
-              placeholder={`Message ${p.first}`}
-              enterKeyHint="send"
-            />
-            <AnimatePresence>
-              {(text.trim() || pending) && (
-                <motion.button className="composer-bar__send" onClick={submit} aria-label="Send" initial={{ scale: 0 }} animate={{ scale: 1 }} exit={{ scale: 0 }} transition={springs.snappy}>
-                  <IconArrowUp size={16} strokeWidth={2.6} />
-                </motion.button>
-              )}
-            </AnimatePresence>
-          </label>
+      {blocked ? (
+        <div className="composer-bar composer-bar--blocked">
+          <p className="t-subhead c-2">You blocked {p.first}. They can’t message you, and you can’t message them.</p>
+          <Button variant="gray" size="small" onClick={() => toggleBlock(c.with)}>
+            Unblock
+          </Button>
         </div>
-      </div>
+      ) : (
+        <div className="composer-bar">
+          <AnimatePresence>
+            {attach && (
+              <motion.div className="attach" initial={{ opacity: 0, y: 8, scale: 0.97 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: 6 }} transition={springs.snappy}>
+                <p className="attach__h t-footnote">Share a step</p>
+                <button
+                  className="attach__item"
+                  onClick={() => {
+                    setPending({
+                      person: ME,
+                      from: 'research-asst',
+                      to: 'msc-chem',
+                    });
+                    setAttach(false);
+                  }}
+                >
+                  <span className="t-subhead w-600">From your Path</span>
+                  <span className="t-footnote c-2">Research → MSc Chemistry</span>
+                </button>
+                <button
+                  className="attach__item"
+                  onClick={() => {
+                    setPending({
+                      person: c.aboutPerson,
+                      from: c.about[0],
+                      to: c.about[1],
+                    });
+                    setAttach(false);
+                  }}
+                >
+                  <span className="t-subhead w-600">From {c.aboutPerson === ME ? 'your' : `${people[c.aboutPerson].first}’s`} Path</span>
+                  <span className="t-footnote c-2">
+                    {wp(c.about[0]).short} → {wp(c.about[1]).short}
+                  </span>
+                </button>
+              </motion.div>
+            )}
+          </AnimatePresence>
+          {pending && (
+            <div className="composer-bar__pending">
+              <SegmentCard seg={pending} mine />
+              <button className="t-footnote c-tint" onClick={() => setPending(undefined)}>
+                Remove
+              </button>
+            </div>
+          )}
+          <div className="composer-bar__row">
+            <motion.button className="composer-bar__plus" aria-label="Share a step from a Path" onClick={() => setAttach((a) => !a)} animate={{ rotate: attach ? 45 : 0 }} transition={springs.snappy}>
+              <IconPlus size={20} />
+            </motion.button>
+            <label className="composer-bar__field">
+              <span className="visually-hidden">Message</span>
+              <input value={text} onChange={(e) => setText(e.target.value)} onKeyDown={(e) => e.key === 'Enter' && submit()} placeholder={`Message ${p.first}`} enterKeyHint="send" />
+              <AnimatePresence>
+                {(text.trim() || pending) && (
+                  <motion.button className="composer-bar__send" onClick={submit} aria-label="Send" initial={{ scale: 0 }} animate={{ scale: 1 }} exit={{ scale: 0 }} transition={springs.snappy}>
+                    <IconArrowUp size={16} strokeWidth={2.6} />
+                  </motion.button>
+                )}
+              </AnimatePresence>
+            </label>
+          </div>
+        </div>
+      )}
     </div>
+  );
+}
+
+/** Every conversation you have: the sample threads, plus any you started with someone new. Blocked people drop out. */
+function useThreads(): Conversation[] {
+  const extra = useApp((s) => s.extraMessages);
+  const blocked = useApp((s) => s.blocked);
+  return useMemo(() => {
+    const started = Object.keys(extra)
+      .filter((k) => k.startsWith('new-') && extra[k].length && !conversationList.some((c) => c.with === k.slice(4)))
+      .sort((a, b) => +(extra[b].at(-1)?.id.slice(2) ?? 0) - +(extra[a].at(-1)?.id.slice(2) ?? 0))
+      .map((k) => draft(k.slice(4)))
+      .filter((c): c is Conversation => !!c);
+    return [...started, ...conversationList].filter((c) => !blocked[c.with]);
+  }, [extra, blocked]);
+}
+
+const relOrder = ['twin', 'peer', 'ahead', 'guide', 'explorer', 'other'];
+
+/** New message: pick anyone on PathedIn. Your connections come first, then people near your Path. */
+function NewMessage({ open, onClose }: { open: boolean; onClose: () => void }) {
+  const navigate = useNavigate();
+  const connections = useApp((s) => s.connections);
+  const blocked = useApp((s) => s.blocked);
+  const [q, setQ] = useState('');
+  const groups = useMemo(() => {
+    const needle = q.trim().toLowerCase();
+    const all = Object.values(people)
+      .filter((p) => p.id !== ME && !blocked[p.id])
+      .filter((p) => !needle || `${p.name} ${p.headline} ${wp(current(p).wp).label}`.toLowerCase().includes(needle))
+      .sort((a, b) => relOrder.indexOf(relationTo(a.id).kind) - relOrder.indexOf(relationTo(b.id).kind) || a.name.localeCompare(b.name));
+    const mine = all.filter((p) => connections[p.id] === 'connected');
+    const rest = all.filter((p) => connections[p.id] !== 'connected');
+    return [
+      { title: 'Your connections', items: mine },
+      {
+        title: needle ? 'Everyone else' : 'Near your Path',
+        items: needle ? rest : rest.slice(0, 12),
+      },
+    ].filter((g) => g.items.length);
+  }, [q, connections, blocked]);
+
+  const pick = (id: string) => {
+    const c = conversationList.find((x) => x.with === id);
+    onClose();
+    setQ('');
+    navigate(c ? `/messages/${c.id}` : `/messages?to=${id}`);
+  };
+
+  return (
+    <Sheet open={open} onClose={onClose} title="New message" width={480} label="New message">
+      <div className="newmsg">
+        <SearchField value={q} onChange={setQ} autoFocus placeholder="Name, role or step" />
+        {groups.map((g) => (
+          <section key={g.title} className="newmsg__group">
+            <h3 className="newmsg__h t-footnote">{g.title}</h3>
+            <ul>
+              {g.items.map((p) => {
+                const rel = relationTo(p.id);
+                return (
+                  <li key={p.id}>
+                    <button className="newmsg__row" onClick={() => pick(p.id)}>
+                      <Avatar id={p.id} size={40} peek={false} />
+                      <span className="newmsg__text">
+                        <span className="t-body truncate">{p.name}</span>
+                        <span className="t-footnote c-2 truncate">{p.headline}</span>
+                      </span>
+                      {rel.kind !== 'other' && rel.kind !== 'self' && <RelationTag kind={rel.kind} label={rel.label} />}
+                    </button>
+                  </li>
+                );
+              })}
+            </ul>
+          </section>
+        ))}
+        {!groups.length && <p className="newmsg__none t-subhead c-2">Nobody matches “{q.trim()}”. Try a first name or a step like “MSc”.</p>}
+      </div>
+    </Sheet>
   );
 }
 
@@ -237,6 +340,26 @@ export function Messages() {
   const navigate = useNavigate();
   const isMobile = useIsMobile();
   const c = useConversation(id, params.get('to'));
+  const threads = useThreads();
+  const [composing, setComposing] = useState(false);
+  const asked = params.get('new') === '1';
+  useEffect(() => {
+    if (asked) setComposing(true);
+  }, [asked]);
+  const newBtn = (
+    <Button variant="tinted" size="small" icon={<IconCompose size={16} />} onClick={() => setComposing(true)}>
+      New message
+    </Button>
+  );
+  const sheet = (
+    <NewMessage
+      open={composing}
+      onClose={() => {
+        setComposing(false);
+        if (asked) navigate('/messages', { replace: true });
+      }}
+    />
+  );
 
   if (isMobile && c) {
     return (
@@ -248,16 +371,31 @@ export function Messages() {
 
   const list = (
     <div className="threads">
-      {conversationList.map((x) => (
+      {threads.map((x) => (
         <ThreadRow key={x.id} c={x} active={c?.id === x.id} />
       ))}
     </div>
   );
 
-  if (isMobile) return <Page title="Messages" back="Home">{list}</Page>;
+  if (isMobile)
+    return (
+      <Page
+        title="Messages"
+        back="Home"
+        trailing={
+          <IconButton label="New message" onClick={() => setComposing(true)}>
+            <IconCompose size={22} strokeWidth={1.6} />
+          </IconButton>
+        }
+      >
+        {list}
+        {sheet}
+      </Page>
+    );
 
   return (
-    <Page title="Messages" subtitle="Every conversation starts from a step on someone’s Path." wide>
+    <Page title="Messages" subtitle="Every conversation starts from a step on someone’s Path." wide largeTrailing={newBtn}>
+      {sheet}
       <div className="messages">
         <aside className="messages__list">{list}</aside>
         <section className="messages__thread">

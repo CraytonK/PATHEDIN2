@@ -377,3 +377,32 @@
     margin-bottom: 12px;
   }
 }
+.post-more__h {
+  padding: 8px 12px 4px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--label-2);
+}
+
+/* A reported post, or one by someone you blocked. */
+.post-hidden {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px 16px;
+  padding: 16px 20px;
+  border-radius: var(--r-card);
+  background: var(--fill);
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--label-2);
+}
+.post-hidden__undo {
+  font-weight: 500;
+  color: var(--tint-text);
+}
+.post-hidden__undo:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}

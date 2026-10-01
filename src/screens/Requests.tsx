@@ -17,6 +17,21 @@ import './lists.css';
 
 const askLabel = { chat: 'A conversation', question: 'One question', review: 'Feedback' };
 
+/** The next few evenings and a weekend morning, as times to offer. */
+function suggestedTimes() {
+  const out: string[] = [];
+  const d = new Date();
+  for (let i = 1; out.length < 4 && i < 10; i++) {
+    const day = new Date(d);
+    day.setDate(d.getDate() + i);
+    const dow = day.getDay();
+    const label = day.toLocaleDateString('en-US', { weekday: 'long' });
+    if (dow === 6) out.push(`${label}, 10:00 AM`);
+    else if (dow !== 0) out.push(`${label}, ${out.length % 2 ? '7:30' : '6:00'} PM`);
+  }
+  return out;
+}
+
 function RequestCard({ r, incoming }: { r: PathRequest; incoming: boolean }) {
   const other = incoming ? r.from : r.to;
   const p = people[other];
@@ -24,6 +39,9 @@ function RequestCard({ r, incoming }: { r: PathRequest; incoming: boolean }) {
   const respond = useApp((s) => s.respondRequest);
   const toast = useUI((s) => s.showToast);
   const pathOwner = incoming ? ME : r.to;
+  const [picking, setPicking] = useState(false);
+  const [time, setTime] = useState<string | null>(null);
+  const times = suggestedTimes();
   return (
     <motion.article layout className="req-card" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, x: -20 }} transition={springs.smooth}>
       <div className="req-card__who">
@@ -57,7 +75,7 @@ function RequestCard({ r, incoming }: { r: PathRequest; incoming: boolean }) {
           >
             Accept
           </Button>
-          <Button variant="gray" size="medium" onClick={() => toast('Suggested Thursday, 6:00 PM')}>
+          <Button variant="gray" size="medium" aria-expanded={picking} onClick={() => setPicking((v) => !v)}>
             Suggest a time
           </Button>
           <Button variant="plain" size="medium" onClick={() => respond(r.id, 'declined')}>
@@ -65,6 +83,39 @@ function RequestCard({ r, incoming }: { r: PathRequest; incoming: boolean }) {
           </Button>
         </div>
       )}
+      <AnimatePresence initial={false}>
+        {incoming && r.status === 'pending' && picking && (
+          <motion.div className="req-times" initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} exit={{ opacity: 0, height: 0 }} transition={springs.smooth}>
+            <p className="req-times__h">When suits you? {p.first} gets a 20-minute call invite for the time you pick.</p>
+            <div className="req-times__opts" role="radiogroup" aria-label="Times to suggest">
+              {times.map((t) => (
+                <button key={t} type="button" role="radio" aria-checked={time === t} className={`req-time ${time === t ? 'is-on' : ''}`} onClick={() => setTime(t)}>
+                  {time === t && <IconCheck size={13} strokeWidth={2.6} />}
+                  {t}
+                </button>
+              ))}
+            </div>
+            <div className="req-times__foot">
+              <Button
+                variant="filled"
+                size="small"
+                disabled={!time}
+                onClick={() => {
+                  if (!time) return;
+                  respond(r.id, 'accepted', time);
+                  setPicking(false);
+                  toast(`Suggested ${time} to ${p.first}`);
+                }}
+              >
+                Send this time
+              </Button>
+              <Button variant="plain" size="small" onClick={() => setPicking(false)}>
+                Cancel
+              </Button>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
       {(r.status !== 'pending' || !incoming) && (
         <p className={`req-card__status t-footnote is-${r.status}`}>
           {r.status === 'accepted' ? `Accepted${r.proposed ? ` · ${r.proposed}` : ''}` : r.status === 'declined' ? 'Not now' : `Waiting for ${p.first}`}
@@ -84,8 +135,9 @@ function RequestCard({ r, incoming }: { r: PathRequest; incoming: boolean }) {
 
 export function Requests() {
   const requests = useApp((s) => s.requests);
+  const blocked = useApp((s) => s.blocked);
   const [tab, setTab] = useState<'in' | 'out'>('in');
-  const incoming = requests.filter((r) => r.to === ME);
+  const incoming = requests.filter((r) => r.to === ME && !blocked[r.from]);
   const outgoing = requests.filter((r) => r.from === ME);
   const list = tab === 'in' ? incoming : outgoing;
   return (

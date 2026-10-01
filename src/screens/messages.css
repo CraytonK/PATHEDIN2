@@ -359,3 +359,52 @@
   bottom: 0;
   padding-bottom: calc(10px + var(--safe-bottom));
 }
+
+/* ── New message sheet ── */
+.newmsg {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding-bottom: 16px;
+}
+.newmsg__h {
+  padding: 0 8px 6px;
+  color: var(--label-2);
+  font-weight: 500;
+}
+.newmsg ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.newmsg__row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  min-height: 56px;
+  padding: 8px;
+  border-radius: 12px;
+  text-align: left;
+  transition: background-color var(--dur-1);
+}
+.newmsg__row:hover,
+.newmsg__row:focus-visible {
+  background: var(--bg-hover);
+}
+.newmsg__text {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+.newmsg__none {
+  padding: 24px 8px;
+  text-align: center;
+}
+.composer-bar--blocked {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}

@@ -179,8 +179,8 @@ export function GuideSetup() {
             <Button variant="filled" size="large" onClick={() => navigate(`/p/${ME}`)}>
               See your Guide profile
             </Button>
-            <Button variant="outline" size="large" onClick={() => navigate('/guides')}>
-              See Path Guides
+            <Button variant="outline" size="large" onClick={() => navigate('/guide')}>
+              Open your Guide hub
             </Button>
           </div>
         </motion.div>

@@ -10,6 +10,8 @@ import { sessionsFor } from '../lib/booking';
 import { RouteSilk } from '../components/path/RouteSilk';
 import { Tour } from './LandingTour';
 import { SkipLink } from '../components/SkipLink';
+import { Link, useNavigate } from 'react-router-dom';
+import { InfoBody, type InfoKey } from './Info';
 import './landing.css';
 
 type AuthMode = 'join' | 'signin';
@@ -18,8 +20,18 @@ type AuthMode = 'join' | 'signin';
  * The signed-out intro page: a quiet masthead, one enormous line, a sentence of explanation, one action,
  * and the product itself layered off the right edge.
  */
-export function Landing({ onAuthed }: { onAuthed: () => void }) {
+export function Landing({ onAuthed, info }: { onAuthed: () => void; info?: InfoKey }) {
   const [auth, setAuth] = useState<AuthMode | null>(null);
+  const navigate = useNavigate();
+  // A section of the intro: scroll to it here, or come back to the intro first from Help and the policies.
+  const jump = (e: React.MouseEvent, id: string) => {
+    e.preventDefault();
+    const go = () => document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    if (info) {
+      navigate('/');
+      setTimeout(go, 120);
+    } else go();
+  };
   useEffect(() => {
     document.title = 'PathedIn · Your path & who’s walked it';
     return () => {
@@ -31,16 +43,16 @@ export function Landing({ onAuthed }: { onAuthed: () => void }) {
       <SkipLink />
       <header className="landing__bar">
         <div className="landing__bar-inner">
-          <a href="#top" className="wordmark landing__logo" aria-label="PathedIn" onClick={(e) => e.preventDefault()}>
+          <Link to="/" className="wordmark landing__logo" aria-label="PathedIn home" onClick={() => !info && window.scrollTo({ top: 0, behavior: 'smooth' })}>
             <Wordmark size={30} />
-          </a>
+          </Link>
           <nav className="landing__nav" aria-label="PathedIn">
-            <a href="#tour" className="landing__link landing__link--wide">
+            <Link to="/" className="landing__link landing__link--wide" onClick={(e) => jump(e, 'tour')}>
               How it works
-            </a>
-            <a href="#guides" className="landing__link landing__link--wide">
+            </Link>
+            <Link to="/" className="landing__link landing__link--wide" onClick={(e) => jump(e, 'guides')}>
               Path Guides
-            </a>
+            </Link>
             <button className="landing__link" onClick={() => setAuth('signin')}>
               Sign in
             </button>
@@ -52,6 +64,10 @@ export function Landing({ onAuthed }: { onAuthed: () => void }) {
       </header>
 
       <main className="landing__main" id="main" tabIndex={-1}>
+      {info ? (
+        <InfoBody k={info} standalone />
+      ) : (
+      <>
       <div className="landing__stage immersive">
         <RouteSilk lines={30} delay={0.2} />
         <div className="landing__hero" id="top">
@@ -89,14 +105,22 @@ export function Landing({ onAuthed }: { onAuthed: () => void }) {
       </div>
 
       <Tour onJoin={() => setAuth('join')} onSignIn={() => setAuth('signin')} />
+      </>
+      )}
       </main>
 
       <footer className="landing__foot">
         <nav aria-label="Footer">
-          {['Help', 'About', 'How it works', 'Path Guides', 'Communities', 'Privacy', 'Terms'].map((l) => (
-            <a key={l} href="#top" onClick={(e) => e.preventDefault()}>
-              {l}
-            </a>
+          <Link to="/" onClick={(e) => jump(e, 'tour')}>
+            How it works
+          </Link>
+          <Link to="/" onClick={(e) => jump(e, 'guides')}>
+            Path Guides
+          </Link>
+          {(['help', 'about', 'privacy', 'terms'] as const).map((k) => (
+            <Link key={k} to={`/${k}`} onClick={() => window.scrollTo(0, 0)}>
+              {k === 'help' ? 'Help' : k === 'about' ? 'About' : k === 'privacy' ? 'Privacy' : 'Terms'}
+            </Link>
           ))}
         </nav>
       </footer>
@@ -263,7 +287,7 @@ function HeroArt() {
             {at.toLocaleDateString('en-US', { month: 'short' }).toUpperCase()}
           </text>
           <text x="360" y="506" className="hero-t hero-t--strong">
-            Office hours with Amara
+            Office Hours with Amara
           </text>
           <text x="360" y="526" className="hero-t hero-t--muted">
             {at.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' })} · 15 minutes · {open.length} spots open

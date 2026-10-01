@@ -199,7 +199,7 @@ export function downloadIcs(b: Booking) {
   const g = people[b.guide];
   const start = new Date(b.at);
   const end = new Date(start.getTime() + Math.max(b.minutes, 15) * 60_000);
-  const what = b.title ?? 'Office hours';
+  const what = b.title ?? 'Office Hours';
   const description = [`${b.title ?? 'Path Office Hours'} with ${g.name}.`, `About: ${b.topic}`, b.note ? `Your note: ${b.note}` : ''].filter(Boolean).join('\n');
   const lines = [
     'BEGIN:VCALENDAR',

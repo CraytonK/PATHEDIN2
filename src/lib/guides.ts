@@ -238,7 +238,7 @@ export function dueFor(service: GuideService, from = new Date()) {
   return d;
 }
 
-/** "Office hours with Amara", "Résumé review with Amara". */
+/** "Office Hours with Amara", "Résumé review with Amara". */
 export function bookingTitle(b: Booking) {
-  return `${b.title ?? 'Office hours'} with ${people[b.guide].first}`;
+  return `${b.title ?? 'Office Hours'} with ${people[b.guide].first}`;
 }

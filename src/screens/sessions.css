@@ -1,0 +1,245 @@
+/* ── Your sessions (Sessions.tsx): each booking as a card, coming up or past ── */
+.sessions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--stack-gap, 16px);
+}
+.session {
+  --bg: var(--card);
+  padding: 18px 20px;
+  border-radius: var(--r-card);
+  background: var(--card);
+  box-shadow: var(--card-shadow);
+}
+.session__top {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  gap: 16px;
+  align-items: start;
+}
+/* The date as a ticket stub, as on the booking confirmation. */
+.session__date {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 56px;
+  padding: 8px 0 9px;
+  border-radius: 14px;
+  background: var(--canvas);
+  font-size: 11px;
+  line-height: 13px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--tint-text);
+}
+.session__date strong {
+  margin: 2px 0;
+  font-size: 22px;
+  line-height: 26px;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  text-transform: none;
+  color: var(--label);
+  font-variant-numeric: tabular-nums;
+}
+.session.is-past .session__date {
+  color: var(--label-3);
+}
+.session__text {
+  min-width: 0;
+}
+.session__title {
+  font-size: 17px;
+  line-height: 22px;
+  font-weight: 500;
+  letter-spacing: -0.012em;
+}
+.session__when {
+  margin-top: 4px;
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--label);
+  font-variant-numeric: tabular-nums;
+}
+.session__about {
+  margin-top: 2px;
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--label-2);
+}
+.session__price {
+  margin: 12px 0 0 72px;
+  font-size: 13px;
+  line-height: 18px;
+  color: var(--label-2);
+  font-variant-numeric: tabular-nums;
+}
+.session__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 10px;
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 1px solid var(--separator);
+}
+.session__cancel,
+.session__link {
+  margin-left: auto;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--label-2);
+}
+.session__cancel:hover,
+.session__link:hover {
+  color: var(--label);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.session__confirm {
+  margin-top: 14px;
+  padding: 14px 16px;
+  border-radius: 14px;
+  background: var(--canvas);
+}
+.session__confirm p {
+  font-size: 14px;
+  line-height: 20px;
+}
+.session__confirm .session__actions {
+  margin-top: 10px;
+  padding-top: 0;
+  border-top: 0;
+}
+.btn--danger.btn--filled {
+  background: var(--danger);
+  color: var(--card);
+}
+
+/* Reviews of past sessions. */
+.session__review {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 1px solid var(--separator);
+}
+.session__review .session__actions {
+  margin-top: 0;
+  padding-top: 0;
+  border-top: 0;
+}
+.session__rate {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+.session__rate legend {
+  float: left;
+  margin-right: 10px;
+  font-size: 14px;
+  font-weight: 500;
+}
+.session__rate button {
+  display: inline-flex;
+  padding: 3px;
+  border-radius: 6px;
+  color: var(--label-4);
+  transition:
+    color 120ms var(--ease-out),
+    scale 120ms var(--ease-out);
+}
+.session__rate button.is-on {
+  color: var(--ink);
+}
+.session__rate button:active {
+  scale: 0.9;
+}
+.session__review-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--label-2);
+}
+.session__review-field textarea {
+  width: 100%;
+  padding: 10px 12px;
+  border: 0;
+  border-radius: 10px;
+  background: var(--canvas);
+  box-shadow: inset 0 0 0 1px var(--separator);
+  font: inherit;
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 22px;
+  color: var(--label);
+  resize: vertical;
+  outline: none;
+}
+.session__review-field textarea:focus {
+  box-shadow:
+    inset 0 0 0 1.5px var(--tint),
+    0 0 0 4px var(--tint-softer);
+}
+.session__stars {
+  display: inline-flex;
+  gap: 2px;
+  color: var(--ink);
+}
+.session__review-body {
+  font-family: var(--font-serif);
+  font-size: 16px;
+  line-height: 24px;
+}
+.session__review-note {
+  font-size: 13px;
+  line-height: 18px;
+  color: var(--label-2);
+}
+
+.sessions__empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 48px 20px;
+  text-align: center;
+  border-radius: var(--r-card);
+  background: var(--card);
+  box-shadow: var(--card-shadow);
+  color: var(--label);
+}
+.sessions__empty svg {
+  margin-bottom: 4px;
+  color: var(--label-3);
+}
+.sessions__empty .btn {
+  margin-top: 12px;
+}
+.sessions__fine {
+  font-size: 13px;
+  line-height: 18px;
+  color: var(--label-3);
+}
+
+@media (max-width: 767px) {
+  .session {
+    padding: 16px;
+  }
+  .session__top {
+    gap: 12px;
+  }
+  .session__date {
+    width: 50px;
+  }
+  .session__price {
+    margin-left: 62px;
+  }
+}

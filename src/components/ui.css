@@ -673,3 +673,35 @@
     font-size: 34px;
   }
 }
+
+/* ── Switch (ui.tsx Switch) ── */
+.switch {
+  position: relative;
+  flex: none;
+  display: flex;
+  align-items: center;
+  width: 46px;
+  height: 28px;
+  padding: 3px;
+  border-radius: var(--r-pill);
+  background: var(--label-4);
+  transition: background-color 200ms var(--ease-out);
+}
+.switch.is-on {
+  justify-content: flex-end;
+  background: var(--primary);
+}
+.switch__knob {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--on-primary);
+  box-shadow: 0 2px 4px rgba(15, 23, 42, 0.25);
+}
+.switch:not(.is-on) .switch__knob {
+  background: #fff;
+}
+.switch:focus-visible {
+  outline: 2px solid var(--tint);
+  outline-offset: 2px;
+}

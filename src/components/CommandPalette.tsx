@@ -10,7 +10,7 @@ import { search, type Result } from '../lib/search';
 import { useApp } from '../lib/store';
 import { switchTheme } from '../lib/theme';
 import { useUI } from '../lib/ui';
-import { IconAlign, IconArrowUpRight, IconBook, IconBookmark, IconCalendar, IconCompass, IconCompose, IconDoc, IconFlag, IconMoon, IconPath, IconPeople, IconQuestion, IconSearch, IconSend, IconGuidePlus, IconSun } from './icons';
+import { IconAlign, IconArrowUpRight, IconBook, IconBookmark, IconCalendar, IconCompass, IconCompose, IconDoc, IconFlag, IconGear, IconMessage, IconMoon, IconPath, IconPeople, IconQuestion, IconSearch, IconSend, IconGuidePlus, IconSun } from './icons';
 import { AvatarStack } from './ui';
 import './palette.css';
 
@@ -45,6 +45,7 @@ export function CommandPalette() {
   const openCompare = useUI((s) => s.openCompare);
   const openBooking = useUI((s) => s.openBooking);
   const theme = useApp((s) => s.theme);
+  const hasGuide = useApp((s) => !!s.myGuide);
   const navigate = useNavigate();
   const [q, setQ] = useState('');
   const [active, setActive] = useState(0);
@@ -85,7 +86,10 @@ export function CommandPalette() {
       },
       { key: 'discover', group: 'Actions', title: 'Discover people on your route', lead: <IconCompass size={17} />, run: go('/discover?tab=people') },
       { key: 'guides', group: 'Actions', title: 'Browse Path Guides', sub: 'Free Office Hours, calls, reviews and mentorship', lead: <IconSend size={17} />, run: go('/guides') },
-      { key: 'become-guide', group: 'Actions', title: 'Become a Path Guide', sub: 'Guide the moves you’ve made, for free or for a fee', lead: <IconGuidePlus size={17} />, run: go('/guide/setup') },
+      hasGuide
+        ? { key: 'guide-hub', group: 'Actions', title: 'Open your Guide hub', sub: 'Who’s booked you and what you’d keep', lead: <IconGuidePlus size={17} />, run: go('/guide') }
+        : { key: 'become-guide', group: 'Actions', title: 'Become a Path Guide', sub: 'Guide the moves you’ve made, for free or for a fee', lead: <IconGuidePlus size={17} />, run: go('/guide/setup') },
+      { key: 'new-message', group: 'Actions', title: 'New message', sub: 'Start a conversation about a step', lead: <IconMessage size={17} />, run: go('/messages?new=1') },
       {
         key: 'theme',
         group: 'Actions',
@@ -104,9 +108,12 @@ export function CommandPalette() {
       { key: 'go-saved', group: 'Go to', title: 'Saved', lead: <IconBookmark size={17} />, run: go('/saved') },
       { key: 'go-requests', group: 'Go to', title: 'Path Requests', lead: <IconSend size={17} />, run: go('/requests') },
       { key: 'go-connections', group: 'Go to', title: 'Connections', lead: <IconPeople size={17} />, run: go('/connections') },
+      { key: 'go-sessions', group: 'Go to', title: 'Your sessions', sub: 'Coming up and past, with reviews', lead: <IconCalendar size={17} />, run: go('/sessions') },
+      { key: 'go-settings', group: 'Go to', title: 'Settings', sub: 'Notifications, privacy and appearance', lead: <IconGear size={17} />, run: go('/settings') },
+      { key: 'go-help', group: 'Go to', title: 'Help', sub: 'How PathedIn works', lead: <IconQuestion size={17} />, run: go('/help') },
     ];
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [theme]);
+  }, [theme, hasGuide]);
 
   const items: Item[] = useMemo(() => {
     const n = q.trim().toLowerCase();

@@ -92,8 +92,8 @@ export function Profile() {
       <Button variant="outline" size="medium" onClick={() => openEditProfile()}>
         Edit profile
       </Button>
-      <Button variant="tinted" size="medium" icon={<IconGuidePlus size={16} />} onClick={() => navigate('/guide/setup')}>
-        {myGuide?.live ? 'Edit Guide profile' : myGuide ? 'Finish your Guide profile' : 'Become a Path Guide'}
+      <Button variant="tinted" size="medium" icon={<IconGuidePlus size={16} />} onClick={() => navigate(myGuide?.live ? '/guide' : '/guide/setup')}>
+        {myGuide?.live ? 'Your Guide hub' : myGuide ? 'Finish your Guide profile' : 'Become a Path Guide'}
       </Button>
     </div>
   ) : (

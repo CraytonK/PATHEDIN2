@@ -93,8 +93,18 @@ export function RailPills({ items }: { items: { to: string; label: string }[] })
 export function RailFooter() {
   return (
     <footer className="rail-foot">
-      {['Help', 'About', 'Path Guides', 'Communities', 'Privacy', 'Terms'].map((l) => (
-        <span key={l}>{l}</span>
+      {[
+        ['Help', '/help'],
+        ['About', '/about'],
+        ['Path Guides', '/guides'],
+        ['Communities', '/communities'],
+        ['Settings', '/settings'],
+        ['Privacy', '/privacy'],
+        ['Terms', '/terms'],
+      ].map(([l, to]) => (
+        <Link key={l} to={to}>
+          {l}
+        </Link>
       ))}
     </footer>
   );
