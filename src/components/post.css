@@ -130,6 +130,37 @@
   display: block;
   color: var(--label);
 }
+/* The whole card opens the post. The title's link stretches over the card, so a click anywhere on it opens the
+   post; the parts with a job of their own (the author, the community, the "…" menu, Save, Book, a Path you can
+   hover) sit above that and keep working, and the space around them lets the click through to the card. */
+.post__link::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  border-radius: inherit;
+}
+.post__link:focus-visible {
+  outline: none;
+}
+.post:has(.post__link:focus-visible) {
+  outline: 2px solid var(--tint);
+  outline-offset: 3px;
+}
+.post__kind,
+.post__by,
+.post__extra,
+.post__meta {
+  position: relative;
+  z-index: 2;
+  pointer-events: none;
+}
+.post__kind :is(a, button, input, textarea, select, label, [role='button'], .avatar, .phint),
+.post__by :is(a, button, input, textarea, select, label, [role='button'], .avatar, .phint),
+.post__extra :is(a, button, input, textarea, select, label, [role='button'], .avatar, .phint),
+.post__meta :is(a, button, input, textarea, select, label, [role='button'], .avatar, .phint) {
+  pointer-events: auto;
+}
 /* Card headers: the interface face, medium weight. Stories set their titles in Charter Bold. */
 .post__title {
   font-size: 21px;

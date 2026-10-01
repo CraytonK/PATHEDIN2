@@ -24,6 +24,7 @@ import { Network } from './screens/Network';
 import { Guides } from './screens/Guides';
 import { Communities } from './screens/Communities';
 import { CommunityScreen } from './screens/Community';
+import { ThreadScreen } from './screens/Thread';
 import { Profile } from './screens/Profile';
 import { Stories } from './screens/Stories';
 import { StoryScreen } from './screens/Story';
@@ -180,6 +181,7 @@ function Shell() {
               <Route path="/guide/setup" element={<GuideSetup />} />
               <Route path="/communities" element={<Communities />} />
               <Route path="/c/:id" element={<CommunityScreen />} />
+              <Route path="/c/:id/t/:tid" element={<ThreadScreen />} />
               <Route path="/p/:id" element={<Profile />} />
               <Route path="/stories" element={<Stories />} />
               <Route path="/stories/:id" element={<StoryScreen />} />

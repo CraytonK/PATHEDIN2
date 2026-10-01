@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import { persist, createJSONStorage, type StateStorage } from 'zustand/middleware';
 import { requestList, conversationList } from '../data/social';
-import type { Banner, Message, PathRequest, Person, ServiceKind } from '../data/types';
+import type { Banner, Message, PathRequest, Person, ServiceKind, Thread } from '../data/types';
 import { ME, people } from '../data/people';
 
 export type ConnectionState = 'pending' | 'connected';
@@ -93,6 +93,10 @@ interface AppState {
   profile: ProfileEdits;
   /** The background behind your photo; none chosen shows PathedIn's route silk. */
   banner: Banner | null;
+  /** Conversations you started in a community, newest first. */
+  myThreads: Thread[];
+  /** Your replies to community conversations, by conversation. */
+  threadReplies: Record<string, { body: string; ago: string }[]>;
 
   connect: (id: string) => void;
   toggleFollow: (id: string) => void;
@@ -118,6 +122,8 @@ interface AppState {
   saveGuide: (g: MyGuide) => void;
   setGuideLive: (live: boolean) => void;
   saveProfile: (profile: ProfileEdits, banner: Banner | null) => void;
+  postThread: (t: Thread) => void;
+  replyToThread: (id: string, body: string) => void;
 }
 
 /** localStorage can throw (private mode, blocked storage). Never let that break the app. */
@@ -154,6 +160,8 @@ export const useApp = create<AppState>()(
       myGuide: null,
       profile: {},
       banner: null,
+      myThreads: [],
+      threadReplies: {},
       connections: {
         sarah: 'connected',
         daniel: 'connected',
@@ -242,6 +250,8 @@ export const useApp = create<AppState>()(
         applyProfile(profile);
         set({ profile, banner });
       },
+      postThread: (t) => set((s) => ({ myThreads: [t, ...s.myThreads] })),
+      replyToThread: (id, body) => set((s) => ({ threadReplies: { ...s.threadReplies, [id]: [...(s.threadReplies[id] ?? []), { body, ago: 'now' }] } })),
     }),
     {
       name: 'pathedin:v1',
@@ -275,6 +285,8 @@ export const useApp = create<AppState>()(
         myGuide: s.myGuide,
         profile: s.profile,
         banner: s.banner,
+        myThreads: s.myThreads,
+        threadReplies: s.threadReplies,
       }),
       onRehydrateStorage: () => (state) => {
         if (state?.profile) applyProfile(state.profile);

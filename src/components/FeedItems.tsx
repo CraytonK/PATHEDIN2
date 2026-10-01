@@ -157,7 +157,7 @@ export function ThreadPost({ t, why, i }: { t: Thread; why: Why; i?: number }) {
   const c = communities[t.community];
   const last = t.replies[t.replies.length - 1];
   const repliers = [...new Set(t.replies.map((r) => r.author))];
-  const to = `/c/${c.id}#${t.id}`;
+  const to = `/c/${c.id}/t/${t.id}`;
   return (
     <Post
       i={i}

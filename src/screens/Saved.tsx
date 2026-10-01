@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Page } from '../components/chrome';
 import { DefaultRail } from '../components/Rail';
-import { DecisionItem, PersonRow, QuestionItem, StoryItem } from '../components/content';
+import { DecisionItem, PersonRow, QuestionItem, StoryItem, ThreadItem } from '../components/content';
 import { RouteItem } from '../components/Ecosystem';
 import { TextTabs } from '../components/ui';
 import { IconBookmark } from '../components/icons';
@@ -11,15 +11,18 @@ import { people } from '../data/people';
 import { stories } from '../data/stories';
 import { questions } from '../data/questions';
 import { decisions } from '../data/decisions';
+import { threads } from '../data/communities';
 import { destinations } from '../data/destinations';
 import { wp } from '../data/waypoints';
 import './lists.css';
 
-type Kind = 'person' | 'route' | 'destination' | 'story' | 'question' | 'decision';
-const labels: Record<Kind, string> = { person: 'People', route: 'Routes', destination: 'Destinations', story: 'Stories', question: 'Questions', decision: 'Decisions' };
+type Kind = 'person' | 'route' | 'destination' | 'story' | 'question' | 'decision' | 'thread';
+const labels: Record<Kind, string> = { person: 'People', route: 'Routes', destination: 'Destinations', story: 'Stories', question: 'Questions', decision: 'Decisions', thread: 'Conversations' };
 
 export function Saved() {
   const saved = useApp((s) => s.saved);
+  const myThreads = useApp((s) => s.myThreads);
+  const allThreads = [...myThreads, ...threads];
   const keys = Object.keys(saved).filter((k) => saved[k]);
   const of = (k: Kind) => keys.filter((x) => x.startsWith(`${k}:`)).map((x) => x.slice(k.length + 1));
   const kinds = (Object.keys(labels) as Kind[]).filter((k) => of(k).length);
@@ -42,6 +45,11 @@ export function Saved() {
               {tab === 'story' && items.filter((id) => stories[id]).map((id) => <StoryItem key={id} story={stories[id]} />)}
               {tab === 'question' && items.filter((id) => questions[id]).map((id) => <QuestionItem key={id} q={questions[id]} />)}
               {tab === 'decision' && items.filter((id) => decisions[id]).map((id) => <DecisionItem key={id} d={decisions[id]} />)}
+              {tab === 'thread' &&
+                items.map((id) => {
+                  const t = allThreads.find((x) => x.id === id);
+                  return t ? <ThreadItem key={id} t={t} showCommunity /> : null;
+                })}
               {tab === 'route' &&
                 items.map((k) => {
                   const [dest, rid] = k.split('/');

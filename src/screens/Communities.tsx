@@ -16,7 +16,7 @@ export function Communities() {
       rail={
         <>
           <RailSection title="Happening now">
-            <RailPosts items={live.map((t) => ({ author: t.author, where: communities[t.community].title, title: t.title, to: `/c/${t.community}#${t.id}`, meta: `${t.ago} · ${t.replyCount} replies` }))} />
+            <RailPosts items={live.map((t) => ({ author: t.author, where: communities[t.community].title, title: t.title, to: `/c/${t.community}/t/${t.id}`, meta: `${t.ago} · ${t.replyCount} replies` }))} />
           </RailSection>
           <RailSection title="Hosts on your route" more={{ to: '/guides', label: 'See all Path Guides' }}>
             <RailPeople ids={['amara', 'tomas', 'priya']} action="request" />

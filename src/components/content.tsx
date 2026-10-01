@@ -419,7 +419,7 @@ export function ThreadItem({ t, showCommunity, i }: { t: Thread; showCommunity?:
       note={`at ${wp(now.wp).short}`}
       where={showCommunity ? <Link to={`/c/${c.id}`}>{c.title}</Link> : undefined}
       ago={t.pinned ? `${t.ago} · Pinned` : t.ago}
-      to={`/c/${c.id}#${t.id}`}
+      to={`/c/${c.id}/t/${t.id}`}
       title={t.title}
       subtitle={t.body}
       why={t.replies[0] ? { kind: 'peer', text: `${people[t.replies[0].author].first} replied from ${wp(current(people[t.replies[0].author]).wp).short}` } : undefined}

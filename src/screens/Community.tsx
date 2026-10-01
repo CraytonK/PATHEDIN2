@@ -81,14 +81,15 @@ export function CommunityScreen() {
   const joined = useApp((s) => !!s.joined[id]);
   const [tab, setTab] = useState<Tab>('conversations');
   const [stage, setStage] = useState<string | null>(null);
-  const [posted, setPosted] = useState<Thread[]>([]);
+  const myThreads = useApp((s) => s.myThreads);
+  const postThread = useApp((s) => s.postThread);
 
   useEffect(() => {
     if (hash) setTimeout(() => document.getElementById(hash.slice(1))?.scrollIntoView({ behavior: 'smooth', block: 'center' }), 400);
   }, [hash]);
 
   if (!c) return <NotFound />;
-  const threads = [...posted, ...allThreads.filter((t) => t.community === id)];
+  const threads = [...myThreads, ...allThreads].filter((t) => t.community === id);
   const qs = questionList.filter((q) => q.community === id);
   const ds = decisionList.filter((d) => d.community === id);
   const ss = storyList.filter((s) => s.communities.includes(id));
@@ -171,7 +172,7 @@ export function CommunityScreen() {
               {tab === 'conversations' && (
                 <div className="card-stack">
                   {joined ? (
-                    <Composer communityId={c.id} onPost={(t) => setPosted((p) => [t, ...p])} />
+                    <Composer communityId={c.id} onPost={postThread} />
                   ) : (
                     <p className="cm__join-note t-subhead c-2">Join to start conversations. Everything you post shows where you are on the route.</p>
                   )}

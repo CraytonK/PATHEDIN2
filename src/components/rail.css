@@ -85,6 +85,23 @@
   text-decoration: underline;
   text-underline-offset: 3px;
 }
+/* Each entry opens as a whole, like a post card: the title's link covers it, the face above keeps its peek. */
+.rail-posts li {
+  position: relative;
+}
+.rail-posts__title::after {
+  content: '';
+  position: absolute;
+  inset: -6px -8px;
+  border-radius: var(--r-sm, 6px);
+}
+.rail-posts li:hover .rail-posts__title {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.rail-posts__by .avatar {
+  z-index: 1;
+}
 .rail-posts__meta {
   margin-top: 6px;
   font-size: 13px;

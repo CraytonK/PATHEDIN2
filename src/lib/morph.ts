@@ -25,7 +25,8 @@ export function setMorphNavigator(fn: (to: string) => void) {
   go = fn;
 }
 
-const ROUTE = /^#?(\/(?:stories|questions|decisions|c)\/[^/?#]+)/;
+// A story, question, decision, community, or a conversation inside a community.
+const ROUTE = /^#?(\/(?:stories|questions|decisions)\/[^/?#]+|\/c\/[^/?#]+(?:\/t\/[^/?#]+)?)/;
 const reduced = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 function inView(el: Element) {
