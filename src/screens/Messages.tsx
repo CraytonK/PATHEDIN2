@@ -13,7 +13,7 @@ import { wp } from '../data/waypoints';
 import type { Conversation, Message } from '../data/types';
 import { current, relationTo } from '../lib/relations';
 import { conversationMessages, useApp } from '../lib/store';
-import { springs, useIsMobile, haptic } from '../lib/motion';
+import { springs, useIsMobile, usePhoneChrome, haptic } from '../lib/motion';
 import { useUI } from '../lib/ui';
 import { bestSegment } from '../components/RequestComposer';
 import './messages.css';
@@ -339,6 +339,7 @@ export function Messages() {
   const [params] = useSearchParams();
   const navigate = useNavigate();
   const isMobile = useIsMobile();
+  const phone = usePhoneChrome();
   const c = useConversation(id, params.get('to'));
   const threads = useThreads();
   const [composing, setComposing] = useState(false);
@@ -383,10 +384,13 @@ export function Messages() {
         title="Messages"
         back="Home"
         trailing={
-          <IconButton label="New message" onClick={() => setComposing(true)}>
-            <IconCompose size={22} strokeWidth={1.6} />
-          </IconButton>
+          phone ? (
+            <IconButton label="New message" onClick={() => setComposing(true)}>
+              <IconCompose size={22} strokeWidth={1.6} />
+            </IconButton>
+          ) : undefined
         }
+        largeTrailing={phone ? undefined : newBtn}
       >
         {list}
         {sheet}
