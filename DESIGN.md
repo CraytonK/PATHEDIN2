@@ -436,6 +436,20 @@ Across the top of a person's card, their Path is drawn on a sunken cream band: w
 ### Office Hours Booking (signature)
 A two-pane sheet: the Guide on a recessed cream panel, then three session tiles, a grid of time slots (the chosen one fills navy, taken ones recede with a strike), topic tags, a note, and a sticky footer with the summary and the primary action. It confirms on a ticket with a perforated date stub and a check that draws itself.
 
+### Your sessions, Settings and the Guide hub
+Account pages are plain cards on the cream canvas, Operate mode: no immersive panels except the Guide hub's live state.
+- **Your sessions** pairs a date stub (weekday, day, month, in navy small caps) with the session's title, time, topic, the Guide's portrait and the price. Actions sit on a hairline below: Add to calendar, Change time, Message, and Cancel (quiet, right-aligned) which turns into an inline confirm with a red action. Past sessions carry a review form: five stars that fill on hover, a short text field, and Post review.
+- **Settings** groups rows into titled cards. A row is a title, a one-line explanation and a control on the right: a switch for on/off, a segmented control (stacked under the text) for choices. Reset opens an inline confirm in place of its row.
+- **Switch:** a 46 × 28 pill; off is a quiet fill, on is navy with the knob sliding right.
+- **Guide hub:** the status panel is the immersive navy surface while you're live and a plain card while paused; three stat cards roll their numbers; bookings reuse the session row; what you offer is a label/value list.
+
+### Help and policies
+A pill tab row (Help, About, Privacy, Terms) over one reading card set in the serif at 18/29, with sans headings. Signed out, the same page sits on the intro page between its masthead and footer.
+
+### Report, block and new messages
+- The post "…" menu adds Report this post (it swaps the menu for four reasons) and Block. A reported post, or any post by someone blocked, folds into a one-line fill row with Undo or Unblock.
+- **New message** is a sheet: a search field, then Your connections and Near your Path as 56px rows with the relation mark on the right.
+
 ### Motion
 - **Dashboard:** the profile card rises in, its Path steps pop in turn and its counts count up; the rings around People worth knowing draw one after another (90 ms apart); the week slides between weeks; schedule items and communities rise a beat apart; the navy pill slides wherever the current thing changes.
 - **Assembling (the intro's language, used across the app):** the intro headline rises line by line out of an 8px blur, then the sentence, then the action. Page titles and subtitles arrive 80 ms apart. Cards and rows rise 16px as they come into view, 55 ms apart, capped at eight. Route silk, Path covers and Your Path this week draw themselves. Stat numerals count up over 1.2 s. The Guides route fills in solid as you read down the page.
