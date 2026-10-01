@@ -74,7 +74,8 @@
   --silk-mask: linear-gradient(90deg, transparent 0, transparent 44%, #000 60%);
   flex: 1;
   display: flex;
-  margin: 0 12px;
+  /* Set into the cream page with the same 12px of cream on every side, the header included. */
+  margin: 12px 12px 0;
   border-radius: var(--r-2xl);
   box-shadow: 0 40px 80px -40px rgba(15, 23, 42, 0.6);
 }
@@ -83,7 +84,7 @@
   flex: 1;
   display: flex;
   align-items: center;
-  min-height: calc(100dvh - 75px - 71px - 12px);
+  min-height: calc(100dvh - 75px - 71px - 24px);
   width: 100%;
   max-width: 1192px;
   margin: 0 auto;
@@ -253,8 +254,10 @@
    A landscape window down to 861px keeps the side-by-side hero, so the action stays on the first screen. */
 @media (max-width: 860px), (max-width: 1000px) and (orientation: portrait) {
   .landing__stage {
-    --hero-art-h: min(42svh, calc((100vw - 24px) * 0.812));
-    --silk-mask: linear-gradient(180deg, #000 0, #000 calc(var(--hero-art-h) - 72px), transparent var(--hero-art-h));
+    /* Room above the picture, so it sits inside the navy panel rather than against its top edge. */
+    --hero-pad: clamp(24px, 4svh, 40px);
+    --hero-art-h: min(40svh, calc((100vw - 24px) * 0.812));
+    --silk-mask: linear-gradient(180deg, #000 0, #000 calc(var(--hero-pad) + var(--hero-art-h) - 72px), transparent calc(var(--hero-pad) + var(--hero-art-h)));
   }
   .landing__hero {
     flex-direction: column;
@@ -262,7 +265,7 @@
     justify-content: flex-start;
     gap: clamp(20px, 3.4svh, 36px);
     min-height: 0;
-    padding: 0 24px 48px;
+    padding: var(--hero-pad) 24px 48px;
   }
   .landing__art {
     position: relative;
@@ -292,6 +295,12 @@
     margin-top: clamp(20px, 3svh, 32px);
   }
 }
+/* On short screens the picture gives up a little height so Start your path stays on the first screen. */
+@media (max-height: 720px) and (max-width: 860px) {
+  .landing__stage {
+    --hero-art-h: min(35svh, calc((100vw - 24px) * 0.812));
+  }
+}
 @media (max-width: 767px) {
   .landing__bar-inner {
     height: 57px;
@@ -307,7 +316,7 @@
     gap: 18px;
   }
   .landing__hero {
-    padding: 0 20px 40px;
+    padding: var(--hero-pad) 20px 40px;
   }
   .landing__art {
     margin: 0 -20px;
