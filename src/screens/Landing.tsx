@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { Wordmark } from '../components/chrome';
 import { IconClose, IconChevronLeft } from '../components/icons';
-import { springs } from '../lib/motion';
+import { springs, useMediaQuery } from '../lib/motion';
 import { useApp } from '../lib/store';
 import { me, people } from '../data/people';
 import { sessionsFor } from '../lib/booking';
@@ -113,6 +113,8 @@ export function Landing({ onAuthed }: { onAuthed: () => void }) {
 */
 function HeroArt() {
   const reduce = useReducedMotion();
+  // Stacked above the headline, the composition is cropped to its own edges so it can be drawn larger.
+  const stacked = useMediaQuery('(max-width: 860px), (max-width: 1000px) and (orientation: portrait)');
   const rise = (delay: number) => ({ initial: reduce ? false : { opacity: 0, y: 18 }, animate: { opacity: 1, y: 0 }, transition: { ...springs.smooth, delay } });
   const draw = (delay: number, duration = 0.8) => ({ initial: reduce ? false : { pathLength: 0 }, animate: { pathLength: 1 }, transition: { delay, duration, ease: [0.16, 1, 0.3, 1] as const } });
   const pop = (delay: number) => ({ initial: reduce ? false : { scale: 0.4, opacity: 0 }, animate: { scale: 1, opacity: 1 }, transition: { type: 'spring' as const, stiffness: 420, damping: 24, delay } });
@@ -130,7 +132,7 @@ function HeroArt() {
   const branch = `M${stops[3].x} ${Y} C ${stops[3].x + 36} ${Y}, ${stops[3].x + 50} ${Y - 52}, ${stops[4].x - 42} ${Y - 52}`;
   return (
     <div className="landing__art" aria-hidden="true">
-      <svg viewBox="0 0 680 620" preserveAspectRatio="xMidYMid meet">
+      <svg viewBox={stacked ? '0 48 680 552' : '0 0 680 620'} preserveAspectRatio="xMidYMid meet">
         <defs>
           <pattern id="hero-dots" width="22" height="22" patternUnits="userSpaceOnUse">
             <circle cx="1.5" cy="1.5" r="1.2" fill="var(--separator-strong)" />
