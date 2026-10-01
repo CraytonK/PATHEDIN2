@@ -12,7 +12,7 @@ import { people, ME } from '../data/people';
 import { wp } from '../data/waypoints';
 import type { Story } from '../data/types';
 import { compactSteps, relationTo } from '../lib/relations';
-import { useIsMobile, useScrollDirection } from '../lib/motion';
+import { usePhoneChrome, useScrollDirection } from '../lib/motion';
 import { useApp } from '../lib/store';
 import { useUI } from '../lib/ui';
 import { NotFound } from './NotFound';
@@ -27,7 +27,8 @@ export function StoryScreen() {
   const openCompare = useUI((u) => u.openCompare);
   const toast = useUI((u) => u.showToast);
   const mine = useApp((st) => (s ? st.myResponses[s.id] : undefined)) ?? [];
-  const isMobile = useIsMobile();
+  // The reading dock replaces the phone's tab bar; with the top bar, the story keeps its own bar under the title.
+  const isMobile = usePhoneChrome();
   const dir = useScrollDirection();
   const [responses, setResponses] = useState(false);
   const [quote, setQuote] = useState<string | undefined>();

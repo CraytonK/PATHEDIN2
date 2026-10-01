@@ -4,7 +4,7 @@ import { createPortal } from 'react-dom';
 import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { me } from '../data/people';
 import { notificationList, conversationList } from '../data/social';
-import { easings, springs, useIsMobile, useScrolled, haptic } from '../lib/motion';
+import { easings, springs, useIsMobile, usePhoneChrome, useScrolled, haptic } from '../lib/motion';
 import { useApp } from '../lib/store';
 import { useUI } from '../lib/ui';
 import { switchTheme } from '../lib/theme';
@@ -300,7 +300,8 @@ export function TabBar() {
 const DOCK_EASE: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
 export function DockTitle({ title, children }: { title: ReactNode; children?: ReactNode }) {
-  const isMobile = useIsMobile();
+  // Wherever the top bar is, the title can dock under it; the phone's navigation bar already carries the title.
+  const isMobile = usePhoneChrome();
   const [shown, setShown] = useState(false);
   const [edge, setEdge] = useState({ left: 40, right: 40 });
   useEffect(() => {
@@ -391,6 +392,7 @@ export function Page({
   const [scrolled, setScrolled] = useState(false);
   const navigate = useNavigate();
   const isMobile = useIsMobile();
+  const phone = usePhoneChrome();
 
   useEffect(() => {
     const el = sentinel.current;
@@ -410,7 +412,7 @@ export function Page({
   const withRail = !!rail && !isMobile;
   return (
     <div className={`page ${wide ? 'page--wide' : ''} ${withRail ? 'page--rail' : ''} ${className}`}>
-      {isMobile && (
+      {phone && (
         <header className={`navbar ${scrolled || !large ? 'is-scrolled' : ''}`}>
           <div className="navbar__side">
             {back && (
@@ -434,8 +436,8 @@ export function Page({
         </header>
       )}
       <PageColumns rail={withRail ? rail : undefined}>
-      <div className={`page__header ${hideHeaderOnDesktop ? 'page__header--mobile-only' : ''} ${!large ? 'page__header--bare' : ''} ${!large && isMobile ? 'visually-hidden' : ''}`}>
-        {!isMobile && back && (
+      <div className={`page__header ${hideHeaderOnDesktop ? 'page__header--mobile-only' : ''} ${!large ? 'page__header--bare' : ''} ${!large && phone ? 'visually-hidden' : ''}`}>
+        {!phone && back && (
           <button className="page__back t-subhead" onClick={goBack}>
             <IconChevronLeft size={16} strokeWidth={2.4} />
             {backLabel}
@@ -453,7 +455,7 @@ export function Page({
               <p className="page__title">{title}</p>
             )}
           </div>
-          {(largeTrailing || (!isMobile && trailing)) && <div className="page__trailing">{largeTrailing ?? trailing}</div>}
+          {(largeTrailing || (!phone && trailing)) && <div className="page__trailing">{largeTrailing ?? trailing}</div>}
         </div>
         {/* The subtitle runs the full width, so a button beside the title never squeezes it. */}
         {subtitle && (

@@ -10,8 +10,7 @@ import { BannerArt, useBanner } from '../components/Banner';
 import { dayLabel, fmtTime, useOpenSpots } from '../lib/booking';
 import { bookingTitle } from '../lib/guides';
 import { RailFooter } from '../components/Rail';
-import { PersonTile } from '../components/content';
-import { Avatar, AvatarStack, CountUp, IconButton, PersonName, Rolling, SectionHeader, TextTabs } from '../components/ui';
+import { Avatar, AvatarStack, CountUp, IconButton, PersonName, Rolling, TextTabs } from '../components/ui';
 import { IconBell, IconCheck, IconPencil, IconChevronLeft, IconChevronRight, IconCompose, IconDoc, IconFlag, IconMessage, IconPlus, IconQuestion, IconSend, IconSignpost, IconGuidePlus } from '../components/icons';
 import { people, me, ME } from '../data/people';
 import { stories } from '../data/stories';
@@ -19,7 +18,7 @@ import { questions, questionList } from '../data/questions';
 import { decisions } from '../data/decisions';
 import { threads, communities } from '../data/communities';
 import { destinations } from '../data/destinations';
-import { edgeClass, rise, springs, useIsMobile, useMediaQuery, useScrollEdges } from '../lib/motion';
+import { edgeClass, rise, springs, useIsMobile, useMediaQuery, usePhoneChrome, useScrollEdges } from '../lib/motion';
 import { relationTo } from '../lib/relations';
 import { usePeek } from '../components/Peek';
 import { conversationList } from '../data/social';
@@ -394,7 +393,7 @@ function WorthRow() {
           People worth knowing
         </h2>
         <Link to="/network" className="dash-card__more">
-          See more suggestions
+          See all
           <IconChevronRight size={14} strokeWidth={2.2} data-dir="forward" />
         </Link>
       </div>
@@ -607,6 +606,7 @@ function Rail({ withMe }: { withMe: boolean }) {
 
 export function Home() {
   const isMobile = useIsMobile();
+  const phone = usePhoneChrome();
   const threeUp = useMediaQuery('(min-width: 1200px)');
   const unread = useUnread();
   const navigate = useNavigate();
@@ -623,7 +623,7 @@ export function Home() {
     // If you've scrolled into the feed, bring its top back into view for the new list.
     const el = feedTop.current;
     if (el) {
-      const y = el.getBoundingClientRect().top + window.scrollY - (isMobile ? 52 : 64);
+      const y = el.getBoundingClientRect().top + window.scrollY - (phone ? 52 : 64);
       if (window.scrollY > y) window.scrollTo({ top: y });
     }
   };
@@ -635,7 +635,7 @@ export function Home() {
       hideHeaderOnDesktop
       className="page--home"
       trailing={
-        isMobile ? (
+        phone ? (
           <>
             <IconButton label="Write" onClick={() => navigate('/write')}>
               <IconCompose size={22} strokeWidth={1.6} />
@@ -650,7 +650,7 @@ export function Home() {
         ) : undefined
       }
       largeTrailing={
-        isMobile ? (
+        phone ? (
           <Link to={`/p/${ME}`} aria-label="Your profile" className="home__me">
             <img src={me.photo} alt="" />
           </Link>
@@ -678,14 +678,8 @@ export function Home() {
                   <PathPulse stops={pulseStops} />
                 </div>
               </section>
-              <section className="home__worth">
-                <SectionHeader title="People worth knowing" subtitle="Chosen for where you are and where you’re going" to="/network" />
-                <div className="carousel">
-                  {worth.map((id) => (
-                    <PersonTile key={id} id={id} />
-                  ))}
-                </div>
-              </section>
+              {/* The same faces in rings as the web Home, rather than a carousel of large photos. */}
+              <WorthRow />
             </>
           )}
           {!isMobile && <WorthRow />}

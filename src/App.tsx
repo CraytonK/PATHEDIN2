@@ -14,7 +14,7 @@ import { FlightLayer } from './components/FlightLayer';
 import { installProfileFlights } from './lib/flight';
 import { installMorphs, morphState, setMorphNavigator } from './lib/morph';
 import { installPointerDetails } from './lib/pointer';
-import { useIsMobile } from './lib/motion';
+import { useIsMobile, usePhoneChrome } from './lib/motion';
 import { useApp } from './lib/store';
 import { useUI } from './lib/ui';
 import { Home } from './screens/Home';
@@ -99,6 +99,7 @@ function useScrollMemory() {
 
 function Shell() {
   const isMobile = useIsMobile();
+  const phone = usePhoneChrome();
   const location = useLocation();
   const { type, restore } = useScrollMemory();
   const setSearch = useUI((s) => s.setSearch);
@@ -126,9 +127,9 @@ function Shell() {
 
   const back = type === 'POP';
   // Like iOS Messages, a conversation takes the whole screen and hides the tab bar.
-  const inThread = isMobile && (/^\/messages\/.+/.test(location.pathname) || (location.pathname === '/messages' && location.search.includes('to=')));
+  const inThread = phone && (/^\/messages\/.+/.test(location.pathname) || (location.pathname === '/messages' && location.search.includes('to=')));
   // A story replaces the tab bar with its own reading dock.
-  const inStory = isMobile && /^\/stories\/[^/]+/.test(location.pathname);
+  const inStory = phone && /^\/stories\/[^/]+/.test(location.pathname);
   // Write is a page of its own, like Medium's editor: no top bar or tab bar.
   const inWrite = location.pathname === '/write';
   // Messages keeps its own split view on desktop, so thread changes shouldn't animate the whole page.
@@ -156,9 +157,9 @@ function Shell() {
 
   return (
     <>
-      <div className={`app ${inWrite ? 'app--write' : isMobile ? (inThread ? 'app--thread' : 'app--mobile') : 'app--desktop'}`}>
+      <div className={`app ${inWrite ? 'app--write' : phone ? (inThread ? 'app--thread' : 'app--mobile') : 'app--desktop'} ${isMobile ? 'app--narrow' : ''}`}>
         <SkipLink />
-        {!isMobile && !inWrite && <TopBar />}
+        {!phone && !inWrite && <TopBar />}
         <AnimatePresence mode="wait" initial={false} onExitComplete={restore}>
           <motion.main
             key={shownKey.current}
@@ -166,11 +167,11 @@ function Shell() {
             data-path={location.pathname}
             tabIndex={-1}
             // Desktop screens arrive with a short rise out of a 3px blur; iPhone keeps the push from the side.
-            initial={isMobile ? { opacity: 0, x: back ? -28 : 36 } : { opacity: 0, y: 8, filter: 'blur(3px)' }}
+            initial={phone ? { opacity: 0, x: back ? -28 : 36 } : { opacity: 0, y: 8, filter: 'blur(3px)' }}
             // The blur is cleared once it lands: a filter left on the page would pin every fixed child to it.
-            animate={isMobile ? { opacity: 1, x: 0, y: 0 } : { opacity: 1, y: 0, filter: 'blur(0px)', transitionEnd: { filter: 'none' } }}
+            animate={phone ? { opacity: 1, x: 0, y: 0 } : { opacity: 1, y: 0, filter: 'blur(0px)', transitionEnd: { filter: 'none' } }}
             exit={{ opacity: 0, transition: { duration: 0.08 } }}
-            transition={isMobile ? { type: 'spring', stiffness: 420, damping: 40, mass: 0.8 } : { duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
+            transition={phone ? { type: 'spring', stiffness: 420, damping: 40, mass: 0.8 } : { duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
           >
             <Routes location={location}>
               <Route path="/" element={<Home />} />
@@ -202,7 +203,7 @@ function Shell() {
             </Routes>
           </motion.main>
         </AnimatePresence>
-        {isMobile && !inThread && !inStory && !inWrite && <TabBar />}
+        {phone && !inThread && !inStory && !inWrite && <TabBar />}
         <PeekLayer />
         <CompareLayer />
         <RequestLayer />

@@ -345,6 +345,15 @@
 .messages-mobile .bubble {
   max-width: 78%;
 }
+/* In a narrow window on a computer the top bar stays, so the thread's own header docks beneath it. */
+.app--desktop .messages-mobile,
+.app--desktop .messages-mobile .thread {
+  min-height: calc(100dvh - var(--topbar-h));
+}
+.app--desktop .messages-mobile .thread__head {
+  top: var(--topbar-h);
+  padding-top: 8px;
+}
 .messages-mobile .composer-bar {
   position: sticky;
   bottom: 0;

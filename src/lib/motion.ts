@@ -59,7 +59,14 @@ export function useMediaQuery(query: string): boolean {
   return matches;
 }
 
+/** A narrow screen: one column, stacked sections, drawings sized for a small width. */
 export const useIsMobile = () => useMediaQuery('(max-width: 767px)');
+/**
+ * The phone's own controls (the tab bar, the iOS-style navigation bar, pages pushed in from the side): on a
+ * touch screen under 768px, or any screen under 520px. A narrow window on a computer keeps the top bar and the
+ * web look, laid out in one column.
+ */
+export const usePhoneChrome = () => useMediaQuery('(max-width: 519px), (max-width: 767px) and (pointer: coarse)');
 export const useIsWide = () => useMediaQuery('(min-width: 1100px)');
 
 /** A light tap where the platform supports it. iOS Safari ignores this gracefully. */

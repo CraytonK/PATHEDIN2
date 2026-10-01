@@ -231,7 +231,8 @@ export function Rolling({ value, format = (n: number) => n.toLocaleString('en-CA
 
 export function CountUp({ value, format = (n: number) => n.toLocaleString('en-CA') }: { value: number; format?: (n: number) => string }) {
   const ref = useRef<HTMLSpanElement>(null);
-  const inView = useInView(ref, { once: true, margin: '-40px' });
+  // Only the top and bottom edges count: a short number near the left edge of a narrow screen still starts.
+  const inView = useInView(ref, { once: true, margin: '-40px 0px -40px 0px' });
   const reduce = useReducedMotion();
   const [shown, setShown] = useState(reduce ? value : 0);
   const [counted, setCounted] = useState(!!reduce);

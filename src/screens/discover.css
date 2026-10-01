@@ -57,7 +57,7 @@
 }
 @media (max-width: 767px) {
   .discover__tabs {
-    top: calc(var(--navbar-h) + var(--safe-top));
+    top: var(--sticky-top, calc(var(--navbar-h) + var(--safe-top)));
     margin: -16px calc(var(--gutter) * -1) 28px;
   }
 }

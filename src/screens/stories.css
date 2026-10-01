@@ -65,7 +65,7 @@
 }
 @media (max-width: 767px) {
   .story__progress {
-    top: calc(var(--navbar-h) + var(--safe-top) - 4px);
+    top: calc(var(--sticky-top, calc(var(--navbar-h) + var(--safe-top))) - 4px);
     transition: top 280ms var(--ease-drawer);
   }
   /* While reading down, the navigation bar slides away and the progress line rides the top edge. */
@@ -169,6 +169,10 @@
   .story__bar-end {
     display: none;
   }
+}
+/* A narrow window on a computer has no dock, so the bar returns at the end of the story. */
+.app--desktop .story__bar-end {
+  display: block;
 }
 .story__tools {
   margin-left: auto;

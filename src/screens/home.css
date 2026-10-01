@@ -463,6 +463,7 @@
   margin-bottom: 16px;
 }
 .dash-card__h {
+  white-space: nowrap;
   font-size: 16px;
   line-height: 20px;
   font-weight: 500;
@@ -768,6 +769,27 @@
   display: grid;
   grid-template-columns: repeat(6, minmax(0, 1fr));
   gap: 8px;
+}
+/* On a narrow screen the six faces scroll sideways, a face and a half showing at the edge so the row reads as more. */
+@media (max-width: 559px) {
+  .worth__row {
+    grid-template-columns: none;
+    grid-auto-flow: column;
+    grid-auto-columns: 84px;
+    gap: 6px;
+    margin: 0 -20px;
+    padding: 0 20px 2px;
+    scroll-padding-inline: 20px;
+    overflow-x: auto;
+    scroll-snap-type: x proximity;
+    scrollbar-width: none;
+  }
+  .worth__row::-webkit-scrollbar {
+    display: none;
+  }
+  .worth__row > * {
+    scroll-snap-align: start;
+  }
 }
 .worth__face {
   position: relative;

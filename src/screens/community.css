@@ -121,7 +121,7 @@
 }
 @media (max-width: 767px) {
   .cm__tabs {
-    top: calc(var(--navbar-h) + var(--safe-top));
+    top: var(--sticky-top, calc(var(--navbar-h) + var(--safe-top)));
   }
 }
 .cm__rail {

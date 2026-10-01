@@ -59,6 +59,8 @@ Requires Node 20+.
 | **Decision Points.** A decision drawn as a fork, showing who took each road and where it led them. People weigh in with their own Path. | Home, Decisions |
 | **Stories on a Path.** Each story's cover is generated from the author's Path, with the stretch it covers highlighted. | Stories |
 
+On a computer, shrinking the window keeps the web version in one column; the phone's tab bar and navigation bar appear only on phones and very narrow screens.
+
 Everything is stateful in the browser: connecting, saving, joining, requests, weighing in, messages and added routes all persist to `localStorage` (and fail safely if storage is unavailable). The app opens in Soft Cream. Midnight (dark) and Automatic can be chosen from the account menu, your profile or ⌘K. **Sign out** (account menu, or the bottom of your own profile) returns you to the intro page.
 
 ## Project structure
